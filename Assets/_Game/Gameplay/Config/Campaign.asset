@@ -1,0 +1,1319 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6df356f33f3d74ab9427b6e8db22a9, type: 3}
+  m_Name: Campaign
+  m_EditorClassIdentifier: Game.Gameplay::Game.Gameplay.Config.CampaignAsset
+  levels:
+  - title: First Taps
+    idea: Short taps are enough for single crystals; extra charge only wastes size.
+    routeLength: 16
+    crystals:
+    - variant: 0
+      position: {x: 0, y: 5}
+      rotationStep: 0
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: 0.05, y: 10.5}
+      rotationStep: 3
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -2.484467, y: -1}
+      rotationStep: 5
+      scale: 1.2153891
+      role: 3
+    - variant: 3
+      position: {x: 3.5899744, y: 0.13431275}
+      rotationStep: 10
+      scale: 0.9307699
+      role: 3
+    - variant: 2
+      position: {x: -3.7817256, y: 1.8068173}
+      rotationStep: 0
+      scale: 1.119118
+      role: 3
+    - variant: 1
+      position: {x: 3.9118562, y: 3.8621345}
+      rotationStep: 6
+      scale: 0.99268365
+      role: 3
+    - variant: 1
+      position: {x: -3.477468, y: 5.2297626}
+      rotationStep: 4
+      scale: 0.99676126
+      role: 3
+    - variant: 0
+      position: {x: 4.290163, y: 7.0376315}
+      rotationStep: 8
+      scale: 1.1998916
+      role: 3
+    - variant: 0
+      position: {x: -3.464991, y: 9.19772}
+      rotationStep: 10
+      scale: 0.98634386
+      role: 3
+    - variant: 1
+      position: {x: 3.0770519, y: 10.881026}
+      rotationStep: 4
+      scale: 0.83677435
+      role: 3
+    - variant: 2
+      position: {x: -4.367615, y: 13.026322}
+      rotationStep: 7
+      scale: 1.0863236
+      role: 3
+    controlHolds:
+    - 0
+    - 0
+  - title: The Cluster
+    idea: One bigger shot clears a dense group cheaper than a series of taps.
+    routeLength: 14
+    crystals:
+    - variant: 0
+      position: {x: -0.55, y: 5.4}
+      rotationStep: 0
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 0, y: 5.4}
+      rotationStep: 5
+      scale: 0.9
+      role: 2
+    - variant: 3
+      position: {x: 0.55, y: 5.4}
+      rotationStep: 10
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -0.85, y: 5.95}
+      rotationStep: 3
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.3, y: 5.95}
+      rotationStep: 8
+      scale: 0.85
+      role: 2
+    - variant: 3
+      position: {x: 0.3, y: 5.95}
+      rotationStep: 1
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: 0.85, y: 5.95}
+      rotationStep: 6
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.55, y: 6.5}
+      rotationStep: 11
+      scale: 0.9
+      role: 2
+    - variant: 3
+      position: {x: 0.05, y: 6.5}
+      rotationStep: 4
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 0.6, y: 6.5}
+      rotationStep: 9
+      scale: 0.9
+      role: 2
+    - variant: 1
+      position: {x: -2.5281286, y: -1}
+      rotationStep: 5
+      scale: 1.1733317
+      role: 3
+    - variant: 0
+      position: {x: 2.5550253, y: 0.27659005}
+      rotationStep: 1
+      scale: 0.8383896
+      role: 3
+    - variant: 0
+      position: {x: -3.0837426, y: 1.5814586}
+      rotationStep: 2
+      scale: 1.1035255
+      role: 3
+    - variant: 2
+      position: {x: 2.503124, y: 3.7525647}
+      rotationStep: 0
+      scale: 1.0069498
+      role: 3
+    - variant: 1
+      position: {x: -2.5675793, y: 5.4445043}
+      rotationStep: 3
+      scale: 0.89485735
+      role: 3
+    - variant: 0
+      position: {x: 3.333721, y: 7.6154995}
+      rotationStep: 3
+      scale: 0.84588957
+      role: 3
+    - variant: 2
+      position: {x: -3.906857, y: 9.812452}
+      rotationStep: 4
+      scale: 1.169506
+      role: 3
+    - variant: 2
+      position: {x: 3.82955, y: 11.391484}
+      rotationStep: 0
+      scale: 0.8665892
+      role: 3
+    controlHolds:
+    - 1.06
+  - title: Mixed Strength
+    idea: 'Change the charge per obstacle: tap, big shot, tap.'
+    routeLength: 22
+    crystals:
+    - variant: 0
+      position: {x: 0, y: 4.5}
+      rotationStep: 0
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -0.55, y: 9.4}
+      rotationStep: 0
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 0, y: 9.4}
+      rotationStep: 5
+      scale: 0.9
+      role: 2
+    - variant: 3
+      position: {x: 0.55, y: 9.4}
+      rotationStep: 10
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -0.85, y: 9.95}
+      rotationStep: 3
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.3, y: 9.95}
+      rotationStep: 8
+      scale: 0.85
+      role: 2
+    - variant: 3
+      position: {x: 0.3, y: 9.95}
+      rotationStep: 1
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: 0.85, y: 9.95}
+      rotationStep: 6
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.55, y: 10.5}
+      rotationStep: 11
+      scale: 0.9
+      role: 2
+    - variant: 3
+      position: {x: 0.05, y: 10.5}
+      rotationStep: 4
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 0.6, y: 10.5}
+      rotationStep: 9
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -0.05, y: 16}
+      rotationStep: 2
+      scale: 1
+      role: 0
+    - variant: 3
+      position: {x: -2.5717902, y: -1}
+      rotationStep: 4
+      scale: 1.1312742
+      role: 3
+    - variant: 1
+      position: {x: 3.5200765, y: 0.41886738}
+      rotationStep: 5
+      scale: 1.1960093
+      role: 3
+    - variant: 2
+      position: {x: -4.38576, y: 2.5561}
+      rotationStep: 3
+      scale: 1.087933
+      role: 3
+    - variant: 2
+      position: {x: 3.0943918, y: 4.842995}
+      rotationStep: 7
+      scale: 1.0212159
+      role: 3
+    - variant: 1
+      position: {x: -3.6576905, y: 6.859246}
+      rotationStep: 2
+      scale: 1.2429534
+      role: 3
+    - variant: 1
+      position: {x: 4.377279, y: 8.193368}
+      rotationStep: 10
+      scale: 0.9418877
+      role: 3
+    - variant: 1
+      position: {x: -4.348723, y: 10.427185}
+      rotationStep: 9
+      scale: 0.90266806
+      role: 3
+    - variant: 2
+      position: {x: 2.5820482, y: 11.901943}
+      rotationStep: 8
+      scale: 0.8964041
+      role: 3
+    - variant: 2
+      position: {x: -2.482894, y: 14.167107}
+      rotationStep: 6
+      scale: 1.166826
+      role: 3
+    - variant: 2
+      position: {x: 3.506802, y: 16.424406}
+      rotationStep: 10
+      scale: 0.8992793
+      role: 3
+    - variant: 2
+      position: {x: -2.857561, y: 18.424328}
+      rotationStep: 7
+      scale: 0.8871939
+      role: 3
+    controlHolds:
+    - 0
+    - 0.21
+    - 0.55
+    - 0
+  - title: Squeeze Through
+    idea: Clear only the middle; the smaller slime fits between the side crystals.
+    routeLength: 16
+    crystals:
+    - variant: 0
+      position: {x: 0, y: 5}
+      rotationStep: 0
+      scale: 0.8
+      role: 0
+    - variant: 0
+      position: {x: 0.02, y: 5.55}
+      rotationStep: 4
+      scale: 0.8
+      role: 0
+    - variant: 0
+      position: {x: -1.12, y: 6.7}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 1.12, y: 6.7}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: -1.12, y: 7.4}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 1.12, y: 7.4}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 1
+      position: {x: -2.6154518, y: -1}
+      rotationStep: 4
+      scale: 1.0892168
+      role: 3
+    - variant: 3
+      position: {x: 2.4851274, y: 0.5611447}
+      rotationStep: 9
+      scale: 1.1036289
+      role: 3
+    - variant: 0
+      position: {x: -3.6877768, y: 2.3307414}
+      rotationStep: 4
+      scale: 1.0723404
+      role: 3
+    - variant: 2
+      position: {x: 3.6856596, y: 3.5334253}
+      rotationStep: 2
+      scale: 1.035482
+      role: 3
+    - variant: 1
+      position: {x: -2.747802, y: 4.6739874}
+      rotationStep: 1
+      scale: 1.1410494
+      role: 3
+    - variant: 1
+      position: {x: 3.420837, y: 6.3712363}
+      rotationStep: 5
+      scale: 1.0378858
+      role: 3
+    - variant: 0
+      position: {x: -2.7905889, y: 8.641918}
+      rotationStep: 3
+      scale: 1.0858302
+      role: 3
+    - variant: 3
+      position: {x: 3.3345466, y: 10.012402}
+      rotationStep: 3
+      scale: 0.926219
+      role: 3
+    - variant: 2
+      position: {x: -2.5405333, y: 11.737499}
+      rotationStep: 5
+      scale: 1.2070773
+      role: 3
+    - variant: 2
+      position: {x: 2.4349034, y: 13.331198}
+      rotationStep: 11
+      scale: 1.2430128
+      role: 3
+    controlHolds:
+    - 0
+    - 0
+  - title: Two Rows
+    idea: Compare one shot through both groups with clearing them one by one.
+    routeLength: 18
+    crystals:
+    - variant: 0
+      position: {x: -0.9, y: 5.3}
+      rotationStep: 0
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.3, y: 5.3}
+      rotationStep: 5
+      scale: 0.85
+      role: 2
+    - variant: 3
+      position: {x: 0.3, y: 5.3}
+      rotationStep: 10
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: 0.9, y: 5.3}
+      rotationStep: 3
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.6, y: 5.75}
+      rotationStep: 8
+      scale: 0.8
+      role: 2
+    - variant: 3
+      position: {x: 0, y: 5.75}
+      rotationStep: 1
+      scale: 0.8
+      role: 2
+    - variant: 0
+      position: {x: 0.6, y: 5.75}
+      rotationStep: 6
+      scale: 0.8
+      role: 2
+    - variant: 0
+      position: {x: -0.9, y: 7.1}
+      rotationStep: 0
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.3, y: 7.1}
+      rotationStep: 5
+      scale: 0.85
+      role: 2
+    - variant: 3
+      position: {x: 0.3, y: 7.1}
+      rotationStep: 10
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: 0.9, y: 7.1}
+      rotationStep: 3
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.6, y: 7.55}
+      rotationStep: 8
+      scale: 0.8
+      role: 2
+    - variant: 3
+      position: {x: 0, y: 7.55}
+      rotationStep: 1
+      scale: 0.8
+      role: 2
+    - variant: 0
+      position: {x: 0.6, y: 7.55}
+      rotationStep: 6
+      scale: 0.8
+      role: 2
+    - variant: 2
+      position: {x: -2.6591134, y: -1}
+      rotationStep: 3
+      scale: 1.0471594
+      role: 3
+    - variant: 0
+      position: {x: 3.4501786, y: 0.70342207}
+      rotationStep: 1
+      scale: 1.0112486
+      role: 3
+    - variant: 2
+      position: {x: -2.9897938, y: 2.105383}
+      rotationStep: 5
+      scale: 1.0567479
+      role: 3
+    - variant: 3
+      position: {x: 4.2769275, y: 3.4238558}
+      rotationStep: 9
+      scale: 1.0497482
+      role: 3
+    - variant: 1
+      position: {x: -3.8379133, y: 4.888729}
+      rotationStep: 0
+      scale: 1.0391455
+      role: 3
+    - variant: 1
+      position: {x: 2.464395, y: 6.9491043}
+      rotationStep: 0
+      scale: 1.1338838
+      role: 3
+    - variant: 3
+      position: {x: -3.2324545, y: 8.056651}
+      rotationStep: 8
+      scale: 0.8189923
+      role: 3
+    - variant: 0
+      position: {x: 4.0870447, y: 9.32286}
+      rotationStep: 11
+      scale: 0.9560339
+      role: 3
+    - variant: 1
+      position: {x: -2.5981727, y: 10.507892}
+      rotationStep: 4
+      scale: 1.2473285
+      role: 3
+    - variant: 2
+      position: {x: 3.3630044, y: 12.63799}
+      rotationStep: 11
+      scale: 1.1367463
+      role: 3
+    - variant: 2
+      position: {x: -4.053571, y: 14.257316}
+      rotationStep: 3
+      scale: 1.0315276
+      role: 3
+    - variant: 3
+      position: {x: 2.9987805, y: 15.751175}
+      rotationStep: 3
+      scale: 1.1845441
+      role: 3
+    controlHolds:
+    - 0.66
+    - 0.65
+  - title: Tempting Crowd
+    idea: 'Many crystals on the side do not block the way: tap the blocker only.'
+    routeLength: 18
+    crystals:
+    - variant: 0
+      position: {x: 0, y: 5.6}
+      rotationStep: 0
+      scale: 0.9
+      role: 0
+    - variant: 0
+      position: {x: 1.35, y: 5}
+      rotationStep: 1
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 1.95, y: 5.2}
+      rotationStep: 7
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 2.55, y: 5}
+      rotationStep: 1
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 1.5, y: 5.75}
+      rotationStep: 3
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 2.15, y: 5.85}
+      rotationStep: 9
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 1.4, y: 6.5}
+      rotationStep: 2
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 2, y: 6.55}
+      rotationStep: 8
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 2.6, y: 6.35}
+      rotationStep: 2
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 0.05, y: 10.8}
+      rotationStep: 3
+      scale: 0.95
+      role: 0
+    - variant: 0
+      position: {x: -1.35, y: 10.3}
+      rotationStep: 1
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -1.95, y: 10.5}
+      rotationStep: 7
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -1.45, y: 11.05}
+      rotationStep: 2
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -2.1, y: 11.2}
+      rotationStep: 9
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -1.5, y: 11.8}
+      rotationStep: 3
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -2.2, y: 11.95}
+      rotationStep: 10
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -2.702775, y: -1}
+      rotationStep: 3
+      scale: 1.005102
+      role: 3
+    - variant: 1
+      position: {x: 2.4152296, y: 0.84569937}
+      rotationStep: 4
+      scale: 0.91886824
+      role: 3
+    - variant: 0
+      position: {x: -4.291811, y: 3.0800242}
+      rotationStep: 6
+      scale: 1.0411553
+      role: 3
+    - variant: 3
+      position: {x: 2.8681953, y: 4.514286}
+      rotationStep: 3
+      scale: 1.0640143
+      role: 3
+    - variant: 1
+      position: {x: -2.9280245, y: 6.3034706}
+      rotationStep: 11
+      scale: 0.9372415
+      role: 3
+    - variant: 1
+      position: {x: 3.507953, y: 7.526973}
+      rotationStep: 6
+      scale: 1.2298819
+      role: 3
+    - variant: 2
+      position: {x: -3.6743205, y: 8.671384}
+      rotationStep: 1
+      scale: 1.0021544
+      role: 3
+    - variant: 0
+      position: {x: 2.839543, y: 9.833319}
+      rotationStep: 7
+      scale: 0.9858488
+      role: 3
+    - variant: 1
+      position: {x: -2.655812, y: 11.678284}
+      rotationStep: 4
+      scale: 0.83757967
+      role: 3
+    - variant: 3
+      position: {x: 4.2911057, y: 13.144782}
+      rotationStep: 0
+      scale: 1.0304797
+      role: 3
+    - variant: 2
+      position: {x: -2.6515763, y: 15.17381}
+      rotationStep: 8
+      scale: 1.1036946
+      role: 3
+    controlHolds:
+    - 0
+    - 0
+  - title: Tight Corridors
+    idea: 'Narrow passages need a smaller slime: save size for the passages ahead.'
+    routeLength: 26
+    crystals:
+    - variant: 0
+      position: {x: 0, y: 4.5}
+      rotationStep: 0
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -1.078, y: 7.2}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 1.078, y: 7.2}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: -1.078, y: 7.9}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 1.078, y: 7.9}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0, y: 11}
+      rotationStep: 5
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -0.998, y: 13.4}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0.998, y: 13.4}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: -0.998, y: 14.1}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0.998, y: 14.1}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0.05, y: 17.3}
+      rotationStep: 8
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -0.958, y: 19.6}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0.958, y: 19.6}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: -0.958, y: 20.3}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0.958, y: 20.3}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 2
+      position: {x: -2.7464366, y: -1}
+      rotationStep: 2
+      scale: 0.9630446
+      role: 3
+    - variant: 2
+      position: {x: 3.3802807, y: 0.9879767}
+      rotationStep: 8
+      scale: 0.82648796
+      role: 3
+    - variant: 1
+      position: {x: -3.593828, y: 2.8546655}
+      rotationStep: 8
+      scale: 1.0255629
+      role: 3
+    - variant: 3
+      position: {x: 3.4594631, y: 4.4047165}
+      rotationStep: 10
+      scale: 1.0782803
+      role: 3
+    - variant: 1
+      position: {x: -4.018136, y: 6.5182123}
+      rotationStep: 11
+      scale: 0.8353375
+      role: 3
+    - variant: 1
+      position: {x: 2.551511, y: 8.104841}
+      rotationStep: 1
+      scale: 0.87588
+      role: 3
+    - variant: 1
+      position: {x: -4.1161866, y: 9.286118}
+      rotationStep: 7
+      scale: 1.1853164
+      role: 3
+    - variant: 1
+      position: {x: 3.5920413, y: 11.5437765}
+      rotationStep: 2
+      scale: 1.0156636
+      role: 3
+    - variant: 1
+      position: {x: -2.7134514, y: 12.848676}
+      rotationStep: 3
+      scale: 0.87783086
+      role: 3
+    - variant: 3
+      position: {x: 3.2192068, y: 14.851575}
+      rotationStep: 0
+      scale: 0.92421323
+      role: 3
+    - variant: 2
+      position: {x: -3.249581, y: 16.090303}
+      rotationStep: 0
+      scale: 1.1758615
+      role: 3
+    - variant: 1
+      position: {x: 3.0735202, y: 17.529192}
+      rotationStep: 6
+      scale: 1.1661104
+      role: 3
+    - variant: 3
+      position: {x: -3.5760763, y: 18.647242}
+      rotationStep: 3
+      scale: 0.9516111
+      role: 3
+    - variant: 0
+      position: {x: 3.989188, y: 20.842167}
+      rotationStep: 8
+      scale: 1.1590085
+      role: 3
+    - variant: 3
+      position: {x: -3.4768906, y: 23.125584}
+      rotationStep: 6
+      scale: 1.1883214
+      role: 3
+    controlHolds:
+    - 0.15
+    - 0.2
+    - 0
+    - 0
+    - 0
+    - 0.17
+  - title: Two Layers
+    idea: A small first shot moves you closer; the second shot then hits the back
+      layer up close.
+    routeLength: 18
+    crystals:
+    - variant: 0
+      position: {x: 0, y: 4.8}
+      rotationStep: 0
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -0.9, y: 7}
+      rotationStep: 0
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.3, y: 7}
+      rotationStep: 5
+      scale: 0.85
+      role: 2
+    - variant: 3
+      position: {x: 0.3, y: 7}
+      rotationStep: 10
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: 0.9, y: 7}
+      rotationStep: 3
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.6, y: 7.45}
+      rotationStep: 8
+      scale: 0.8
+      role: 2
+    - variant: 3
+      position: {x: 0, y: 7.45}
+      rotationStep: 1
+      scale: 0.8
+      role: 2
+    - variant: 0
+      position: {x: 0.6, y: 7.45}
+      rotationStep: 6
+      scale: 0.8
+      role: 2
+    - variant: 3
+      position: {x: -2.7900982, y: -1}
+      rotationStep: 1
+      scale: 0.9209872
+      role: 3
+    - variant: 3
+      position: {x: 4.3453317, y: 1.130254}
+      rotationStep: 0
+      scale: 1.1841077
+      role: 3
+    - variant: 3
+      position: {x: -2.895845, y: 2.629307}
+      rotationStep: 9
+      scale: 1.0099703
+      role: 3
+    - variant: 0
+      position: {x: 4.0507307, y: 4.2951465}
+      rotationStep: 5
+      scale: 1.0925465
+      role: 3
+    - variant: 1
+      position: {x: -3.1082473, y: 5.532954}
+      rotationStep: 10
+      scale: 1.1834337
+      role: 3
+    - variant: 2
+      position: {x: 3.595069, y: 7.4827094}
+      rotationStep: 8
+      scale: 0.97187805
+      role: 3
+    - variant: 0
+      position: {x: -2.5580523, y: 8.7008505}
+      rotationStep: 0
+      scale: 0.9184786
+      role: 3
+    - variant: 1
+      position: {x: 4.3445396, y: 10.854236}
+      rotationStep: 10
+      scale: 1.0454786
+      role: 3
+    - variant: 1
+      position: {x: -2.7710907, y: 12.819069}
+      rotationStep: 3
+      scale: 0.91808206
+      role: 3
+    - variant: 3
+      position: {x: 4.147308, y: 14.158367}
+      rotationStep: 1
+      scale: 0.8179467
+      role: 3
+    controlHolds:
+    - 0
+    - 0.66
+  - title: Everything Together
+    idea: Big shot on the cluster, enough shrink for the passage, cheap taps after.
+    routeLength: 26
+    crystals:
+    - variant: 0
+      position: {x: -0.55, y: 5}
+      rotationStep: 0
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 0, y: 5}
+      rotationStep: 5
+      scale: 0.9
+      role: 2
+    - variant: 3
+      position: {x: 0.55, y: 5}
+      rotationStep: 10
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -0.85, y: 5.55}
+      rotationStep: 3
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.3, y: 5.55}
+      rotationStep: 8
+      scale: 0.85
+      role: 2
+    - variant: 3
+      position: {x: 0.3, y: 5.55}
+      rotationStep: 1
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: 0.85, y: 5.55}
+      rotationStep: 6
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.55, y: 6.1}
+      rotationStep: 11
+      scale: 0.9
+      role: 2
+    - variant: 3
+      position: {x: 0.05, y: 6.1}
+      rotationStep: 4
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: 0.6, y: 6.1}
+      rotationStep: 9
+      scale: 0.9
+      role: 2
+    - variant: 0
+      position: {x: -1.058, y: 9.6}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 1.058, y: 9.6}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: -1.058, y: 10.3}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 1.058, y: 10.3}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0, y: 13.5}
+      rotationStep: 1
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -0.05, y: 17}
+      rotationStep: 6
+      scale: 0.9
+      role: 0
+    - variant: 0
+      position: {x: 0.05, y: 20.5}
+      rotationStep: 9
+      scale: 1
+      role: 0
+    - variant: 1
+      position: {x: -2.8337598, y: -1}
+      rotationStep: 1
+      scale: 0.8789298
+      role: 3
+    - variant: 1
+      position: {x: 3.3103826, y: 1.2725314}
+      rotationStep: 3
+      scale: 1.0917273
+      role: 3
+    - variant: 1
+      position: {x: -4.197862, y: 2.4039483}
+      rotationStep: 10
+      scale: 0.9943778
+      role: 3
+    - variant: 0
+      position: {x: 2.6419988, y: 4.185577}
+      rotationStep: 11
+      scale: 1.1068126
+      role: 3
+    - variant: 1
+      position: {x: -4.1983585, y: 5.7476954}
+      rotationStep: 9
+      scale: 1.0815296
+      role: 3
+    - variant: 2
+      position: {x: 2.638627, y: 6.8605776}
+      rotationStep: 3
+      scale: 1.0678761
+      role: 3
+    - variant: 2
+      position: {x: -2.9999182, y: 8.115583}
+      rotationStep: 5
+      scale: 1.1016407
+      role: 3
+    - variant: 2
+      position: {x: 3.0970378, y: 10.164694}
+      rotationStep: 5
+      scale: 1.0752934
+      role: 3
+    - variant: 1
+      position: {x: -2.8287303, y: 11.589461}
+      rotationStep: 2
+      scale: 0.95833325
+      role: 3
+    - variant: 3
+      position: {x: 3.075409, y: 13.465158}
+      rotationStep: 1
+      scale: 1.1616802
+      role: 3
+    - variant: 1
+      position: {x: -2.4455912, y: 15.523293}
+      rotationStep: 8
+      scale: 0.87019527
+      role: 3
+    - variant: 2
+      position: {x: 3.1482596, y: 16.907211}
+      rotationStep: 9
+      scale: 1.147677
+      role: 3
+    - variant: 1
+      position: {x: -2.8311813, y: 18.759775}
+      rotationStep: 7
+      scale: 0.9402031
+      role: 3
+    - variant: 1
+      position: {x: 3.9574332, y: 20.689762}
+      rotationStep: 9
+      scale: 1.0226674
+      role: 3
+    - variant: 3
+      position: {x: -3.7165854, y: 22.565207}
+      rotationStep: 6
+      scale: 1.1830333
+      role: 3
+    controlHolds:
+    - 0.21
+    - 0.55
+    - 0
+    - 0
+    - 0
+  - title: The Way Home
+    idea: Plan your size all the way to the doors; the last passage is the narrowest.
+    routeLength: 32
+    crystals:
+    - variant: 0
+      position: {x: 0, y: 4.2}
+      rotationStep: 0
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -0.9, y: 7.6}
+      rotationStep: 0
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.3, y: 7.6}
+      rotationStep: 5
+      scale: 0.85
+      role: 2
+    - variant: 3
+      position: {x: 0.3, y: 7.6}
+      rotationStep: 10
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: 0.9, y: 7.6}
+      rotationStep: 3
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.6, y: 8.05}
+      rotationStep: 8
+      scale: 0.8
+      role: 2
+    - variant: 3
+      position: {x: 0, y: 8.05}
+      rotationStep: 1
+      scale: 0.8
+      role: 2
+    - variant: 0
+      position: {x: 0.6, y: 8.05}
+      rotationStep: 6
+      scale: 0.8
+      role: 2
+    - variant: 0
+      position: {x: 0, y: 12.2}
+      rotationStep: 4
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -0.9, y: 14.6}
+      rotationStep: 0
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.3, y: 14.6}
+      rotationStep: 5
+      scale: 0.85
+      role: 2
+    - variant: 3
+      position: {x: 0.3, y: 14.6}
+      rotationStep: 10
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: 0.9, y: 14.6}
+      rotationStep: 3
+      scale: 0.85
+      role: 2
+    - variant: 0
+      position: {x: -0.6, y: 15.05}
+      rotationStep: 8
+      scale: 0.8
+      role: 2
+    - variant: 3
+      position: {x: 0, y: 15.05}
+      rotationStep: 1
+      scale: 0.8
+      role: 2
+    - variant: 0
+      position: {x: 0.6, y: 15.05}
+      rotationStep: 6
+      scale: 0.8
+      role: 2
+    - variant: 0
+      position: {x: -1.038, y: 19}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 1.038, y: 19}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: -1.038, y: 19.7}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 1.038, y: 19.7}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0.04, y: 22}
+      rotationStep: 7
+      scale: 1
+      role: 0
+    - variant: 0
+      position: {x: -0.898, y: 25.2}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0.898, y: 25.2}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: -0.898, y: 25.9}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 0
+      position: {x: 0.898, y: 25.9}
+      rotationStep: 0
+      scale: 1
+      role: 1
+    - variant: 3
+      position: {x: -2.8774214, y: -1}
+      rotationStep: 0
+      scale: 0.83687234
+      role: 3
+    - variant: 2
+      position: {x: 4.2754335, y: 0.2148087}
+      rotationStep: 7
+      scale: 0.999347
+      role: 3
+    - variant: 3
+      position: {x: -3.4998791, y: 2.1785898}
+      rotationStep: 11
+      scale: 0.9787852
+      role: 3
+    - variant: 0
+      position: {x: 3.2332666, y: 4.0760074}
+      rotationStep: 6
+      scale: 1.1210787
+      role: 3
+    - variant: 1
+      position: {x: -3.2884698, y: 5.962437}
+      rotationStep: 8
+      scale: 0.9796257
+      role: 3
+    - variant: 2
+      position: {x: 3.6821852, y: 7.438446}
+      rotationStep: 10
+      scale: 1.1638743
+      role: 3
+    - variant: 1
+      position: {x: -3.4417841, y: 8.730316}
+      rotationStep: 11
+      scale: 0.8348028
+      role: 3
+    - variant: 2
+      position: {x: 3.849536, y: 10.675152}
+      rotationStep: 1
+      scale: 1.1051084
+      role: 3
+    - variant: 1
+      position: {x: -2.8863697, y: 12.759853}
+      rotationStep: 1
+      scale: 0.99858445
+      role: 3
+    - variant: 0
+      position: {x: 4.00351, y: 13.9719515}
+      rotationStep: 2
+      scale: 1.0554136
+      role: 3
+    - variant: 1
+      position: {x: -3.0435963, y: 15.239786}
+      rotationStep: 0
+      scale: 0.9423622
+      role: 3
+    - variant: 1
+      position: {x: 3.1856296, y: 16.59622}
+      rotationStep: 11
+      scale: 0.9134601
+      role: 3
+    - variant: 2
+      position: {x: -3.458734, y: 18.816042}
+      rotationStep: 3
+      scale: 1.159499
+      role: 3
+    - variant: 3
+      position: {x: 2.9415557, y: 20.61356}
+      rotationStep: 4
+      scale: 1.1794969
+      role: 3
+    - variant: 2
+      position: {x: -3.8364327, y: 22.285017}
+      rotationStep: 0
+      scale: 0.9553894
+      role: 3
+    - variant: 0
+      position: {x: 4.1598387, y: 24.322765}
+      rotationStep: 8
+      scale: 0.8326678
+      role: 3
+    - variant: 1
+      position: {x: -3.1771865, y: 26.103804}
+      rotationStep: 5
+      scale: 1.0012523
+      role: 3
+    - variant: 0
+      position: {x: 4.1145535, y: 27.719797}
+      rotationStep: 8
+      scale: 1.1871203
+      role: 3
+    controlHolds:
+    - 0
+    - 0
+    - 0.26
+    - 0
+    - 0
+    - 0.34
+    - 0.21

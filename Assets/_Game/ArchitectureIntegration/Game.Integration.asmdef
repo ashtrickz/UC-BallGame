@@ -1,0 +1,24 @@
+{
+    "name": "Game.Integration",
+    "rootNamespace": "Game.Integration",
+    "references": [
+        "Game.Foundation",
+        "Game.Assets",
+        "Game.UI",
+        "Game.Application",
+        "Game.Settings",
+        "Game.Audio",
+        "Game.Users",
+        "Game.Gameplay",
+        "Game.Gameplay.View",
+        "UniTask",
+        "VContainer",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "autoReferenced": true
+}

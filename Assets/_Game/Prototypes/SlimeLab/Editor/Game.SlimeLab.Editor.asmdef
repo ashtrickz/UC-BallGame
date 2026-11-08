@@ -1,0 +1,10 @@
+{
+    "name": "Game.SlimeLab.Editor",
+    "rootNamespace": "Game.Prototypes.SlimeLab.Editor",
+    "references": [
+        "Game.SlimeLab", "Unity.InputSystem", "Unity.TextMeshPro", "UnityEngine.UI",
+        "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": ["Editor"],
+    "autoReferenced": true
+}

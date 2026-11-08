@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jelly Neck
+  m_Shader: {fileID: 4800000, guid: 6b97ef72736d5ac4eaae8e93b2220cb3, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _Brightness: 1.05
+    - _BubbleStrength: 0.22
+    - _Gloss: 48
+    - _Impact: 0
+    - _Phase: 0
+    - _Pull: 0
+    - _RimStrength: 0.9
+    - _Wobble: 0
+    - _WobbleSpeed: 3.5
+    m_Colors:
+    - _BaseColor: {r: 0.34509805, g: 0.9411765, b: 0.26666668, a: 1}
+    - _HighlightColor: {r: 1.6, g: 1.6, b: 1.4180392, a: 1.6}
+    - _PullDirection: {r: 1, g: 0, b: 0, a: 0}
+    - _RimColor: {r: 0.88235295, g: 1, b: 0.5254902, a: 1}
+    - _ShadowTint: {r: 0.23921569, g: 0.7607843, b: 0.67058825, a: 1}
+    - _TopColor: {r: 0.09019608, g: 0.8745098, b: 0.6901961, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

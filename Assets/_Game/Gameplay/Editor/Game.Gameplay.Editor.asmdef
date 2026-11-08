@@ -1,0 +1,25 @@
+{
+    "name": "Game.Gameplay.Editor",
+    "rootNamespace": "Game.Gameplay.Editor",
+    "references": [
+        "Game.Gameplay",
+        "Game.Gameplay.View",
+        "Game.Integration",
+        "Game.Application",
+        "Game.Foundation",
+        "VContainer",
+        "Game.UI",
+        "UniTask",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.Addressables",
+        "Unity.Addressables.Editor",
+        "Unity.ResourceManager"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "autoReferenced": true
+}

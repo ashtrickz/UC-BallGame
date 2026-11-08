@@ -1,0 +1,16 @@
+{
+    "name": "Game.Gameplay.Tests",
+    "references": [
+        "Game.Gameplay"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ]
+}

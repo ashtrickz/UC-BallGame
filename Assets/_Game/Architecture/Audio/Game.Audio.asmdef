@@ -1,0 +1,10 @@
+{
+    "name": "Game.Audio",
+    "rootNamespace": "Game.Audio",
+    "references": [
+        "Game.Foundation",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "autoReferenced": true
+}

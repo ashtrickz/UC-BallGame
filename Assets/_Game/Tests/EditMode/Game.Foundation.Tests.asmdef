@@ -1,0 +1,31 @@
+{
+    "name": "Game.Foundation.Tests",
+    "references": [
+        "Game.Foundation",
+        "Game.Assets",
+        "Game.UI",
+        "Game.Application",
+        "Game.Settings",
+        "Game.Audio",
+        "Game.Users",
+        "Game.Integration",
+        "Game.Gameplay",
+        "UniTask",
+        "VContainer",
+        "UnityEngine.UI",
+        "Unity.TextMeshPro",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "Game.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Game.UI",
+    "rootNamespace": "Game.UI",
+    "references": [
+        "UniTask",
+        "DOTween.Modules",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "autoReferenced": true
+}

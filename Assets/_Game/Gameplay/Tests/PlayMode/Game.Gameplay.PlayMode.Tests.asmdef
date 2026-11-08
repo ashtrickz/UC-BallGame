@@ -1,0 +1,21 @@
+{
+    "name": "Game.Gameplay.PlayMode.Tests",
+    "references": [
+        "Game.Gameplay",
+        "Game.Gameplay.View",
+        "Game.Integration",
+        "Game.Application",
+        "Game.Foundation",
+        "Game.UI",
+        "UniTask",
+        "VContainer",
+        "UnityEngine.UI"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ]
+}

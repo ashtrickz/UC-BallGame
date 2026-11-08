@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6f1fab95a0b804c812002eec5bf40c, type: 3}
+  m_Name: CrystalCatalog
+  m_EditorClassIdentifier: Game.Gameplay::Game.Gameplay.Config.CrystalCatalog
+  materials:
+  - {fileID: 2100000, guid: 9bb3976643b56a54e9a69f36388b9071, type: 2}
+  - {fileID: 2100000, guid: 97efa826509f2d5448b662ac58ca1aea, type: 2}
+  variants:
+  - name: Spire
+    shards:
+    - mesh: {fileID: 4300000, guid: e19ea4199f0d5e44e8162bfefaa0e778, type: 2}
+      materialIndex: 0
+      localPosition: {x: 0, y: 0, z: 0}
+      localEuler: {x: 8, y: 30, z: 6}
+      localScale: {x: 0.64, y: 0.95, z: 0.64}
+    contour:
+    - {x: -0.2779376, y: 0.15509193}
+    - {x: -0.27618435, y: -0.16011839}
+    - {x: 0.0017532005, y: -0.3152103}
+    - {x: 0.2779376, y: -0.15509196}
+    - {x: 0.27793762, y: -0.15509191}
+    - {x: 0.27618435, y: 0.16011837}
+    - {x: 0.21229406, y: 0.24576446}
+    - {x: -0.015614786, y: 0.37293985}
+    - {x: -0.24208595, y: 0.24164277}
+  - name: Stout
+    shards:
+    - mesh: {fileID: 4300000, guid: e19ea4199f0d5e44e8162bfefaa0e778, type: 2}
+      materialIndex: 1
+      localPosition: {x: 0, y: 0, z: 0}
+      localEuler: {x: -9, y: 58, z: -3}
+      localScale: {x: 0.8, y: 0.7, z: 0.8}
+    contour:
+    - {x: -0.39738286, y: -0.0127999615}
+    - {x: -0.3771806, y: -0.07280802}
+    - {x: -0.20132798, y: -0.3491635}
+    - {x: -0.18292844, y: -0.34981883}
+    - {x: 0.21445446, y: -0.33701894}
+    - {x: 0.21445452, y: -0.3370189}
+    - {x: 0.39738286, y: 0.012799942}
+    - {x: 0.18292838, y: 0.3498189}
+    - {x: -0.21445449, y: 0.3370189}
+  - name: Twin
+    shards:
+    - mesh: {fileID: 4300000, guid: e19ea4199f0d5e44e8162bfefaa0e778, type: 2}
+      materialIndex: 0
+      localPosition: {x: -0.12, y: 0, z: 0.05}
+      localEuler: {x: 10, y: 10, z: -8}
+      localScale: {x: 0.56, y: 0.92, z: 0.56}
+    - mesh: {fileID: 4300000, guid: e19ea4199f0d5e44e8162bfefaa0e778, type: 2}
+      materialIndex: 1
+      localPosition: {x: 0.2, y: 0, z: -0.08}
+      localEuler: {x: -12, y: 70, z: 14}
+      localScale: {x: 0.42, y: 0.62, z: 0.42}
+    contour:
+    - {x: -0.39188758, y: 0.10481229}
+    - {x: -0.2974115, y: -0.1577691}
+    - {x: 0.062719546, y: -0.23838553}
+    - {x: 0.2597651, y: -0.27508637}
+    - {x: 0.25976512, y: -0.27508637}
+    - {x: 0.39704555, y: -0.11670082}
+    - {x: 0.33728045, y: 0.078385554}
+    - {x: 0.13297327, y: 0.31386572}
+    - {x: -0.089974545, y: 0.3588118}
+    - {x: -0.21447606, y: 0.3125814}
+  - name: Cluster
+    shards:
+    - mesh: {fileID: 4300000, guid: e19ea4199f0d5e44e8162bfefaa0e778, type: 2}
+      materialIndex: 1
+      localPosition: {x: 0, y: 0, z: 0}
+      localEuler: {x: 5, y: 0, z: 4}
+      localScale: {x: 0.5, y: 1.02, z: 0.5}
+    - mesh: {fileID: 4300000, guid: e19ea4199f0d5e44e8162bfefaa0e778, type: 2}
+      materialIndex: 0
+      localPosition: {x: 0.22, y: 0, z: 0.12}
+      localEuler: {x: -14, y: 40, z: 18}
+      localScale: {x: 0.36, y: 0.6, z: 0.36}
+    - mesh: {fileID: 4300000, guid: e19ea4199f0d5e44e8162bfefaa0e778, type: 2}
+      materialIndex: 0
+      localPosition: {x: -0.2, y: 0, z: 0.14}
+      localEuler: {x: 12, y: 100, z: -16}
+      localScale: {x: 0.34, y: 0.55, z: 0.34}
+    contour:
+    - {x: -0.36080486, y: 0.085386515}
+    - {x: -0.12469549, y: -0.21644245}
+    - {x: 0.12469549, y: -0.21492253}
+    - {x: 0.3424897, y: -0.00034714385}
+    - {x: 0.3784691, y: 0.17569382}
+    - {x: 0.25597945, y: 0.29604098}
+    - {x: -0.16202901, y: 0.29924014}
+    - {x: -0.32283384, y: 0.24462661}

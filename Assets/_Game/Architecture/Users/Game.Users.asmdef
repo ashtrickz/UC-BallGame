@@ -1,0 +1,10 @@
+{
+    "name": "Game.Users",
+    "rootNamespace": "Game.Users",
+    "references": [
+        "Game.Foundation",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "autoReferenced": true
+}
