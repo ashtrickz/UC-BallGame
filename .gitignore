@@ -88,3 +88,12 @@ Assets/AnyPortrait/Documentation/AnyPortrait User Guide.pdf.meta
 # Node runtime dependencies
 **/node_modules/
 ServerSocket/.local-data/
+
+# Audio trials and audition exports; runtime clips live in Audio/Selected.
+/Assets/_Game/Audio/Procedural/
+/Assets/_Game/Audio/Procedural.meta
+/Assets/_Game/Audio/Generated/
+/Assets/_Game/Audio/Generated.meta
+/Art/Audio/Procedural/
+/Art/Audio/Selected/Source/
+/Art/Audio/Selected/validation/

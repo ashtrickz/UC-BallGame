@@ -12,6 +12,7 @@
         "Game.Users",
         "Game.Gameplay",
         "Game.Gameplay.View",
+        "DOTween.Modules",
         "UniTask",
         "VContainer",
         "Unity.Addressables",

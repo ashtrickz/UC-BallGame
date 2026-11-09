@@ -255,6 +255,7 @@ namespace Game.Integration.Game
             _stage.CameraRig.Snap(anchor, (float)rules.D0, (float)rules.D0);
             _stage.Preview.ResetEffects();
             _resultView.Hide();
+            _view.SetGameplayActionsVisible(true);
             _hasResult = false;
             RefreshAttemptLabel();
             _view.ShowHint(null);
@@ -502,6 +503,8 @@ namespace Game.Integration.Game
 
         private void RenderResult(bool animate)
         {
+            // Menu belongs only to the dedicated menu button. Secondary is reserved for a distinct
+            // alternative: replay after a campaign win, or a new wall after a wall defeat.
             var context = _attempt;
             if (context == null) return;
             var model = context.Model;
@@ -510,7 +513,7 @@ namespace Game.Integration.Game
                 var left = Mathf.RoundToInt((float)((model.Diameter - model.Rules.Dcrit) / model.Rules.Budget) * 100);
                 var stats = _localization.Format("result.stats", left, model.ShotsFired);
                 if (context.Mode == AttemptMode.Wall)
-                    ShowResult(_localization.Get("result.wall_broken"), stats, "action.new_wall", () => PlayWall(), "common.menu", RequestMenu, animate);
+                    ShowResult(_localization.Get("result.wall_broken"), stats, "action.new_wall", () => PlayWall(), null, null, animate);
                 else if (!context.IsCampaign)
                     ShowResult(_localization.Get("result.home"), stats, "action.new_level", PlayEndless, null, null, animate);
                 else if (context.LevelNumber < CampaignLength)
@@ -523,7 +526,7 @@ namespace Game.Integration.Game
             {
                 var why = _localization.Get(model.Defeat == DefeatReason.Overcharge ? "result.overcharge" : "result.no_ammo");
                 if (context.Mode == AttemptMode.Wall)
-                    ShowResult(_localization.Get("result.pop"), why, "action.new_wall", () => PlayWall(), "action.same_wall", () => PlayWall(context.Seed), animate);
+                    ShowResult(_localization.Get("result.pop"), why, "action.same_wall", () => PlayWall(context.Seed), "action.new_wall", () => PlayWall(), animate);
                 else ShowResult(_localization.Get("result.pop"), why, "common.retry", Restart, null, null, animate);
             }
         }
@@ -533,6 +536,7 @@ namespace Game.Integration.Game
             var primary = _localization.Get(primaryKey);
             var secondary = string.IsNullOrEmpty(secondaryKey) ? null : _localization.Get(secondaryKey);
             _resultView.Initialize(new ResultViewModel(title, subtitle, primary, primaryAction, secondary, secondaryAction, RequestMenu));
+            _view.SetGameplayActionsVisible(false);
             if (animate && (_pause & PauseReason.Menu) == 0) _resultView.Show();
         }
 

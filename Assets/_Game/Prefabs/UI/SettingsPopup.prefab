@@ -1375,8 +1375,8 @@ MonoBehaviour:
   chosenFpsSprite: {fileID: 0}
   otherFpsSprite: {fileID: 0}
   buildText: {fileID: 9180698526283359322}
-  copyKeyButton: {fileID: 7031721699158283347}
-  copyKeyLabel: {fileID: 6865100118934708479}
+  copyKeyButton: {fileID: 0}
+  copyKeyLabel: {fileID: 0}
   copiedSeconds: 1.5
   resetButton: {fileID: 7446791362160862490}
   languageChoices:

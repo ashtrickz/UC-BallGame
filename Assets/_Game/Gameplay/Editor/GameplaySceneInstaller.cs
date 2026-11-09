@@ -276,7 +276,7 @@ namespace Game.Gameplay.Editor
             var screen = gameView.transform;
             var buttonSquare = FindSprite(screen, "button_square_normal");
             var buttonPrimary = FindSprite(screen.root, "button_primary_normal");
-            foreach (var name in new[] { "Size meter", "Retry", "Level", "Hint" })
+            foreach (var name in new[] { "Size meter", "Level", "Hint" })
             {
                 var old = screen.Find(name);
                 if (old != null) Object.DestroyImmediate(old.gameObject);
@@ -297,7 +297,7 @@ namespace Game.Gameplay.Editor
             sizeLabel.outlineWidth = 0.2f;
             sizeLabel.outlineColor = new Color32(9, 47, 50, 255);
 
-            var restart = MakeButton("Retry", root, buttonSquare, new Vector2(0, 1), new Vector2(32, -32), new Vector2(190, 125), "RETRY", 40);
+            ConfigureGameplayActions(gameView);
             var seed = Label("Level", root, "LEVEL", 34, new Color(0.75f, 0.88f, 0.86f, 0.95f), Vector2.zero, Vector2.zero, new Vector2(30, 24), new Vector2(1000, 50));
             seed.alignment = TextAlignmentOptions.BottomLeft;
             seed.rectTransform.pivot = Vector2.zero;
@@ -320,7 +320,15 @@ namespace Game.Gameplay.Editor
             var subtitle = Label("Subtitle", card, "", 40, new Color(0.89f, 0.95f, 0.92f), new Vector2(0, 0.5f), new Vector2(1, 0.5f), new Vector2(0, 90), new Vector2(-80, 140));
             var again = MakeButton("Primary", card, buttonPrimary, new Vector2(0.5f, 0), new Vector2(0, 190), new Vector2(520, 150), "NEXT LEVEL", 50);
             again.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0);
-            var secondary = MakeButton("Secondary", card, buttonSquare, new Vector2(0.5f, 0), new Vector2(0, 50), new Vector2(380, 115), "RETRY", 40);
+            // One row owns the optional alternate action and the single menu action.
+            // The layout centres Menu automatically when the alternate action is hidden.
+            var actions = Rect("SecondaryActions", card, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 50), new Vector2(780, 115));
+            var layout = actions.gameObject.AddComponent<UnityEngine.UI.HorizontalLayoutGroup>();
+            layout.childAlignment = TextAnchor.MiddleCenter;
+            layout.spacing = 20;
+            layout.childControlWidth = layout.childControlHeight = false;
+            layout.childForceExpandWidth = layout.childForceExpandHeight = false;
+            var secondary = MakeButton("Secondary", actions, buttonSquare, new Vector2(0.5f, 0), Vector2.zero, new Vector2(380, 115), "RETRY", 40);
             secondary.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0);
 
             Set(gameView, "sizeFill", fill);
@@ -328,19 +336,90 @@ namespace Game.Gameplay.Editor
             Set(gameView, "sizeLabel", sizeLabel);
             Set(gameView, "seedLabel", seed);
             Set(gameView, "hintLabel", hint);
-            Set(gameView, "restartButton", restart);
             Set(resultView, "title", title);
             Set(resultView, "subtitle", subtitle);
             Set(resultView, "primaryButton", again);
             Set(resultView, "primaryLabel", again.GetComponentInChildren<TMP_Text>());
             Set(resultView, "secondaryButton", secondary);
             Set(resultView, "secondaryLabel", secondary.GetComponentInChildren<TMP_Text>());
-            var menu = MakeButton("Menu", card, buttonSquare, new Vector2(0, 1), new Vector2(24, -24), new Vector2(190, 90), "MENU", 34);
+            var menu = MakeButton("Menu", actions, buttonSquare, new Vector2(0.5f, 0), Vector2.zero, new Vector2(380, 115), "MENU", 40);
+            menu.GetComponentInChildren<TMP_Text>().gameObject.AddComponent<global::Game.Integration.Localization.LocalizedText>().SetKey("common.menu");
             Set(resultView, "menuButton", menu);
             Set(resultView, "card", card);
             Set(resultView, "dim", panel.GetComponent<UnityEngine.UI.Image>());
             panel.gameObject.SetActive(false);
             return resultView;
+        }
+
+        /// <summary>Keep existing action buttons and custom icons when reinstalling the gameplay HUD.</summary>
+        public static void ConfigureGameplayActions(Game.Integration.Game.GameView gameView)
+        {
+            var screen = gameView.transform;
+            var data = new SerializedObject(gameView);
+            var square = FindSprite(screen, "button_square_normal");
+            var settings = data.FindProperty("settingsButton").objectReferenceValue as UnityEngine.UI.Button;
+            var restart = data.FindProperty("restartButton").objectReferenceValue as UnityEngine.UI.Button;
+            var menu = data.FindProperty("menuButton").objectReferenceValue as UnityEngine.UI.Button;
+            var burger = data.FindProperty("burgerButton").objectReferenceValue as UnityEngine.UI.Button;
+            if (burger == null)
+            {
+                burger = MakeButton("BurgerButton", screen, square, Vector2.one, new Vector2(-32, -32), new Vector2(125, 125), "", 40);
+                var icon = Rect("Icon", burger.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(80, 80));
+                for (var i = 0; i < 3; i++)
+                {
+                    var bar = Rect("Line" + (i + 1), icon, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 21 - i * 21), new Vector2(68, 10));
+                    Fill(bar, GameplayAssetsBuilder.Hex("092F32")).raycastTarget = false;
+                }
+            }
+
+            var dropdown = data.FindProperty("actionsMenu").objectReferenceValue as GameObject;
+            if (dropdown == null)
+                dropdown = Rect("ActionsMenu", screen, Vector2.one, Vector2.one, Vector2.one, new Vector2(-32, -177), new Vector2(125, 415)).gameObject;
+            var layout = dropdown.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
+            if (layout == null) layout = dropdown.AddComponent<UnityEngine.UI.VerticalLayoutGroup>();
+            layout.childAlignment = TextAnchor.UpperRight;
+            layout.spacing = 20;
+            layout.childControlWidth = layout.childControlHeight = false;
+            layout.childForceExpandWidth = layout.childForceExpandHeight = false;
+
+            // Existing art is a placeholder; each Icon is a normal Image whose Sprite can be replaced by hand.
+            menu = ConfigureActionButton(menu, "Menu", "icon_colony_goal", dropdown.transform, square);
+            restart = ConfigureActionButton(restart, "RetryButton", "icon_restart", dropdown.transform, square);
+            settings = ConfigureActionButton(settings, "Settings", "icon_settings", dropdown.transform, square);
+            menu.transform.SetSiblingIndex(0);
+            restart.transform.SetSiblingIndex(1);
+            settings.transform.SetSiblingIndex(2);
+            dropdown.SetActive(false);
+            Set(gameView, "burgerButton", burger);
+            Set(gameView, "actionsMenu", dropdown);
+            Set(gameView, "menuButton", menu);
+            Set(gameView, "restartButton", restart);
+            Set(gameView, "settingsButton", settings);
+            EditorUtility.SetDirty(gameView);
+        }
+
+        private static UnityEngine.UI.Button ConfigureActionButton(UnityEngine.UI.Button button, string name, string defaultIcon, Transform parent, Sprite background)
+        {
+            if (button == null)
+                button = MakeButton(name, parent, background, Vector2.one, Vector2.zero, new Vector2(125, 125), "", 40);
+            button.name = name;
+            button.transform.SetParent(parent, false);
+            var rect = (RectTransform)button.transform;
+            rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.one;
+            rect.anchoredPosition = Vector2.zero;
+            rect.sizeDelta = new Vector2(125, 125);
+            button.gameObject.SetActive(true);
+            foreach (var label in button.GetComponentsInChildren<TMP_Text>(true)) label.gameObject.SetActive(false);
+            var icon = button.transform.Find("Icon") as RectTransform;
+            if (icon == null)
+                icon = Rect("Icon", button.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(90, 90));
+            var image = icon.GetComponent<UnityEngine.UI.Image>();
+            if (image == null) image = icon.gameObject.AddComponent<UnityEngine.UI.Image>();
+            if (image.sprite == null)
+                image.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/_Game/Art/UI/CartoonContour/Sprites/" + defaultIcon + ".png");
+            image.preserveAspect = true;
+            image.raycastTarget = false;
+            return button;
         }
 
         /// <summary>Particle splash of the colony pool: fountain, crown of drops, surface ripples.</summary>

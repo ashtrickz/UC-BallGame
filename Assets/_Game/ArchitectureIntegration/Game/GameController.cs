@@ -33,6 +33,7 @@ namespace Game.Integration.Game
             _initialized = true;
             if (_session.Phase != GamePhase.Playing) _session.StartRound();
             _view.SettingsRequested += OpenSettings;
+            _view.MenuRequested += OnMenuRequested;
             _users.Changed += Refresh;
             _localization.Changed += Refresh;
             _session.Changed += OnPhaseChanged;
@@ -112,6 +113,7 @@ namespace Game.Integration.Game
             if (_disposed) return;
             _disposed = true;
             _view.SettingsRequested -= OpenSettings;
+            _view.MenuRequested -= OnMenuRequested;
             _users.Changed -= Refresh;
             _localization.Changed -= Refresh;
             _session.Changed -= OnPhaseChanged;

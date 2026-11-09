@@ -425,5 +425,19 @@
       "sha256": "990e48a074c49782eb90096b90f94919f57d7a5e0ee4fb5c2258e89b2fbe8434"
     }
   ],
-  "clip_count": 68
+  "clip_count": 68,
+  "source_note": "The source fields record historical trial paths. Trial assets and audition files were removed; the retained runtime files are listed in path.",
+  "source_licenses": [
+    {
+      "id": "wet_squelch",
+      "author": "SFXMint",
+      "license": "CC0-1.0",
+      "page": "https://sfxmint.com/sounds/mud-squelch-01",
+      "url": "https://sfxmint.com/dl/mud-squelch-01.mp3",
+      "file": "mud-squelch-01.mp3",
+      "origin": "AI-generated source sound, declared by publisher",
+      "bytes": 9656,
+      "sha256": "4701842150ae17573a3db30d943e5f89835dd4b738045507285761824f294183"
+    }
+  ]
 }

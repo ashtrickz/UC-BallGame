@@ -478,6 +478,7 @@ namespace Game.Gameplay.PlayModeTests
         });
 
         [UnityTest]
+        [Category("GameplayNavigation")]
         public IEnumerator Campaign_progresses_repeats_and_completes() => UniTask.ToCoroutine(async () =>
         {
             try
@@ -517,6 +518,12 @@ namespace Game.Gameplay.PlayModeTests
                     .Timeout(TimeSpan.FromSeconds(120)));
                 Assert.AreEqual(gameplay.CampaignLength + 1, progress.Unlocked, "campaign complete");
                 Assert.AreEqual(gameplay.CampaignLength, gameplay.ContinueLevel);
+                var result = UnityEngine.Object.FindFirstObjectByType<GameScope>().Container.Resolve<ResultView>();
+                await UniTask.WaitUntil(() => result.gameObject.activeSelf && !result.IsAnimating).Timeout(TimeSpan.FromSeconds(10));
+                Assert.AreEqual(3, result.GetComponentsInChildren<UnityEngine.UI.Button>().Length);
+                ClickVisible(result.transform.Find("RootTransform/SecondaryActions/Secondary").GetComponent<UnityEngine.UI.Button>());
+                Assert.IsFalse(result.gameObject.activeSelf);
+                Assert.AreEqual(gameplay.CampaignLength, gameplay.Current.LevelNumber, "The final level can be replayed from its result.");
                 gameplay.PlayEndless();
                 Assert.IsFalse(gameplay.Current.IsCampaign);
             }
