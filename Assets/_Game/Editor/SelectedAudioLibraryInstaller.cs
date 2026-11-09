@@ -36,16 +36,7 @@ namespace Game.Editor
                 var path = file.Replace('\\', '/');
                 AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
                 var importer = (AudioImporter)AssetImporter.GetAtPath(path);
-                var settings = importer.defaultSampleSettings;
-                settings.compressionFormat = AudioCompressionFormat.PCM;
-                settings.loadType = AudioClipLoadType.DecompressOnLoad;
-                settings.sampleRateSetting = AudioSampleRateSetting.PreserveSampleRate;
-                settings.preloadAudioData = true;
-                importer.defaultSampleSettings = settings;
-                importer.forceToMono = false; // The selected masters already are mono.
-                importer.loadInBackground = false;
-                importer.ClearSampleSettingOverride("Android");
-                importer.ClearSampleSettingOverride("Standalone");
+                GameAssetImportPolicy.ConfigureAudio(importer);
                 importer.SaveAndReimport();
             }
 

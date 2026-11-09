@@ -1,5 +1,6 @@
 // [UNITY-SKILL:SPRITEATLAS]
 // [TYPE:PREBUILD]
+// Import policy version 2: compressed platform textures, preserving delivery settings.
 using System;
 using System.IO;
 using UnityEditor;
@@ -41,7 +42,7 @@ namespace Game.Editor
             if (importer == null)
                 throw new InvalidOperationException("SpriteAtlas importer was not created: " + AtlasPath);
 
-            importer.includeInBuild = true;
+            // Preserve the atlas's current delivery choice when the loading flow is refactored.
             var texture = importer.textureSettings;
             texture.filterMode = FilterMode.Bilinear;
             texture.generateMipMaps = false;
@@ -58,11 +59,28 @@ namespace Game.Editor
 
             var platform = importer.GetPlatformSettings("DefaultTexturePlatform");
             platform.maxTextureSize = 1024;
-            platform.format = TextureImporterFormat.RGBA32;
-            platform.textureCompression = TextureImporterCompression.Uncompressed;
+            platform.format = TextureImporterFormat.Automatic;
+            platform.textureCompression = TextureImporterCompression.CompressedHQ;
+            platform.compressionQuality = 80;
             platform.crunchedCompression = false;
             importer.SetPlatformSettings(platform);
+            SetPlatform(importer, "Android", TextureImporterFormat.ASTC_4x4);
+            SetPlatform(importer, "Standalone", TextureImporterFormat.BC7);
             importer.SaveAndReimport();
+        }
+
+        private static void SetPlatform(SpriteAtlasImporter importer, string platformName, TextureImporterFormat format)
+        {
+            var platform = importer.GetPlatformSettings(platformName);
+            platform.name = platformName;
+            platform.overridden = true;
+            platform.maxTextureSize = 1024;
+            platform.format = format;
+            platform.textureCompression = TextureImporterCompression.CompressedHQ;
+            platform.compressionQuality = 80;
+            platform.crunchedCompression = false;
+            platform.allowsAlphaSplitting = false;
+            importer.SetPlatformSettings(platform);
         }
     }
 }
