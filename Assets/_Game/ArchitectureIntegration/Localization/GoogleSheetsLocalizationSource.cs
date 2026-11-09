@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Localization;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Game.Integration.Localization
@@ -32,7 +33,13 @@ namespace Game.Integration.Localization
             using var request = UnityWebRequest.Get(_csvUrl);
             request.timeout = _timeoutSeconds;
             await request.SendWebRequest().ToUniTask(cancellationToken: cancellationToken);
-            return LocalizationTable.FromCsv(request.downloadHandler.text);
+            var table = LocalizationTable.FromCsv(request.downloadHandler.text);
+            var fonts = Resources.Load<LocalizationFonts>(LocalizationFonts.ResourcePath);
+            if (fonts == null)
+                throw new InvalidOperationException("The bundled localization fonts are missing.");
+
+            fonts.ValidateChineseCoverage(table);
+            return table;
         }
     }
 }

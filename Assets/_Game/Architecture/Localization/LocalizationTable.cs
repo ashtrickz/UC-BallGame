@@ -13,6 +13,17 @@ namespace Game.Localization
         private readonly Dictionary<string, Dictionary<string, string>> _languages =
             new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
 
+        public IEnumerable<string> Languages => _languages.Keys;
+
+        public IEnumerable<KeyValuePair<string, string>> GetEntries(string language)
+        {
+            if (language == null || !_languages.TryGetValue(language, out var entries))
+                yield break;
+
+            foreach (var entry in entries)
+                yield return entry;
+        }
+
         public bool TryGet(string key, string language, out string value)
         {
             value = null;

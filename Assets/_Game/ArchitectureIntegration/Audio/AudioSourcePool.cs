@@ -1,16 +1,18 @@
 using System;
-using System.Threading;
-using Cysharp.Threading.Tasks;
 using Game.Assets;
 using Game.Audio;
 using UnityEngine;
 using UnityEngine.Audio;
+using VContainer.Unity;
 using Object = UnityEngine.Object;
 
 namespace Game.Integration.Audio
 {
-    /// <summary>Owns bounded effect voices, leases and versioned playback handles.</summary>
-    public sealed class AudioSourcePool : IDisposable
+    /// <summary>
+    /// Owns bounded effect voices, leases and versioned playback handles. Handles call back into the pool by slot,
+    /// and finished leased clips are released by the pool's own tick, so a playback allocates only its handle.
+    /// </summary>
+    public sealed class AudioSourcePool : IAudioVoices, ITickable, IDisposable
     {
         private const int PoolSize = 24;
         private const string RootName = "AudioPool";
@@ -20,7 +22,6 @@ namespace Game.Integration.Audio
         private const int LoopPriority = 64;
         private const int EffectPriority = 128;
         private readonly AudioMixerVolumes _volumes;
-        private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
         private readonly AudioSource[] _pool = new AudioSource[PoolSize];
         private readonly AudioGroup[] _poolGroups = new AudioGroup[PoolSize];
         private readonly GameSound?[] _poolSounds = new GameSound?[PoolSize];
@@ -32,6 +33,7 @@ namespace Game.Integration.Audio
         private readonly int[] _poolVersion = new int[PoolSize];
         private readonly AssetLease<AudioClip>[] _poolLeases = new AssetLease<AudioClip>[PoolSize];
         private GameObject _root;
+        private int _leasedSlots;
         private bool _disposed;
         private bool _gameplayPaused;
 
@@ -94,6 +96,9 @@ namespace Game.Integration.Audio
             _poolSounds[index] = sound;
             _poolBaseVolumes[index] = Mathf.Clamp01(baseVolume);
             _poolLeases[index] = lease;
+            if (lease != null)
+                _leasedSlots++;
+
             _poolVolumes[index] = _poolBaseVolumes[index] * Mathf.Clamp01(multiplier);
             _startedAt[index] = AudioSettings.dspTime;
             source.clip = clip;
@@ -104,14 +109,8 @@ namespace Game.Integration.Audio
             _volumes.ApplyMixerGroup(source, group, output);
             source.Play();
             ApplyPause(index);
-            var handle = new AudioPlaybackHandle(source, _poolVersion[index], _poolVersion, index,
-                () => ReleaseSlot(index),
-                value => SetVolume(index, value),
-                paused => SetManualPaused(index, paused),
-                () => _poolPaused[index]);
-            if (lease != null)
-                ReleaseWhenFinishedAsync(index, _poolVersion[index]).Forget(Debug.LogException);
-            return handle;
+
+            return new AudioPlaybackHandle(source, _poolVersion[index], _poolVersion, index, this);
         }
 
         public void SetGameplayPaused(bool paused)
@@ -128,12 +127,44 @@ namespace Game.Integration.Audio
                 return;
 
             _disposed = true;
-            _lifetime.Cancel();
             for (var i = 0; i < PoolSize; i++)
                 ReleaseSlot(i);
+
             if (_root != null)
                 Object.Destroy(_root);
-            _lifetime.Dispose();
+        }
+
+        // Releases the clip lease of every playback that has finished on its own.
+        public void Tick()
+        {
+            if (_disposed || _leasedSlots == 0)
+                return;
+
+            for (var i = 0; i < PoolSize; i++)
+            {
+                if (_poolLeases[i] != null && !_pool[i].isPlaying && !_poolPaused[i])
+                    ReleaseSlot(i);
+            }
+        }
+
+        void IAudioVoices.Stop(int slot)
+        {
+            ReleaseSlot(slot);
+        }
+
+        void IAudioVoices.SetVolume(int slot, float multiplier)
+        {
+            SetVolume(slot, multiplier);
+        }
+
+        void IAudioVoices.SetPaused(int slot, bool paused)
+        {
+            SetManualPaused(slot, paused);
+        }
+
+        bool IAudioVoices.IsPaused(int slot)
+        {
+            return _poolPaused[slot];
         }
 
         private void SetVolume(int index, float value)
@@ -176,8 +207,12 @@ namespace Game.Integration.Audio
             _poolPaused[index] = _manualPaused[index] = false;
             _poolSounds[index] = null;
             ++_poolVersion[index];
-            _poolLeases[index]?.Dispose();
+            if (_poolLeases[index] == null)
+                return;
+
+            _poolLeases[index].Dispose();
             _poolLeases[index] = null;
+            _leasedSlots--;
         }
 
         private void ApplyPause(int index)
@@ -191,20 +226,6 @@ namespace Game.Integration.Audio
                 _pool[index].Pause();
             else
                 _pool[index].UnPause();
-        }
-
-        private async UniTask ReleaseWhenFinishedAsync(int index, int version)
-        {
-            try
-            {
-                await UniTask.WaitUntil(() => _disposed || _poolVersion[index] != version ||
-                    (!_pool[index].isPlaying && !_poolPaused[index]), cancellationToken: _lifetime.Token);
-                if (!_disposed && _poolVersion[index] == version)
-                    ReleaseSlot(index);
-            }
-            catch (OperationCanceledException) when (_disposed)
-            {
-            }
         }
 
         private static bool IsGameplay(AudioGroup group) => group == AudioGroup.Sfx || group == AudioGroup.Ambience;

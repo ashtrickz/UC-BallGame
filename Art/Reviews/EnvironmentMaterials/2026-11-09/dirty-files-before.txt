@@ -1,4 +1,0 @@
-Assets/TextMesh Pro/Resources/Fonts & Materials/DynaPuff SDF.asset
-Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
-Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
-Assets/TextMesh Pro/Resources/TMP Settings.asset

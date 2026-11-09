@@ -98,7 +98,7 @@ namespace Game.Integration.Composition
             builder.Register<AudioRandom>(Lifetime.Singleton);
             builder.Register<AudioVariation>(Lifetime.Singleton);
             builder.Register<AudioMixerVolumes>(Lifetime.Singleton);
-            builder.Register<AudioSourcePool>(Lifetime.Singleton);
+            builder.Register<AudioSourcePool>(Lifetime.Singleton).AsSelf().As<ITickable>();
             builder.Register<MusicPlayer>(Lifetime.Singleton);
             builder.Register<AudioService>(Lifetime.Singleton).AsSelf().As<IAudioService>();
 #if UNITY_ANDROID && !UNITY_EDITOR
