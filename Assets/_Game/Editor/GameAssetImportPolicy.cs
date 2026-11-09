@@ -91,10 +91,11 @@ namespace Game.Editor
             var path = importer.assetPath;
             if (!path.StartsWith(AudioFolder, StringComparison.Ordinal)) return false;
             var music = path.StartsWith(AudioFolder + "Music/", StringComparison.Ordinal);
-            var noisyEffect = path.StartsWith(AudioFolder + "Crystal/", StringComparison.Ordinal)
+            var noisyEffect = !path.Contains("_loop_")
+                              && (path.StartsWith(AudioFolder + "Crystal/", StringComparison.Ordinal)
                               || path.StartsWith(AudioFolder + "Slime/", StringComparison.Ordinal)
                               || path.StartsWith(AudioFolder + "Shot/", StringComparison.Ordinal)
-                              || path.StartsWith(AudioFolder + "Finish/", StringComparison.Ordinal);
+                              || path.StartsWith(AudioFolder + "Finish/", StringComparison.Ordinal));
 
             var settings = importer.defaultSampleSettings;
             settings.loadType = music ? AudioClipLoadType.Streaming : AudioClipLoadType.DecompressOnLoad;

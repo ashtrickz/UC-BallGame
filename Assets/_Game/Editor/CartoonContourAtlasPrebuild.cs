@@ -32,6 +32,7 @@ namespace Game.Editor
 
             // A folder packable includes newly imported UI sprites on subsequent builds.
             // Saving the owned atlas data preserves its existing .meta GUID.
+            var existingAtlas = File.Exists(AtlasPath);
             Directory.CreateDirectory(Path.GetDirectoryName(AtlasPath));
             var asset = new SpriteAtlasAsset();
             asset.Add(new UnityEngine.Object[] { folder });
@@ -43,6 +44,7 @@ namespace Game.Editor
                 throw new InvalidOperationException("SpriteAtlas importer was not created: " + AtlasPath);
 
             // Preserve the atlas's current delivery choice when the loading flow is refactored.
+            if (!existingAtlas) importer.includeInBuild = true;
             var texture = importer.textureSettings;
             texture.filterMode = FilterMode.Bilinear;
             texture.generateMipMaps = false;
