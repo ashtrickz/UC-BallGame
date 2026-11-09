@@ -5,6 +5,7 @@ using Game.Gameplay.Geometry;
 using Game.Gameplay.Model;
 using Game.Gameplay.View;
 using Game.Integration.Audio;
+using Game.App.Game;
 using UnityEngine;
 
 namespace Game.Integration.Game
@@ -23,13 +24,16 @@ namespace Game.Integration.Game
         private readonly CurrentAttempt _attempt;
         private readonly GameplayAudioPresenter _sounds;
         private readonly GameplayHapticsPresenter _haptics;
+        private readonly IStarProgress _stars;
 
-        public AttemptRunner(GameplayStage stage, CurrentAttempt attempt, GameplayAudioPresenter sounds, GameplayHapticsPresenter haptics)
+        public AttemptRunner(GameplayStage stage, CurrentAttempt attempt, GameplayAudioPresenter sounds, GameplayHapticsPresenter haptics,
+            IStarProgress stars)
         {
             _stage = stage ? stage : throw new ArgumentNullException(nameof(stage));
             _attempt = attempt ?? throw new ArgumentNullException(nameof(attempt));
             _sounds = sounds ?? throw new ArgumentNullException(nameof(sounds));
             _haptics = haptics ?? throw new ArgumentNullException(nameof(haptics));
+            _stars = stars ?? throw new ArgumentNullException(nameof(stars));
             _stage.Slime.PresentationCue += _haptics.OnSlimeCue;
         }
 
@@ -118,6 +122,11 @@ namespace Game.Integration.Game
             }
 
             // The outcome is fixed and saved at once; the dive and a short beat play before the popup.
+            if (!_attempt.Is(context))
+                return null;
+
+            context.CaptureStars();
+            _stars.Record(context.Built.ResultKey, context.EarnedStars);
             context.Policy.RecordWin(context);
             var pool = _stage.FinishPool;
             if (pool != null)

@@ -71,12 +71,11 @@ namespace Game.Integration.Game
     {
         protected const string RetryKey = "common.retry";
 
-        private const string StatsKey = "result.stats";
+        private const string StarStatsKey = "result.star_stats";
         private const string PopTitleKey = "result.pop";
         private const string OverchargeKey = "result.overcharge";
         private const string NoAmmoKey = "result.no_ammo";
         private const int FirstCampaignLevel = 1;
-        private const float Percent = 100f;
 
         protected AttemptModePolicy(ILocalizationService localization)
         {
@@ -121,9 +120,10 @@ namespace Game.Integration.Game
         {
             var model = context.Model;
             var rules = model.Rules;
-            var left = Mathf.RoundToInt((float)((model.Diameter - rules.Dcrit) / rules.Budget) * Percent);
+            var left = Mathf.RoundToInt((float)StarCriteria.RemainingMassPercent(model.Diameter, rules.D0));
 
-            return Localization.Format(StatsKey, left, model.ShotsFired);
+            return Localization.Format(StarStatsKey, model.ShotsFired, left, context.Built.Stars.MaxShots,
+                context.Built.Stars.MinRemainingMassPercent.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture));
         }
 
         protected AttemptResult Popped(AttemptContext context, ResultChoice primary, ResultChoice secondary)
@@ -239,7 +239,7 @@ namespace Game.Integration.Game
                 Localization.Get(WallBrokenKey),
                 Stats(context),
                 new ResultChoice(NewWallKey, Retry(context)),
-                ResultChoice.None);
+                new ResultChoice(SameWallKey, new WallLevelRequest(context.Seed)));
         }
 
         public override AttemptResult Lost(AttemptContext context)

@@ -41,6 +41,8 @@ namespace Game.Gameplay.Config
         public double ScaleMin;
         public double ScaleMax;
         public int MaxCandidates;
+        public int StarExtraShots;
+        public double StarMassAllowancePercent;
 
         public static WallValues Defaults => new WallValues
         {
@@ -57,6 +59,8 @@ namespace Game.Gameplay.Config
             ScaleMin = DefaultScaleMin,
             ScaleMax = DefaultScaleMax,
             MaxCandidates = DefaultMaxCandidates,
+            StarExtraShots = 0,
+            StarMassAllowancePercent = 5,
         };
 
         public string Fingerprint()

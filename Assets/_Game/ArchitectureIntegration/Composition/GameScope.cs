@@ -1,5 +1,6 @@
 using Game.App.Scenes;
 using Game.Integration.Composition;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -7,10 +8,10 @@ namespace Game.Integration.Game
 {
     public sealed class GameScope : ReadySceneScope
     {
-        [UnityEngine.SerializeField] private GameView view;
-        [UnityEngine.SerializeField] private ResultView resultView;
-        [UnityEngine.SerializeField] private global::Game.Gameplay.Config.SlimeGameConfig gameConfig;
-        [UnityEngine.SerializeField] private global::Game.Gameplay.View.GameplayStage gameplayStage;
+        [SerializeField] private GameView view;
+        [SerializeField] private ResultView resultView;
+        [SerializeField] private global::Game.Gameplay.Config.SlimeGameConfig gameConfig;
+        [SerializeField] private global::Game.Gameplay.View.GameplayStage gameplayStage;
 
         protected override void Awake()
         {
@@ -39,11 +40,17 @@ namespace Game.Integration.Game
             builder.Register<global::Game.Gameplay.Generation.LevelGenerator>(Lifetime.Scoped);
             builder.Register<global::Game.Gameplay.Generation.WallGenerator>(Lifetime.Scoped);
             builder.Register<global::Game.Gameplay.Levels.ISeedProvider>(_ =>
-                new global::Game.Gameplay.Levels.SeedProvider(gameConfig.DebugFixedSeed, System.Environment.TickCount), Lifetime.Scoped);
-            builder.Register<global::Game.Gameplay.Levels.CampaignLevelSource>(Lifetime.Scoped).As<global::Game.Gameplay.Levels.ILevelSource>();
-            builder.Register<global::Game.Gameplay.Levels.WallLevelSource>(Lifetime.Scoped).As<global::Game.Gameplay.Levels.ILevelSource>();
-            builder.Register<global::Game.Gameplay.Levels.EndlessLevelSource>(Lifetime.Scoped).As<global::Game.Gameplay.Levels.ILevelSource>();
-            builder.Register<global::Game.Gameplay.Levels.ILevelFactory, global::Game.Gameplay.Levels.LevelFactory>(Lifetime.Scoped);
+                    new global::Game.Gameplay.Levels.SeedProvider(gameConfig.DebugFixedSeed,
+                        System.Environment.TickCount),
+                Lifetime.Scoped);
+            builder.Register<global::Game.Gameplay.Levels.CampaignLevelSource>(Lifetime.Scoped)
+                .As<global::Game.Gameplay.Levels.ILevelSource>();
+            builder.Register<global::Game.Gameplay.Levels.WallLevelSource>(Lifetime.Scoped)
+                .As<global::Game.Gameplay.Levels.ILevelSource>();
+            builder.Register<global::Game.Gameplay.Levels.EndlessLevelSource>(Lifetime.Scoped)
+                .As<global::Game.Gameplay.Levels.ILevelSource>();
+            builder.Register<global::Game.Gameplay.Levels.ILevelFactory, global::Game.Gameplay.Levels.LevelFactory>(
+                Lifetime.Scoped);
             builder.Register<CampaignAttemptPolicy>(Lifetime.Scoped).As<IAttemptModePolicy>();
             builder.Register<WallAttemptPolicy>(Lifetime.Scoped).As<IAttemptModePolicy>();
             builder.Register<EndlessAttemptPolicy>(Lifetime.Scoped).As<IAttemptModePolicy>();
@@ -56,13 +63,15 @@ namespace Game.Integration.Game
             builder.Register<AttemptRunner>(Lifetime.Scoped);
             builder.Register<HudPresenter>(Lifetime.Scoped);
             builder.Register<ResultPresenter>(Lifetime.Scoped);
+            builder.Register<ResultStarsPresenter>(Lifetime.Scoped);
             builder.Register<ChargeInputController>(Lifetime.Scoped);
             builder.RegisterEntryPoint<GameplayFrame>();
             builder.Register<SpotlightTargets>(Lifetime.Scoped).AsSelf().As<IPostLateTickable>();
             builder.Register<TutorialAttemptHook>(Lifetime.Scoped).AsSelf().As<IAttemptStartHook>();
             builder.Register<GameplayFlow>(Lifetime.Scoped);
 #if GAME_DEBUG
-            builder.Register<DebugGameplayOverrides>(Lifetime.Scoped).AsSelf().As<IGameplayOverrides>().As<IAttemptStartHook>();
+            builder.Register<DebugGameplayOverrides>(Lifetime.Scoped).AsSelf().As<IGameplayOverrides>()
+                .As<IAttemptStartHook>();
             builder.Register<IGameplayDebug, GameplayDebug>(Lifetime.Scoped);
             if (DemoCommandLine.IsRequested)
                 builder.RegisterEntryPoint<DemoGameEntryPoint>();
@@ -79,7 +88,8 @@ namespace Game.Integration.Game
                 if (gameplayStage.Tutorial != null)
                 {
                     r.InjectGameObject(gameplayStage.Tutorial.gameObject);
-                    r.Resolve<global::Game.Integration.Audio.UiFeedbackBinder>().Bind(gameplayStage.Tutorial.gameObject);
+                    r.Resolve<global::Game.Integration.Audio.UiFeedbackBinder>()
+                        .Bind(gameplayStage.Tutorial.gameObject);
                 }
             });
             builder.RegisterEntryPoint<GameEntryPoint>().As<global::Game.Foundation.ISceneReadiness>();

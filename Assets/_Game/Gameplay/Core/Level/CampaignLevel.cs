@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.Gameplay.Config;
 using Game.Gameplay.Generation;
 using Game.Gameplay.Geometry;
+using Game.Gameplay.Levels;
 
 namespace Game.Gameplay.Level
 {
@@ -36,9 +37,10 @@ namespace Game.Gameplay.Level
         public double RouteLength { get; }
         public IReadOnlyList<CrystalSpec> Crystals { get; }
         public IReadOnlyList<double> ControlHolds { get; }
+        public StarCriteria Stars { get; }
 
         public CampaignLevelSpec(int number, string title, string idea, double routeLength, IReadOnlyList<CrystalSpec> crystals,
-            IReadOnlyList<double> controlHolds)
+            IReadOnlyList<double> controlHolds, StarCriteria? stars = null)
         {
             Number = number;
             Title = title ?? "";
@@ -46,6 +48,7 @@ namespace Game.Gameplay.Level
             RouteLength = routeLength;
             Crystals = crystals ?? Array.Empty<CrystalSpec>();
             ControlHolds = controlHolds ?? Array.Empty<double>();
+            Stars = stars ?? new StarCriteria(ControlHolds.Count, 0);
         }
     }
 

@@ -265,6 +265,8 @@ namespace Game.Gameplay.Editor
                 {
                     title = designs[i].Title, idea = designs[i].Idea, routeLength = (float)designs[i].Route, crystals = crystals,
                     controlHolds = r.Control.ToArray(),
+                    maxShotsForStar = r.Control.Count,
+                    minRemainingMassPercent = (float)Math.Floor((rules.D0 - r.ControlCost) / rules.D0 * 100 - 5),
                 };
             }
             asset.levels = levels;

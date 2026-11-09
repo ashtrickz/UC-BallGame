@@ -42,6 +42,13 @@ namespace Game.Integration.Menu
 
         public IReadOnlyList<UnityEngine.UI.Button> Cells => _cells;
 
+        public void SetStars(int index, int count)
+        {
+            var row = _cells[index].GetComponentInChildren<StarRowView>(true);
+            if (row != null)
+                row.Show(count);
+        }
+
         protected override void Awake()
         {
             if (cellTemplate != null)

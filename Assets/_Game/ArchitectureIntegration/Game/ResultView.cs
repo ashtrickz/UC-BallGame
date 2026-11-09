@@ -33,6 +33,14 @@ namespace Game.Integration.Game
         [SerializeField] private RectTransform card;
         [SerializeField] private UnityEngine.UI.Image dim;
         [SerializeField, Min(0.05f)] private float flyInDuration = 0.55f;
+        [SerializeField] private StarRowView stars;
+        [SerializeField] private WorldStarsView starFlight;
+
+        public event Action Hidden;
+
+        public StarRowView Stars => stars;
+
+        public WorldStarsView StarFlight => starFlight;
 
         private ResultViewModel _model;
         private Sequence _flyIn;
@@ -80,6 +88,7 @@ namespace Game.Integration.Game
 
         public void Hide()
         {
+            Hidden?.Invoke();
             _model = null;
             StopAnimation();
             HideInstant();
@@ -100,6 +109,7 @@ namespace Game.Integration.Game
 
         protected override void OnDisable()
         {
+            Hidden?.Invoke();
             base.OnDisable();
             _model = null;
             StopAnimation();

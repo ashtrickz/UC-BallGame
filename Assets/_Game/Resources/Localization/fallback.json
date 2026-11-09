@@ -290,6 +290,10 @@
         {
           "key": "loading.error",
           "value": "Could not load the game."
+        },
+        {
+          "key": "result.star_stats",
+          "value": "{0} SHOTS · {1}% MASS LEFT\nBONUS: SHOTS <= {2} · MASS >= {3}%"
         }
       ]
     },
@@ -583,6 +587,10 @@
         {
           "key": "loading.error",
           "value": "Не вдалося завантажити гру."
+        },
+        {
+          "key": "result.star_stats",
+          "value": "ПОСТРІЛИ: {0} · МАСА: {1}%\nБОНУСИ: ПОСТРІЛИ <= {2} · МАСА >= {3}%"
         }
       ]
     },
@@ -876,6 +884,10 @@
         {
           "key": "loading.error",
           "value": "No se pudo cargar el juego."
+        },
+        {
+          "key": "result.star_stats",
+          "value": "{0} DISPAROS · {1}% DE MASA\nBONUS: DISPAROS <= {2} · MASA >= {3}%"
         }
       ]
     },
@@ -1169,6 +1181,10 @@
         {
           "key": "loading.error",
           "value": "无法加载游戏。"
+        },
+        {
+          "key": "result.star_stats",
+          "value": "射击 {0} 次 · 剩余质量 {1}%\n奖励：射击 <= {2} · 质量 >= {3}%"
         }
       ]
     }

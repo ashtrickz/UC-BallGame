@@ -38,14 +38,12 @@ namespace Game.Integration.Composition
         [SerializeField] private Transform popupRoot;
         [SerializeField] private SettingsPopupView settingsPopupPrefab;
         [SerializeField] private AudioMixer audioMixer;
-        [Tooltip("Optional override. Empty loads Resources/Audio/AudioLibrary.")]
-        [SerializeField] private AudioLibrary audioLibrary;
+
+        [Tooltip("Optional override. Empty loads Resources/Audio/AudioLibrary.")] [SerializeField]
+        private AudioLibrary audioLibrary;
+
         [SerializeField] private IntroVideoView introVideoPrefab;
-        public static ProjectScope Instance
-        {
-            get;
-            private set;
-        }
+        public static ProjectScope Instance { get; private set; }
         private GameNavigation _navigation;
         private ILoadingScreen _loading;
         private IInitializationModel _initialization;
@@ -60,6 +58,7 @@ namespace Game.Integration.Composition
                 Destroy(gameObject);
                 return;
             }
+
             Instance = this;
             DontDestroyOnLoad(gameObject);
             base.Awake();
@@ -122,7 +121,8 @@ namespace Game.Integration.Composition
             builder.Register<SettingsPopupViewFactory>(Lifetime.Singleton)
                 .WithParameter(settingsPopupPrefab)
                 .WithParameter(popupRoot);
-            builder.Register<ISettingsPopupView>(r => r.Resolve<SettingsPopupViewFactory>().Create(), Lifetime.Transient);
+            builder.Register<ISettingsPopupView>(r => r.Resolve<SettingsPopupViewFactory>().Create(),
+                Lifetime.Transient);
             builder.Register<SettingsPopupController>(Lifetime.Transient);
             builder.Register<ISceneRuntime, UnitySceneLoader>(Lifetime.Singleton);
             builder.Register<SceneTransition>(Lifetime.Singleton);
@@ -136,6 +136,7 @@ namespace Game.Integration.Composition
             builder.Register<GameSession>(Lifetime.Singleton);
             builder.Register<IGameLauncher, GameLauncher>(Lifetime.Singleton);
             builder.Register<ICampaignProgress, PlayerPrefsCampaignProgress>(Lifetime.Singleton);
+            builder.Register<IStarProgress, PlayerPrefsStarProgress>(Lifetime.Singleton);
             builder.Register<ISlimeColorPreferences, PlayerPrefsSlimeColorPreferences>(Lifetime.Singleton);
 
             if (introVideoPrefab == null)
@@ -151,7 +152,8 @@ namespace Game.Integration.Composition
 
             builder.Register<IReadOnlyList<IInitializationStep>>(r => new IInitializationStep[]
             {
-                r.Resolve<LocalizationService>(), r.Resolve<AssetService>(), r.Resolve<IAudioService>(), r.Resolve<UserInitializationStep>()
+                r.Resolve<LocalizationService>(), r.Resolve<AssetService>(), r.Resolve<IAudioService>(),
+                r.Resolve<UserInitializationStep>()
             }, Lifetime.Singleton);
             builder.RegisterBuildCallback(r =>
             {
@@ -180,8 +182,10 @@ namespace Game.Integration.Composition
         {
             if (_loading != null)
                 _loading.RetryRequested -= RetryNavigation;
+            
             if (Instance == this)
                 Instance = null;
+            
             base.OnDestroy();
         }
     }

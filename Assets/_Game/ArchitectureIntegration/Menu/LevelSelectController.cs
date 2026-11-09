@@ -31,14 +31,16 @@ namespace Game.Integration.Menu
         private readonly LevelSelectView _view;
         private readonly ICampaignProgress _progress;
         private readonly SlimeGameConfig _config;
+        private readonly IStarProgress _stars;
         private UniTaskCompletionSource<int?> _pending;
         private bool _disposed;
 
-        public LevelSelectController(LevelSelectView view, ICampaignProgress progress, SlimeGameConfig config)
+        public LevelSelectController(LevelSelectView view, ICampaignProgress progress, SlimeGameConfig config, IStarProgress stars)
         {
             _view = view ? view : throw new ArgumentNullException(nameof(view));
             _progress = progress ?? throw new ArgumentNullException(nameof(progress));
             _config = config ? config : throw new ArgumentNullException(nameof(config));
+            _stars = stars ?? throw new ArgumentNullException(nameof(stars));
             _view.LevelChosen += OnChosen;
             _view.BackRequested += OnBack;
             _view.HideInstant();
@@ -59,6 +61,10 @@ namespace Game.Integration.Menu
             try
             {
                 _view.SetLevels(Count, Math.Min(Math.Max(1, _progress.Unlocked), Count + 1));
+                var rules = _config.CreateSnapshot();
+                for (var i = 0; i < Count; i++)
+                    _view.SetStars(i, _stars.Best(_config.Campaign.StarsKey(i, rules)));
+
                 await _view.ShowAsync(cancellationToken);
                 return await pending.Task.AttachExternalCancellation(cancellationToken);
             }

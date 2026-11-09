@@ -16,18 +16,21 @@ namespace Game.Integration.Game
         private readonly ILocalizationService _localization;
         private readonly IPauseService _pause;
         private readonly CurrentAttempt _attempt;
+        private readonly ResultStarsPresenter _stars;
 
         private bool _hasResult;
         private bool _won;
+        private bool _celebrate;
 
         public ResultPresenter(ResultView resultView, GameView view, ILocalizationService localization, IPauseService pause,
-            CurrentAttempt attempt)
+            CurrentAttempt attempt, ResultStarsPresenter stars)
         {
             _resultView = resultView ? resultView : throw new ArgumentNullException(nameof(resultView));
             _view = view ? view : throw new ArgumentNullException(nameof(view));
             _localization = localization ?? throw new ArgumentNullException(nameof(localization));
             _pause = pause ?? throw new ArgumentNullException(nameof(pause));
             _attempt = attempt ?? throw new ArgumentNullException(nameof(attempt));
+            _stars = stars ?? throw new ArgumentNullException(nameof(stars));
             _pause.Changed += OnPauseChanged;
             _localization.Changed += OnLanguageChanged;
         }
@@ -41,6 +44,7 @@ namespace Game.Integration.Game
             _resultView.Hide();
             _view.SetGameplayActionsVisible(true);
             _hasResult = false;
+            _celebrate = false;
         }
 
         public void ShowWon(AttemptContext context)
@@ -76,6 +80,7 @@ namespace Game.Integration.Game
 
             _hasResult = true;
             _won = won;
+            _celebrate = won;
             Render(true);
         }
 
@@ -103,7 +108,16 @@ namespace Game.Integration.Game
             _resultView.Initialize(model);
             _view.SetGameplayActionsVisible(false);
             if (animate && !_pause.Has(PauseReason.Menu))
+            {
                 _resultView.Show();
+                if (_resultView.Stars != null)
+                    _resultView.Stars.gameObject.SetActive(_won);
+
+                if (_won)
+                    _stars.Show(context, _celebrate);
+
+                _celebrate = false;
+            }
         }
 
         private void Choose(LevelRequest request)

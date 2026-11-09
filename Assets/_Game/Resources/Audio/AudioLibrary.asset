@@ -379,6 +379,26 @@ MonoBehaviour:
     loop: 0
     minInterval: 0.2
     maxVoices: 1
+  - id: 33
+    clip: {fileID: 8300000, guid: bb89f5ad75408ec458a09cc4594b72f1, type: 3}
+    variants: []
+    volume: 0.45
+    pitchRange: {x: 1, y: 1}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0
+    maxVoices: 3
+  - id: 34
+    clip: {fileID: 8300000, guid: baba10e4a04976e49aaef4ab08cc7a48, type: 3}
+    variants: []
+    volume: 0.85
+    pitchRange: {x: 1, y: 1}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0
+    maxVoices: 3
   onEnter:
     m_AssetGUID: 
     m_SubObjectName: 

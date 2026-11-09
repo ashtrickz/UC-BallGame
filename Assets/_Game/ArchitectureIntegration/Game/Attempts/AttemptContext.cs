@@ -48,6 +48,17 @@ namespace Game.Integration.Game
 
         public bool IsDisposed { get; private set; }
 
+        public int EarnedStars { get; private set; }
+
+        public void CaptureStars()
+        {
+            if (!Model.IsFinished)
+                throw new InvalidOperationException("Only a terminal attempt has a star result.");
+
+            EarnedStars = Built.Stars.Evaluate(Model.Phase == AttemptPhase.Won, Model.ShotsFired,
+                StarCriteria.RemainingMassPercent(Model.Diameter, Rules.D0));
+        }
+
         public void Dispose()
         {
             if (IsDisposed)

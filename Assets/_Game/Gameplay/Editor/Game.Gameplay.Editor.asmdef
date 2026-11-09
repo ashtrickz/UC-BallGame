@@ -6,6 +6,7 @@
         "Game.Gameplay.View",
         "Game.Application",
         "Game.Foundation",
+        "Game.Audio",
         "VContainer",
         "Game.UI",
         "UniTask",

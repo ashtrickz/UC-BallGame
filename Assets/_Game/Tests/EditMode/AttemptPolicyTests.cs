@@ -174,7 +174,8 @@ namespace Game.Foundation.Tests
             Assert.AreEqual(0, _progress.CompletedLevel, "walls never touch the campaign progress");
             Assert.AreEqual("action.new_wall", won.Primary.LabelKey);
             Assert.IsNull(((WallLevelRequest)won.Primary.Request).Seed);
-            Assert.IsTrue(won.Secondary.IsNone);
+            Assert.AreEqual("action.same_wall", won.Secondary.LabelKey);
+            Assert.AreEqual(Seed, ((WallLevelRequest)won.Secondary.Request).Seed);
             Assert.AreEqual("action.same_wall", lost.Primary.LabelKey);
             Assert.AreEqual(Seed, ((WallLevelRequest)lost.Primary.Request).Seed);
             Assert.AreEqual("action.new_wall", lost.Secondary.LabelKey);

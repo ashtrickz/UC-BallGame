@@ -51,7 +51,7 @@ namespace Game.Gameplay.Levels
             var spec = _config.CampaignSpec(request.Number - FirstLevel);
             var level = CampaignLevels.Build(_config.CreateSnapshot(), spec, out var rules);
 
-            return new BuiltLevel(request, level, rules, level.Seed);
+            return new BuiltLevel(request, level, rules, level.Seed, spec.Stars);
         }
     }
 
@@ -74,7 +74,9 @@ namespace Game.Gameplay.Levels
             var seed = request.Seed ?? _seeds.Next();
             var level = _generator.Generate(_config.CreateSnapshot(), _config.Wall, seed, out var rules);
 
-            return new BuiltLevel(request, level, rules, seed);
+            var stars = StarCriteria.FromControl(level, rules.D0, _config.Wall.StarExtraShots, _config.Wall.StarMassAllowancePercent);
+
+            return new BuiltLevel(request, level, rules, seed, stars);
         }
     }
 

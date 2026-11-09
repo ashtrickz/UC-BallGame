@@ -75,6 +75,8 @@ MonoBehaviour:
     controlHolds:
     - 0
     - 0
+    maxShotsForStar: 2
+    minRemainingMassPercent: 88
   - title: The Cluster
     idea: One bigger shot clears a dense group cheaper than a series of taps.
     routeLength: 14
@@ -171,6 +173,8 @@ MonoBehaviour:
       role: 3
     controlHolds:
     - 1.06
+    maxShotsForStar: 1
+    minRemainingMassPercent: 75
   - title: Mixed Strength
     idea: 'Change the charge per obstacle: tap, big shot, tap.'
     routeLength: 22
@@ -295,6 +299,8 @@ MonoBehaviour:
     - 0.21
     - 0.55
     - 0
+    maxShotsForStar: 4
+    minRemainingMassPercent: 71
   - title: Squeeze Through
     idea: Clear only the middle; the smaller slime fits between the side crystals.
     routeLength: 16
@@ -382,6 +388,8 @@ MonoBehaviour:
     controlHolds:
     - 0
     - 0
+    maxShotsForStar: 2
+    minRemainingMassPercent: 88
   - title: Two Rows
     idea: Compare one shot through both groups with clearing them one by one.
     routeLength: 18
@@ -519,6 +527,8 @@ MonoBehaviour:
     controlHolds:
     - 0.66
     - 0.65
+    maxShotsForStar: 2
+    minRemainingMassPercent: 69
   - title: Tempting Crowd
     idea: 'Many crystals on the side do not block the way: tap the blocker only.'
     routeLength: 18
@@ -661,6 +671,8 @@ MonoBehaviour:
     controlHolds:
     - 0
     - 0
+    maxShotsForStar: 2
+    minRemainingMassPercent: 88
   - title: Tight Corridors
     idea: 'Narrow passages need a smaller slime: save size for the passages ahead.'
     routeLength: 26
@@ -822,6 +834,8 @@ MonoBehaviour:
     - 0
     - 0
     - 0.17
+    maxShotsForStar: 6
+    minRemainingMassPercent: 68
   - title: Two Layers
     idea: A small first shot moves you closer; the second shot then hits the back
       layer up close.
@@ -920,6 +934,8 @@ MonoBehaviour:
     controlHolds:
     - 0
     - 0.66
+    maxShotsForStar: 2
+    minRemainingMassPercent: 78
   - title: Everything Together
     idea: Big shot on the cluster, enough shrink for the passage, cheap taps after.
     routeLength: 26
@@ -1090,6 +1106,8 @@ MonoBehaviour:
     - 0
     - 0
     - 0
+    maxShotsForStar: 5
+    minRemainingMassPercent: 67
   - title: The Way Home
     idea: Plan your size all the way to the doors; the last passage is the narrowest.
     routeLength: 32
@@ -1317,3 +1335,6 @@ MonoBehaviour:
     - 0
     - 0.34
     - 0.21
+    maxShotsForStar: 7
+    minRemainingMassPercent: 60
+  starCriteriaInitialized: 1
