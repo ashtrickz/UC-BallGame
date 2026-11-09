@@ -1,0 +1,107 @@
+key,en,uk,es,zh-CN
+menu.levels,LEVELS,РІВНІ,NIVELES,关卡
+menu.wall,WALL,СТІНА,MURO,墙壁
+common.back,BACK,НАЗАД,VOLVER,返回
+common.close,CLOSE,ЗАКРИТИ,CERRAR,关闭
+common.reset,RESET,СКИНУТИ,RESTABLECER,重置
+settings.title,SETTINGS,НАЛАШТУВАННЯ,AJUSTES,设置
+settings.language,Language,Мова,Idioma,语言
+settings.copy_key,Copy player ID,Скопіювати ID гравця,Copiar ID del jugador,复制玩家ID
+settings.copied,Copied,Скопійовано,Copiado,已复制
+common.menu,MENU,МЕНЮ,MENÚ,菜单
+common.retry,RETRY,ЩЕ РАЗ,REINTENTAR,重试
+common.skip,SKIP,ПРОПУСТИТИ,SALTAR,跳过
+common.tap_continue,TAP TO CONTINUE,"ТОРКНИСЯ, ЩОБ ПРОДОВЖИТИ",TOCA PARA CONTINUAR,点击继续
+menu.pick_color,Pick Slimey's Color,Обери колір Слаймі,Elige el color de Slimey,选择史莱米的颜色
+settings.master_volume,Master,Загальна гучність,Volumen general,主音量
+settings.music_volume,Music,Музика,Música,音乐
+settings.sfx_volume,Sfx,Звукові ефекти,Efectos de sonido,音效
+settings.ui_volume,Ui,Звуки інтерфейсу,Sonidos de la interfaz,界面音效
+settings.voice_volume,Voice,Голос,Voces,语音
+settings.fps,{0} FPS,{0} FPS,{0} FPS,{0} 帧/秒
+game.player,Player,Гравець,Jugador,玩家
+loading.default,Loading...,Завантаження...,Cargando...,正在加载...
+loading.assets,Initializing assets...,Підготовка ресурсів...,Preparando recursos...,正在准备资源...
+loading.audio,Initializing audio...,Підготовка звуку...,Preparando el audio...,正在准备音频...
+loading.user,Loading user profile...,Завантаження профілю гравця...,Cargando el perfil del jugador...,正在加载玩家资料...
+loading.translations,Loading translations...,Завантаження перекладів...,Cargando traducciones...,正在加载翻译...
+loading.game,Loading game...,Завантаження гри...,Cargando el juego...,正在加载游戏...
+hud.size,SIZE  {0}%,РОЗМІР  {0}%,TAMAÑO  {0}%,体型  {0}%
+hud.level,LEVEL {0},РІВЕНЬ {0},NIVEL {0},第{0}关
+hud.wall_seed,WALL · SEED {0},СТІНА · SEED {0},MURO · SEMILLA {0},墙壁 · 种子 {0}
+hud.endless_seed,ENDLESS · SEED {0},БЕЗКІНЕЧНИЙ РЕЖИМ · SEED {0},SIN FIN · SEMILLA {0},无尽模式 · 种子 {0}
+hud.controls,HOLD TO CHARGE  ·  RELEASE TO SHOOT,УТРИМУЙ ДЛЯ ЗАРЯДУ  ·  ВІДПУСТИ ДЛЯ ПОСТРІЛУ,MANTÉN PARA CARGAR  ·  SUELTA PARA DISPARAR,按住蓄力  ·  松开发射
+result.wall_broken,WALL BROKEN!,СТІНУ ЗРУЙНОВАНО!,¡MURO DESTRUIDO!,墙壁击破！
+result.home,HOME AT LAST!,НАРЕШТІ ВДОМА!,¡POR FIN EN CASA!,终于到家了！
+result.level_clear,LEVEL {0} CLEAR!,РІВЕНЬ {0} ПРОЙДЕНО!,¡NIVEL {0} COMPLETADO!,第{0}关通过！
+result.campaign_complete,CAMPAIGN COMPLETE!,КАМПАНІЮ ПРОЙДЕНО!,¡CAMPAÑA COMPLETADA!,战役完成！
+result.colony_home,The colony is home.,Колонія вдома.,La colonia está en casa.,整个族群都到家了。
+result.pop,POP!,ЛУСЬ!,¡PLOP!,噗！
+result.stats,{0}% size to spare · {1} shots,Залишилося {0}% розміру · пострілів: {1},{0}% de tamaño restante · {1} disparos,剩余{0}%体型 · 发射{1}次
+result.overcharge,Held too long: the slime got too small to hold together.,Ти утримував надто довго: слизик став замалим і луснув.,Mantuviste pulsado demasiado tiempo: el slime se hizo tan pequeño que no pudo mantenerse entero.,按得太久了：史莱姆缩得太小，无法维持形态。
+result.no_ammo,Not enough jelly left for another shot.,Залишилося замало желе для ще одного пострілу.,No queda suficiente gelatina para otro disparo.,剩余的果冻不足以再次发射。
+action.new_wall,NEW WALL,НОВА СТІНА,NUEVO MURO,新墙壁
+action.same_wall,SAME WALL,ТА САМА СТІНА,MISMO MURO,重试此墙
+action.new_level,NEW LEVEL,НОВИЙ РІВЕНЬ,NUEVO NIVEL,新关卡
+action.next_level,NEXT LEVEL,НАСТУПНИЙ РІВЕНЬ,SIGUIENTE NIVEL,下一关
+action.wall_mode,WALL MODE,РЕЖИМ СТІНИ,MODO MURO,墙壁模式
+action.replay_level,REPLAY LEVEL,ПОВТОРИТИ РІВЕНЬ,REPETIR NIVEL,重玩本关
+tutorial.tour,"Bring your slime home!
+Get through these doors.","Поверни слизика додому!
+Пройди крізь ці двері.","¡Lleva a tu slime a casa!
+Atraviesa estas puertas.","带你的史莱姆回家！
+穿过这扇门。"
+tutorial.slime,"This is you.
+Your SIZE is your ammo.","Це ти.
+Твій РОЗМІР — твої боєприпаси.","Este eres tú.
+Tu TAMAÑO es tu munición.","这就是你。
+你的体型就是弹药。"
+tutorial.meter,"Every shot costs size.
+Get too small and you POP!","Кожен постріл зменшує розмір.
+Станеш замалим — і ЛУСЬ!","Cada disparo reduce tu tamaño.
+¡Si te haces demasiado pequeño, PLOP!","每次发射都会消耗体型。
+变得太小就会爆掉！"
+tutorial.crystal,"Crystals block the way.
+Shoot them to clear a path.","Кристали перекривають шлях.
+Стріляй у них, щоб пройти.","Los cristales bloquean el camino.
+Dispárales para abrirte paso.","水晶挡住了去路。
+射击水晶，清出一条路。"
+tutorial.hop,"You hop forward by yourself
+and stop before the next crystal.","Ти сам стрибаєш уперед
+і зупиняєшся перед наступним кристалом.","Avanzas a saltos automáticamente
+y te detienes ante el siguiente cristal.","你会自动向前跳跃，
+并在下一块水晶前停下。"
+tutorial.doors,"The doors open when you get close.
+Reach them to win!","Двері відчиняться, коли наблизишся.
+Дістанься до них, щоб перемогти!","Las puertas se abren cuando te acercas.
+¡Llega hasta ellas para ganar!","靠近时门就会打开。
+到达门口即可获胜！"
+tutorial.tap_first,"TAP anywhere to shoot.
+A quick tap is enough for one crystal.","ТОРКНИСЯ будь-де, щоб вистрілити.
+Швидкого дотику досить для одного кристала.","TOCA en cualquier parte para disparar.
+Un toque rápido basta para un cristal.","点击任意位置发射。
+轻点一下就足以击碎一块水晶。"
+tutorial.tap_again,Tap again to clear the way.,"Торкнися ще раз, щоб розчистити шлях.",Toca de nuevo para despejar el camino.,再次点击，清除障碍。
+tutorial.hold,"Holding grows the shot and shrinks you.
+Release to fire!","Утримання збільшує снаряд і зменшує тебе.
+Відпусти, щоб вистрілити!","Al mantener pulsado, el proyectil crece y tú te encoges.
+¡Suelta para disparar!","按住时弹丸会变大，而你会缩小。
+松开即可发射！"
+campaign.level1.title,First Taps,Перші дотики,Primeros toques,初次点击
+campaign.level2.title,The Cluster,Скупчення,El grupo,水晶簇
+campaign.level3.title,Mixed Strength,Різна міцність,Distintas resistencias,强弱混合
+campaign.level4.title,Squeeze Through,Протиснися,Hazte un hueco,挤过去
+campaign.level5.title,Two Rows,Два ряди,Dos filas,两排水晶
+campaign.level6.title,Tempting Crowd,Спокусливе скупчення,Un grupo tentador,诱人的密集水晶
+campaign.level7.title,Tight Corridors,Вузькі коридори,Pasillos estrechos,狭窄走廊
+campaign.level8.title,Two Layers,Два шари,Dos capas,双层障碍
+campaign.level9.title,Everything Together,Усе разом,Todo junto,全部齐上
+campaign.level10.title,The Way Home,Шлях додому,El camino a casa,回家之路
+language.en,English,English,English,English
+language.uk,Українська,Українська,Українська,Українська
+language.es,Español,Español,Español,Español
+language.zh-CN,简体中文,简体中文,简体中文,简体中文
+loading.menu,Loading menu...,Завантаження меню...,Cargando el menú...,正在加载菜单...
+loading.ready,Ready!,Готово!,¡Listo!,准备就绪！
+loading.cancelled,Scene transition cancelled.,Перехід між сценами скасовано.,Se ha cancelado el cambio de escena.,场景切换已取消。
+loading.error,Could not load the game.,Не вдалося завантажити гру.,No se pudo cargar el juego.,无法加载游戏。
