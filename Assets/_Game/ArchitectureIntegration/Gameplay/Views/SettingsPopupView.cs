@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Game.Integration.Localization;
 using Game.Settings;
 using Game.UI;
 using TMPro;
@@ -14,6 +16,7 @@ namespace Game.Integration.Gameplay
         event Action<int> FpsChosen;
         event Action CopyKeyClicked;
         event Action ResetClicked;
+        event Action<string> LanguageChosen;
 
         /// <summary>Shows a value without reporting it back as a change.</summary>
         void ShowVolume(VolumeChannel channel, float value);
@@ -22,6 +25,7 @@ namespace Game.Integration.Gameplay
         void ShowFps(int fps);
 
         void ShowBuild(string version, bool canCopyKey);
+        void ShowLanguages(IReadOnlyList<LanguageOption> languages, string selectedLanguage);
 
         /// <summary>Puts the player's key on the clipboard and says so on the button for a moment.</summary>
         void CopyKey(string key);
@@ -44,10 +48,18 @@ namespace Game.Integration.Gameplay
             public Button button;
         }
 
+        [Serializable]
+        public sealed class LanguageChoice
+        {
+            public string code;
+            public UnityEngine.UI.Button button;
+        }
+
         public event Action<VolumeChannel, float> VolumeChanged;
         public event Action<int> FpsChosen;
         public event Action CopyKeyClicked;
         public event Action ResetClicked;
+        public event Action<string> LanguageChosen;
 
         [SerializeField] private VolumeRow[] volumes = Array.Empty<VolumeRow>();
         [SerializeField] private FpsChoice[] fpsChoices = Array.Empty<FpsChoice>();
@@ -58,8 +70,9 @@ namespace Game.Integration.Gameplay
         [SerializeField] private TMP_Text copyKeyLabel;
         [SerializeField, Min(0.1f)] private float copiedSeconds = 1.5f;
         [SerializeField] private Button resetButton;
+        [SerializeField] private LanguageChoice[] languageChoices = Array.Empty<LanguageChoice>();
 
-        private string _copyKeyText;
+        private LocalizedText _copyKeyText;
         private Coroutine _copied;
 
         protected override void Awake()
@@ -77,8 +90,14 @@ namespace Game.Integration.Gameplay
                 var fps = choice.fps;
                 choice.button.onClick.AddListener(() => FpsChosen?.Invoke(fps));
             }
+            foreach (var choice in languageChoices)
+            {
+                if (choice.button == null) continue;
+                var code = choice.code;
+                choice.button.onClick.AddListener(() => LanguageChosen?.Invoke(code));
+            }
             if (copyKeyButton != null) copyKeyButton.onClick.AddListener(OnCopyKey);
-            if (copyKeyLabel != null) _copyKeyText = copyKeyLabel.text;
+            if (copyKeyLabel != null) _copyKeyText = copyKeyLabel.GetComponent<LocalizedText>();
             if (resetButton != null) resetButton.onClick.AddListener(OnReset);
             base.Awake();
         }
@@ -87,6 +106,7 @@ namespace Game.Integration.Gameplay
         {
             foreach (var row in volumes) if (row.slider != null) row.slider.onValueChanged.RemoveAllListeners();
             foreach (var choice in fpsChoices) if (choice.button != null) choice.button.onClick.RemoveAllListeners();
+            foreach (var choice in languageChoices) if (choice.button != null) choice.button.onClick.RemoveAllListeners();
             if (copyKeyButton != null) copyKeyButton.onClick.RemoveListener(OnCopyKey);
             if (resetButton != null) resetButton.onClick.RemoveListener(OnReset);
             base.OnDestroy();
@@ -118,6 +138,23 @@ namespace Game.Integration.Gameplay
             if (copyKeyButton != null) copyKeyButton.interactable = canCopyKey;
         }
 
+        public void ShowLanguages(IReadOnlyList<LanguageOption> languages, string selectedLanguage)
+        {
+            foreach (var choice in languageChoices)
+            {
+                if (choice.button == null) continue;
+                var supported = false;
+                foreach (var language in languages) if (language.Code == choice.code) { supported = true; break; }
+                choice.button.interactable = supported;
+                if (choice.button.targetGraphic is UnityEngine.UI.Image image)
+                {
+                    var selected = string.Equals(choice.code, selectedLanguage, StringComparison.OrdinalIgnoreCase);
+                    if (chosenFpsSprite != null && otherFpsSprite != null) image.sprite = selected ? chosenFpsSprite : otherFpsSprite;
+                    else image.color = selected ? new Color(0.18f, 0.55f, 0.7f) : new Color(0.2f, 0.29f, 0.4f);
+                }
+            }
+        }
+
         public void CopyKey(string key)
         {
             GUIUtility.systemCopyBuffer = key;
@@ -128,9 +165,9 @@ namespace Game.Integration.Gameplay
 
         private IEnumerator SayCopied()
         {
-            copyKeyLabel.text = "Copied";
+            if (_copyKeyText != null) _copyKeyText.SetKey("settings.copied");
             yield return new WaitForSecondsRealtime(copiedSeconds);
-            copyKeyLabel.text = _copyKeyText;
+            if (_copyKeyText != null) _copyKeyText.SetKey("settings.copy_key");
             _copied = null;
         }
     }

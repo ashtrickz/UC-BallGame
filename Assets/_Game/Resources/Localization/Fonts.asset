@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47718627a4265a14e9e0c655d765b163, type: 3}
+  m_Name: Fonts
+  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizationFonts
+  multilingual: {fileID: 11400000, guid: 9a05d7b68e3694c42a671a3a160ac24f, type: 2}
+  simplifiedChinese: {fileID: 11400000, guid: 2bb997b816de06247ad637d6d18b887d, type: 2}

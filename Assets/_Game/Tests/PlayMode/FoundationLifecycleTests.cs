@@ -38,10 +38,12 @@ namespace Game.Foundation.Tests
             await UniTask.Yield();
             var grid = UnityEngine.Object.FindFirstObjectByType<LevelSelectView>();
             Assert.IsNotNull(grid, "LEVELS shows the level grid");
+            await UniTask.WaitUntil(() => grid.GetComponent<CanvasGroup>().interactable)
+                .Timeout(TimeSpan.FromSeconds(5));
             Assert.IsTrue(grid.Cells[0].interactable);
             grid.Cells[0].onClick.Invoke();
-            await UniTask.Yield();
-            Assert.IsFalse(grid.IsVisible);
+            await UniTask.WaitUntil(() => grid == null || !grid.gameObject.activeSelf)
+                .Timeout(TimeSpan.FromSeconds(5));
         }
 
         [UnityTest]

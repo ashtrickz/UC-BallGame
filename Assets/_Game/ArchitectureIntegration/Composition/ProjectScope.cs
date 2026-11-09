@@ -13,9 +13,11 @@ using Game.Foundation;
 using Game.Integration.Audio;
 using Game.Integration.Bootstrap;
 using Game.Integration.Gameplay;
+using Game.Integration.Localization;
 using Game.Integration.Scenes;
 using Game.Integration.Settings;
 using Game.Settings;
+using Game.Localization;
 using Game.UI;
 using Game.Users;
 using UnityEngine;
@@ -31,6 +33,7 @@ namespace Game.Integration.Composition
         [SerializeField] private Transform popupRoot;
         [SerializeField] private SettingsPopupView settingsPopupPrefab;
         [SerializeField] private AudioMixer audioMixer;
+        [Tooltip("Optional override. Empty loads Resources/Audio/AudioLibrary.")]
         [SerializeField] private AudioLibrary audioLibrary;
         [SerializeField] private IntroVideoView introVideoPrefab;
         [SerializeField] private bool mobileSettingsPack = true;
@@ -64,6 +67,16 @@ namespace Game.Integration.Composition
             builder.Register<AssetService>(Lifetime.Singleton).AsSelf().As<IAssetService>();
             builder.Register<ISettingsRuntime>(_ => new UnitySettingsRuntime(mobileSettingsPack ? SettingsPack.Mobile : SettingsPack.Desktop), Lifetime.Singleton);
             builder.Register<ISettingsService, SettingsService>(Lifetime.Singleton);
+            var localizationFonts = Resources.Load<LocalizationFonts>(LocalizationFonts.ResourcePath);
+            if (localizationFonts == null) throw new InvalidOperationException("Install the localization font assets.");
+            localizationFonts.ConfigureFallbacks();
+            builder.Register<LocalizationService>(r =>
+            {
+                var config = Resources.Load<LocalizationConfig>(LocalizationConfig.ResourcePath);
+                if (config == null) throw new InvalidOperationException("Add LocalizationConfig to Resources/Localization.");
+                return config.CreateService(r.Resolve<ISettingsService>());
+            }, Lifetime.Singleton).AsSelf().As<ILocalizationService>();
+            if (audioLibrary == null) audioLibrary = Resources.Load<AudioLibrary>(AudioLibrary.ResourcePath);
             builder.Register<AudioService>(r => new AudioService(r.Resolve<ISettingsService>(), r.Resolve<IAssetService>(), audioLibrary, audioMixer), Lifetime.Singleton)
                 .AsSelf().As<IAudioService>();
             builder.Register<UserRepository>(Lifetime.Singleton).AsSelf().As<IUserRepository>();
@@ -88,6 +101,7 @@ namespace Game.Integration.Composition
                 builder.RegisterInstance<IIntroScreen>(intro);
                 builder.RegisterBuildCallback(r =>
                 {
+                    r.InjectGameObject(intro.gameObject);
                     var audio = r.Resolve<IAudioService>();
                     var settings = r.Resolve<ISettingsService>();
                     audio.MuteMusic(true);
@@ -97,10 +111,11 @@ namespace Game.Integration.Composition
 
             builder.Register<IReadOnlyList<IInitializationStep>>(r => new IInitializationStep[]
             {
-                r.Resolve<AssetService>(), r.Resolve<IAudioService>(), r.Resolve<UserInitializationStep>()
+                r.Resolve<LocalizationService>(), r.Resolve<AssetService>(), r.Resolve<IAudioService>(), r.Resolve<UserInitializationStep>()
             }, Lifetime.Singleton);
             builder.RegisterBuildCallback(r =>
             {
+                r.InjectGameObject(loadingView.gameObject);
                 _navigation = r.Resolve<GameNavigation>();
                 _loading = r.Resolve<ILoadingScreen>();
                 _initialization = r.Resolve<IInitializationModel>();

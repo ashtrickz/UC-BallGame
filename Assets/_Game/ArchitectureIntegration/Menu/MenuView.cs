@@ -4,6 +4,7 @@ using Game.Gameplay.Config;
 using Game.Gameplay.View;
 using Game.UI;
 using UnityEngine;
+using VContainer;
 
 namespace Game.Integration.Menu
 {
@@ -28,6 +29,9 @@ namespace Game.Integration.Menu
         private readonly List<SlimeColorSwatch> _swatches = new List<SlimeColorSwatch>();
         private IReadOnlyList<SlimeColorPreset> _presets;
         private bool _interactable = true;
+        private IObjectResolver _resolver;
+
+        [Inject] public void Construct(IObjectResolver resolver) => _resolver = resolver;
         public event Action PlayRequested;
         public event Action WallRequested;
         public event Action SettingsRequested;
@@ -45,11 +49,12 @@ namespace Game.Integration.Menu
                 {
                     var index = i;
                     var go = new GameObject("Color " + presets[i].Id, typeof(RectTransform),
-                        typeof(CanvasRenderer), typeof(SlimeColorSwatch), typeof(UnityEngine.UI.Button));
+                        typeof(CanvasRenderer), typeof(SlimeColorSwatch), typeof(FeedbackButton));
                     go.transform.SetParent(slimeColorRoot, false);
                     var swatch = go.GetComponent<SlimeColorSwatch>();
                     swatch.SetColors(presets[i].BaseColor, presets[i].TopColor);
-                    var button = go.GetComponent<UnityEngine.UI.Button>();
+                    var button = go.GetComponent<FeedbackButton>();
+                    _resolver?.Inject(button);
                     button.targetGraphic = swatch;
                     button.interactable = _interactable;
                     var navigation = button.navigation;

@@ -31,6 +31,11 @@ namespace Game.Integration.Menu
             builder.Register<ICampaignProgress, PlayerPrefsCampaignProgress>(Lifetime.Scoped);
             builder.Register<LevelSelectController>(Lifetime.Scoped).As<ILevelSelect>();
             builder.Register<MenuController>(Lifetime.Scoped);
+            builder.RegisterBuildCallback(r =>
+            {
+                r.InjectGameObject(menuView.gameObject);
+                r.InjectGameObject(levelSelectView.gameObject);
+            });
             builder.RegisterEntryPoint<MenuEntryPoint>().As<global::Game.Foundation.ISceneReadiness>();
         }
     }

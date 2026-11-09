@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -38,6 +39,7 @@ namespace Game.Gameplay.View
         private SlimeViewConfig _config;
         private LevelData _level;
         private float _time;
+        public event Action<bool> Shattered;
 
         public void Bind(GameClock clock, SlimeViewConfig config)
         {
@@ -144,6 +146,7 @@ namespace Game.Gameplay.View
             await _clock.Wait(delay, token);
             await _clock.Animate(_config.infectDuration, t => Tint(crystal, t, 1 + 0.35f * t), token);
             var top = crystal.Root.position + Vector3.up * (0.45f * crystal.Scale.y);
+            Shattered?.Invoke(crystal.Scale.y >= 1.1f);
             debris?.Burst(top, 8, 0.8f, crystal.Materials.Length > 0 ? crystal.Materials[0] : null, 1.2f);
             await _clock.Animate(_config.shatterDuration, t =>
             {

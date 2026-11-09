@@ -1,0 +1,9 @@
+{
+  "before": 204,
+  "after": 204,
+  "duplicates": false,
+  "doorsZ": 25.0,
+  "poolZ": 27.6,
+  "sceneSaved": true,
+  "models": "{\n    \"models\": 14,\n    \"triangles\": 5736,\n    \"axes\": \"X right / Y up / +Z forward\",\n    \"unitScale\": 1.0,\n    \"errors\": []\n}"
+}

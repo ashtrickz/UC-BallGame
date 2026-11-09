@@ -3,6 +3,7 @@
     "rootNamespace": "Game.Gameplay.View",
     "references": [
         "Game.Gameplay",
+        "Game.Localization",
         "UniTask",
         "Unity.InputSystem",
         "Unity.TextMeshPro",

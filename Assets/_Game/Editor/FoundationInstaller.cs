@@ -278,7 +278,7 @@ namespace Game.Editor
             rect.sizeDelta = size;
             var image = rect.gameObject.AddComponent<UnityEngine.UI.Image>();
             image.color = new Color(0.2f, 0.29f, 0.4f);
-            var button = rect.gameObject.AddComponent<UnityEngine.UI.Button>();
+            var button = rect.gameObject.AddComponent<Game.UI.FeedbackButton>();
             button.targetGraphic = image;
             var label = Label("Label", rect, text, Vector2.zero, size);
             label.fontSize = 27;

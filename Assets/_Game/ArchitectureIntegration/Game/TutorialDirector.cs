@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using Game.Gameplay.Geometry;
 using Game.Gameplay.Model;
 using Game.Gameplay.View;
+using Game.Localization;
 using UnityEngine;
 
 namespace Game.Integration.Game
@@ -19,20 +20,26 @@ namespace Game.Integration.Game
         private readonly GameplayController _gameplay;
         private readonly AttemptContext _context;
         private readonly GameplayStage _stage;
+        private readonly GameView _view;
         private readonly TutorialOverlay _overlay;
         private readonly CancellationTokenSource _skip = new CancellationTokenSource();
         private Func<List<SpotlightHole>> _holes = () => new List<SpotlightHole>();
         private UniTaskCompletionSource _tap;
+        private readonly ILocalizationService _localization;
+        private string _messageKey;
+        private bool _waitsForTap;
 
         public bool IsRunning { get; private set; }
         public string Step { get; private set; } = "";
 
-        public TutorialDirector(GameplayController gameplay, AttemptContext context)
+        public TutorialDirector(GameplayController gameplay, AttemptContext context, GameView view, ILocalizationService localization)
         {
             _gameplay = gameplay;
             _context = context;
             _stage = gameplay.Stage;
+            _view = view;
             _overlay = _stage.Tutorial;
+            _localization = localization;
         }
 
         public void Skip()
@@ -46,6 +53,7 @@ namespace Game.Integration.Game
             IsRunning = true;
             _overlay.Continue += OnContinue;
             _overlay.Skip += Skip;
+            _localization.Changed += RefreshMessage;
             using var linked = CancellationTokenSource.CreateLinkedTokenSource(_context.Token, _skip.Token);
             var token = linked.Token;
             var model = _context.Model;
@@ -58,29 +66,30 @@ namespace Game.Integration.Game
 
                 var doorPoint = new Vector3(0, 0, (float)_context.Level.DoorZ - 3.6f);
                 _stage.CameraRig.ShowPoint(doorPoint, 0.7f);
-                await Explain("tour", "Bring your slime home!\nGet through these doors.", () => Holes(DoorsHole()), token);
+                await Explain("tour", "tutorial.tour", () => Holes(DoorsHole()), token);
                 _stage.CameraRig.ShowPoint(null, 0.6f);
                 var deadline = Time.realtimeSinceStartup + 3f;
                 await UniTask.WaitUntil(() => !_stage.CameraRig.IsTouring || Time.realtimeSinceStartup > deadline, cancellationToken: token);
 
-                await Explain("slime", "This is you.\nYour SIZE is your ammo.", () => Holes(SlimeHole()), token);
-                await Explain("meter", "Every shot costs size.\nGet too small and you POP!", () => Holes(MeterHole()), token);
-                await Explain("crystal", "Crystals block the way.\nShoot them to clear a path.", () => Holes(SlimeHole(), BlockerHole(model)), token);
+                await Explain("slime", "tutorial.slime", () => Holes(SlimeHole()), token);
+                await Explain("meter", "tutorial.meter", () => Holes(MeterHole()), token);
+                await Explain("crystal", "tutorial.crystal", () => Holes(SlimeHole(), BlockerHole(model)), token);
 
                 if (!await Act("shot1", 1, token)) return;
                 if (!await WaitForStop(model, token)) return;
-                await Explain("hop", "You hop forward by yourself\nand stop before the next crystal.", () => Holes(SlimeHole(), BlockerHole(model)), token);
+                await Explain("hop", "tutorial.hop", () => Holes(SlimeHole(), BlockerHole(model)), token);
                 if (!await Act("shot2", 2, token)) return;
 
                 await UniTask.WaitUntil(() => model.DoorsOpen || model.IsFinished || model.Phase == AttemptPhase.DefeatAnimation, cancellationToken: token);
                 if (model.DoorsOpen && !model.IsFinished && model.Phase != AttemptPhase.DefeatAnimation)
-                    await Explain("doors", "The doors open when you get close.\nReach them to win!", () => Holes(DoorsHole()), token);
+                    await Explain("doors", "tutorial.doors", () => Holes(DoorsHole()), token);
             }
             catch (OperationCanceledException) { }
             finally
             {
                 _overlay.Continue -= OnContinue;
                 _overlay.Skip -= Skip;
+                _localization.Changed -= RefreshMessage;
                 // A newer tutorial (restart of level 1) owns the overlay now: leave it alone.
                 var owner = _gameplay.Tutorial == null || _gameplay.Tutorial == this;
                 if (owner && _overlay) _overlay.Hide();
@@ -94,13 +103,13 @@ namespace Game.Integration.Game
         // ------------------------------------------------------------------ steps
 
         /// <summary>Paused explanation: spotlight, message, wait for a tap.</summary>
-        private async UniTask Explain(string step, string text, Func<List<SpotlightHole>> holes, CancellationToken token)
+        private async UniTask Explain(string step, string textKey, Func<List<SpotlightHole>> holes, CancellationToken token)
         {
             EnsureAlive();
             Step = step;
             _gameplay.SetPaused(PauseReason.Tutorial, true);
             _holes = holes;
-            _overlay.Show(text, true);
+            ShowMessage(textKey, true);
             // A short guard so the tap that closed the previous card cannot skip this one.
             await UniTask.Delay(TimeSpan.FromSeconds(0.35f), DelayType.UnscaledDeltaTime, cancellationToken: token);
             _tap = new UniTaskCompletionSource();
@@ -114,9 +123,9 @@ namespace Game.Integration.Game
             Step = step;
             var model = _context.Model;
             _gameplay.SetPaused(PauseReason.Tutorial, false);
-            var tapText = shotsTarget == 1 ? "TAP anywhere to shoot.\nA quick tap is enough for one crystal." : "Tap again to clear the way.";
-            const string holdText = "Holding grows the shot and shrinks you.\nRelease to fire!";
-            _overlay.Show(tapText, false);
+            var tapKey = shotsTarget == 1 ? "tutorial.tap_first" : "tutorial.tap_again";
+            const string holdKey = "tutorial.hold";
+            ShowMessage(tapKey, false);
             while (model.ShotsFired < shotsTarget)
             {
                 EnsureAlive();
@@ -124,12 +133,12 @@ namespace Game.Integration.Game
                 if (model.Phase == AttemptPhase.Charging)
                 {
                     _holes = () => Holes(SlimeHole(), PreviewHole(model), MeterHole());
-                    if (_overlay.Message != holdText) _overlay.Show(holdText, false);
+                    if (_messageKey != holdKey) ShowMessage(holdKey, false);
                 }
                 else
                 {
                     _holes = () => Holes(SlimeHole(), BlockerHole(model));
-                    if (_overlay.Message != tapText) _overlay.Show(tapText, false);
+                    if (_messageKey != tapKey) ShowMessage(tapKey, false);
                 }
                 await UniTask.Yield(PlayerLoopTiming.Update, token);
             }
@@ -146,6 +155,19 @@ namespace Game.Integration.Game
         }
 
         private void OnContinue() => _tap?.TrySetResult();
+
+        private void ShowMessage(string key, bool waitsForTap)
+        {
+            _messageKey = key;
+            _waitsForTap = waitsForTap;
+            _overlay.Show(_localization.Get(key), waitsForTap);
+        }
+
+        private void RefreshMessage()
+        {
+            if (_overlay && _overlay.IsVisible && !string.IsNullOrEmpty(_messageKey))
+                _overlay.Show(_localization.Get(_messageKey), _waitsForTap);
+        }
 
         private void EnsureAlive()
         {
@@ -185,7 +207,7 @@ namespace Game.Integration.Game
 
         private SpotlightHole? MeterHole()
         {
-            var meter = _stage.Hud.SizeMeter;
+            var meter = _view.SizeMeter;
             if (meter == null) return null;
             var corners = new Vector3[4];
             meter.GetWorldCorners(corners); // overlay canvas: world corners are screen pixels

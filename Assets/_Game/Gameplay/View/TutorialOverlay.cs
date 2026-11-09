@@ -48,6 +48,7 @@ namespace Game.Gameplay.View
 
         public bool IsVisible => gameObject.activeSelf;
         public string Message => message != null ? message.text : "";
+        public TMP_Text MessageLabel => message;
         public bool WaitsForTap => continueButton != null && continueButton.gameObject.activeSelf;
 
         private void Awake()

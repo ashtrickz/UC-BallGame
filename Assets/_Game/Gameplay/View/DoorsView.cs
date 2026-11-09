@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Game.Gameplay.View
 
         public bool IsOpen => _t >= 1;
         public float Z => transform.position.z;
+        public event Action Opening;
 
         public void Bind(GameClock clock) => _clock = clock;
 
@@ -34,7 +36,12 @@ namespace Game.Gameplay.View
             Apply();
         }
 
-        public void Open() => _opening = true;
+        public void Open()
+        {
+            if (_opening) return;
+            _opening = true;
+            Opening?.Invoke();
+        }
 
         /// <summary>Waits until the leaves are fully open (used before the slime passes the door plane).</summary>
         public async UniTask WaitOpenAsync(CancellationToken token)

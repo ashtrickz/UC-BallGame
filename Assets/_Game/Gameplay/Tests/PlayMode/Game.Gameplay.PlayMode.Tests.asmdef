@@ -3,6 +3,7 @@
     "references": [
         "Game.Gameplay",
         "Game.Gameplay.View",
+        "Game.Audio",
         "Game.Integration",
         "Game.Application",
         "Game.Foundation",

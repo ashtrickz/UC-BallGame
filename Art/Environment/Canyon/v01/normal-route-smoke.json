@@ -1,0 +1,12 @@
+{
+  "mode": "Endless",
+  "seed": 424242,
+  "phase": "Won",
+  "spent": 0.8980000000000001,
+  "expected": 0.8980000000000001,
+  "shots": 5,
+  "expectedShots": 5,
+  "doorsOpen": true,
+  "poolTarget": "(0.00, 0.15, 27.60)",
+  "body": "(0.00, -0.57, 27.60)"
+}

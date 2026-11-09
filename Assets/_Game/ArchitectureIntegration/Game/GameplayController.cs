@@ -1,6 +1,9 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Game.Audio;
+using Game.Integration.Audio;
+using Game.Localization;
 using Game.Gameplay.Config;
 using Game.Gameplay.Generation;
 using Game.Gameplay.Geometry;
@@ -59,10 +62,11 @@ namespace Game.Integration.Game
     {
         private readonly SlimeGameConfig _config;
         private readonly GameplayStage _stage;
+        private readonly GameView _view;
+        private readonly ResultView _resultView;
         private readonly LevelGenerator _generator;
         private readonly ICampaignProgress _progress;
         private readonly WallGenerator _walls = new WallGenerator();
-        private Action _primaryAction, _secondaryAction;
         private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
         private readonly System.Random _seeds = new System.Random(Environment.TickCount);
         private AttemptContext _attempt;
@@ -71,6 +75,9 @@ namespace Game.Integration.Game
         private int _attemptCounter;
         private double? _scriptedHold;
         private TutorialDirector _tutorial;
+        private readonly GameplayAudioPresenter _sounds;
+        private readonly ILocalizationService _localization;
+        private bool _hasResult, _resultWon;
 
         public AttemptContext Current => _attempt;
         public GameplayStage Stage => _stage;
@@ -86,12 +93,19 @@ namespace Game.Integration.Game
         /// <summary>The player asked to go back to the mode selection.</summary>
         public event Action MenuRequested;
 
-        public GameplayController(SlimeGameConfig config, GameplayStage stage, LevelGenerator generator, ICampaignProgress progress)
+        public GameplayController(SlimeGameConfig config, GameplayStage stage, GameView view, ResultView resultView,
+            LevelGenerator generator, ICampaignProgress progress, ILocalizationService localization,
+            IAudioService audio = null)
         {
             _config = config ? config : throw new ArgumentNullException(nameof(config));
             _stage = stage ? stage : throw new ArgumentNullException(nameof(stage));
+            _view = view ? view : throw new ArgumentNullException(nameof(view));
+            _resultView = resultView ? resultView : throw new ArgumentNullException(nameof(resultView));
             _generator = generator ?? throw new ArgumentNullException(nameof(generator));
             _progress = progress ?? throw new ArgumentNullException(nameof(progress));
+            _localization = localization ?? throw new ArgumentNullException(nameof(localization));
+            _view.BindLocalization(_localization);
+            if (audio != null) _sounds = new GameplayAudioPresenter(stage, audio);
         }
 
         public bool HasCampaign => _config.Campaign != null && _config.Campaign.Count > 0;
@@ -108,11 +122,10 @@ namespace Game.Integration.Game
             _initialized = true;
             _pause = initialPause;
             _stage.Clock.Paused = _pause != PauseReason.None;
-            _stage.Hud.RestartRequested += OnRestartRequested;
-            _stage.Hud.PrimaryRequested += OnPrimary;
-            _stage.Hud.SecondaryRequested += OnSecondary;
-            _stage.Hud.MenuRequested += OnMenu;
+            _sounds?.SetPaused(_pause != PauseReason.None);
+            _view.RestartRequested += OnRestartRequested;
             _stage.BackgroundChanged += OnBackgroundChanged;
+            _localization.Changed += RefreshTranslations;
             if (HasCampaign) PlayCampaignLevel(ContinueLevel);
             else PlayEndless();
             RunFrameLoopAsync(_lifetime.Token).Forget(Debug.LogException);
@@ -172,9 +185,19 @@ namespace Game.Integration.Game
         {
             if (_disposed) return;
             var was = _pause != PauseReason.None;
+            var menuWasOpen = (_pause & PauseReason.Menu) != 0;
+            var settingsWereOpen = (_pause & PauseReason.Settings) != 0;
             _pause = paused ? _pause | reason : _pause & ~reason;
             var now = _pause != PauseReason.None;
             _stage.Clock.Paused = now;
+            _sounds?.SetPaused(now);
+            if (menuWasOpen != ((_pause & PauseReason.Menu) != 0))
+            {
+                if ((_pause & PauseReason.Menu) != 0) _resultView.Hide();
+                else if (_hasResult) RenderResult(true);
+            }
+            if (settingsWereOpen != ((_pause & PauseReason.Settings) != 0))
+                _sounds?.PanelChanged((_pause & PauseReason.Settings) != 0);
             if (_attempt != null)
             {
                 var model = _attempt.Model;
@@ -208,6 +231,7 @@ namespace Game.Integration.Game
             _tutorial = null;
             if ((_pause & PauseReason.Tutorial) != 0) SetPaused(PauseReason.Tutorial, false);
             _attempt?.Dispose();
+            _sounds?.BeginAttempt();
             _busy = false;
             _scriptedHold = null;
             var context = new AttemptContext(++_attemptCounter, seed, mode, levelNumber, rules, level, _lifetime.Token);
@@ -225,22 +249,10 @@ namespace Game.Integration.Game
             if (_stage.PoolSplash != null) _stage.PoolSplash.Clear();
             _stage.CameraRig.Snap(anchor, (float)rules.D0, (float)rules.D0);
             _stage.Preview.Hide();
-            _stage.Hud.HideResult();
-            if (context.IsCampaign)
-            {
-                _stage.Hud.ShowSeed($"LEVEL {levelNumber}");
-                _stage.Hud.ShowHint(null);
-            }
-            else if (mode == AttemptMode.Wall)
-            {
-                _stage.Hud.ShowSeed($"WALL · SEED {seed}");
-                _stage.Hud.ShowHint(null);
-            }
-            else
-            {
-                _stage.Hud.ShowSeed($"ENDLESS · SEED {seed}");
-                _stage.Hud.ShowHint(null);
-            }
+            _resultView.Hide();
+            _hasResult = false;
+            RefreshAttemptLabel();
+            _view.ShowHint(null);
             _stage.Input.RequireFreshPress();
             context.Model.DoorsOpened += () => { if (_attempt == context) _stage.Doors.Open(); };
             context.Model.SetPaused(_pause != PauseReason.None);
@@ -248,9 +260,23 @@ namespace Game.Integration.Game
             RunChain(context, context.Model.Start());
             if (mode == AttemptMode.Campaign && levelNumber == 1 && TutorialEnabled && _stage.Tutorial != null)
             {
-                _tutorial = new TutorialDirector(this, context);
+                _tutorial = new TutorialDirector(this, context, _view, _localization);
                 _tutorial.RunAsync().Forget(Debug.LogException);
             }
+        }
+
+        private void RefreshAttemptLabel()
+        {
+            if (_attempt == null) return;
+            _view.ShowSeed(_attempt.IsCampaign
+                ? _localization.Format("hud.level", _attempt.LevelNumber)
+                : _localization.Format(_attempt.Mode == AttemptMode.Wall ? "hud.wall_seed" : "hud.endless_seed", _attempt.Seed));
+        }
+
+        private void RefreshTranslations()
+        {
+            RefreshAttemptLabel();
+            if (_hasResult) RenderResult(false);
         }
 
         // ------------------------------------------------------------------ per frame
@@ -280,8 +306,9 @@ namespace Game.Integration.Game
                 if (model.Phase == AttemptPhase.Waiting && input.PressedThisFrame && model.BeginCharge())
                 {
                     _stage.Slime.BeginCharge();
+                    _sounds?.BeginCharge();
                     _stage.CameraRig.OnChargeStarted((float)model.ChargeStartDiameter);
-                    _stage.Hud.ShowHint(null);
+                    _view.ShowHint(null);
                 }
                 else if (model.Phase == AttemptPhase.Charging && input.IsHeld)
                 {
@@ -314,7 +341,7 @@ namespace Game.Integration.Game
             _stage.Track.SetCorridorWidth((float)(rules.CorridorHalfWidth(model.Diameter) * 2));
             _stage.CameraRig.Follow(_stage.Slime.Anchor);
             var budget = (float)rules.Budget;
-            _stage.Hud.ShowSize((float)(model.Diameter - rules.Dcrit) / budget, (float)(model.ChargeStartDiameter - rules.Dcrit) / budget, diameter);
+            _view.ShowSize((float)(model.Diameter - rules.Dcrit) / budget, (float)(model.ChargeStartDiameter - rules.Dcrit) / budget);
         }
 
         private void ShowPreview(AttemptModel model)
@@ -323,6 +350,8 @@ namespace Game.Integration.Game
             if (plan == null) return;
             var budgetLeft = model.ChargeStartDiameter - model.Rules.Dcrit;
             _stage.Slime.UpdateCharge((float)plan.ProjectileDiameter, (float)(plan.Cost / Math.Max(1e-6, budgetLeft)));
+            _sounds?.UpdateCharge((float)(plan.Cost / Math.Max(1e-6, budgetLeft)),
+                (float)((model.Diameter - model.Rules.Dcrit) / model.Rules.Budget));
             _stage.Preview.Show(World(plan.ImpactCenter), (float)plan.BlastRadius, _stage.ViewConfig.previewColor);
             _stage.Crystals.SetPreview(plan.HitIds);
         }
@@ -336,6 +365,7 @@ namespace Game.Integration.Game
         private void OnChargeCancelled(AttemptModel model)
         {
             _stage.Slime.CancelCharge();
+            _sounds?.CancelCharge();
             ClearPreview();
             _stage.CameraRig.SettleTo((float)model.Diameter);
         }
@@ -380,6 +410,7 @@ namespace Game.Integration.Game
                         case ActionKind.Shot:
                         {
                             var plan = request.Shot;
+                            _sounds?.PrepareShot(plan.HitIds.Count > 0);
                             await _stage.Slime.ShootAsync(World(plan.TouchCenter), World(plan.ImpactCenter), (float)plan.ProjectileDiameter, token);
                             if (!model.ConfirmImpact(context.Id, actionId)) return;
                             request = model.Pending;
@@ -387,11 +418,13 @@ namespace Game.Integration.Game
                         }
                         case ActionKind.Clearing:
                             await _stage.Crystals.ClearAsync(request.Shot.HitIds, World(request.Shot.ImpactCenter), token);
+                            _sounds?.ClearingFinished(request.Shot.HitIds.Count > 0);
                             if (!model.ConfirmClearing(context.Id, actionId)) return;
                             request = model.Pending;
                             break;
                         case ActionKind.Defeat:
                         {
+                            _sounds?.BeginDefeat();
                             Vector3? target = request.DefeatCrystalId >= 0 ? World(request.DefeatTarget) : (Vector3?)null;
                             await _stage.Slime.DefeatAsync(target, token);
                             if (!model.ConfirmDefeat(context.Id, actionId)) return;
@@ -423,18 +456,11 @@ namespace Game.Integration.Game
 
         private void OnWon(AttemptContext context)
         {
+            if (_attempt != context) return;
+            _sounds?.Won();
             var model = context.Model;
-            var left = Mathf.RoundToInt((float)((model.Diameter - model.Rules.Dcrit) / model.Rules.Budget) * 100);
-            var stats = $"{left}% size to spare · {model.ShotsFired} shots";
-            if (context.Mode == AttemptMode.Wall) ShowResult("WALL BROKEN!", stats, "NEW WALL", () => PlayWall(), "MENU", RequestMenu);
-            else if (!context.IsCampaign) ShowResult("HOME AT LAST!", stats, "NEW LEVEL", PlayEndless, null, null);
-            else
-            {
-                if (context.LevelNumber < CampaignLength)
-                    ShowResult($"LEVEL {context.LevelNumber} CLEAR!", stats, "NEXT LEVEL", NextLevel, "RETRY", Restart);
-                else
-                    ShowResult("CAMPAIGN COMPLETE!", "The colony is home. " + stats, "WALL MODE", () => PlayWall(), "REPLAY LEVEL", Restart);
-            }
+            _hasResult = _resultWon = true;
+            RenderResult(true);
             Debug.Log($"[Gameplay] attempt {context.Id} won: level {context.LevelNumber}, seed {context.Seed}, shots {model.ShotsFired}, spent {model.TotalSpent:0.###}");
         }
 
@@ -446,30 +472,52 @@ namespace Game.Integration.Game
 
         private void OnLost(AttemptContext context)
         {
+            if (_attempt != context) return;
+            _sounds?.Lost();
             var model = context.Model;
-            var why = model.Defeat == DefeatReason.Overcharge ? "Held too long: the slime got too small to hold together."
-                : "Not enough jelly left for another shot.";
-            if (context.Mode == AttemptMode.Wall)
-            {
-                var seed = context.Seed;
-                ShowResult("POP!", why, "NEW WALL", () => PlayWall(), "SAME WALL", () => PlayWall(seed));
-            }
-            else ShowResult("POP!", why, "RETRY", Restart, null, null);
+            _hasResult = true;
+            _resultWon = false;
+            RenderResult(true);
             Debug.Log($"[Gameplay] attempt {context.Id} lost ({model.Defeat}): level {context.LevelNumber}, seed {context.Seed}, shots {model.ShotsFired}");
         }
 
-        private void ShowResult(string title, string subtitle, string primary, Action primaryAction, string secondary, Action secondaryAction)
+        private void RenderResult(bool animate)
         {
-            _primaryAction = primaryAction;
-            _secondaryAction = secondaryAction;
-            _stage.Hud.ShowResult(title, subtitle, primary, secondary);
+            var context = _attempt;
+            if (context == null) return;
+            var model = context.Model;
+            if (_resultWon)
+            {
+                var left = Mathf.RoundToInt((float)((model.Diameter - model.Rules.Dcrit) / model.Rules.Budget) * 100);
+                var stats = _localization.Format("result.stats", left, model.ShotsFired);
+                if (context.Mode == AttemptMode.Wall)
+                    ShowResult(_localization.Get("result.wall_broken"), stats, "action.new_wall", () => PlayWall(), "common.menu", RequestMenu, animate);
+                else if (!context.IsCampaign)
+                    ShowResult(_localization.Get("result.home"), stats, "action.new_level", PlayEndless, null, null, animate);
+                else if (context.LevelNumber < CampaignLength)
+                    ShowResult(_localization.Format("result.level_clear", context.LevelNumber), stats, "action.next_level", NextLevel, "common.retry", Restart, animate);
+                else
+                    ShowResult(_localization.Get("result.campaign_complete"), _localization.Get("result.colony_home") + " " + stats,
+                        "action.wall_mode", () => PlayWall(), "action.replay_level", Restart, animate);
+            }
+            else
+            {
+                var why = _localization.Get(model.Defeat == DefeatReason.Overcharge ? "result.overcharge" : "result.no_ammo");
+                if (context.Mode == AttemptMode.Wall)
+                    ShowResult(_localization.Get("result.pop"), why, "action.new_wall", () => PlayWall(), "action.same_wall", () => PlayWall(context.Seed), animate);
+                else ShowResult(_localization.Get("result.pop"), why, "common.retry", Restart, null, null, animate);
+            }
         }
 
-        private void OnMenu() { _primaryAction = _secondaryAction = null; RequestMenu(); }
-        private void RequestMenu() => MenuRequested?.Invoke();
+        private void ShowResult(string title, string subtitle, string primaryKey, Action primaryAction, string secondaryKey, Action secondaryAction, bool animate)
+        {
+            var primary = _localization.Get(primaryKey);
+            var secondary = string.IsNullOrEmpty(secondaryKey) ? null : _localization.Get(secondaryKey);
+            _resultView.Initialize(new ResultViewModel(title, subtitle, primary, primaryAction, secondary, secondaryAction, RequestMenu));
+            if (animate && (_pause & PauseReason.Menu) == 0) _resultView.Show();
+        }
 
-        private void OnPrimary() { var action = _primaryAction; _primaryAction = _secondaryAction = null; action?.Invoke(); }
-        private void OnSecondary() { var action = _secondaryAction; _primaryAction = _secondaryAction = null; action?.Invoke(); }
+        private void RequestMenu() => MenuRequested?.Invoke();
 
         private static Vector3 World(Vec2 p) => new Vector3((float)p.X, 0, (float)p.Z);
 
@@ -477,11 +525,15 @@ namespace Game.Integration.Game
         {
             if (_disposed) return;
             _disposed = true;
-            _stage.Hud.RestartRequested -= OnRestartRequested;
-            _stage.Hud.PrimaryRequested -= OnPrimary;
-            _stage.Hud.SecondaryRequested -= OnSecondary;
-            _stage.Hud.MenuRequested -= OnMenu;
+            if (_view != null)
+            {
+                _view.RestartRequested -= OnRestartRequested;
+                _view.BindLocalization(null);
+            }
+            if (_resultView != null) _resultView.Hide();
             _stage.BackgroundChanged -= OnBackgroundChanged;
+            _localization.Changed -= RefreshTranslations;
+            _sounds?.Dispose();
             _attempt?.Dispose();
             _attempt = null;
             _lifetime.Cancel();

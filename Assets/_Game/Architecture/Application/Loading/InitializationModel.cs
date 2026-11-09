@@ -6,7 +6,7 @@ namespace Game.App.Loading
     {
         public event Action Changed;
         public float InitPercentage { get; private set; } = 0;
-        public string Message { get; private set; } = "Loading...";
+        public string Message { get; private set; } = "loading.default";
         public bool HasError { get; private set; }
         public bool CanRetry { get; private set; }
         public bool IsComplete { get; private set; }

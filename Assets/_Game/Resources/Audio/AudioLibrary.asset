@@ -1,0 +1,401 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864971fc4c170b04585dbbcd0b50c86c, type: 3}
+  m_Name: AudioLibrary
+  m_EditorClassIdentifier: Game.Integration::Game.Integration.Audio.AudioLibrary
+  mixerRoutes:
+  - group: 4
+    output: {fileID: -501827600997958173, guid: d814f4dc56c943b42ab636c1658c0263, type: 2}
+  - group: 0
+    output: {fileID: -8182940591272488027, guid: d814f4dc56c943b42ab636c1658c0263, type: 2}
+  - group: 2
+    output: {fileID: 4514966834919962499, guid: d814f4dc56c943b42ab636c1658c0263, type: 2}
+  sounds:
+  - id: 0
+    clip: {fileID: 8300000, guid: 9f8c3185fce11624089a2078f044acb0, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 367fde535b20c9a4a9bdb9354adb0e95, type: 3}
+    - {fileID: 8300000, guid: 87c69fd4b7c720c4fbdd7074a35a5e7d, type: 3}
+    volume: 0.75
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.055
+    maxVoices: 2
+  - id: 1
+    clip: {fileID: 8300000, guid: baba10e4a04976e49aaef4ab08cc7a48, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 1aec198d9fd32d94a8d1bbb9bff2b0a6, type: 3}
+    volume: 0.8
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.1
+    maxVoices: 2
+  - id: 2
+    clip: {fileID: 8300000, guid: 9dc194931003a784ca6df7722488a6c2, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 10e87cdebdf3bc14d98b3dc04e538805, type: 3}
+    volume: 0.7
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.1
+    maxVoices: 2
+  - id: 3
+    clip: {fileID: 8300000, guid: bb89f5ad75408ec458a09cc4594b72f1, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 4f3980788d69d774b93ca3657846b0c0, type: 3}
+    volume: 0.65
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.15
+    maxVoices: 2
+  - id: 4
+    clip: {fileID: 8300000, guid: 35a91c994e658a645892ff81c0342bb1, type: 3}
+    variants:
+    - {fileID: 8300000, guid: adc0ffc1851a1084d8fec39a3d6647c2, type: 3}
+    volume: 0.6
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.15
+    maxVoices: 2
+  - id: 5
+    clip: {fileID: 8300000, guid: 5dd739a1f74bdea49bf14adf75c708aa, type: 3}
+    variants: []
+    volume: 0.6
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.075
+    maxVoices: 2
+  - id: 6
+    clip: {fileID: 8300000, guid: e7bb148a456fa3243bc93b00bc17a59d, type: 3}
+    variants: []
+    volume: 0.6
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.075
+    maxVoices: 2
+  - id: 7
+    clip: {fileID: 8300000, guid: 9040d4c0e63151c4987a2b35a5f4a4a6, type: 3}
+    variants:
+    - {fileID: 8300000, guid: b11306edefd8d0e4db9860c76e74e59a, type: 3}
+    - {fileID: 8300000, guid: 9ef212279eb470b4da353e1180a4d105, type: 3}
+    volume: 0.35
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 0
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.08
+    maxVoices: 1
+  - id: 8
+    clip: {fileID: 8300000, guid: 669db82a2f26d4a4bb56de02ffd0d310, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 4c4393951359bf8418fdaa069562b1f4, type: 3}
+    volume: 0.8
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0
+    maxVoices: 1
+  - id: 9
+    clip: {fileID: 8300000, guid: 7ee5f53a08ce26e4197ada93d35db672, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 5abf33f2fbb332a4c8d1c2aecd126a3d, type: 3}
+    - {fileID: 8300000, guid: 2276a122981d7b6448c947cbd235ea48, type: 3}
+    volume: 0.55
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.09
+    maxVoices: 2
+  - id: 10
+    clip: {fileID: 8300000, guid: f477d7a318a02d84f89a42e4ec2b6e69, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 3a47d5457eec3fa43bba591f74d514d5, type: 3}
+    - {fileID: 8300000, guid: 0247ecaf66830f442ac0ee3f30058e3f, type: 3}
+    volume: 0.85
+    pitchRange: {x: 0.92, y: 1.08}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.12
+    maxVoices: 2
+  - id: 11
+    clip: {fileID: 8300000, guid: b78e3f29c4ed72c48a3694f033af520b, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 18367abb8393fbd458261d9c60146511, type: 3}
+    - {fileID: 8300000, guid: fcbfdc83818b7a24aa9fc4f836a6299f, type: 3}
+    - {fileID: 8300000, guid: a44aa6eb5d58fdc4cbb656e2bc1adee4, type: 3}
+    - {fileID: 8300000, guid: 5c568dfa72811994fac1d3ab80d891f3, type: 3}
+    volume: 0.65
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.15
+    maxVoices: 2
+  - id: 12
+    clip: {fileID: 8300000, guid: 3327d4abe3fed104eb2a76bfdddc5b37, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 6734f2347c0f15e4bb682fa1d9ce76ac, type: 3}
+    - {fileID: 8300000, guid: 464b807328f196b44947b6c72f6c992d, type: 3}
+    volume: 0.7
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.12
+    maxVoices: 1
+  - id: 13
+    clip: {fileID: 8300000, guid: 87a4e6342fec16d458dee86848bba5b9, type: 3}
+    variants: []
+    volume: 0.7
+    pitchRange: {x: 1, y: 1}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 1
+    minInterval: 0
+    maxVoices: 1
+  - id: 14
+    clip: {fileID: 8300000, guid: eccf14cc9ad13114e893bdc64a7866ab, type: 3}
+    variants: []
+    volume: 0.6
+    pitchRange: {x: 1, y: 1}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 1
+    minInterval: 0
+    maxVoices: 1
+  - id: 15
+    clip: {fileID: 8300000, guid: 8a65fbc626ec7794aae78e05dabdf32f, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 6efd016cc30ffbd42bce4e018d39062a, type: 3}
+    volume: 0.65
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.15
+    maxVoices: 1
+  - id: 16
+    clip: {fileID: 8300000, guid: c28244f2af09832448a44e7c4f77d97f, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 7fea27f05b846e94cb6840acae431f2a, type: 3}
+    volume: 0.55
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 1.2
+    maxVoices: 1
+  - id: 17
+    clip: {fileID: 8300000, guid: d205b1ada4303474eb8b4da0f4d37994, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 7419cd8dd752d6041833f5c56993c69a, type: 3}
+    volume: 0.85
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.12
+    maxVoices: 2
+  - id: 18
+    clip: {fileID: 8300000, guid: fad2b442575a2cb43ba4e146b493ca9c, type: 3}
+    variants: []
+    volume: 0.45
+    pitchRange: {x: 1, y: 1}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 1
+    minInterval: 0
+    maxVoices: 1
+  - id: 19
+    clip: {fileID: 8300000, guid: 5821e5fcf0824d643bf31c64ccd159a6, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 919e80b1f2dc81e45a193ac96195559c, type: 3}
+    - {fileID: 8300000, guid: 5e40d279cc100304eb61a997621280b2, type: 3}
+    - {fileID: 8300000, guid: 3c1233a3390f0154ebd9ea25edfe325c, type: 3}
+    volume: 0.8
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.07
+    maxVoices: 2
+  - id: 20
+    clip: {fileID: 8300000, guid: 78a4be5ed53a1f7408889c59040ba74e, type: 3}
+    variants:
+    - {fileID: 8300000, guid: f5aa6d39d8851e94d90bbf21b849b70a, type: 3}
+    volume: 0.6
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.15
+    maxVoices: 2
+  - id: 21
+    clip: {fileID: 8300000, guid: 46a99406115e7164d83807972405c189, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 415a2d8c39f9bb9458176deb234022b1, type: 3}
+    - {fileID: 8300000, guid: d6ab06d44da251442b7c2cf627d3c64c, type: 3}
+    - {fileID: 8300000, guid: 016ed888a49fc4b40957237bc0b04883, type: 3}
+    - {fileID: 8300000, guid: c99a368d5515e644e9ed9ee8f3d3e1c2, type: 3}
+    volume: 0.65
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.035
+    maxVoices: 4
+  - id: 22
+    clip: {fileID: 8300000, guid: 1b28da9d91a13d74a9a709e4e0f04300, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 2c15e6267e3f7f443a2d5d40d9865f18, type: 3}
+    - {fileID: 8300000, guid: f1b506a9824415f44b7696414f359d83, type: 3}
+    - {fileID: 8300000, guid: dc4b7191566db7c4db1407909f205570, type: 3}
+    volume: 0.65
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.055
+    maxVoices: 3
+  - id: 23
+    clip: {fileID: 8300000, guid: 8400e71ceb4ef384984b42ded7122e1f, type: 3}
+    variants:
+    - {fileID: 8300000, guid: d68f50e214736fc4e8c8f5feadae1dc4, type: 3}
+    - {fileID: 8300000, guid: 006d3bb9d8fbbc44dbeade9bc7c5f682, type: 3}
+    volume: 0.55
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.18
+    maxVoices: 2
+  - id: 24
+    clip: {fileID: 8300000, guid: dab9c149f39982a41a4c2d236275f3cb, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 2feec40d1009f894e8d046959c11b472, type: 3}
+    volume: 0.7
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 1
+    maxVoices: 1
+  - id: 25
+    clip: {fileID: 8300000, guid: 07ac54ab3e1ec0e44918ae9d0c5e04ab, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 26738755e79e85447bfa18be259629e2, type: 3}
+    volume: 0.65
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.5
+    maxVoices: 1
+  - id: 26
+    clip: {fileID: 8300000, guid: 735748fddfc4a9047a3a0f8134c67074, type: 3}
+    variants:
+    - {fileID: 8300000, guid: 3fcb82b2e7f171149888e01f1992c159, type: 3}
+    - {fileID: 8300000, guid: 1704ad893231f054a822b66311b8d064, type: 3}
+    volume: 0.75
+    pitchRange: {x: 0.95, y: 1.05}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 0.5
+    maxVoices: 1
+  - id: 27
+    clip: {fileID: 8300000, guid: 3cdc2a4315c5bdf49bab4975d7d01042, type: 3}
+    variants: []
+    volume: 0.8
+    pitchRange: {x: 0.99, y: 1.01}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 2
+    maxVoices: 1
+  - id: 28
+    clip: {fileID: 8300000, guid: b9336c79a40a16541be8be473ccd68f3, type: 3}
+    variants: []
+    volume: 0.75
+    pitchRange: {x: 0.99, y: 1.01}
+    group: 4
+    mixerGroup: {fileID: 0}
+    loop: 0
+    minInterval: 2
+    maxVoices: 1
+  - id: 29
+    clip: {fileID: 8300000, guid: f80b75b5714835a4f852ccb33185e3e1, type: 3}
+    variants: []
+    volume: 0.35
+    pitchRange: {x: 1, y: 1}
+    group: 2
+    mixerGroup: {fileID: 4514966834919962499, guid: d814f4dc56c943b42ab636c1658c0263, type: 2}
+    loop: 1
+    minInterval: 0
+    maxVoices: 1
+  - id: 30
+    clip: {fileID: 8300000, guid: f80b75b5714835a4f852ccb33185e3e1, type: 3}
+    variants: []
+    volume: 0.35
+    pitchRange: {x: 1, y: 1}
+    group: 2
+    mixerGroup: {fileID: 4514966834919962499, guid: d814f4dc56c943b42ab636c1658c0263, type: 2}
+    loop: 1
+    minInterval: 0
+    maxVoices: 1
+  onEnter:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  onClick:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  onCoin:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  mainMenuTheme:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  gameplayTheme:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

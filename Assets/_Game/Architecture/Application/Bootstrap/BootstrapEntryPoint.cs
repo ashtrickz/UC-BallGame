@@ -12,7 +12,7 @@ namespace Game.App.Bootstrap
 {
     public sealed class BootstrapEntryPoint : IStartable, IDisposable
     {
-        private const string GameLoadingLabel = "Loading game...";
+        private const string GameLoadingLabel = "loading.game";
         
         private readonly IReadOnlyList<IInitializationStep> _steps;
         private readonly IInitializationModel _model;

@@ -6,6 +6,7 @@
         "VContainer",
         "DOTween.Modules",
         "Game.Foundation",
+        "Game.Localization",
         "Game.UI",
         "Unity.TextMeshPro",
         "UnityEngine.UI"

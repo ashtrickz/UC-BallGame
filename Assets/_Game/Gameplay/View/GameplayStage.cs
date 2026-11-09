@@ -17,7 +17,6 @@ namespace Game.Gameplay.View
         [SerializeField] private ImpactPreviewView preview;
         [SerializeField] private CameraRig cameraRig;
         [SerializeField] private PointerChargeInput input;
-        [SerializeField] private GameplayHud hud;
         [SerializeField] private Transform finishMarker;
         [SerializeField] private TutorialOverlay tutorial;
         [SerializeField] private PoolSplashEffect poolSplash;
@@ -31,7 +30,6 @@ namespace Game.Gameplay.View
         public ImpactPreviewView Preview => preview;
         public CameraRig CameraRig => cameraRig;
         public PointerChargeInput Input => input;
-        public GameplayHud Hud => hud;
         public Transform FinishMarker => finishMarker;
         public TutorialOverlay Tutorial => tutorial;
         public PoolSplashEffect PoolSplash => poolSplash;
@@ -46,7 +44,7 @@ namespace Game.Gameplay.View
         private void Awake()
         {
             if (viewConfig == null || slime == null || crystals == null || track == null || doors == null || preview == null
-                || cameraRig == null || input == null || hud == null)
+                || cameraRig == null || input == null)
                 throw new InvalidOperationException("GameplayStage has unassigned references. Run Tools/Ball Game/Gameplay/Install Into Game Scene.");
             slime.Bind(Clock, viewConfig);
             crystals.Bind(Clock, viewConfig);

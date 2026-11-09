@@ -19,6 +19,7 @@ namespace Game.Integration.Menu
         private readonly ICampaignProgress _progress;
         private readonly SlimeGameConfig _config;
         private UniTaskCompletionSource<int?> _pending;
+        private bool _disposed;
 
         public LevelSelectController(LevelSelectView view, ICampaignProgress progress, SlimeGameConfig config)
         {
@@ -27,24 +28,38 @@ namespace Game.Integration.Menu
             _config = config ? config : throw new ArgumentNullException(nameof(config));
             _view.LevelChosen += OnChosen;
             _view.BackRequested += OnBack;
-            _view.Hide();
+            _view.HideInstant();
         }
 
         public int Count => _config.Campaign != null ? _config.Campaign.Count : 0;
 
         public async UniTask<int?> ChooseAsync(CancellationToken cancellationToken)
         {
-            _pending?.TrySetResult(null);
+            if (_disposed) throw new ObjectDisposedException(nameof(LevelSelectController));
+            cancellationToken.ThrowIfCancellationRequested();
+            if (_pending != null) throw new InvalidOperationException("Level selection is already open.");
             var pending = _pending = new UniTaskCompletionSource<int?>();
-            _view.Show(Count, Math.Min(Math.Max(1, _progress.Unlocked), Count + 1));
             try
             {
+                _view.SetLevels(Count, Math.Min(Math.Max(1, _progress.Unlocked), Count + 1));
+                await _view.ShowAsync(cancellationToken);
                 return await pending.Task.AttachExternalCancellation(cancellationToken);
             }
             finally
             {
-                if (_pending == pending) _pending = null;
-                if (_view) _view.Hide();
+                try
+                {
+                    if (_view)
+                    {
+                        if (_disposed || cancellationToken.IsCancellationRequested) _view.HideInstant();
+                        else await _view.HideAsync(cancellationToken);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    if (_view) _view.HideInstant();
+                }
+                finally { _pending = null; }
             }
         }
 
@@ -58,9 +73,12 @@ namespace Game.Integration.Menu
 
         public void Dispose()
         {
+            if (_disposed) return;
+            _disposed = true;
             _pending?.TrySetResult(null);
             if (_view)
             {
+                _view.HideInstant();
                 _view.LevelChosen -= OnChosen;
                 _view.BackRequested -= OnBack;
             }

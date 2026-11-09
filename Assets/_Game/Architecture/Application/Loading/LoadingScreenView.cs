@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Game.UI;
 using TMPro;
@@ -18,6 +19,7 @@ namespace Game.App.Loading
         private Material _runtimeMaterial;
         private Tween _progressTween;
         public event Action RetryRequested;
+        public IEnumerable<TMP_Text> DynamicTextLabels => new[] { message, percentageLabel };
 
         protected override void Awake()
         {

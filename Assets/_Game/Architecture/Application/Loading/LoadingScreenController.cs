@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Game.Localization;
 
 namespace Game.App.Loading
 {
@@ -9,14 +10,20 @@ namespace Game.App.Loading
         private readonly ILoadingScreenView _view;
         private readonly IInitializationModel _model;
         private UniTaskCompletionSource _showTransition;
+        private readonly ILocalizationService _localization;
+        private float _percentage;
+        private string _message;
+        private bool _error, _canRetry;
         public event Action RetryRequested;
 
-        public LoadingScreenController(ILoadingScreenView view, IInitializationModel model)
+        public LoadingScreenController(ILoadingScreenView view, IInitializationModel model, ILocalizationService localization)
         {
             _view = view;
             _model = model;
+            _localization = localization;
             view.RetryRequested += OnRetry;
             model.Changed += Refresh;
+            _localization.Changed += RefreshContent;
             Refresh();
         }
 
@@ -26,7 +33,7 @@ namespace Game.App.Loading
         public UniTask ShowLoadingAsync(float initPercentage, string message,
             CancellationToken cancellationToken = default)
         {
-            _view.SetContent(initPercentage, message, false, false);
+            SetContent(initPercentage, message, false, false);
             return EnsureShown(cancellationToken);
         }
 
@@ -37,7 +44,7 @@ namespace Game.App.Loading
 
         public void ShowError(string message, bool canRetry)
         {
-            _view.SetContent(0, message, true, canRetry);
+            SetContent(0, message, true, canRetry);
             EnsureShown().Forget();
         }
 
@@ -81,10 +88,26 @@ namespace Game.App.Loading
 
         private void OnRetry() => RetryRequested?.Invoke();
 
+        private void SetContent(float percentage, string message, bool error, bool canRetry)
+        {
+            _percentage = percentage;
+            _message = message;
+            _error = error;
+            _canRetry = canRetry;
+            RefreshContent();
+        }
+
+        private void RefreshContent()
+        {
+            var key = _error && _message != "loading.cancelled" ? "loading.error" : _message;
+            _view.SetContent(_percentage, _localization.Get(key), _error, _canRetry);
+        }
+
         public void Dispose()
         {
             _view.RetryRequested -= OnRetry;
             _model.Changed -= Refresh;
+            _localization.Changed -= RefreshContent;
         }
     }
 }

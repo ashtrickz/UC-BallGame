@@ -15,7 +15,7 @@ namespace Game.UI
     /// The C# events (<see cref="HoldStarted"/>, <see cref="HoldCancelled"/>, <see cref="HoldCompleted"/>) are the hook for haptics later.
     /// </summary>
     [AddComponentMenu("UI/Hold Button")]
-    public class HoldButton : Button
+    public class HoldButton : FeedbackButton
     {
         /// <summary>Below this a hold is too easy to trigger by accident.</summary>
         public const float MinHoldSeconds = 0.3f;
@@ -108,7 +108,7 @@ namespace Game.UI
         public override void OnSubmit(BaseEventData eventData)
         {
             if (!requireHold) { base.OnSubmit(eventData); return; }
-            if (IsActive() && IsInteractable()) Complete();
+            if (IsActive() && IsInteractable()) { PlayPressFeedback(); Complete(); }
         }
 
         private void Release()
@@ -146,6 +146,7 @@ namespace Game.UI
             _done = true;
             Progress = 1f;
             ApplyProgress();
+            PlayClickFeedback();
             HoldCompleted?.Invoke();
             onHoldCompleted.Invoke();
         }

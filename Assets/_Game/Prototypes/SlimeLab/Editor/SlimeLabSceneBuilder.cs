@@ -397,7 +397,7 @@ namespace Game.Prototypes.SlimeLab.Editor
             var rect = Rect(name, parent, Vector2.right, Vector2.right, new Vector2(0.5f, 0), position, size);
             var image = rect.gameObject.AddComponent<UnityEngine.UI.Image>();
             image.color = SlimeLabPalette.Platform;
-            var button = rect.gameObject.AddComponent<UnityEngine.UI.Button>();
+            var button = rect.gameObject.AddComponent<global::Game.UI.FeedbackButton>();
             var colors = button.colors;
             colors.normalColor = SlimeLabPalette.Text;
             colors.highlightedColor = SlimeLabPalette.JellyLight;

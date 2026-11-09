@@ -5,9 +5,7 @@ using UnityEngine;
 
 namespace Game.Integration.Settings
 {
-    // A minimal, dependency-free ISettingsRuntime: PlayerPrefs-backed, no legacy
-    // ScrObjLib/SettingsRepository and no external localization service. Replace with a
-    // richer implementation if the project needs one.
+    // PlayerPrefs-backed settings. LocalizationService observes language changes through SettingsService.
     public sealed class UnitySettingsRuntime : ISettingsRuntime
     {
         private const string KeyPrefix = "Settings.";
@@ -15,7 +13,9 @@ namespace Game.Integration.Settings
         private static readonly LanguageOption[] SupportedLanguages =
         {
             new LanguageOption("en", "en", "English"),
-            new LanguageOption("ru", "ru", "Русский")
+            new LanguageOption("uk", "uk", "Українська"),
+            new LanguageOption("es", "es", "Español"),
+            new LanguageOption("zh-CN", "zh-CN", "简体中文")
         };
 
         public SettingsPack Pack { get; }

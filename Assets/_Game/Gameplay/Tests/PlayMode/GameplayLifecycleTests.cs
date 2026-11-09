@@ -18,7 +18,7 @@ using VContainer;
 namespace Game.Gameplay.PlayModeTests
 {
     /// <summary>The full attempt in the real Game scene: animations, waits, confirmations, pause and restart.</summary>
-    public sealed class GameplayLifecycleTests
+    public sealed partial class GameplayLifecycleTests
     {
         private const int Seed = 424242;
 
@@ -99,10 +99,10 @@ namespace Game.Gameplay.PlayModeTests
                 var block = new MaterialPropertyBlock();
                 foreach (var renderer in slime.GetComponentsInChildren<MeshRenderer>(true))
                 {
-                    if (!renderer.sharedMaterial.HasProperty("_TopColor")) continue;
+                    if (renderer.transform.parent != slime.transform || !renderer.sharedMaterial.HasProperty("_TopColor")) continue;
                     renderer.GetPropertyBlock(block);
-                    Assert.AreEqual(preset.BaseColor, block.GetColor("_BaseColor"), renderer.name + " base");
-                    Assert.AreEqual(preset.TopColor, block.GetColor("_TopColor"), renderer.name + " top");
+                    Assert.Less(Vector4.Distance(preset.BaseColor, block.GetColor("_BaseColor")), 1e-5f, renderer.name + " base");
+                    Assert.Less(Vector4.Distance(preset.TopColor, block.GetColor("_TopColor")), 1e-5f, renderer.name + " top");
                     count++;
                 }
                 Assert.AreEqual(3, count, "body, drop and neck all use the preset");
@@ -308,7 +308,8 @@ namespace Game.Gameplay.PlayModeTests
                 Assert.AreEqual(wall.Level.Control.TotalCost, wall.Model.TotalSpent, 1e-9);
 
                 // The MENU button on the result card goes back to the mode choice.
-                var menuButton = gameplay.Stage.Hud.transform.Find("Result/Card/Menu").GetComponent<UnityEngine.UI.Button>();
+                var menuButton = UnityEngine.Object.FindFirstObjectByType<ResultView>(FindObjectsInactive.Include)
+                    .transform.Find("Card/Menu").GetComponent<UnityEngine.UI.Button>();
                 // The popup appears after the dive into the pool.
                 await UniTask.WaitUntil(() => menuButton.gameObject.activeInHierarchy).Timeout(TimeSpan.FromSeconds(5));
                 menuButton.onClick.Invoke();
@@ -347,9 +348,13 @@ namespace Game.Gameplay.PlayModeTests
                     .GetField("playButton", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(menu);
 
                 levels.onClick.Invoke();
-                await UniTask.Yield();
                 var grid = UnityEngine.Object.FindFirstObjectByType<Game.Integration.Menu.LevelSelectView>();
                 Assert.IsNotNull(grid);
+                var group = grid.GetComponent<CanvasGroup>();
+                Assert.IsNotNull(group, "level selection uses the shared view transition");
+                Assert.IsFalse(group.interactable, "input is blocked while opening");
+                await UniTask.WaitUntil(() => group.interactable).Timeout(TimeSpan.FromSeconds(5));
+                Assert.AreEqual(1f, group.alpha);
                 Assert.AreEqual(config.Campaign.Count, grid.Cells.Count);
                 for (var i = 0; i < grid.Cells.Count; i++)
                     Assert.AreEqual(i < 3, grid.Cells[i].interactable, $"level {i + 1}");
@@ -361,6 +366,11 @@ namespace Game.Gameplay.PlayModeTests
                 Assert.IsTrue(grid.IsVisible);
 
                 grid.Cells[1].onClick.Invoke();
+                Assert.IsTrue(grid.gameObject.activeSelf, "the view stays active until its closing animation finishes");
+                Assert.IsFalse(group.interactable, "input is blocked while closing");
+                Assert.AreEqual(GamePhase.Menu, session.Phase, "the round starts after the view finishes closing");
+                await UniTask.WaitUntil(() => grid == null || !grid.gameObject.activeSelf)
+                    .Timeout(TimeSpan.FromSeconds(5));
                 var gameplay = await LoadedGameplayAsync();
                 Assert.AreEqual(GamePhase.Playing, session.Phase);
                 Assert.AreEqual(2, gameplay.Current.LevelNumber);
@@ -374,11 +384,17 @@ namespace Game.Gameplay.PlayModeTests
                 levels.onClick.Invoke();
                 await UniTask.Yield();
                 grid = UnityEngine.Object.FindFirstObjectByType<LevelSelectView>();
-                await UniTask.Yield();
-                grid.transform.Find("Back").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
-                await UniTask.Yield();
+                group = grid.GetComponent<CanvasGroup>();
+                await UniTask.WaitUntil(() => group.interactable).Timeout(TimeSpan.FromSeconds(5));
+                ((UnityEngine.UI.Button)typeof(LevelSelectView)
+                    .GetField("backButton", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .GetValue(grid)).onClick.Invoke();
+                Assert.IsTrue(grid.gameObject.activeSelf, "BACK also waits for the closing animation");
+                Assert.IsFalse(group.interactable);
+                await UniTask.WaitUntil(() => !grid.gameObject.activeSelf).Timeout(TimeSpan.FromSeconds(5));
                 Assert.IsFalse(grid.IsVisible);
                 Assert.AreEqual(GamePhase.Menu, session.Phase);
+                Assert.IsTrue(levels.IsInteractable(), "menu input is restored after closing");
             }
             finally { await TearDownAsync(); }
         });

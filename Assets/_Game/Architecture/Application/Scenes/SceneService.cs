@@ -35,20 +35,21 @@ namespace Game.App.Scenes
                 cancellationToken.ThrowIfCancellationRequested();
                 var startPercentage = _initialization != null && !_initialization.IsComplete
                     ? _initialization.InitPercentage : 0f;
-                await _loading.ShowLoadingAsync(startPercentage, $"Loading {sceneName}…", cancellationToken);
+                var messageKey = sceneName == GameNavigation.MenuScene ? "loading.menu" : "loading.game";
+                await _loading.ShowLoadingAsync(startPercentage, messageKey, cancellationToken);
                 cancellationToken.ThrowIfCancellationRequested();
                 var progress = Progress.CreateOnlyValueChanged<float>(value =>
-                    _loading.ShowLoading(startPercentage + value * (100f - startPercentage), $"Loading {sceneName}…"));
+                    _loading.ShowLoading(startPercentage + value * (100f - startPercentage), messageKey));
                 await _loadScene(sceneName, progress, cancellationToken);
                 cancellationToken.ThrowIfCancellationRequested();
-                _loading.ShowLoading(100f, "Ready!");
+                _loading.ShowLoading(100f, "loading.ready");
                 // Present the completed bar before the reveal starts.
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate, cancellationToken);
                 await _loading.HideLoadingAsync(cancellationToken);
             }
             catch (OperationCanceledException)
             {
-                _loading.ShowError("Scene transition cancelled.", false);
+                _loading.ShowError("loading.cancelled", false);
                 throw;
             }
             catch (Exception exception)

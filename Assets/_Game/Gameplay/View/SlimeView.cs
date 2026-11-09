@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace Game.Gameplay.View
 {
+    public enum SlimePresentationCue { HopPreparing, Takeoff, Landed, ShotReleased, ShotImpact, DefeatPreparing, Popped, PoolSplash }
+
     /// <summary>
     /// Procedural jelly slime ported from SlimeLab: hop preparation, arc, squash and stretch, damped landing
     /// spring, charging drop with a stretching neck, separation, flight, final weak hop and pop.
@@ -56,6 +58,7 @@ namespace Game.Gameplay.View
         public float Diameter => _diameter;
         public Vector3 BodyCenter => body.position;
         public SplashPool Splashes => splashes;
+        public event Action<SlimePresentationCue> PresentationCue;
 
         public void Bind(GameClock clock, SlimeViewConfig config)
         {
@@ -123,12 +126,15 @@ namespace Game.Gameplay.View
 
         public async UniTask HopAsync(Vector3 to, float heightScale, Action<float> progress, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
+            PresentationCue?.Invoke(SlimePresentationCue.HopPreparing);
             var from = _anchor;
             try
             {
                 await _clock.Animate(_config.hopPrepare, t => _prepare = Mathf.Sin(t * Mathf.PI * 0.5f), token);
                 _prepare = 0;
                 _hopClock = 0;
+                PresentationCue?.Invoke(SlimePresentationCue.Takeoff);
                 await _clock.Animate(_config.hopFlight, t =>
                 {
                     _flightT = t;
@@ -145,6 +151,7 @@ namespace Game.Gameplay.View
                 _height = 0;
             }
             _anchor = to;
+            PresentationCue?.Invoke(SlimePresentationCue.Landed);
             _impactVelocity = -6.3f * Mathf.Clamp(heightScale, 0.3f, 1f);
             splashes?.Burst(new Vector3(_anchor.x, 0.1f, _anchor.z), 6, 0.4f);
         }
@@ -198,6 +205,7 @@ namespace Game.Gameplay.View
         /// <summary>Pinches the drop off and flies it to the first contact. Completes at the moment of impact.</summary>
         public async UniTask ShootAsync(Vector3 touchCenter, Vector3 impactPoint, float projectileDiameter, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             _dropDiameter = projectileDiameter;
             _pinchStart = drop.position;
             _pinching = true;
@@ -207,6 +215,7 @@ namespace Game.Gameplay.View
             _flying = true;
             bridge.gameObject.SetActive(false);
             _impactVelocity -= 3.4f;
+            PresentationCue?.Invoke(SlimePresentationCue.ShotReleased);
             var start = drop.position;
             splashes?.Burst(start, 7, 0.55f);
             var radius = projectileDiameter * 0.5f;
@@ -227,6 +236,7 @@ namespace Game.Gameplay.View
             }
             finally { _flying = false; }
             drop.gameObject.SetActive(false);
+            PresentationCue?.Invoke(SlimePresentationCue.ShotImpact);
             splashes?.Burst(impactPoint + Vector3.up * 0.2f, 14, 0.9f + radius);
         }
 
@@ -235,6 +245,8 @@ namespace Game.Gameplay.View
         /// <summary>Final weak hop into the blocking crystal (if any), squash and pop.</summary>
         public async UniTask DefeatAsync(Vector3? target, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
+            PresentationCue?.Invoke(SlimePresentationCue.DefeatPreparing);
             CancelCharge();
             if (target.HasValue)
             {
@@ -247,6 +259,7 @@ namespace Game.Gameplay.View
                 {
                     await _clock.Animate(_config.hopPrepare, t => _prepare = Mathf.Sin(t * Mathf.PI * 0.5f) * 0.6f, token);
                     _prepare = 0;
+                    PresentationCue?.Invoke(SlimePresentationCue.Takeoff);
                     await _clock.Animate(_config.defeatHopDuration, t =>
                     {
                         _flightT = t;
@@ -256,9 +269,11 @@ namespace Game.Gameplay.View
                 }
                 finally { _flightT = -1; _height = 0; _prepare = 0; }
                 _impactVelocity = -4f;
+                PresentationCue?.Invoke(SlimePresentationCue.Landed);
             }
             await _clock.Animate(_config.popSquash, t => _flatten = Mathf.Lerp(1, 0.42f, GameClock.EaseOut(t)), token);
             _popped = true;
+            PresentationCue?.Invoke(SlimePresentationCue.Popped);
             body.gameObject.SetActive(false);
             if (shadow != null) shadow.gameObject.SetActive(false);
             var center = new Vector3(_anchor.x, _diameter * 0.3f, _anchor.z);
@@ -273,6 +288,7 @@ namespace Game.Gameplay.View
         public async UniTask DiveIntoAsync(Transform pool, PoolSplashEffect splash, CancellationToken token)
         {
             if (pool == null) return;
+            token.ThrowIfCancellationRequested();
             CancelCharge();
             _scripted = true;
             var radius = _diameter * 0.5f;
@@ -286,9 +302,11 @@ namespace Game.Gameplay.View
             try
             {
                 // 1. Anticipation: a deep, wide crouch.
+                PresentationCue?.Invoke(SlimePresentationCue.HopPreparing);
                 await _clock.Animate(0.22f, t => Pose(start, radius, Mathf.Lerp(0.9f, 0.56f, GameClock.EaseOut(t)), 0, 0), token);
                 splashes?.Burst(start + Vector3.up * 0.08f, 8, 0.55f);
                 // 2. Launch: stretched upwards, decelerating towards the apex.
+                PresentationCue?.Invoke(SlimePresentationCue.Takeoff);
                 await _clock.Animate(0.36f, t =>
                 {
                     var e = GameClock.EaseOut(t);
@@ -310,6 +328,7 @@ namespace Game.Gameplay.View
                     if (!splashed && height < surface)
                     {
                         splashed = true;
+                        PresentationCue?.Invoke(SlimePresentationCue.PoolSplash);
                         var entry = new Vector3(landing.x, surface, landing.z);
                         if (splash != null) splash.Play(entry, _diameter / 1.6f);
                         splashes?.Burst(entry + Vector3.up * 0.05f, 8, 1.1f, null, 1.3f);

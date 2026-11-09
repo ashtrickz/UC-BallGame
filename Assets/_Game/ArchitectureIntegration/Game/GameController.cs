@@ -5,6 +5,7 @@ using Game.App.Game;
 using Game.App.Scenes;
 using Game.Integration.Gameplay;
 using Game.UI;
+using Game.Localization;
 using Game.Users;
 using UnityEngine;
 
@@ -18,12 +19,13 @@ namespace Game.Integration.Game
         private readonly GameSession _session;
         private readonly GameplayController _gameplay;
         private readonly GameNavigation _navigation;
+        private readonly ILocalizationService _localization;
         private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
         private bool _initialized;
         private bool _popupOpen;
         private bool _disposed;
-        public GameController(GameView view, IUserRepository users, IPopupService popups, GameSession session, GameplayController gameplay, GameNavigation navigation)
-        { _view = view; _users = users; _popups = popups; _session = session; _gameplay = gameplay; _navigation = navigation; }
+        public GameController(GameView view, IUserRepository users, IPopupService popups, GameSession session, GameplayController gameplay, GameNavigation navigation, ILocalizationService localization)
+        { _view = view; _users = users; _popups = popups; _session = session; _gameplay = gameplay; _navigation = navigation; _localization = localization; }
 
         public async UniTask InitializeAsync(CancellationToken cancellationToken = default)
         {
@@ -32,6 +34,7 @@ namespace Game.Integration.Game
             if (_session.Phase != GamePhase.Playing) _session.StartRound();
             _view.SettingsRequested += OpenSettings;
             _users.Changed += Refresh;
+            _localization.Changed += Refresh;
             _session.Changed += OnPhaseChanged;
             _session.RoundStarted += OnRoundStarted;
             _gameplay.MenuRequested += OnMenuRequested;
@@ -45,7 +48,7 @@ namespace Game.Integration.Game
             else _view.HideInstant();
         }
 
-        private void Refresh() => _view.ShowPlayer(_users.Profile?.PlayerName ?? "Player");
+        private void Refresh() => _view.ShowPlayer(_users.Profile?.PlayerName ?? _localization.Get("game.player"));
         private void OnPhaseChanged()
         {
             _gameplay.SetPaused(PauseReason.Menu, _session.Phase != GamePhase.Playing);
@@ -110,6 +113,7 @@ namespace Game.Integration.Game
             _disposed = true;
             _view.SettingsRequested -= OpenSettings;
             _users.Changed -= Refresh;
+            _localization.Changed -= Refresh;
             _session.Changed -= OnPhaseChanged;
             _session.RoundStarted -= OnRoundStarted;
             _gameplay.MenuRequested -= OnMenuRequested;

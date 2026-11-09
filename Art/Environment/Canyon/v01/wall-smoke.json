@@ -1,0 +1,12 @@
+{
+  "mode": "Wall",
+  "seed": 424242,
+  "phase": "Won",
+  "spent": 0.8480000000000001,
+  "expected": 0.8480000000000001,
+  "shots": 4,
+  "expectedShots": 4,
+  "doorsOpen": true,
+  "leftHinge": 260.0,
+  "rightHinge": 99.99999
+}

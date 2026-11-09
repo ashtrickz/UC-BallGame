@@ -31,6 +31,7 @@ namespace Game.Integration.Gameplay
             View.FpsChosen += OnFps;
             View.CopyKeyClicked += OnCopyKey;
             View.ResetClicked += OnReset;
+            View.LanguageChosen += OnLanguage;
             try { await PresentAsync(cancellationToken); }
             finally
             {
@@ -39,6 +40,7 @@ namespace Game.Integration.Gameplay
                 View.FpsChosen -= OnFps;
                 View.CopyKeyClicked -= OnCopyKey;
                 View.ResetClicked -= OnReset;
+                View.LanguageChosen -= OnLanguage;
             }
         }
 
@@ -61,10 +63,17 @@ namespace Game.Integration.Gameplay
             ShowAll();
         }
 
+        private void OnLanguage(string code)
+        {
+            foreach (var language in _settings.Languages)
+                if (language.Code == code) { _settings.SetLanguage(language); return; }
+        }
+
         private void ShowAll()
         {
             foreach (var channel in Channels) View.ShowVolume(channel, _settings.GetVolume(channel));
             View.ShowFps(_settings.TargetFps);
+            View.ShowLanguages(_settings.Languages, _settings.CurrentLanguage);
         }
     }
 }

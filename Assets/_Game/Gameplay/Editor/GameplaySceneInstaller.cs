@@ -21,7 +21,6 @@ namespace Game.Gameplay.Editor
     {
         public const string ScenePath = "Assets/_Game/Scenes/Game.unity";
         private const string StageName = "Gameplay Stage";
-        private const string HudName = "Gameplay HUD";
         private const string LightName = "Gameplay Key Light";
         private const string VolumeName = "Gameplay Grading";
 
@@ -54,7 +53,7 @@ namespace Game.Gameplay.Editor
             var preview = BuildPreview(stage.transform, assets);
             var input = stage.gameObject.AddComponent<PointerChargeInput>();
             var rig = ConfigureCamera(assets);
-            var hud = BuildHud(assets);
+            var resultView = BuildGameView(assets);
             ConfigureMenu();
             var levelSelect = BuildLevelSelect();
 
@@ -66,7 +65,6 @@ namespace Game.Gameplay.Editor
             Set(stage, "preview", preview);
             Set(stage, "cameraRig", rig);
             Set(stage, "input", input);
-            Set(stage, "hud", hud);
             Set(stage, "finishMarker", colony);
             Set(stage, "tutorial", BuildTutorial(assets));
             Set(stage, "poolSplash", BuildPoolSplash(colony, assets));
@@ -75,6 +73,9 @@ namespace Game.Gameplay.Editor
             if (scope == null) throw new InvalidOperationException("Game scene has no GameScope.");
             Set(scope, "gameConfig", assets.GameConfig);
             Set(scope, "gameplayStage", stage);
+            Set(scope, "resultView", resultView);
+
+            CanyonEnvironmentInstaller.Apply(stage);
 
             ConfigurePlayer();
             EditorSceneManager.MarkSceneDirty(scene);
@@ -266,21 +267,23 @@ namespace Game.Gameplay.Editor
             return rig;
         }
 
-        // ------------------------------------------------------------------ HUD
+        // ------------------------------------------------------------------ game UI
 
-        private static GameplayHud BuildHud(GameplayAssetsBuilder.Set a)
+        private static Game.Integration.Game.ResultView BuildGameView(GameplayAssetsBuilder.Set a)
         {
             var gameView = Object.FindFirstObjectByType<Game.Integration.Game.GameView>(FindObjectsInactive.Include);
             if (gameView == null) throw new InvalidOperationException("Game scene has no GameView.");
             var screen = gameView.transform;
-            var old = screen.Find(HudName);
-            if (old != null) Object.DestroyImmediate(old.gameObject);
             var buttonSquare = FindSprite(screen, "button_square_normal");
             var buttonPrimary = FindSprite(screen.root, "button_primary_normal");
-
-            var root = Rect(HudName, screen, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
-            root.SetAsFirstSibling();
-            var hud = root.gameObject.AddComponent<GameplayHud>();
+            foreach (var name in new[] { "Size meter", "Retry", "Level", "Hint" })
+            {
+                var old = screen.Find(name);
+                if (old != null) Object.DestroyImmediate(old.gameObject);
+            }
+            var previousResult = screen.parent.GetComponentInChildren<Game.Integration.Game.ResultView>(true);
+            if (previousResult != null) Object.DestroyImmediate(previousResult.gameObject);
+            var root = screen;
 
             // Size meter: the player's resource (D between Dcrit and D0), with the share being charged highlighted.
             var meter = Rect("Size meter", root, new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0, -52), new Vector2(560, 64));
@@ -305,7 +308,9 @@ namespace Game.Gameplay.Editor
             hint.outlineColor = new Color32(9, 30, 36, 255);
             hint.fontStyle = FontStyles.Bold;
 
-            var panel = Rect("Result", root, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
+            var panel = Rect("ResultView", screen.parent, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
+            panel.SetSiblingIndex(screen.GetSiblingIndex() + 1);
+            var resultView = panel.gameObject.AddComponent<Game.Integration.Game.ResultView>();
             Fill(panel, new Color(0.04f, 0.08f, 0.1f, 0.6f)).raycastTarget = true;
             var card = Rect("Card", panel, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(900, 700));
             Fill(card, new Color(0.1f, 0.18f, 0.23f, 0.96f));
@@ -318,24 +323,24 @@ namespace Game.Gameplay.Editor
             var secondary = MakeButton("Secondary", card, buttonSquare, new Vector2(0.5f, 0), new Vector2(0, 50), new Vector2(380, 115), "RETRY", 40);
             secondary.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0);
 
-            Set(hud, "sizeFill", fill);
-            Set(hud, "chargeFill", charge);
-            Set(hud, "sizeLabel", sizeLabel);
-            Set(hud, "seedLabel", seed);
-            Set(hud, "hintLabel", hint);
-            Set(hud, "restartButton", restart);
-            Set(hud, "resultPanel", panel.gameObject);
-            Set(hud, "resultTitle", title);
-            Set(hud, "resultSubtitle", subtitle);
-            Set(hud, "resultPrimaryButton", again);
-            Set(hud, "resultPrimaryLabel", again.GetComponentInChildren<TMP_Text>());
-            Set(hud, "resultSecondaryButton", secondary);
-            Set(hud, "resultSecondaryLabel", secondary.GetComponentInChildren<TMP_Text>());
+            Set(gameView, "sizeFill", fill);
+            Set(gameView, "chargeFill", charge);
+            Set(gameView, "sizeLabel", sizeLabel);
+            Set(gameView, "seedLabel", seed);
+            Set(gameView, "hintLabel", hint);
+            Set(gameView, "restartButton", restart);
+            Set(resultView, "title", title);
+            Set(resultView, "subtitle", subtitle);
+            Set(resultView, "primaryButton", again);
+            Set(resultView, "primaryLabel", again.GetComponentInChildren<TMP_Text>());
+            Set(resultView, "secondaryButton", secondary);
+            Set(resultView, "secondaryLabel", secondary.GetComponentInChildren<TMP_Text>());
             var menu = MakeButton("Menu", card, buttonSquare, new Vector2(0, 1), new Vector2(24, -24), new Vector2(190, 90), "MENU", 34);
-            Set(hud, "resultMenuButton", menu);
-            Set(hud, "resultCard", card);
-            Set(hud, "resultDim", panel.GetComponent<Image>());
-            return hud;
+            Set(resultView, "menuButton", menu);
+            Set(resultView, "card", card);
+            Set(resultView, "dim", panel.GetComponent<UnityEngine.UI.Image>());
+            panel.gameObject.SetActive(false);
+            return resultView;
         }
 
         /// <summary>Particle splash of the colony pool: fountain, crown of drops, surface ripples.</summary>
@@ -476,7 +481,7 @@ namespace Game.Gameplay.Editor
             var tap = Rect("Continue", root, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
             var tapImage = Fill(tap, new Color(0, 0, 0, 0));
             tapImage.raycastTarget = true;
-            var tapButton = tap.gameObject.AddComponent<Button>();
+            var tapButton = tap.gameObject.AddComponent<global::Game.UI.FeedbackButton>();
             tapButton.transition = Selectable.Transition.None;
 
             var card = Rect("Card", root, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 300), new Vector2(940, 300));
@@ -604,7 +609,7 @@ namespace Game.Gameplay.Editor
             var image = rect.gameObject.AddComponent<Image>();
             image.sprite = sprite;
             image.type = sprite != null && sprite.border != Vector4.zero ? UnityEngine.UI.Image.Type.Sliced : UnityEngine.UI.Image.Type.Simple;
-            var button = rect.gameObject.AddComponent<Button>();
+            var button = rect.gameObject.AddComponent<global::Game.UI.FeedbackButton>();
             var label = Label("Label", rect, text, fontSize, Color.white, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             label.fontStyle = FontStyles.Bold;
             return button;

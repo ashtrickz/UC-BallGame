@@ -1460,7 +1460,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 298914505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
@@ -1495,6 +1495,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  punchEnabled: 1
+  punchTarget: {fileID: 0}
+  punchStrength: 0.08
+  punchDuration: 0.2
+  punchVibrato: 4
+  punchElasticity: 0.5
+  soundEnabled: 1
+  clickSound: 0
 --- !u!114 &298914507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2983,7 +2991,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 699760533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
@@ -3018,6 +3026,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  punchEnabled: 1
+  punchTarget: {fileID: 0}
+  punchStrength: 0.08
+  punchDuration: 0.2
+  punchVibrato: 4
+  punchElasticity: 0.5
+  soundEnabled: 1
+  clickSound: 0
 --- !u!114 &699760535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3104,7 +3120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 770812587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
@@ -3139,6 +3155,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  punchEnabled: 1
+  punchTarget: {fileID: 0}
+  punchStrength: 0.08
+  punchDuration: 0.2
+  punchVibrato: 4
+  punchElasticity: 0.5
+  soundEnabled: 1
+  clickSound: 0
 --- !u!114 &770812589
 MonoBehaviour:
   m_ObjectHideFlags: 0

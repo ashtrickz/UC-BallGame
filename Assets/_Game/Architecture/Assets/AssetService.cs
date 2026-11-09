@@ -28,7 +28,7 @@ namespace Game.Assets
             _mainThread = Thread.CurrentThread.ManagedThreadId;
         }
 
-        public string Name => "Initializing assets...";
+        public string Name => "loading.assets";
 
         // Addressables retains initialization state after native failure. Retry has not been
         // demonstrated safe; callers may retry waiting after cancellation, not native failure.

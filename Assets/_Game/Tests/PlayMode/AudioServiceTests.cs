@@ -13,7 +13,7 @@ using UnityEngine.TestTools;
 
 namespace Game.Foundation.Tests
 {
-    public sealed class AudioServiceTests
+    public sealed partial class AudioServiceTests
     {
         private sealed class UnusedAssets : IAssetService
         {
