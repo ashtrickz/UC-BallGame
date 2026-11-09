@@ -128,7 +128,7 @@ namespace Game.Integration.Gameplay
                 {
                     if (chosenFpsSprite != null && otherFpsSprite != null)
                         image.sprite = choice.fps == fps ? chosenFpsSprite : otherFpsSprite;
-                    else image.color = choice.fps == fps ? new Color(0.18f, 0.55f, 0.7f) : new Color(0.2f, 0.29f, 0.4f);
+                    else image.color = choice.fps == fps ? new Color(1f, 1, 1) : new Color(0.8f, 0.8f, 0.8f);
                 }
         }
 
@@ -149,8 +149,9 @@ namespace Game.Integration.Gameplay
                 if (choice.button.targetGraphic is UnityEngine.UI.Image image)
                 {
                     var selected = string.Equals(choice.code, selectedLanguage, StringComparison.OrdinalIgnoreCase);
-                    if (chosenFpsSprite != null && otherFpsSprite != null) image.sprite = selected ? chosenFpsSprite : otherFpsSprite;
-                    else image.color = selected ? new Color(0.18f, 0.55f, 0.7f) : new Color(0.2f, 0.29f, 0.4f);
+                    if (chosenFpsSprite != null && otherFpsSprite != null)
+                        image.sprite = selected ? chosenFpsSprite : otherFpsSprite;
+                    else image.color = selected ? new Color(1f, 1, 1) : new Color(0.8f, 0.8f, 0.8f);
                 }
             }
         }

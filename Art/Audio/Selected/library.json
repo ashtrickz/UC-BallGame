@@ -1,0 +1,519 @@
+{
+  "sounds": [
+    {
+      "id": "UiClick",
+      "clips": [
+        "Assets/_Game/Audio/Selected/UI/ui_click_01.wav",
+        "Assets/_Game/Audio/Selected/UI/ui_click_02.wav",
+        "Assets/_Game/Audio/Selected/UI/ui_click_03.wav"
+      ],
+      "volume": 0.75,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "UI",
+      "loop": false,
+      "minInterval": 0.055,
+      "maxVoices": 2
+    },
+    {
+      "id": "UiConfirm",
+      "clips": [
+        "Assets/_Game/Audio/Selected/UI/ui_confirm_01.wav",
+        "Assets/_Game/Audio/Selected/UI/ui_confirm_02.wav"
+      ],
+      "volume": 0.8,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "UI",
+      "loop": false,
+      "minInterval": 0.1,
+      "maxVoices": 2
+    },
+    {
+      "id": "UiBack",
+      "clips": [
+        "Assets/_Game/Audio/Selected/UI/ui_back_01.wav",
+        "Assets/_Game/Audio/Selected/UI/ui_back_02.wav"
+      ],
+      "volume": 0.7,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "UI",
+      "loop": false,
+      "minInterval": 0.1,
+      "maxVoices": 2
+    },
+    {
+      "id": "UiPanelOpen",
+      "clips": [
+        "Assets/_Game/Audio/Selected/UI/ui_panel_open_01.wav",
+        "Assets/_Game/Audio/Selected/UI/ui_panel_open_02.wav"
+      ],
+      "volume": 0.65,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "UI",
+      "loop": false,
+      "minInterval": 0.15,
+      "maxVoices": 2
+    },
+    {
+      "id": "UiPanelClose",
+      "clips": [
+        "Assets/_Game/Audio/Selected/UI/ui_panel_close_01.wav",
+        "Assets/_Game/Audio/Selected/UI/ui_panel_close_02.wav"
+      ],
+      "volume": 0.6,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "UI",
+      "loop": false,
+      "minInterval": 0.15,
+      "maxVoices": 2
+    },
+    {
+      "id": "UiToggleOn",
+      "clips": [
+        "Assets/_Game/Audio/Selected/UI/ui_toggle_on_01.wav"
+      ],
+      "volume": 0.6,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "UI",
+      "loop": false,
+      "minInterval": 0.075,
+      "maxVoices": 2
+    },
+    {
+      "id": "UiToggleOff",
+      "clips": [
+        "Assets/_Game/Audio/Selected/UI/ui_toggle_off_01.wav"
+      ],
+      "volume": 0.6,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "UI",
+      "loop": false,
+      "minInterval": 0.075,
+      "maxVoices": 2
+    },
+    {
+      "id": "UiSliderTick",
+      "clips": [
+        "Assets/_Game/Audio/Selected/UI/ui_slider_tick_01.wav",
+        "Assets/_Game/Audio/Selected/UI/ui_slider_tick_02.wav",
+        "Assets/_Game/Audio/Selected/UI/ui_slider_tick_03.wav"
+      ],
+      "volume": 0.35,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "UI",
+      "loop": false,
+      "minInterval": 0.08,
+      "maxVoices": 1
+    },
+    {
+      "id": "RoundStart",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Session/round_start_01.wav",
+        "Assets/_Game/Audio/Selected/Session/round_start_02.wav"
+      ],
+      "volume": 0.8,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0,
+      "maxVoices": 1
+    },
+    {
+      "id": "SlimeSquash",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Slime/slime_squash_01.wav",
+        "Assets/_Game/Audio/Selected/Slime/slime_squash_02.wav",
+        "Assets/_Game/Audio/Selected/Slime/slime_squash_03.wav"
+      ],
+      "volume": 0.55,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.09,
+      "maxVoices": 2
+    },
+    {
+      "id": "SlimeJump",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Slime/slime_jump_01.wav",
+        "Assets/_Game/Audio/Selected/Slime/slime_jump_02.wav",
+        "Assets/_Game/Audio/Selected/Slime/slime_jump_03.wav"
+      ],
+      "volume": 0.85,
+      "pitchRange": [
+        0.92,
+        1.08
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.12,
+      "maxVoices": 2
+    },
+    {
+      "id": "SlimeLand",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Slime/slime_land_01.wav",
+        "Assets/_Game/Audio/Selected/Slime/slime_land_02.wav",
+        "Assets/_Game/Audio/Selected/Slime/slime_land_03.wav",
+        "Assets/_Game/Audio/Selected/Slime/slime_land_04.wav",
+        "Assets/_Game/Audio/Selected/Slime/slime_land_05.wav"
+      ],
+      "volume": 0.65,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.15,
+      "maxVoices": 2
+    },
+    {
+      "id": "ChargeStart",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Charge/charge_start_01.wav",
+        "Assets/_Game/Audio/Selected/Charge/charge_start_02.wav",
+        "Assets/_Game/Audio/Selected/Charge/charge_start_03.wav"
+      ],
+      "volume": 0.7,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.12,
+      "maxVoices": 1
+    },
+    {
+      "id": "ChargeLoop",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Charge/charge_body_loop_01.wav"
+      ],
+      "volume": 0.7,
+      "pitchRange": [
+        1,
+        1
+      ],
+      "group": "Sfx",
+      "loop": true,
+      "minInterval": 0.0,
+      "maxVoices": 1
+    },
+    {
+      "id": "ChargeTensionLoop",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Charge/charge_tension_loop_01.wav"
+      ],
+      "volume": 0.6,
+      "pitchRange": [
+        1,
+        1
+      ],
+      "group": "Sfx",
+      "loop": true,
+      "minInterval": 0.0,
+      "maxVoices": 1
+    },
+    {
+      "id": "ChargeCancel",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Charge/charge_cancel_01.wav",
+        "Assets/_Game/Audio/Selected/Charge/charge_cancel_02.wav"
+      ],
+      "volume": 0.65,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.15,
+      "maxVoices": 1
+    },
+    {
+      "id": "ResourceWarning",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Charge/resource_warning_01.wav",
+        "Assets/_Game/Audio/Selected/Charge/resource_warning_02.wav"
+      ],
+      "volume": 0.55,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 1.2,
+      "maxVoices": 1
+    },
+    {
+      "id": "SlimeShoot",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Shot/slime_shoot_01.wav",
+        "Assets/_Game/Audio/Selected/Shot/slime_shoot_02.wav"
+      ],
+      "volume": 0.85,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.12,
+      "maxVoices": 2
+    },
+    {
+      "id": "ProjectileFlightLoop",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Shot/projectile_flight_loop_01.wav"
+      ],
+      "volume": 0.45,
+      "pitchRange": [
+        1,
+        1
+      ],
+      "group": "Sfx",
+      "loop": true,
+      "minInterval": 0.0,
+      "maxVoices": 1
+    },
+    {
+      "id": "ProjectileImpact",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Shot/projectile_impact_01.wav",
+        "Assets/_Game/Audio/Selected/Shot/projectile_impact_02.wav",
+        "Assets/_Game/Audio/Selected/Shot/projectile_impact_03.wav",
+        "Assets/_Game/Audio/Selected/Shot/projectile_impact_04.wav"
+      ],
+      "volume": 0.8,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.07,
+      "maxVoices": 2
+    },
+    {
+      "id": "ProjectileFizzle",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Shot/projectile_fizzle_01.wav",
+        "Assets/_Game/Audio/Selected/Shot/projectile_fizzle_02.wav"
+      ],
+      "volume": 0.6,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.15,
+      "maxVoices": 2
+    },
+    {
+      "id": "CrystalBreakSmall",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_01.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_02.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_03.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_04.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_05.wav"
+      ],
+      "volume": 0.65,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.035,
+      "maxVoices": 4
+    },
+    {
+      "id": "CrystalBreakLarge",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_large_01.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_large_02.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_large_03.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_break_large_04.wav"
+      ],
+      "volume": 0.65,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.055,
+      "maxVoices": 3
+    },
+    {
+      "id": "CrystalDebris",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Crystal/crystal_debris_01.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_debris_02.wav",
+        "Assets/_Game/Audio/Selected/Crystal/crystal_debris_03.wav"
+      ],
+      "volume": 0.55,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.18,
+      "maxVoices": 2
+    },
+    {
+      "id": "GateOpen",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Finish/gate_open_01.wav",
+        "Assets/_Game/Audio/Selected/Finish/gate_open_02.wav"
+      ],
+      "volume": 0.7,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 1.0,
+      "maxVoices": 1
+    },
+    {
+      "id": "FailSqueeze",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Outcome/fail_squeeze_01.wav",
+        "Assets/_Game/Audio/Selected/Outcome/fail_squeeze_02.wav"
+      ],
+      "volume": 0.65,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.5,
+      "maxVoices": 1
+    },
+    {
+      "id": "FailPop",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Outcome/fail_pop_01.wav",
+        "Assets/_Game/Audio/Selected/Outcome/fail_pop_02.wav",
+        "Assets/_Game/Audio/Selected/Outcome/fail_pop_03.wav"
+      ],
+      "volume": 0.75,
+      "pitchRange": [
+        0.95,
+        1.05
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.5,
+      "maxVoices": 1
+    },
+    {
+      "id": "Victory",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Outcome/victory_01.wav"
+      ],
+      "volume": 0.8,
+      "pitchRange": [
+        0.99,
+        1.01
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 2.0,
+      "maxVoices": 1
+    },
+    {
+      "id": "Defeat",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Outcome/defeat_01.wav"
+      ],
+      "volume": 0.75,
+      "pitchRange": [
+        0.99,
+        1.01
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 2.0,
+      "maxVoices": 1
+    },
+    {
+      "id": "PoolSplash",
+      "clips": [
+        "Assets/_Game/Audio/Selected/Shot/slime_shoot_02.wav"
+      ],
+      "volume": 0.9,
+      "pitchRange": [
+        0.8,
+        0.9
+      ],
+      "group": "Sfx",
+      "loop": false,
+      "minInterval": 0.2,
+      "maxVoices": 1
+    },
+    {
+      "id": "MainMenuMusic",
+      "clips": [],
+      "volume": 0.35,
+      "pitchRange": [
+        1,
+        1
+      ],
+      "group": "Music",
+      "loop": true,
+      "minInterval": 0,
+      "maxVoices": 1
+    },
+    {
+      "id": "GameplayMusic",
+      "clips": [],
+      "volume": 0.35,
+      "pitchRange": [
+        1,
+        1
+      ],
+      "group": "Music",
+      "loop": true,
+      "minInterval": 0,
+      "maxVoices": 1
+    }
+  ]
+}

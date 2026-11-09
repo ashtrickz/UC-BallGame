@@ -29,11 +29,13 @@ namespace Game.Gameplay.PlayModeTests
                 var heard = new List<GameSound>();
                 var jumpClips = new List<string>();
                 var shotClips = new List<string>();
+                var splashClips = new List<string>();
                 observer = (id, handle) =>
                 {
                     heard.Add(id);
                     if (id == GameSound.SlimeJump) jumpClips.Add(handle.Clip.name);
                     if (id == GameSound.SlimeShoot) shotClips.Add(handle.Clip.name);
+                    if (id == GameSound.PoolSplash) splashClips.Add(handle.Clip.name);
                 };
                 audio.SoundPlayed += observer;
                 gameplay.RestartWithSeed(Seed);
@@ -45,12 +47,18 @@ namespace Game.Gameplay.PlayModeTests
                 await UniTask.WaitUntil(() => heard.Contains(GameSound.Victory)).Timeout(TimeSpan.FromSeconds(8));
                 foreach (var id in new[] { GameSound.RoundStart, GameSound.SlimeSquash, GameSound.SlimeJump,
                     GameSound.SlimeLand, GameSound.ChargeStart, GameSound.SlimeShoot, GameSound.ProjectileImpact,
-                    GameSound.GateOpen, GameSound.Victory })
+                    GameSound.GateOpen, GameSound.PoolSplash, GameSound.Victory })
                     CollectionAssert.Contains(heard, id, id.ToString());
                 Assert.IsTrue(heard.Contains(GameSound.CrystalBreakSmall) || heard.Contains(GameSound.CrystalBreakLarge));
                 Assert.AreEqual(context.Model.ShotsFired, shotClips.Count, "Each accepted projectile produces one release sound.");
                 Assert.IsTrue(jumpClips.TrueForAll(name => name.StartsWith("slime_jump_")), "Use the selected jump WAVs.");
                 Assert.IsTrue(shotClips.TrueForAll(name => name.StartsWith("slime_shoot_")), "Use the selected slime-shot WAVs.");
+                Assert.AreEqual(1, splashClips.Count, "One water-entry splash per winning dive.");
+                var library = Resources.Load<AudioLibrary>(AudioLibrary.ResourcePath);
+                Assert.IsTrue(library.TryGet(GameSound.PoolSplash, out var splash));
+                Assert.AreEqual(splash.GetClip(0).name, splashClips[0], "Use the independently authored pool cue.");
+                Assert.Less(heard.IndexOf(GameSound.PoolSplash), heard.IndexOf(GameSound.Victory),
+                    "Water contact sounds before the victory popup.");
                 Debug.Log($"[Audio validation] {jumpClips.Count} jumps, {shotClips.Count} shots, {heard.Count} cue starts through a real winning attempt.");
             }
             finally

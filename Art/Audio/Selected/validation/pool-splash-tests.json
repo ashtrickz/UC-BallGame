@@ -1,0 +1,1 @@
+{"status":"completed","duration":17.21,"summary":{"total":1,"passed":1,"failed":0,"skipped":0,"inconclusive":0},"results":[{"FullName":"Game.Gameplay.PlayModeTests.GameplayLifecycleTests.Audio_selected_jump_shot_impacts_and_result_follow_the_real_gameplay","Status":"Passed","Duration":17.1001665,"Message":null,"StackTrace":null}]}

@@ -76,6 +76,7 @@ namespace Game.Integration.Game
         private double? _scriptedHold;
         private TutorialDirector _tutorial;
         private readonly GameplayAudioPresenter _sounds;
+        private readonly GameplayHapticsPresenter _haptics = new GameplayHapticsPresenter();
         private readonly ILocalizationService _localization;
         private bool _hasResult, _resultWon;
 
@@ -105,6 +106,7 @@ namespace Game.Integration.Game
             _progress = progress ?? throw new ArgumentNullException(nameof(progress));
             _localization = localization ?? throw new ArgumentNullException(nameof(localization));
             _view.BindLocalization(_localization);
+            _stage.Slime.PresentationCue += _haptics.OnSlimeCue;
             if (audio != null) _sounds = new GameplayAudioPresenter(stage, audio);
         }
 
@@ -123,6 +125,7 @@ namespace Game.Integration.Game
             _pause = initialPause;
             _stage.Clock.Paused = _pause != PauseReason.None;
             _sounds?.SetPaused(_pause != PauseReason.None);
+            _haptics.SetPaused(_pause != PauseReason.None);
             _view.RestartRequested += OnRestartRequested;
             _stage.BackgroundChanged += OnBackgroundChanged;
             _localization.Changed += RefreshTranslations;
@@ -191,6 +194,7 @@ namespace Game.Integration.Game
             var now = _pause != PauseReason.None;
             _stage.Clock.Paused = now;
             _sounds?.SetPaused(now);
+            _haptics.SetPaused(now);
             if (menuWasOpen != ((_pause & PauseReason.Menu) != 0))
             {
                 if ((_pause & PauseReason.Menu) != 0) _resultView.Hide();
@@ -231,6 +235,7 @@ namespace Game.Integration.Game
             _tutorial = null;
             if ((_pause & PauseReason.Tutorial) != 0) SetPaused(PauseReason.Tutorial, false);
             _attempt?.Dispose();
+            _haptics.CancelCharge();
             _sounds?.BeginAttempt();
             _busy = false;
             _scriptedHold = null;
@@ -248,7 +253,7 @@ namespace Game.Integration.Game
             if (colorIndex >= 0) _stage.Slime.SetColors(_config.SlimeColors[colorIndex]);
             if (_stage.PoolSplash != null) _stage.PoolSplash.Clear();
             _stage.CameraRig.Snap(anchor, (float)rules.D0, (float)rules.D0);
-            _stage.Preview.Hide();
+            _stage.Preview.ResetEffects();
             _resultView.Hide();
             _hasResult = false;
             RefreshAttemptLabel();
@@ -307,6 +312,12 @@ namespace Game.Integration.Game
                 {
                     _stage.Slime.BeginCharge();
                     _sounds?.BeginCharge();
+                    var chargeRules = model.Rules;
+                    var chargeBudget = Math.Max(1e-6, chargeRules.Budget);
+                    var chargeRate = chargeRules.Values.ChargeRate;
+                    _haptics.BeginCharge((float)(chargeRules.ChargeCost(0) / chargeBudget),
+                        (float)(chargeRate / chargeBudget),
+                        (float)Math.Max(0, (model.Diameter - chargeRules.Dcrit) / chargeRate));
                     _stage.CameraRig.OnChargeStarted((float)model.ChargeStartDiameter);
                     _view.ShowHint(null);
                 }
@@ -322,13 +333,16 @@ namespace Game.Integration.Game
                 {
                     // Held too long: Dcrit reached during the hold. The outcome is fixed; the view only shows it.
                     ClearPreview();
+                    _haptics.CancelCharge();
                     _stage.CameraRig.SettleTo((float)model.Diameter);
                     RunChain(context, model.Pending);
                 }
                 else if (model.Phase == AttemptPhase.Charging && (!input.IsHeld || scriptedRelease))
                 {
                     var shot = model.ReleaseCharge();
-                    ClearPreview();
+                    _haptics.CancelCharge();
+                    _stage.Preview.Hide();
+                    _stage.Crystals.CommitPreview(shot?.Shot?.HitIds);
                     _stage.CameraRig.SettleTo((float)model.Diameter);
                     RunChain(context, shot);
                 }
@@ -366,6 +380,7 @@ namespace Game.Integration.Game
         {
             _stage.Slime.CancelCharge();
             _sounds?.CancelCharge();
+            _haptics.CancelCharge();
             ClearPreview();
             _stage.CameraRig.SettleTo((float)model.Diameter);
         }
@@ -411,13 +426,17 @@ namespace Game.Integration.Game
                         {
                             var plan = request.Shot;
                             _sounds?.PrepareShot(plan.HitIds.Count > 0);
-                            await _stage.Slime.ShootAsync(World(plan.TouchCenter), World(plan.ImpactCenter), (float)plan.ProjectileDiameter, token);
+                            await _stage.Slime.ShootAsync(World(plan.TouchCenter), World(plan.ImpactCenter),
+                                (float)plan.ProjectileDiameter, _stage.ViewConfig.ImpactStrength((float)plan.BlastRadius), token);
                             if (!model.ConfirmImpact(context.Id, actionId)) return;
+                            if (plan.Hit) _stage.Preview.PlayImpact(World(plan.ImpactCenter), (float)plan.BlastRadius,
+                                _stage.ViewConfig.infectColor);
                             request = model.Pending;
                             break;
                         }
                         case ActionKind.Clearing:
-                            await _stage.Crystals.ClearAsync(request.Shot.HitIds, World(request.Shot.ImpactCenter), token);
+                            await _stage.Crystals.ClearAsync(request.Shot.HitIds, World(request.Shot.ImpactCenter),
+                                (float)request.Shot.BlastRadius, token);
                             _sounds?.ClearingFinished(request.Shot.HitIds.Count > 0);
                             if (!model.ConfirmClearing(context.Id, actionId)) return;
                             request = model.Pending;
@@ -533,6 +552,8 @@ namespace Game.Integration.Game
             if (_resultView != null) _resultView.Hide();
             _stage.BackgroundChanged -= OnBackgroundChanged;
             _localization.Changed -= RefreshTranslations;
+            _stage.Slime.PresentationCue -= _haptics.OnSlimeCue;
+            _haptics.Dispose();
             _sounds?.Dispose();
             _attempt?.Dispose();
             _attempt = null;

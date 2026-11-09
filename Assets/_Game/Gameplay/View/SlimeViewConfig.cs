@@ -24,6 +24,16 @@ namespace Game.Gameplay.View
         [Min(0.02f)] public float infectDuration = 0.12f;
         [Min(0.02f)] public float shatterDuration = 0.22f;
 
+        [Header("Shot feedback (presentation only)")]
+        [Range(0, 0.5f)] public float previewTint = 0.18f;
+        [Range(1, 1.5f)] public float previewBrightness = 1.28f;
+        [Range(0.5f, 1)] public float surroundingCrystalBrightness = 0.8f;
+        [Range(0.006f, 0.04f)] public float previewEdgeWidth = 0.018f;
+        [Min(0.3f)] public float strongImpactRadius = 2.2f;
+
+        public float ImpactStrength(float radius) => Mathf.InverseLerp(0.2f, Mathf.Max(0.3f, strongImpactRadius), radius);
+        public float ImpactWaveDuration(float radius) => Mathf.Clamp(radius / Mathf.Max(0.1f, waveSpeed), 0.12f, 0.4f);
+
         [Header("Defeat")]
         [Min(0)] public float defeatHopHeight = 0.32f;
         [Min(0.1f)] public float defeatHopDuration = 0.45f;

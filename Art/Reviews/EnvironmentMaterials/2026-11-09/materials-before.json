@@ -1,0 +1,53 @@
+[
+  {
+    "path": "Assets/_Game/Art/Environment/Canyon/Materials/Canyon Vertex Surface.mat",
+    "baseColor": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "shadowTint": [
+      0.64,
+      0.72,
+      0.84,
+      1
+    ],
+    "brightness": 1,
+    "variation": 0.025
+  },
+  {
+    "path": "Assets/_Game/Art/Environment/Canyon/Materials/Distant Sand.mat",
+    "baseColor": [
+      0.8745098,
+      0.7058824,
+      0.49803922,
+      1
+    ],
+    "shadowTint": [
+      0.64,
+      0.72,
+      0.84,
+      1
+    ],
+    "brightness": 1,
+    "variation": 0.035
+  },
+  {
+    "path": "Assets/_Game/Art/Environment/Canyon/Materials/Route Sand.mat",
+    "baseColor": [
+      0.9607843,
+      0.80784315,
+      0.5921569,
+      1
+    ],
+    "shadowTint": [
+      0.64,
+      0.72,
+      0.84,
+      1
+    ],
+    "brightness": 1,
+    "variation": 0.01
+  }
+]

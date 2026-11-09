@@ -1218,7 +1218,6 @@ GameObject:
   m_Component:
   - component: {fileID: 668747886}
   - component: {fileID: 668747885}
-  - component: {fileID: 668747884}
   - component: {fileID: 668747883}
   m_Layer: 0
   m_Name: SlimePreviewCamera
@@ -1271,14 +1270,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &668747884
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 668747882}
-  m_Enabled: 1
 --- !u!20 &668747885
 Camera:
   m_ObjectHideFlags: 0
@@ -2479,7 +2470,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56
+  m_fontSize: 50
   m_fontSizeBase: 56
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -1,0 +1,429 @@
+{
+  "base_pack": "approved procedural v02",
+  "download_sources": [
+    {
+      "file": "jump.mp3",
+      "sha256": "11fefd76e8ea77f0f4899483ce7003aee047d30c436a5a27e4339976f20586b7"
+    },
+    {
+      "file": "shot.mp3",
+      "sha256": "6a8eb5f8d5feea57f2e8a451a42a1ea64766e128c44174f6041ce74f3a65fc97"
+    }
+  ],
+  "files": [
+    {
+      "family": "ui_click",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_click_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_click_01.wav",
+      "sha256": "6d012a2a9db84248a14b371a6a514887bc2fec797e9a4b63801ad5a0131c3afa"
+    },
+    {
+      "family": "ui_click",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_click_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_click_02.wav",
+      "sha256": "e6a795c2874bebff0e85595f059cbfffb050fd15ac24b3ec5e522a75a2b5208c"
+    },
+    {
+      "family": "ui_click",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_click_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_click_03.wav",
+      "sha256": "f1ab56a4286aed7546fde3f61ab874ab385980281eae0d2778b9be3777fa52e0"
+    },
+    {
+      "family": "ui_confirm",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_confirm_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_confirm_01.wav",
+      "sha256": "4c8fb191df356c0abb2a4c2e6a415dd83244526b42a588d38d0f6c43ed7ac4d6"
+    },
+    {
+      "family": "ui_confirm",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_confirm_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_confirm_02.wav",
+      "sha256": "7b2feb9e337aad06d10afde0492b0b33d585150580fa0d488421bd041b91bf35"
+    },
+    {
+      "family": "ui_back",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_back_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_back_01.wav",
+      "sha256": "12a91a4c13be460c7fa3a650cd1adfa6a72fdd92325270a1a0da6e411323aba6"
+    },
+    {
+      "family": "ui_back",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_back_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_back_02.wav",
+      "sha256": "fa8ae62c90786513abd1d071628d51a63d10b819d42a6d889348a04bff846577"
+    },
+    {
+      "family": "ui_panel_open",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_panel_open_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_panel_open_01.wav",
+      "sha256": "13221a2f0556e15e47e2eca9e7179104744c945da582c2102876472fc4af57af"
+    },
+    {
+      "family": "ui_panel_open",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_panel_open_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_panel_open_02.wav",
+      "sha256": "f483bf4e86e5c0598d016ca072aab17083a2e443a9f6d95b6ec787f3d932165c"
+    },
+    {
+      "family": "ui_panel_close",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_panel_close_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_panel_close_01.wav",
+      "sha256": "c66ade6af8e43b336273ec8e6eb28d12087baac6ae58a7beb8bb37a8be5a2c44"
+    },
+    {
+      "family": "ui_panel_close",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_panel_close_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_panel_close_02.wav",
+      "sha256": "f9c4703eefff82b2ce2cb035d14849550209412dcff6d6bfe4772abbb54f77f2"
+    },
+    {
+      "family": "ui_toggle_on",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_toggle_on_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_toggle_on_01.wav",
+      "sha256": "127c43ad8506b78a3de65bc67ac466ab9fac525849d213f4d082d92f86567d85"
+    },
+    {
+      "family": "ui_toggle_off",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_toggle_off_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_toggle_off_01.wav",
+      "sha256": "bacdb6aaedd14845f5c8be48835266eeb72fbd9895aa4123540786b4f3590bab"
+    },
+    {
+      "family": "ui_slider_tick",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_slider_tick_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_slider_tick_01.wav",
+      "sha256": "b2ffbfb604323fc159c48df3b5b454e7565cc261c4503d27ada20536111fac4a"
+    },
+    {
+      "family": "ui_slider_tick",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_slider_tick_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_slider_tick_02.wav",
+      "sha256": "abf30fd78817c190244111b947169a72cae33bf332343170a251eccba5e22e31"
+    },
+    {
+      "family": "ui_slider_tick",
+      "path": "Assets/_Game/Audio/Selected/UI/ui_slider_tick_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/UI/ui_slider_tick_03.wav",
+      "sha256": "81a3c254731b378c9faa0844efb76b0940856c32aa1d23f3ed6615297b84df6f"
+    },
+    {
+      "family": "round_start",
+      "path": "Assets/_Game/Audio/Selected/Session/round_start_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Session/round_start_01.wav",
+      "sha256": "b288146432f00b618a5689a23cc37e7299c73631a68c4df447ff3878df8926ee"
+    },
+    {
+      "family": "round_start",
+      "path": "Assets/_Game/Audio/Selected/Session/round_start_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Session/round_start_02.wav",
+      "sha256": "85e14e4ec70754c3c6a50b43c04b0e796036d3932b82899c29849be29282804a"
+    },
+    {
+      "family": "slime_squash",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_squash_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_squash_01.wav",
+      "sha256": "c2738d1e2d0f140c6747832fe80241829a3907d2448ec57bce04846865140274"
+    },
+    {
+      "family": "slime_squash",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_squash_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_squash_02.wav",
+      "sha256": "bd29da54f7adaf58166dbae44ba307a3cfd3e3a6d68276d349482bf02c59b872"
+    },
+    {
+      "family": "slime_squash",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_squash_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_squash_03.wav",
+      "sha256": "df36f099f7d7b50758a867d6885bec5e26d846c3cbcfd7bd27b78a2ac1a0ebc5"
+    },
+    {
+      "family": "slime_land",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_land_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_land_01.wav",
+      "sha256": "0ab10bb520807d41ccff770f90e47292e81dd4d1644215fb6a0485b3683d2006"
+    },
+    {
+      "family": "slime_land",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_land_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_land_02.wav",
+      "sha256": "866c10db1b777441e7436ea5bf1eef935c357b109b1b4f70f8fe560abb59bdea"
+    },
+    {
+      "family": "slime_land",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_land_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_land_03.wav",
+      "sha256": "d3f32ba4a9a4edfd2b46ff7e238978de71a5ac82544821cbfe0b36a62687bd41"
+    },
+    {
+      "family": "slime_land",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_land_04.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_land_04.wav",
+      "sha256": "f31fc2848bf4c1e69225c42d2ba6cc8ca5cef27a8045fed88e01d1a591ed3ece"
+    },
+    {
+      "family": "slime_land",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_land_05.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_land_05.wav",
+      "sha256": "a7e2ea99d5a54a666c5c54602ae5cb010850bb146d2c9802e2b997337f45bc37"
+    },
+    {
+      "family": "charge_start",
+      "path": "Assets/_Game/Audio/Selected/Charge/charge_start_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/charge_start_01.wav",
+      "sha256": "165b8b5e12f8928bd2556c6c4984014dd8107245b76b57e0a386361bead6a382"
+    },
+    {
+      "family": "charge_start",
+      "path": "Assets/_Game/Audio/Selected/Charge/charge_start_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/charge_start_02.wav",
+      "sha256": "129776f3ecc40604d9a43b7c4ae336c0b74a7fbeaae8d45b48b33a369a4f0ddc"
+    },
+    {
+      "family": "charge_start",
+      "path": "Assets/_Game/Audio/Selected/Charge/charge_start_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/charge_start_03.wav",
+      "sha256": "8dbfb13f004bb8a522678391941f67d8d0f7c20fcd6e258d30edd60d0b8e2788"
+    },
+    {
+      "family": "charge_body_loop",
+      "path": "Assets/_Game/Audio/Selected/Charge/charge_body_loop_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/charge_body_loop_01.wav",
+      "sha256": "7eed135b20de72d5954078e35b205852cd8e9525374d81df574595e4c052bff0"
+    },
+    {
+      "family": "charge_tension_loop",
+      "path": "Assets/_Game/Audio/Selected/Charge/charge_tension_loop_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/charge_tension_loop_01.wav",
+      "sha256": "118496309e59827d53765762bc2f85e92324dbb3aac5b963c6e8dd5f6d2b0df9"
+    },
+    {
+      "family": "charge_cancel",
+      "path": "Assets/_Game/Audio/Selected/Charge/charge_cancel_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/charge_cancel_01.wav",
+      "sha256": "8557f334aedbe1b4c40aabde56abdede6714ea0114466ad9f705a8f5161a0405"
+    },
+    {
+      "family": "charge_cancel",
+      "path": "Assets/_Game/Audio/Selected/Charge/charge_cancel_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/charge_cancel_02.wav",
+      "sha256": "090829d028ce0b054d4928e5c39c31b12b79b4e0982f7eca7f43ae41e0263644"
+    },
+    {
+      "family": "resource_warning",
+      "path": "Assets/_Game/Audio/Selected/Charge/resource_warning_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/resource_warning_01.wav",
+      "sha256": "a9b9a0a1415023d11ff08793c42ba3cc0875f65cdbe4a8b16beee81fbe252164"
+    },
+    {
+      "family": "resource_warning",
+      "path": "Assets/_Game/Audio/Selected/Charge/resource_warning_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Charge/resource_warning_02.wav",
+      "sha256": "1891672ebae5351b0f900c7d3927f5b656b8161d8303a01642f590143d92c580"
+    },
+    {
+      "family": "projectile_flight_loop",
+      "path": "Assets/_Game/Audio/Selected/Shot/projectile_flight_loop_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot/projectile_flight_loop_01.wav",
+      "sha256": "c06e861ae11c2ac5e488107bdcb2a52e98145a92241abd3879f3db54f6f53c8f"
+    },
+    {
+      "family": "projectile_impact",
+      "path": "Assets/_Game/Audio/Selected/Shot/projectile_impact_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot/projectile_impact_01.wav",
+      "sha256": "961b95f4e65ea92b0b6ef1c91aee04bbd23b9c71b3586c4603a930436687a602"
+    },
+    {
+      "family": "projectile_impact",
+      "path": "Assets/_Game/Audio/Selected/Shot/projectile_impact_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot/projectile_impact_02.wav",
+      "sha256": "a4bd0f3c75d1ce9ad97588af6c494790c4a13b28b0cbe9c40de25012e29b0a98"
+    },
+    {
+      "family": "projectile_impact",
+      "path": "Assets/_Game/Audio/Selected/Shot/projectile_impact_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot/projectile_impact_03.wav",
+      "sha256": "5b4736a630006cee3bf78f85429a3c90e997df65088b77cb3d2b17e018debf2b"
+    },
+    {
+      "family": "projectile_impact",
+      "path": "Assets/_Game/Audio/Selected/Shot/projectile_impact_04.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot/projectile_impact_04.wav",
+      "sha256": "6b53c1a8b493363b05c55af0d3195600fb6c4f90a7b1b40534455165a97debd6"
+    },
+    {
+      "family": "projectile_fizzle",
+      "path": "Assets/_Game/Audio/Selected/Shot/projectile_fizzle_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot/projectile_fizzle_01.wav",
+      "sha256": "fd81dc882113213a5acee411fe61c0eeed8de457e39529c8f8711a48e89340fa"
+    },
+    {
+      "family": "projectile_fizzle",
+      "path": "Assets/_Game/Audio/Selected/Shot/projectile_fizzle_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot/projectile_fizzle_02.wav",
+      "sha256": "99fd17232ae6f080eeaff9f152d1b9e88c9e2f52bb72215198cc9c21c82fc42c"
+    },
+    {
+      "family": "crystal_break_small",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_small_01.wav",
+      "sha256": "9e812bfe5f20ca6626dd0ba11168602b85b5836926b29c5cecccb238ae409ea6"
+    },
+    {
+      "family": "crystal_break_small",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_small_02.wav",
+      "sha256": "25fd36040a080b70f959098c2454a18e1a676cb3471119a5a48c127ccc15c1a4"
+    },
+    {
+      "family": "crystal_break_small",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_small_03.wav",
+      "sha256": "326ed4960d7f2ee589cd50a68f6bfdbb3610be27e6dc225c2f546d2894501961"
+    },
+    {
+      "family": "crystal_break_small",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_04.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_small_04.wav",
+      "sha256": "a5adf13dce831f6e203665397e5ebbc4def9039339cbc0c728e581ced6c29ccc"
+    },
+    {
+      "family": "crystal_break_small",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_small_05.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_small_05.wav",
+      "sha256": "3ccdf5fda7c25f6a5868177b9410d0b9216279584968de6e26ab219a9d3de1fd"
+    },
+    {
+      "family": "crystal_break_large",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_large_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_large_01.wav",
+      "sha256": "92f61a4cf6d126164effd0e46d8b54b1d44997de8e723a991cdaf1cd7322f194"
+    },
+    {
+      "family": "crystal_break_large",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_large_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_large_02.wav",
+      "sha256": "eac1a1f03069b8ad0780e248edf34e274685b85516daccb3ed21fb2e122ee4ee"
+    },
+    {
+      "family": "crystal_break_large",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_large_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_large_03.wav",
+      "sha256": "224a7e54eed502fba4a9408d5f7d845f87011c62ae2839851332600acfad47cc"
+    },
+    {
+      "family": "crystal_break_large",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_break_large_04.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_break_large_04.wav",
+      "sha256": "42efdd318b1ad2616378be0166b29b5b008f74169cc95a15bf964c770371b8e0"
+    },
+    {
+      "family": "crystal_debris",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_debris_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_debris_01.wav",
+      "sha256": "a59ea1bfaf07d875774911a975275d98aea16f69eed3181fba53d1a4511db133"
+    },
+    {
+      "family": "crystal_debris",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_debris_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_debris_02.wav",
+      "sha256": "293010f47338e2ac9f63b27caeecf7beaa9366fa3dcc8d225156e70ac4b9ffb2"
+    },
+    {
+      "family": "crystal_debris",
+      "path": "Assets/_Game/Audio/Selected/Crystal/crystal_debris_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Crystal/crystal_debris_03.wav",
+      "sha256": "4c271cb1ccdc24fca4476b2f4e02a9ef7fdef8bf1cb07a9a40af01e511072d19"
+    },
+    {
+      "family": "gate_open",
+      "path": "Assets/_Game/Audio/Selected/Finish/gate_open_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Finish/gate_open_01.wav",
+      "sha256": "1ac87314be1df48243c510fb42438f84b82c2d863882359d25b85343e82648e1"
+    },
+    {
+      "family": "gate_open",
+      "path": "Assets/_Game/Audio/Selected/Finish/gate_open_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Finish/gate_open_02.wav",
+      "sha256": "71d7aa9e551316a63d584116d7bb8d11a39576e8f4b0f6ac30211b6feaef591f"
+    },
+    {
+      "family": "fail_squeeze",
+      "path": "Assets/_Game/Audio/Selected/Outcome/fail_squeeze_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Outcome/fail_squeeze_01.wav",
+      "sha256": "767d6699fc8eb7a841d2febe145fdab9554dca509e3c5197fbe0163e5211d403"
+    },
+    {
+      "family": "fail_squeeze",
+      "path": "Assets/_Game/Audio/Selected/Outcome/fail_squeeze_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Outcome/fail_squeeze_02.wav",
+      "sha256": "89dc992a0b9eb2da78789102e9bb8c4db7829c613854e0da5363e0d10ea4d278"
+    },
+    {
+      "family": "fail_pop",
+      "path": "Assets/_Game/Audio/Selected/Outcome/fail_pop_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Outcome/fail_pop_01.wav",
+      "sha256": "b3a476c92581d514b0aee23e998f8e388d467da4b3c66cee390b4fd748b93b23"
+    },
+    {
+      "family": "fail_pop",
+      "path": "Assets/_Game/Audio/Selected/Outcome/fail_pop_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Outcome/fail_pop_02.wav",
+      "sha256": "0b20c5f75f9cb8962487858d20478bc3cd278eaf2a2caab958892bcd02c1d6b6"
+    },
+    {
+      "family": "fail_pop",
+      "path": "Assets/_Game/Audio/Selected/Outcome/fail_pop_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Outcome/fail_pop_03.wav",
+      "sha256": "dafa80471f4d2c442a674de12681855342fe66736e3604f1360351e8a5c420b9"
+    },
+    {
+      "family": "victory",
+      "path": "Assets/_Game/Audio/Selected/Outcome/victory_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Outcome/victory_01.wav",
+      "sha256": "cf78bb190c56bb08ca3cde85e479d284c2334147df2d490034f76d71f45d75eb"
+    },
+    {
+      "family": "defeat",
+      "path": "Assets/_Game/Audio/Selected/Outcome/defeat_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Outcome/defeat_01.wav",
+      "sha256": "99367a6692458dcb924081b0e8dcabb5c587c007090dd47622f9168992d3f816"
+    },
+    {
+      "family": "slime_takeoff",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_jump_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_takeoff_01.wav",
+      "selected_download": "jump.mp3",
+      "sha256": "b98a335084e8aa223a3585554bd4b2a4b45d0f89fedd6795d435d9679c42edf6"
+    },
+    {
+      "family": "slime_takeoff",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_jump_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_takeoff_02.wav",
+      "selected_download": "jump.mp3",
+      "sha256": "739b83a2f4f3ce14ae5d3dd0db7d6e166e144eb53850cb808f5f943e38f0b5dd"
+    },
+    {
+      "family": "slime_takeoff",
+      "path": "Assets/_Game/Audio/Selected/Slime/slime_jump_03.wav",
+      "source": "Assets/_Game/Audio/Procedural/v02/Slime/slime_takeoff_03.wav",
+      "selected_download": "jump.mp3",
+      "sha256": "200f66702c64540aa81d03f354662655b7c3ed599e5a71be81c6756c21e3dc73"
+    },
+    {
+      "family": "slime_shoot",
+      "path": "Assets/_Game/Audio/Selected/Shot/slime_shoot_01.wav",
+      "source": "Assets/_Game/Audio/Procedural/v04-foley/Shot/slime_shot_01.wav",
+      "selected_download": "shot.mp3",
+      "sha256": "ee1b1bc418a3d94860a0ffdccda3bcccb82e639b8cf83e6049018d4c376227a1"
+    },
+    {
+      "family": "slime_shoot",
+      "path": "Assets/_Game/Audio/Selected/Shot/slime_shoot_02.wav",
+      "source": "Assets/_Game/Audio/Procedural/v04-foley/Shot/slime_shot_02.wav",
+      "selected_download": "shot.mp3",
+      "sha256": "990e48a074c49782eb90096b90f94919f57d7a5e0ee4fb5c2258e89b2fbe8434"
+    }
+  ],
+  "clip_count": 68
+}

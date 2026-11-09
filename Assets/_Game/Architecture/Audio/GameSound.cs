@@ -9,6 +9,7 @@ namespace Game.Audio
         SlimeShoot, ProjectileFlightLoop, ProjectileImpact, ProjectileFizzle,
         CrystalBreakSmall, CrystalBreakLarge, CrystalDebris, GateOpen,
         FailSqueeze, FailPop, Victory, Defeat,
-        MainMenuMusic, GameplayMusic, UiCoin
+        MainMenuMusic, GameplayMusic, UiCoin,
+        PoolSplash
     }
 }

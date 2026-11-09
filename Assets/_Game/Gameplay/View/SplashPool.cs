@@ -75,6 +75,8 @@ namespace Game.Gameplay.View
                     _properties.SetColor(TopColorId, _colors.Value.TopColor);
                 }
                 speck.Renderer.SetPropertyBlock(_properties);
+                speck.Transform.position = origin;
+                speck.Transform.localScale = Vector3.one * speck.Size;
                 speck.Transform.gameObject.SetActive(true);
             }
         }

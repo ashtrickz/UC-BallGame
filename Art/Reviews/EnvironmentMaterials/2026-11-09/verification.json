@@ -1,0 +1,103 @@
+{
+  "date": "2026-11-09",
+  "restorePoint": "89119cb0a636447510c2647d102fea9e25d5560e",
+  "scope": "Parameters of three existing environment materials only",
+  "changedMaterials": [
+    {
+      "path": "Assets/_Game/Art/Environment/Canyon/Materials/Canyon Vertex Surface.mat",
+      "baseColor": [
+        1.0,
+        0.9,
+        0.8399999,
+        1.0
+      ],
+      "shadowTint": [
+        0.0799999759,
+        0.179999977,
+        0.299999982,
+        1.0
+      ],
+      "brightness": 0.99,
+      "variation": 0.05
+    },
+    {
+      "path": "Assets/_Game/Art/Environment/Canyon/Materials/Distant Sand.mat",
+      "baseColor": [
+        0.81,
+        0.65,
+        0.4699999,
+        1.0
+      ],
+      "shadowTint": [
+        0.279999971,
+        0.339999974,
+        0.49,
+        1.0
+      ],
+      "brightness": 0.95,
+      "variation": 0.04
+    },
+    {
+      "path": "Assets/_Game/Art/Environment/Canyon/Materials/Route Sand.mat",
+      "baseColor": [
+        1.0,
+        0.82,
+        0.58,
+        1.0
+      ],
+      "shadowTint": [
+        0.379999936,
+        0.439999968,
+        0.58,
+        1.0
+      ],
+      "brightness": 0.98,
+      "variation": 0.012
+    }
+  ],
+  "validation": {
+    "campaignSameCameraAndFrame": true,
+    "wallSameCameraSeedAndFrame": true,
+    "wallSeed": 424242,
+    "protectedGameFilesHashChecked": 242,
+    "changedProtectedGameFiles": 0,
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "editorStateRestored": true,
+    "originalMaterials": "original-materials/",
+    "uiShadersAndCharacterMaterialsUnchanged": true
+  },
+  "scorecard": [
+    {
+      "axis": "Palette discipline",
+      "before": 3,
+      "after": 4,
+      "evidence": "Warmer sandstone, subdued outer sand and a distinct but restrained route."
+    },
+    {
+      "axis": "Style uniformity",
+      "before": 3,
+      "after": 3,
+      "evidence": "Existing low-poly style retained; the warmer environment is closer to the menu palette."
+    },
+    {
+      "axis": "Lighting depth",
+      "before": 3,
+      "after": 3,
+      "evidence": "Material shadow tint deepened; lighting, shader bands and geometry unchanged."
+    }
+  ],
+  "references": [
+    "craft-game-floors/SKILL.md",
+    "craft-game-floors/references/art-direction.md",
+    "craft-game-floors/references/visual-scorecard.md",
+    "unity-cli/references/playmode-verification-loop.md",
+    "https://docs.unity.com/en-us/engine/6000.3/script-reference/unityengine/application/runinbackground"
+  ],
+  "notes": [
+    "No packages, textures, meshes, scene settings, UI, shader source or character material assets were changed.",
+    "Existing dirty TextMesh Pro files predate this task.",
+    "Re-running the Canyon environment installer currently resets these material parameters to its defaults; originals and final parameter values are retained in this review folder.",
+    "No new tests were added for this material-only change. Visual checks covered campaign, dense WALL and charging."
+  ]
+}

@@ -108,7 +108,7 @@ namespace Game.Integration.Audio
                     break;
                 case SlimePresentationCue.DefeatPreparing: Play(GameSound.FailSqueeze); break;
                 case SlimePresentationCue.Popped: Play(GameSound.FailPop); break;
-                case SlimePresentationCue.PoolSplash: Play(GameSound.ProjectileImpact, 0.7f); break;
+                case SlimePresentationCue.PoolSplash: Play(GameSound.PoolSplash); break;
             }
         }
 

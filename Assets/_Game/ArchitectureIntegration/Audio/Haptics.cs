@@ -25,8 +25,8 @@ namespace Game.Integration.Audio
 #if UNITY_ANDROID && !UNITY_EDITOR
             ReleaseAndroid();
             _initialized = _failed = false;
-            Application.quitting -= ReleaseAndroid;
-            Application.quitting += ReleaseAndroid;
+            UnityEngine.Application.quitting -= ReleaseAndroid;
+            UnityEngine.Application.quitting += ReleaseAndroid;
 #endif
         }
 
@@ -57,6 +57,28 @@ namespace Game.Integration.Audio
             if (!Enabled || milliseconds <= 0 || intensity <= 0 || float.IsNaN(intensity) || float.IsInfinity(intensity)) return;
 #if UNITY_ANDROID && !UNITY_EDITOR
             UseAndroid(() => PlayOneShot(milliseconds, Mathf.Clamp(Mathf.RoundToInt(Mathf.Clamp01(intensity) * 255), 1, 255)));
+#elif UNITY_IOS && !UNITY_EDITOR
+            Play(intensity >= 0.5f ? HapticKind.Success : HapticKind.Tap);
+#endif
+        }
+
+        /// <summary>Schedules the charge's continuously increasing amplitude; Cancel ends it at finger release.</summary>
+        public static void StartCharge(float initialCharge, float chargePerSecond, float seconds)
+        {
+            if (!Enabled) return;
+#if UNITY_ANDROID && !UNITY_EDITOR
+            UseAndroid(() =>
+            {
+                var pattern = ChargeHapticPattern.Build(initialCharge, chargePerSecond, seconds, _hasAmplitudeControl);
+                if (pattern.Timings.Length == 0) return;
+                if (_sdk >= 26)
+                {
+                    using var effects = new AndroidJavaClass("android.os.VibrationEffect");
+                    using var effect = effects.CallStatic<AndroidJavaObject>("createWaveform", pattern.Timings, pattern.Amplitudes, -1);
+                    _vibrator.Call("vibrate", effect);
+                }
+                else _vibrator.Call("vibrate", pattern.Timings, -1);
+            });
 #endif
         }
 

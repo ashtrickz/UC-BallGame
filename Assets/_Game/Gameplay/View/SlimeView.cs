@@ -203,9 +203,11 @@ namespace Game.Gameplay.View
         }
 
         /// <summary>Pinches the drop off and flies it to the first contact. Completes at the moment of impact.</summary>
-        public async UniTask ShootAsync(Vector3 touchCenter, Vector3 impactPoint, float projectileDiameter, CancellationToken token)
+        public async UniTask ShootAsync(Vector3 touchCenter, Vector3 impactPoint, float projectileDiameter,
+            float feedbackStrength, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
+            var strength = Mathf.Clamp01(feedbackStrength);
             _dropDiameter = projectileDiameter;
             _pinchStart = drop.position;
             _pinching = true;
@@ -217,7 +219,7 @@ namespace Game.Gameplay.View
             _impactVelocity -= 3.4f;
             PresentationCue?.Invoke(SlimePresentationCue.ShotReleased);
             var start = drop.position;
-            splashes?.Burst(start, 7, 0.55f);
+            splashes?.Burst(start, Mathf.RoundToInt(Mathf.Lerp(4, 8, strength)), Mathf.Lerp(0.35f, 0.6f, strength));
             var radius = projectileDiameter * 0.5f;
             var target = touchCenter.z > start.z + 0.1f ? touchCenter : impactPoint;
             target.y = Mathf.Max(radius, 0.15f);
@@ -237,7 +239,8 @@ namespace Game.Gameplay.View
             finally { _flying = false; }
             drop.gameObject.SetActive(false);
             PresentationCue?.Invoke(SlimePresentationCue.ShotImpact);
-            splashes?.Burst(impactPoint + Vector3.up * 0.2f, 14, 0.9f + radius);
+            splashes?.Burst(impactPoint + Vector3.up * 0.2f, Mathf.RoundToInt(Mathf.Lerp(7, 20, strength)),
+                Mathf.Lerp(0.65f, 1.85f, strength), null, Mathf.Lerp(0.8f, 1.25f, strength));
         }
 
         // ---------------------------------------------------------------- defeat and victory

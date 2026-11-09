@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-09",
+  "features": [
+    "22 ms landing pulse at intensity 0.45",
+    "28 ms pool-entry pulse at intensity 0.55",
+    "One finite native charge envelope; amplitude 26..184 with 20 ms samples",
+    "On/off fallback increases duty cycle instead of requesting unsupported amplitudes",
+    "Charge cancellation on release, pause, overcharge, restart and disposal"
+  ],
+  "validation": {
+    "targetedTests": 8,
+    "passed": 8,
+    "androidConditionalCodeErrors": 0,
+    "androidApkBuilt": false,
+    "physicalDeviceTested": false
+  },
+  "references": [
+    "https://developer.android.com/reference/android/os/VibrationEffect#createWaveform(long[],%20int[],%20int)",
+    "https://developer.android.com/reference/android/os/Vibrator#hasAmplitudeControl()"
+  ],
+  "notes": [
+    "The existing Android VIBRATE manifest processor is retained.",
+    "Gameplay feedback is separate from audio volume and audio-library assignment.",
+    "UI, shaders and character material files were not edited for this task. Concurrent user edits to Menu.unity and SettingsPopup.prefab were preserved.",
+    "The continuous charge envelope is implemented for Android; iOS retains discrete landing feedback through the existing native bridge."
+  ]
+}

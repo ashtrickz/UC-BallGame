@@ -48,6 +48,7 @@ namespace Game.Gameplay.View
                 throw new InvalidOperationException("GameplayStage has unassigned references. Run Tools/Ball Game/Gameplay/Install Into Game Scene.");
             slime.Bind(Clock, viewConfig);
             crystals.Bind(Clock, viewConfig);
+            preview.Bind(Clock, viewConfig);
             track.Bind(Clock, viewConfig);
             doors.Bind(Clock);
             cameraRig.Bind(Clock, viewConfig);
