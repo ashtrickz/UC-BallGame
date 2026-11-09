@@ -4,7 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>
     /// Wave of infection and shattering outward from the blast centre, with debris bursts. Destroyed crystals stay

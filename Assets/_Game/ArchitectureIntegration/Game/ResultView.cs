@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Game.UI;
+using Slime.UI;
 using TMPro;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// Standalone result card. The presenter supplies all copy and actions through its model. The fly-in is one
     /// sequence built on first show and replayed afterwards; an interrupted fly-in snaps the card to its rest pose.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Game", sourceAssembly: "Game.Features.Game", sourceClassName: "ResultView")]
     public sealed class ResultView : ViewBase
     {
         private const float CardStartY = -1700f;
@@ -26,9 +27,7 @@ namespace Game.Integration.Game
         [SerializeField] private TMP_Text title;
         [SerializeField] private TMP_Text subtitle;
         [SerializeField] private UnityEngine.UI.Button primaryButton;
-        [SerializeField] private TMP_Text primaryLabel;
         [SerializeField] private UnityEngine.UI.Button secondaryButton;
-        [SerializeField] private TMP_Text secondaryLabel;
         [SerializeField] private UnityEngine.UI.Button menuButton;
         [SerializeField] private RectTransform card;
         [SerializeField] private UnityEngine.UI.Image dim;
@@ -48,7 +47,7 @@ namespace Game.Integration.Game
 
         public bool IsAnimating => _flyIn != null && _flyIn.IsActive() && _flyIn.IsPlaying();
 
-        public IEnumerable<TMP_Text> DynamicTextLabels => new[] { title, subtitle, primaryLabel, secondaryLabel };
+        public IEnumerable<TMP_Text> DynamicTextLabels => new[] { title, subtitle };
 
         public void Initialize(ResultViewModel model)
         {
@@ -59,20 +58,14 @@ namespace Game.Integration.Game
             if (subtitle != null)
                 subtitle.text = model.Subtitle;
 
-            if (primaryLabel != null)
-                primaryLabel.text = model.PrimaryLabel;
-
             if (secondaryButton != null)
-            {
-                var hasSecondary = !string.IsNullOrEmpty(model.SecondaryLabel) && model.SecondaryAction != null;
-                secondaryButton.gameObject.SetActive(hasSecondary);
-            }
-
-            if (secondaryLabel != null)
-                secondaryLabel.text = model.SecondaryLabel ?? string.Empty;
+                secondaryButton.gameObject.SetActive(model.SecondaryAction != null);
 
             if (menuButton != null)
                 menuButton.gameObject.SetActive(model.MenuAction != null);
+
+            if (card != null)
+                UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(card);
         }
 
         public void Show()

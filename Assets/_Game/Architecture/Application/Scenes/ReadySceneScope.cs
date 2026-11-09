@@ -1,11 +1,11 @@
-using Game.Foundation;
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Slime.Foundation;
 using VContainer;
 using VContainer.Unity;
 
-namespace Game.App.Scenes
+namespace Slime.App.Scenes
 {
     [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Game.Architecture.Bootstrap.Unity", sourceAssembly: "Assembly-CSharp", sourceClassName: "ReadySceneScope")]
     public abstract class ReadySceneScope : LifetimeScope

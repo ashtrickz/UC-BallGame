@@ -1,23 +1,26 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Reflection;
 using Cysharp.Threading.Tasks;
-using Game.App.Game;
-using Game.App.Loading;
-using Game.App.Scenes;
-using Game.Audio;
-using Game.Integration.Composition;
-using Game.Integration.Game;
-using Game.Integration.Gameplay;
-using Game.Integration.Menu;
-using Game.UI;
+using Slime.Audio;
 using NUnit.Framework;
+using Slime.App.Game;
+using Slime.App.Loading;
+using Slime.App.Scenes;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Settings;
+using Slime.Menu;
+using Slime.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.PlayMode
 {
     public sealed class FeedbackButtonLifecycleTests
     {
@@ -73,14 +76,14 @@ namespace Game.Foundation.Tests
                     .Timeout(TimeSpan.FromSeconds(5));
                 var popup = UnityEngine.Object.FindFirstObjectByType<SettingsPopupView>();
                 AssertFeedback(popup.gameObject, feedback);
-                popup.transform.Find("RootTransform/Close").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+                popup.transform.Find("RootTransform/CloseButton").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
                 await popupTask;
 
                 scope.Container.Resolve<GameSession>().StartRound(GameMode.Wall);
                 await scope.Container.Resolve<GameNavigation>().OpenAsync(GameNavigation.GameScene);
                 var gameScope = UnityEngine.Object.FindFirstObjectByType<GameScope>();
                 await gameScope.Ready;
-                var stage = gameScope.Container.Resolve<global::Game.Gameplay.View.GameplayStage>();
+                var stage = gameScope.Container.Resolve<Slime.Gameplay.View.GameplayStage>();
                 AssertFeedback(UnityEngine.Object.FindFirstObjectByType<GameView>().gameObject, feedback);
                 AssertFeedback(gameScope.Container.Resolve<ResultView>().gameObject, feedback);
                 AssertFeedback(stage.Tutorial.gameObject, feedback);

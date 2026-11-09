@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Settings
+namespace Slime.Settings
 {
     public enum SettingsTab { Video, Audio, Game, Controls }
     public enum SettingId

@@ -1,4 +1,4 @@
-namespace Game.Gameplay.Generation
+namespace Slime.Gameplay.Core.Generation
 {
     /// <summary>
     /// SplitMix64. A fixed, local algorithm: the generator owns its stream, so effects, sound or animation

@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace Game.Editor
+namespace Slime.Editor
 {
     /// <summary>Import rules for the game's authored textures and selected audio, including regenerated assets.</summary>
     public sealed class GameAssetImportPolicy : AssetPostprocessor

@@ -1,13 +1,14 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Gameplay.View;
-using Game.UI;
+using Slime.Gameplay.View;
+using Slime.UI;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Three reusable world-canvas stars: spring out of the well, follow a sine arc, then light popup slots.</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Game", sourceAssembly: "Game.Features.Game", sourceClassName: "WorldStarsView")]
     public sealed class WorldStarsView : MonoBehaviour
     {
         private const float FullTurn = 360f;

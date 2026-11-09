@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Gameplay.Levels
+namespace Slime.Gameplay.Core.Levels
 {
     /// <summary>Source of seeds for generated levels.</summary>
     public interface ISeedProvider

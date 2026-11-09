@@ -1,6 +1,6 @@
-using Game.Settings;
+using Slime.Settings;
 
-namespace Game.Integration.Settings
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Selects the settings supported by the compiled player platform.</summary>
     public sealed class SettingsPackProvider

@@ -1,13 +1,13 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Game;
-using Game.Gameplay.Levels;
-using Game.Integration.Gameplay;
-using Game.UI;
+using Slime.App.Game;
+using Slime.Gameplay.Core.Levels;
+using Slime.Infrastructure.Settings;
+using Slime.UI;
 using UnityEngine;
 
-namespace Game.Integration.Menu
+namespace Slime.Menu
 {
     /// <summary>Menu scenario: level choice, the crystal wall and settings. Starting a round is delegated to the launcher.</summary>
     public sealed class MenuController : IController

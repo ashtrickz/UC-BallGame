@@ -1,7 +1,7 @@
-using Game.Localization;
-using Game.Settings;
+using Slime.Localization;
+using Slime.Settings;
 
-namespace Game.Integration.Localization
+namespace Slime.Infrastructure.Localization
 {
     /// <summary>Creates localization after its bundled configuration and fallback fonts are ready.</summary>
     public sealed class LocalizationServiceFactory

@@ -3,7 +3,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Game.Assets
+namespace Slime.Assets
 {
     public sealed class AddressablesAssetBackend : IAssetBackend
     {

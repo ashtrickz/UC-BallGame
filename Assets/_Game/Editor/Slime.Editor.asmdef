@@ -1,0 +1,34 @@
+{
+  "name": "Slime.Editor",
+  "rootNamespace": "Slime.Editor",
+  "references": [
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "GUID:d53dea1b37dfc874db8ba0f01970bded",
+    "GUID:d40d1a3658e75a64fb6e4c4f1840be99",
+    "GUID:44b1270a4efce154f82ba0106a125bf6",
+    "GUID:4fe53e4e854b9cb4d962c89512c29091",
+    "GUID:b4517358f190e234e925cec921c0cb53",
+    "GUID:b8ade7ee5ade01149b5577e8738c3706",
+    "GUID:dee1813af771f554eb094f0b8438b6d7",
+    "GUID:a996807419652a443a29bb1262d35555",
+    "UniTask",
+    "VContainer",
+    "Unity.Addressables",
+    "Unity.ResourceManager",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
+    "UnityEditor.UI",
+    "Unity.InputSystem",
+    "Unity.Addressables.Editor",
+    "GUID:1839419fae3aeed4c8869d6e945540a1",
+    "GUID:3ea074f0615e5ef4d8f7c40c1c129e80",
+    "GUID:10184a36dc038e74baa9e3dd27a68dfd",
+    "GUID:d3c123c08e6ca5140aa9528db58f23cf",
+    "GUID:a52c20f2b72bf2d4a9dfbd8e2f223aee",
+    "GUID:aa357f12ba38b9f47834681b4f33b5ba"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}

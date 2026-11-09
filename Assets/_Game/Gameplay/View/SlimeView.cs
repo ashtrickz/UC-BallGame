@@ -1,11 +1,12 @@
 using System.Threading;
 using System;
 using Cysharp.Threading.Tasks;
-using Game.Foundation;
-using Game.Gameplay.Config;
+using Slime.Foundation;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Moments of the slime presentation that sound and haptics react to.</summary>
     public enum SlimePresentationCue
@@ -27,6 +28,7 @@ namespace Game.Gameplay.View
     /// Every critical action is an awaitable that completes when its animation really finishes and is cancelled
     /// (never completed) by the attempt token.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "SlimeView")]
     public sealed class SlimeView : MonoBehaviour, IFrameTickable
     {
         private const string WobbleProperty = "_Wobble";

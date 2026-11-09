@@ -1462,7 +1462,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -1862,7 +1862,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4920c20a7f6b8ee43bd52a91f53cc28a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.SlimeLab::Game.Prototypes.SlimeLab.SlimeLabHud
+  m_EditorClassIdentifier: Slime.Prototypes.SlimeLab::Slime.Prototypes.SlimeLab.SlimeLabHud
   demo: {fileID: 1546357111}
   stateLabel: {fileID: 1561634092}
   massLabel: {fileID: 593620333}
@@ -2993,7 +2993,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -3122,7 +3122,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -5233,7 +5233,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16a082a744a4d4441855f444a4fcbd8c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.SlimeLab::Game.Prototypes.SlimeLab.SlimeLabDemo
+  m_EditorClassIdentifier: Slime.Prototypes.SlimeLab::Slime.Prototypes.SlimeLab.SlimeLabDemo
   body: {fileID: 390829724}
   drop: {fileID: 2008173884}
   bridge: {fileID: 1035154619}

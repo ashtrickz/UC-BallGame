@@ -1,24 +1,27 @@
-using Game.Foundation;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Game.App.Loading;
-using Game.Gameplay.View;
-using Game.Integration.Gameplay;
-using Game.Integration.Localization;
+using Slime.App.Loading;
+using Slime.Foundation;
+using Slime.Gameplay.View;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Settings;
+using Slime.Infrastructure.Localization;
 using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
 
-namespace Game.Editor
+namespace Slime.Editor
 {
     /// <summary>Authoring only: stores keys and font bindings on existing UI, with no runtime string matching.</summary>
     public static class LocalizationUiInstaller
     {
-        private const string PopupPath = "Assets/_Game/Prefabs/UI/SettingsPopup.prefab";
+        private const string PopupPath = "Assets/_Game/Prefabs/UI/Popups/SettingsPopup.prefab";
         private const string FontFolder = "Assets/_Game/Art/Fonts/Localization";
         private static Dictionary<string, string> _english;
 
@@ -128,9 +131,9 @@ namespace Game.Editor
         private static void BindHierarchy(GameObject root)
         {
             var dynamic = new HashSet<TMP_Text>();
-            foreach (var view in root.GetComponentsInChildren<Game.Integration.Game.GameView>(true))
+            foreach (var view in root.GetComponentsInChildren<GameView>(true))
                 dynamic.UnionWith(view.DynamicTextLabels);
-            foreach (var view in root.GetComponentsInChildren<Game.Integration.Game.ResultView>(true))
+            foreach (var view in root.GetComponentsInChildren<ResultView>(true))
                 dynamic.UnionWith(view.DynamicTextLabels);
             foreach (var loading in root.GetComponentsInChildren<LoadingScreenView>(true))
                 dynamic.UnionWith(loading.DynamicTextLabels);

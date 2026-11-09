@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Game.Audio;
-using Game.Gameplay.View;
+using Slime.Audio;
+using Slime.Gameplay.View;
 using UnityEngine;
+using Slime.Infrastructure.Audio;
 
-namespace Game.Integration.Audio
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Owns one gameplay scene's sounds; view contacts drive the actual one-shots.</summary>
     public sealed class GameplayAudioPresenter : IDisposable

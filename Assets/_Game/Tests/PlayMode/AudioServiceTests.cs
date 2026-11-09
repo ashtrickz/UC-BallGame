@@ -1,17 +1,19 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Assets;
-using Game.Audio;
-using Game.Integration.Audio;
-using Game.Integration.Settings;
-using Game.Settings;
 using NUnit.Framework;
+using Slime.Assets;
+using Slime.Audio;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Infrastructure.Settings;
+using Slime.Settings;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.PlayMode
 {
     public sealed partial class AudioServiceTests
     {

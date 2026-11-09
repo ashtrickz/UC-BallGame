@@ -1,11 +1,12 @@
 using System;
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
-using Game.Gameplay.Levels;
 using NUnit.Framework;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Generation;
+using Slime.Gameplay.Core.Levels;
 using UnityEditor;
 
-namespace Game.Gameplay.Tests
+namespace Slime.Gameplay.Tests.EditMode
 {
     /// <summary>Authored independent star thresholds, boundary behavior and achievable targets on real generated layouts.</summary>
     public sealed class StarCriteriaTests

@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.App.Loading
+namespace Slime.App.Loading
 {
     public sealed class InitializationModel : IInitializationModel
     {

@@ -1,4 +1,4 @@
-namespace Game.Audio
+namespace Slime.Audio
 {
     public enum GameSound
     {

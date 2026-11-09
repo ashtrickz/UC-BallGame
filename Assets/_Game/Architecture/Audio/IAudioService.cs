@@ -1,8 +1,8 @@
-using Game.Foundation;
 using System;
+using Slime.Foundation;
 using UnityEngine;
 
-namespace Game.Audio
+namespace Slime.Audio
 {
     public enum MusicTheme
     {

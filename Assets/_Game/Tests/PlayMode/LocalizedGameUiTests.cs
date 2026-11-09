@@ -1,28 +1,30 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Game;
-using Game.App.Loading;
-using Game.App.Scenes;
-using Game.Integration.Composition;
-using Game.Integration.Game;
-using Game.Integration.Gameplay;
-using Game.Integration.Localization;
-using Game.Integration.Menu;
-using Game.Integration.Settings;
-using Game.Localization;
-using Game.Settings;
-using Game.UI;
 using NUnit.Framework;
+using Slime.App.Game;
+using Slime.App.Loading;
+using Slime.App.Scenes;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Settings;
+using Slime.Infrastructure.Localization;
+using Slime.Menu;
+using Slime.Localization;
+using Slime.Settings;
+using Slime.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.PlayMode
 {
     public sealed class LocalizedGameUiTests
     {
@@ -70,7 +72,7 @@ namespace Game.Foundation.Tests
                     AssertNoMissingGlyphs(popup.gameObject);
                 }
                 Assert.AreEqual(settings.CurrentLanguage, new UnitySettingsRuntime(SettingsPack.Mobile, new LanguageOptionsProvider(), new NullDisplaySettings()).CurrentLanguage);
-                popup.transform.Find("RootTransform/Close").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+                popup.transform.Find("RootTransform/CloseButton").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
                 await popupTask;
 
                 Select(settings, "uk");
@@ -96,7 +98,7 @@ namespace Game.Foundation.Tests
                 await UniTask.WaitUntil(() => debug.Tutorial != null && debug.Tutorial.Step == "tour").Timeout(TimeSpan.FromSeconds(10));
                 var tutorial = debug.Tutorial;
                 Select(settings, "zh-CN");
-                Assert.AreEqual(localization.Get("tutorial.tour"), gameScope.Container.Resolve<global::Game.Gameplay.View.GameplayStage>().Tutorial.Message);
+                Assert.AreEqual(localization.Get("tutorial.tour"), gameScope.Container.Resolve<Slime.Gameplay.View.GameplayStage>().Tutorial.Message);
                 Assert.AreSame(tutorial, debug.Tutorial);
                 Assert.AreEqual("tour", tutorial.Step);
                 debug.SkipTutorial();

@@ -1,10 +1,11 @@
-using Game.UI;
+using Slime.UI;
 using UnityEditor;
 using UnityEngine;
 
-namespace Game.Editor
+namespace Slime.Editor
 {
     [CustomEditor(typeof(FeedbackButton), true), CanEditMultipleObjects]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Editor", sourceAssembly: "Game.Editor", sourceClassName: "FeedbackButtonEditor")]
     public class FeedbackButtonEditor : UnityEditor.UI.ButtonEditor
     {
         private SerializedProperty _punchEnabled, _punchTarget, _punchStrength, _punchDuration;

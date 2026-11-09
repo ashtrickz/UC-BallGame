@@ -1,13 +1,14 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Assets;
 using NUnit.Framework;
+using Slime.Assets;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class AssetOwnershipTests
     {

@@ -1,7 +1,7 @@
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEngine;
 
-namespace Game.Integration.Composition
+namespace Slime.Infrastructure.Frame
 {
     /// <summary>Reads Unity's unscaled frame interval at the project loop boundary.</summary>
     public sealed class UnityFrameTimeSource : IFrameTimeSource

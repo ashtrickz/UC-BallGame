@@ -1,0 +1,10 @@
+{
+  "name": "Slime.Users",
+  "rootNamespace": "Slime.Users",
+  "references": [
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "UniTask"
+  ],
+  "includePlatforms": [],
+  "autoReferenced": true
+}

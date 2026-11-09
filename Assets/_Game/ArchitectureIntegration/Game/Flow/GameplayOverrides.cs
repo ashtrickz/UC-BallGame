@@ -1,4 +1,4 @@
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// The only way debug tooling can steer the attempt: an exact hold limit and whether the tutorial may start.

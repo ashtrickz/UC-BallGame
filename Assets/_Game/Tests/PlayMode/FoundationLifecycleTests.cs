@@ -1,22 +1,24 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Game.App.Loading;
-using Game.App.Game;
-using Game.App.Scenes;
-using Game.Integration.Composition;
-using Game.Integration.Gameplay;
-using Game.Integration.Menu;
-using Game.UI;
-using Game.Users;
+using Slime.UI;
 using NUnit.Framework;
+using Slime.App.Game;
+using Slime.App.Loading;
+using Slime.App.Scenes;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.Infrastructure.Settings;
+using Slime.Menu;
+using Slime.Users;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.PlayMode
 {
     public sealed class FoundationLifecycleTests
     {
@@ -73,7 +75,7 @@ namespace Game.Foundation.Tests
                 var menu = UnityEngine.Object.FindFirstObjectByType<MenuView>();
                 Assert.AreEqual(GamePhase.Menu, session.Phase);
                 Assert.IsTrue(menu.IsVisible);
-                Assert.IsNull(UnityEngine.Object.FindFirstObjectByType<global::Game.Integration.Game.GameScope>());
+                Assert.IsNull(UnityEngine.Object.FindFirstObjectByType<Slime.Composition.GameScope>());
                 AssignedButton(menu, "settingsButton").onClick.Invoke();
                 await UniTask.Delay(400, ignoreTimeScale: true);
                 var popup = UnityEngine.Object.FindFirstObjectByType<SettingsPopupView>();
@@ -95,11 +97,11 @@ namespace Game.Foundation.Tests
                 Assert.IsTrue(menu == null);
                 Assert.IsTrue(menuScope == null);
                 Assert.IsFalse(SceneManager.GetSceneByName(GameNavigation.MenuScene).isLoaded);
-                var sceneScope = UnityEngine.Object.FindFirstObjectByType<global::Game.Integration.Game.GameScope>();
+                var sceneScope = UnityEngine.Object.FindFirstObjectByType<Slime.Composition.GameScope>();
                 Assert.AreSame(root, sceneScope.Parent);
                 Assert.AreSame(session, sceneScope.Container.Resolve<GameSession>());
                 Assert.AreSame(users, sceneScope.Container.Resolve<IUserRepository>());
-                var game = UnityEngine.Object.FindFirstObjectByType<global::Game.Integration.Game.GameView>();
+                var game = UnityEngine.Object.FindFirstObjectByType<Slime.Gameplay.Presentation.GameView>();
                 Assert.IsTrue(game.IsVisible);
 
                 await navigation.OpenAsync(GameNavigation.MenuScene);
@@ -112,7 +114,7 @@ namespace Game.Foundation.Tests
                 await ChooseFirstLevelAsync();
                 await UniTask.WaitUntil(() => !navigation.IsTransitioning).Timeout(TimeSpan.FromSeconds(10));
                 Assert.AreEqual(2, session.RoundNumber);
-                game = UnityEngine.Object.FindFirstObjectByType<global::Game.Integration.Game.GameView>();
+                game = UnityEngine.Object.FindFirstObjectByType<Slime.Gameplay.Presentation.GameView>();
                 var duplicate = new GameObject("DuplicateProjectScope");
                 duplicate.AddComponent<ProjectScope>();
                 await UniTask.Yield();

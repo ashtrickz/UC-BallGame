@@ -1,10 +1,14 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Foundation;
+using Slime.Foundation;
 using VContainer.Unity;
+#if GAME_DEBUG
+using Slime.Diagnostics;
+#endif
+using Slime.Gameplay.Presentation;
 
-namespace Game.Integration.Game
+namespace Slime.Composition
 {
     public sealed class GameEntryPoint : IStartable, ISceneReadiness, IDisposable
     {

@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 585eacf5a3faf63459e0b216288a243a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.SplashPool
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.SplashPool
   defaultMaterial: {fileID: 2100000, guid: b66f9c8591f36114285f582932206a1a, type: 2}
   speckMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   capacity: 64
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fb57803ea0650346ac880969a67cf97, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.SlimeView
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.SlimeView
   body: {fileID: 5374302215294349930}
   eyes:
   - {fileID: 8408195325130803331}

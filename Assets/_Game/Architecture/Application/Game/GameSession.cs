@@ -1,7 +1,7 @@
 using System;
-using Game.Gameplay.Levels;
+using Slime.Gameplay.Core.Levels;
 
-namespace Game.App.Game
+namespace Slime.App.Game
 {
     public enum GamePhase { Menu, Playing }
 

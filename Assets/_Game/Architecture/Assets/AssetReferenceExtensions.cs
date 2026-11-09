@@ -3,7 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 
-namespace Game.Assets
+namespace Slime.Assets
 {
     public static class AssetReferenceExtensions
     {

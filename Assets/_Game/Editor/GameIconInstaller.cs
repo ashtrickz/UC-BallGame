@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
 
-namespace Game.Editor
+namespace Slime.Editor
 {
     /// <summary>Assigns the generated mascot icon set without changing other Player settings.</summary>
     public static class GameIconInstaller

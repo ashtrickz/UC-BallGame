@@ -1,8 +1,8 @@
-using Game.Foundation;
-using Game.UI;
+using Slime.Foundation;
+using Slime.UI;
 using UnityEngine;
 
-namespace Game.Integration.Composition
+namespace Slime.Infrastructure.Frame
 {
     /// <summary>Binds dynamic frame clients and layout services without view-container coupling.</summary>
     public sealed class UiLifecycleBinder

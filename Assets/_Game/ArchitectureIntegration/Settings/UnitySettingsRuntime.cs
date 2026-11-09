@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Game.Settings;
+using Slime.Settings;
 using UnityEngine;
 
-namespace Game.Integration.Settings
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Persists shared preferences and delegates display controls to the compiled platform.</summary>
     public sealed class UnitySettingsRuntime : ISettingsRuntime

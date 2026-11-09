@@ -1,6 +1,6 @@
 using UnityEngine.Audio;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Scene-authored audio references consumed by the configuration provider.</summary>
     public sealed class AudioReferences

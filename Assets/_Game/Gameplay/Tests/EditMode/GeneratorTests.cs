@@ -1,11 +1,12 @@
 using System.Diagnostics;
 using System.Text;
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
-using Game.Gameplay.Level;
 using NUnit.Framework;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Generation;
+using Slime.Gameplay.Core.Level;
 
-namespace Game.Gameplay.Tests
+namespace Slime.Gameplay.Tests.EditMode
 {
     public sealed class GeneratorTests
     {

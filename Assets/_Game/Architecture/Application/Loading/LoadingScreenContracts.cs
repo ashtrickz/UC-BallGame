@@ -1,9 +1,9 @@
-using Game.UI;
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Slime.UI;
 
-namespace Game.App.Loading
+namespace Slime.App.Loading
 {
     public interface ILoadingScreenView : IView
     {

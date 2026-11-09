@@ -1,13 +1,16 @@
+using Slime.Foundation;
 using System;
 using System.Reflection;
 using System.Threading;
-using Game.Gameplay.View;
-using Game.Integration.Game;
-using Game.UI;
 using NUnit.Framework;
+using Slime.Gameplay.View;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
+using Slime.UI;
 using UnityEngine;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.PlayMode
 {
     /// <summary>Exactly the awarded stars launch and arrive; pause freezes flight and cancellation cannot fill a new result.</summary>
     public sealed class WorldStarsViewTests

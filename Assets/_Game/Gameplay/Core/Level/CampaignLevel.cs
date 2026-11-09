@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Levels;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Generation;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Levels;
 
-namespace Game.Gameplay.Level
+namespace Slime.Gameplay.Core.Level
 {
     /// <summary>One fixed crystal of a hand-designed level.</summary>
     public sealed class CrystalSpec

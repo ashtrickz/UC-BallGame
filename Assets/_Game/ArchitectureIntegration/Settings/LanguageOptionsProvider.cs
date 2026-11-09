@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Game.Settings;
+using Slime.Settings;
 using UnityEngine;
 
-namespace Game.Integration.Settings
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Loads player-facing language names from bundled data instead of source literals.</summary>
     public sealed class LanguageOptionsProvider

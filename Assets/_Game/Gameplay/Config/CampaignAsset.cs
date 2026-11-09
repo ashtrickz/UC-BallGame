@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Level;
-using Game.Gameplay.Levels;
+using Slime.Gameplay.Core.Level;
+using Slime.Gameplay.Core.Levels;
 using UnityEngine;
+using Slime.Gameplay.Core.Config;
 
-namespace Game.Gameplay.Config
+namespace Slime.Gameplay.Config
 {
     /// <summary>
     /// The ten fixed campaign levels: crystal placements, route length and the stored control sequence.
     /// Authored by Tools/Ball Game/Gameplay/Campaign/Write Campaign Levels; every level is proven by tests.
     /// </summary>
     [CreateAssetMenu(menuName = "Ball Game/Campaign", fileName = "Campaign")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.Config", sourceAssembly: "Game.Gameplay.Config", sourceClassName: "CampaignAsset")]
     public sealed class CampaignAsset : ScriptableObject
     {
         [Serializable]

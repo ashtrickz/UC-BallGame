@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Threading;
 using System;
-using Game.App.Game;
-using Game.Gameplay.Config;
-using Game.Gameplay.Levels;
+using Slime.App.Game;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Levels;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// Scene scenario of the gameplay: request, level, attempt, scene, start. Owns restart and level changes and

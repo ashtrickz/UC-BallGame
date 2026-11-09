@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Game.Localization;
+using Slime.Localization;
 using TMPro;
 using UnityEngine;
 
-namespace Game.Integration.Localization
+namespace Slime.Infrastructure.Localization
 {
     [CreateAssetMenu(menuName = "Ball Game/Localization Fonts")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Localization", sourceAssembly: "Game.Services", sourceClassName: "LocalizationFonts")]
     public sealed class LocalizationFonts : ScriptableObject
     {
         private const int CjkStart = 0x2E80;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Prototypes.SlimeLab
+namespace Slime.Prototypes.SlimeLab
 {
     // Slime Lab only: candy-colored cartoon jelly and illustrated crystal facets.
     // Turquoise upper body, lime transmitted edges, coral/amethyst obstacles.

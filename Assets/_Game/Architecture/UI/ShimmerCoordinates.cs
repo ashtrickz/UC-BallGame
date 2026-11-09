@@ -1,10 +1,11 @@
 using UnityEngine;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>Sprite-local coordinates for the shared shimmer material, independent of atlas UVs and icon size.</summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(UnityEngine.UI.Graphic))]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.UI", sourceAssembly: "Game.UI", sourceClassName: "ShimmerCoordinates")]
     public sealed class ShimmerCoordinates : UnityEngine.UI.BaseMeshEffect
     {
         private const float MinExtent = 0.001f;

@@ -1,15 +1,16 @@
 using System;
-using Game.Foundation;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Loading;
+using Slime.App.Loading;
+using Slime.Foundation;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-namespace Game.Integration.Composition
+namespace Slime.Infrastructure.Frame
 {
     /// <summary>Shows the authored intro, with unscaled skip, stall and fade handling.</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Composition", sourceAssembly: "Game.Services", sourceClassName: "IntroVideoView")]
     public sealed class IntroVideoView : MonoBehaviour, IIntroScreen, ITickRegistryClient
     {
         private const float MaxFrameSeconds = 0.1f;

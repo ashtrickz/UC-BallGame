@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Game.Integration.Localization;
-using Game.Localization;
+using Slime.Infrastructure.Localization;
+using Slime.Localization;
 using TMPro;
 using UnityEditor;
 using UnityEditor.Build;
@@ -13,7 +13,7 @@ using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
 
-namespace Game.Editor
+namespace Slime.Editor
 {
     /// <summary>Bakes a reproducible Chinese subset and rejects stale or dynamic fonts before a player build.</summary>
     public sealed class LocalizationChineseFontBuilder : IPreprocessBuildWithReport

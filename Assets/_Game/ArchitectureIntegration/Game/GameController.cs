@@ -1,15 +1,15 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Game;
-using Game.App.Scenes;
-using Game.Integration.Gameplay;
-using Game.UI;
-using Game.Localization;
-using Game.Users;
+using Slime.App.Game;
+using Slime.App.Scenes;
+using Slime.Infrastructure.Settings;
+using Slime.Localization;
+using Slime.UI;
+using Slime.Users;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     public sealed class GameController : IController
     {
@@ -75,7 +75,7 @@ namespace Game.Integration.Game
 
         private void OnRoundStarted()
         {
-            if (_session.Request is global::Game.Gameplay.Levels.WallLevelRequest wall)
+            if (_session.Request is Slime.Gameplay.Core.Levels.WallLevelRequest wall)
             {
                 _gameplay.PlayWall(wall.Seed);
                 return;

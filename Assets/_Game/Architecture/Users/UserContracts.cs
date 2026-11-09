@@ -1,9 +1,9 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Foundation;
+using Slime.Foundation;
 
-namespace Game.Users
+namespace Slime.Users
 {
     [Serializable]
     public sealed class UserSaveData

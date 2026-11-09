@@ -1,13 +1,13 @@
-using Game.Audio;
+using Slime.Audio;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Provides harmless feedback calls on platforms without a native implementation.</summary>
     public sealed class NullHaptics : IHaptics
     {
         public bool Enabled { get; set; } = true;
 
-        public void Play(global::Game.Audio.HapticKind kind)
+        public void Play(Slime.Audio.HapticKind kind)
         {
         }
 

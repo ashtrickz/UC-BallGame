@@ -1,7 +1,8 @@
 using UnityEngine;
 
-namespace Game.Integration.Settings
+namespace Slime.Infrastructure.Settings
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Settings", sourceAssembly: "Game.Services", sourceClassName: "SettingsPersistence")]
     public sealed class SettingsPersistence : MonoBehaviour
     {
         private void OnApplicationPause(bool paused)

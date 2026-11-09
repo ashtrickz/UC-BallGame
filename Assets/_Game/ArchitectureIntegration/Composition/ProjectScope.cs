@@ -2,32 +2,34 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
-using Game.App.Bootstrap;
-using Game.App.Game;
-using Game.App.Loading;
-using Game.App.Popups;
-using Game.App.Scenes;
-using Game.Assets;
-using Game.Audio;
-using Game.Foundation;
-using Game.Integration.Audio;
-using Game.Integration.Bootstrap;
-using Game.Integration.Gameplay;
-using Game.Integration.Localization;
-using Game.Integration.Scenes;
-using Game.Integration.Settings;
-using Game.Settings;
-using Game.Localization;
-using Game.UI;
-using Game.Users;
+using Slime.App.Bootstrap;
+using Slime.App.Game;
+using Slime.App.Loading;
+using Slime.App.Popups;
+using Slime.App.Scenes;
+using Slime.Assets;
+using Slime.Audio;
+using Slime.Foundation;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Infrastructure.Bootstrap;
+using Slime.Infrastructure.Settings;
+using Slime.Infrastructure.Localization;
+using Slime.Composition.Scenes;
+using Slime.Localization;
+using Slime.Settings;
+using Slime.UI;
+using Slime.Users;
 using UnityEngine;
 using UnityEngine.Audio;
 using VContainer;
 using VContainer.Unity;
+using Slime.Infrastructure.Frame;
 
-namespace Game.Integration.Composition
+namespace Slime.Composition
 {
     /// <summary>Registers project-lifetime services under the persistent bootstrap root.</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Composition", sourceAssembly: "Game.Composition", sourceClassName: "ProjectScope")]
     public sealed class ProjectScope : LifetimeScope
     {
         private const string UserDirectoryName = "Users";

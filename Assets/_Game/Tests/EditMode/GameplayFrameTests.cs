@@ -1,3 +1,4 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,20 +6,22 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Gameplay.View;
-using Game.Integration.Game;
 using NUnit.Framework;
+using Slime.Gameplay.View;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
 using UnityEngine;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>The gameplay frame is driven by the scene clock, and gameplay behaviours have no Unity frame callbacks.</summary>
     public sealed class GameplayFrameTests
     {
         private const float Frame = 0.1f;
         private const float AnimationSeconds = 0.25f;
-        private const string GameplayNamespace = "Game.Integration.Game";
-        private const string ViewNamespace = "Game.Gameplay.View";
+        private static readonly string GameplayNamespace = typeof(GameplayFlow).Namespace;
+        private static readonly string ViewNamespace = typeof(GameClock).Namespace;
 
 
         // The frame recorder is a debug tool that captures at the end of the frame.
@@ -74,10 +77,14 @@ namespace Game.Foundation.Tests
         public void Gameplay_behaviours_have_no_coroutines()
         {
             var assemblies = new[] { typeof(GameClock).Assembly, typeof(GameplayFlow).Assembly };
-            var offenders = assemblies
+            var behaviours = assemblies
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => typeof(MonoBehaviour).IsAssignableFrom(type))
                 .Where(type => type.Namespace == GameplayNamespace || type.Namespace == ViewNamespace)
+                .ToList();
+
+            Assert.IsNotEmpty(behaviours, "The architecture check must inspect the actual gameplay behaviours.");
+            var offenders = behaviours
                 .SelectMany(Offending)
                 .Where(name => !Allowed.Contains(name))
                 .ToList();

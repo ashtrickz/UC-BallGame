@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Integration.Localization
+namespace Slime.Infrastructure.Localization
 {
     /// <summary>Validates and caches the bundled localization configuration.</summary>
     public sealed class LocalizationConfigProvider

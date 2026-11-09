@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Gameplay.Geometry
+namespace Slime.Gameplay.Core.Geometry
 {
     /// <summary>A point or direction on the logical XZ plane. Doubles keep generation deterministic and tolerant.</summary>
     public readonly struct Vec2 : IEquatable<Vec2>

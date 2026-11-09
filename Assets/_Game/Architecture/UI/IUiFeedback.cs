@@ -1,4 +1,4 @@
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>UI feedback identifiers retain the values authored on existing button prefabs.</summary>
     public enum UiFeedbackSound

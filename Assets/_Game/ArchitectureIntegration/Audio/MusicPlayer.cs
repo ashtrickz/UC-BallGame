@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Assets;
-using Game.Audio;
+using Slime.Assets;
+using Slime.Audio;
 using UnityEngine;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Owns the persistent music voice and rejects superseded asynchronous theme loads.</summary>
     public sealed class MusicPlayer : IDisposable

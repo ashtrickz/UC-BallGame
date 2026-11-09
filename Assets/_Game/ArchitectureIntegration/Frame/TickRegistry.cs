@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEngine;
 using VContainer.Unity;
 
-namespace Game.Integration.Composition
+namespace Slime.Infrastructure.Frame
 {
     /// <summary>Ticks enabled dynamic clients while deferring additions until the next frame.</summary>
     public sealed class TickRegistry : ITickRegistry, ITickable, IDisposable

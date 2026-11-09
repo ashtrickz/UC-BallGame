@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace Game.Localization
+namespace Slime.Localization
 {
     public static class LocalizationFormatting
     {

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Game.Gameplay.Levels;
-using Game.Gameplay.Model;
+using Slime.Gameplay.Core.Levels;
+using Slime.Gameplay.Core.Model;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Creates the context of a new attempt for a built level.</summary>
     public interface IAttemptFactory

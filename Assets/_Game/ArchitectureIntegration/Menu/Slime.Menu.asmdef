@@ -1,0 +1,26 @@
+{
+  "name": "Slime.Menu",
+  "rootNamespace": "Slime.Menu",
+  "references": [
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "GUID:d40d1a3658e75a64fb6e4c4f1840be99",
+    "GUID:44b1270a4efce154f82ba0106a125bf6",
+    "GUID:6a206aff7600dc945b4fd7a54f32f50a",
+    "GUID:aa357f12ba38b9f47834681b4f33b5ba",
+    "GUID:a996807419652a443a29bb1262d35555",
+    "GUID:1839419fae3aeed4c8869d6e945540a1",
+    "UniTask",
+    "VContainer",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

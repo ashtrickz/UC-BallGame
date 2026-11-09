@@ -1,17 +1,18 @@
-using Game.Foundation;
-using Game.Integration.Composition;
 using VContainer;
 using VContainer.Unity;
 using System.Collections;
 using Cysharp.Threading.Tasks;
-using Game.UI;
 using NUnit.Framework;
+using Slime.Foundation;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 
-namespace Game.Bootstrap.Tests
+namespace Slime.Tests.PlayMode
 {
     public sealed class HoldButtonTests
     {

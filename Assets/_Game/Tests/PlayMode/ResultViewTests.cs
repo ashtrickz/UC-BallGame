@@ -1,19 +1,22 @@
+using Slime.Foundation;
 using System.Collections;
 using System.Reflection;
-using Game.Integration.Game;
 using NUnit.Framework;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.PlayMode
 {
     public sealed class ResultViewTests
     {
         private GameObject _root;
         private ResultView _view;
         private UnityEngine.UI.Button _primary, _secondary, _menu;
-        private TMP_Text _title, _secondaryLabel;
+        private TMP_Text _title;
 
         [SetUp]
         public void SetUp()
@@ -25,12 +28,10 @@ namespace Game.Foundation.Tests
             _secondary = Child<UnityEngine.UI.Button>("Secondary");
             _menu = Child<UnityEngine.UI.Button>("Menu");
             _title = Child<TextMeshProUGUI>("Title");
-            _secondaryLabel = Child<TextMeshProUGUI>("Secondary label");
             Set("primaryButton", _primary);
             Set("secondaryButton", _secondary);
             Set("menuButton", _menu);
             Set("title", _title);
-            Set("secondaryLabel", _secondaryLabel);
         }
 
         [TearDown]
@@ -47,7 +48,7 @@ namespace Game.Foundation.Tests
                 Assert.IsFalse(_root.activeSelf);
                 calls++;
             }
-            _view.Initialize(new ResultViewModel("Result", "Stats", "Next", Run, "Retry", Run, Run));
+            _view.Initialize(new ResultViewModel("Result", "Stats", Run, Run, Run));
             _view.Show();
             var button = action == "primary" ? _primary : action == "secondary" ? _secondary : _menu;
             button.onClick.Invoke();
@@ -61,15 +62,14 @@ namespace Game.Foundation.Tests
         {
             var oldCalls = 0;
             var newCalls = 0;
-            _view.Initialize(new ResultViewModel("Old", "", "Next", () => oldCalls++, "Retry", () => oldCalls++));
+            _view.Initialize(new ResultViewModel("Old", "", () => oldCalls++, () => oldCalls++));
             _view.Show();
             yield return null;
             Assert.IsTrue(_view.IsAnimating);
-            _view.Initialize(new ResultViewModel("Translated", "", "Next", () => newCalls++));
+            _view.Initialize(new ResultViewModel("Translated", "", () => newCalls++));
             Assert.AreEqual("Translated", _title.text);
             Assert.IsTrue(_view.IsAnimating);
             Assert.IsFalse(_secondary.gameObject.activeSelf);
-            Assert.AreEqual(string.Empty, _secondaryLabel.text);
             Assert.IsFalse(_menu.gameObject.activeSelf);
             _primary.onClick.Invoke();
             Assert.AreEqual(0, oldCalls);
@@ -80,7 +80,7 @@ namespace Game.Foundation.Tests
         public void Hiding_result_discards_actions_from_the_previous_attempt()
         {
             var calls = 0;
-            _view.Initialize(new ResultViewModel("Result", "", "Next", () => calls++));
+            _view.Initialize(new ResultViewModel("Result", "", () => calls++));
             _view.Show();
             _view.Hide();
             _primary.onClick.Invoke();

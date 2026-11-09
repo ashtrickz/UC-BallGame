@@ -2,13 +2,13 @@ using System;
 using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Loading;
-using Game.App.Scenes;
-using Game.Foundation;
 using NUnit.Framework;
+using Slime.App.Loading;
+using Slime.App.Scenes;
+using Slime.Foundation;
 using UnityEngine.TestTools;
 
-namespace Game.Application.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class NavigationTests
     {

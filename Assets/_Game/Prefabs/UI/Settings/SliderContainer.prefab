@@ -410,6 +410,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: settings.master_volume
   arguments: []

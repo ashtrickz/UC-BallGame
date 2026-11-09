@@ -1,14 +1,15 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Popups;
-using Game.UI;
 using NUnit.Framework;
+using Slime.App.Popups;
+using Slime.UI;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class PopupLifetimeTests
     {

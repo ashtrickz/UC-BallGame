@@ -1,9 +1,10 @@
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Model;
 using NUnit.Framework;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Model;
 
-namespace Game.Gameplay.Tests
+namespace Slime.Gameplay.Tests.EditMode
 {
     public sealed class AttemptModelTests
     {

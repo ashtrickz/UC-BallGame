@@ -1,3 +1,4 @@
+using Slime.Foundation;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -5,7 +6,7 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>
     /// Keeps the project code on its style: layout, constants instead of literals, English only, documentation on

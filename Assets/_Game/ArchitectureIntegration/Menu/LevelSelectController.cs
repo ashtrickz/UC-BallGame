@@ -1,10 +1,11 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Gameplay.Config;
-using Game.App.Game;
+using Slime.App.Game;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
 
-namespace Game.Integration.Menu
+namespace Slime.Menu
 {
     /// <summary>Picks a campaign level: returns the chosen level number, or null when the player goes back.</summary>
     public interface ILevelSelect

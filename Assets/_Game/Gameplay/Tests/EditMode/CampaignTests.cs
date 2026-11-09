@@ -1,12 +1,14 @@
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
-using Game.Gameplay.Level;
-using Game.Gameplay.Model;
 using NUnit.Framework;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Generation;
+using Slime.Gameplay.Core.Level;
+using Slime.Gameplay.Core.Model;
 using UnityEditor;
+using Geometry = Slime.Gameplay.Core.Geometry;
 
-namespace Game.Gameplay.Tests
+namespace Slime.Gameplay.Tests.EditMode
 {
     /// <summary>The shipped campaign: every level proven, forgiving, and its stated lesson really occurs.</summary>
     public sealed class CampaignTests

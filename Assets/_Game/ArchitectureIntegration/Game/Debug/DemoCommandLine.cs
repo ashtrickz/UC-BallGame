@@ -3,14 +3,15 @@ using System;
 using System.Globalization;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Game;
-using Game.App.Scenes;
-using Game.Foundation;
-using Game.Gameplay.View;
+using Slime.App.Game;
+using Slime.App.Scenes;
+using Slime.Foundation;
+using Slime.Gameplay.View;
 using UnityEngine;
 using VContainer.Unity;
+using Slime.Gameplay.Presentation;
 
-namespace Game.Integration.Game
+namespace Slime.Diagnostics
 {
     /// <summary>
     /// Development arguments for recordings and smoke runs of a player build:
@@ -79,7 +80,7 @@ namespace Game.Integration.Game
         private async UniTask OpenGameAsync()
         {
             await _menu.Ready.AttachExternalCancellation(_lifetime.Token);
-            // Finish Loading -> Menu before requesting Menu -> Game.
+            // Finish Loading -> Menu before requesting Menu -> Slime.
             await UniTask.WaitUntil(() => !_navigation.IsTransitioning, cancellationToken: _lifetime.Token);
             await _launcher.LaunchAsync(null);
         }

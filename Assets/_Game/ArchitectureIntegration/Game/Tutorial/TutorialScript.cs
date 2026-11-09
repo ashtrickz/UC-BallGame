@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     public enum TutorialStepKind
     {

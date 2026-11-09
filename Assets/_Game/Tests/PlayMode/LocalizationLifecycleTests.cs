@@ -1,14 +1,15 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
-using Game.Integration.Localization;
-using Game.Localization;
 using NUnit.Framework;
+using Slime.Infrastructure.Localization;
+using Slime.Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.PlayMode
 {
     public sealed class LocalizationLifecycleTests
     {

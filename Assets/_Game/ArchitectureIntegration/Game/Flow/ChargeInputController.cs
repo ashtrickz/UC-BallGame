@@ -1,11 +1,11 @@
 using System;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Model;
-using Game.Gameplay.View;
-using Game.Integration.Audio;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Model;
+using Slime.Gameplay.View;
+using Slime.Infrastructure.Audio;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// Per-frame input of the attempt: press starts the charge, holding grows it with a live shot preview, release

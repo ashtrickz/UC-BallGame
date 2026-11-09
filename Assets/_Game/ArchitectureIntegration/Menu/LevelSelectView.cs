@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
-using Game.UI;
+using Slime.UI;
 using TMPro;
 using UnityEngine;
 using VContainer;
 
-namespace Game.Integration.Menu
+namespace Slime.Menu
 {
     /// <summary>
     /// Grid of campaign levels: completed levels, the next level to play and locked ones.
     /// Cells are cloned from a template child, so the grid follows the campaign length.
     /// </summary>
     [RequireComponent(typeof(CanvasGroup))]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Menu", sourceAssembly: "Game.Features.Menu", sourceClassName: "LevelSelectView")]
     public sealed class LevelSelectView : ViewBase
     {
         private const string CellName = "Level ";

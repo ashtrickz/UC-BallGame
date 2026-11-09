@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Assets
+namespace Slime.Assets
 {
     public sealed class AssetLease<T> : IDisposable where T : UnityEngine.Object
     {

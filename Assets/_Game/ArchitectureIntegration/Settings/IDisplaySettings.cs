@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Game.Settings;
+using Slime.Settings;
 
-namespace Game.Integration.Settings
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Isolates desktop display controls from the shared settings runtime.</summary>
     public interface IDisplaySettings

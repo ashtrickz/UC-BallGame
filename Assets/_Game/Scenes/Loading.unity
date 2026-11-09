@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb335746ef379904c9177df1fd058641, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Application::Game.App.Loading.LoadingScreenView
+  m_EditorClassIdentifier: Slime.App::Slime.App.Loading.LoadingScreenView
   canvasGroup: {fileID: 0}
   initiallyVisible: 1
   animateFade: 0
@@ -735,7 +735,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06b2a6922001abb4585fccf24f51255e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.UI::Game.UI.SafeAreaFitter
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.SafeAreaFitter
 --- !u!1 &1389445613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1559,7 +1559,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06b2a6922001abb4585fccf24f51255e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.UI::Game.UI.SafeAreaFitter
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.SafeAreaFitter
 --- !u!1 &1692894656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,7 +1788,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: common.retry
   arguments: []
 --- !u!114 &1725405137
@@ -1855,7 +1855,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -2127,7 +2127,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 806f9aa6e5bfe7f40b1e97b74449158a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Composition.ProjectScope
+  m_EditorClassIdentifier: Slime.Composition::Slime.Composition.ProjectScope
   parentReference:
     TypeName: 
   autoRun: 1

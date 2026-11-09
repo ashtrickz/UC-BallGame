@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Users
+namespace Slime.Users
 {
     public sealed class UserProfile
     {

@@ -1,10 +1,11 @@
+using Slime.Foundation;
 using System;
 using System.IO;
 using System.Xml;
-using Game.Editor.Android;
 using NUnit.Framework;
+using Slime.Editor.Android;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class AndroidHapticsManifestTests
     {

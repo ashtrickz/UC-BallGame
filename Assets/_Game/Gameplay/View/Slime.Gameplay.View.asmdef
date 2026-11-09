@@ -1,0 +1,23 @@
+{
+  "name": "Slime.Gameplay.View",
+  "rootNamespace": "Slime.Gameplay.View",
+  "references": [
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "GUID:6a206aff7600dc945b4fd7a54f32f50a",
+    "UniTask",
+    "Unity.InputSystem",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
+    "GUID:aa357f12ba38b9f47834681b4f33b5ba",
+    "GUID:dee1813af771f554eb094f0b8438b6d7"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

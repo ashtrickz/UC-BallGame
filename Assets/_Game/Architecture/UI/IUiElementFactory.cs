@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>Creates UI elements at runtime with their dependencies and feedback bound, so views never see a container.</summary>
     public interface IUiElementFactory

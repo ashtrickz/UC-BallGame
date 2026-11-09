@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Gameplay.Geometry
+namespace Slime.Gameplay.Core.Geometry
 {
     public readonly struct SweepHit
     {

@@ -1,10 +1,10 @@
 using System;
-using Game.Audio;
-using Game.Settings;
+using Slime.Audio;
+using Slime.Settings;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Applies source gains and authored routing without applying mixer gains twice.</summary>
     public sealed class AudioMixerVolumes : IDisposable

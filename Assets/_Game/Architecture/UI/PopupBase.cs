@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>Popup view: the base fade plus a scale punch in the same reusable transition, and a close button.</summary>
     [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Game.Architecture.UI", sourceAssembly: "Assembly-CSharp", sourceClassName: "PopupBase")]

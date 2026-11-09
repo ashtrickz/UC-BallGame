@@ -1,4 +1,4 @@
-namespace Game.Integration.Settings
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Owns the existing persisted settings keys across platform implementations.</summary>
     public static class SettingsStorageKeys

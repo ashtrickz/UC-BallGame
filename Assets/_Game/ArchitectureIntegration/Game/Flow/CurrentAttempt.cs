@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>The attempt in play and whether a view action chain is running for it.</summary>
     public sealed class CurrentAttempt : IDisposable

@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Game.App.Loading
+namespace Slime.App.Loading
 {
     /// <summary>The company's intro over the loading screen: the game loads underneath while it plays.</summary>
     public interface IIntroScreen

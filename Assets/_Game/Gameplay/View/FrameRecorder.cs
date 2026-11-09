@@ -3,12 +3,13 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>
     /// Development tool: writes every frame (with UI) as a JPEG while <see cref="Time.captureFramerate"/> fixes the
     /// game step, so the frames form a smooth video regardless of capture cost. Assemble with ffmpeg.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "FrameRecorder")]
     public sealed class FrameRecorder : MonoBehaviour
     {
         public string Folder { get; private set; }

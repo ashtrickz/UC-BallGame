@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
-using Game.Gameplay.Level;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Generation;
+using Slime.Gameplay.Core.Level;
 using UnityEditor;
 using UnityEngine;
 
-namespace Game.Gameplay.Editor
+namespace Slime.Gameplay.Editor
 {
     /// <summary>
     /// Source of the ten campaign layouts (metres; x = lateral, z = along the route) and the design analysis:

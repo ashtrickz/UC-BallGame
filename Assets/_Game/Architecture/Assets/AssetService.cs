@@ -1,11 +1,11 @@
-using Game.Foundation;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Slime.Foundation;
 using UnityEngine;
 
-namespace Game.Assets
+namespace Slime.Assets
 {
     public sealed class AssetService : IAssetService, IInitializationStep, IDisposable
     {

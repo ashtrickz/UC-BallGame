@@ -1,8 +1,8 @@
 using System;
-using Game.Gameplay.Model;
-using Game.Localization;
+using Slime.Gameplay.Core.Model;
+using Slime.Localization;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Gameplay HUD: size meter, attempt label from the mode policy, hint and the restart button.</summary>
     public sealed class HudPresenter : IDisposable

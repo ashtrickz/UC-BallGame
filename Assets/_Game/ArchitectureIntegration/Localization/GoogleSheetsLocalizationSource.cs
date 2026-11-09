@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Localization;
+using Slime.Localization;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Game.Integration.Localization
+namespace Slime.Infrastructure.Localization
 {
     /// <summary>Reads a public Google Sheets CSV URL without embedding account credentials in the game.</summary>
     public sealed class GoogleSheetsLocalizationSource : ILocalizationSource

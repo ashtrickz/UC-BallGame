@@ -1,10 +1,10 @@
 using System.Threading;
 using System;
 using Cysharp.Threading.Tasks;
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Pausable presentation time of the gameplay scene, advanced once per frame by the scene frame.</summary>
     public interface IGameClock

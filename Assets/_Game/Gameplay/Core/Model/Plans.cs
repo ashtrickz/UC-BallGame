@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
 
-namespace Game.Gameplay.Model
+namespace Slime.Gameplay.Core.Model
 {
     /// <summary>Immutable outcome of a shot. Fixed at release; the impact applies exactly this.</summary>
     public sealed class ShotPlan

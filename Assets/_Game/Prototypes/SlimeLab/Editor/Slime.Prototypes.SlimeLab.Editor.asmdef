@@ -1,0 +1,17 @@
+{
+  "name": "Slime.Prototypes.SlimeLab.Editor",
+  "rootNamespace": "Slime.Prototypes.SlimeLab.Editor",
+  "references": [
+    "GUID:10624e8842517da43b0c5c563c00df0a",
+    "GUID:d40d1a3658e75a64fb6e4c4f1840be99",
+    "Unity.InputSystem",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}

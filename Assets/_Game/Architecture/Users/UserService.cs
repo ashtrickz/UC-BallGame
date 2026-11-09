@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Game.Users
+namespace Slime.Users
 {
     // Main-thread service. Persist before publishing; a failed write never changes the visible profile.
     public sealed class UserService : IUserService

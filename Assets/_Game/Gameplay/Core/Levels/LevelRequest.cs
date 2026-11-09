@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Gameplay.Levels
+namespace Slime.Gameplay.Core.Levels
 {
     /// <summary>What the player asked to play: the level type and its parameters, without how it is built.</summary>
     public abstract class LevelRequest

@@ -2,9 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.Prototypes.SlimeLab
+namespace Slime.Prototypes.SlimeLab
 {
     [DisallowMultipleComponent]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Prototypes.SlimeLab", sourceAssembly: "Game.SlimeLab", sourceClassName: "SlimeLabDemo")]
     public sealed class SlimeLabDemo : MonoBehaviour
     {
         public enum MotionState { Idle, Charging, Pinching, Flying }

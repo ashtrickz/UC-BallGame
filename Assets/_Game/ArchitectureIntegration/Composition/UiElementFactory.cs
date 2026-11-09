@@ -1,11 +1,13 @@
 using System;
-using Game.Integration.Audio;
-using Game.UI;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.UI;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Slime.Infrastructure.Frame;
 
-namespace Game.Integration.Composition
+namespace Slime.Composition
 {
     /// <summary>Instantiates UI elements through the scene scope: injects their components and binds button feedback.</summary>
     public sealed class UiElementFactory : IUiElementFactory

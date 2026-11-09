@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Gameplay.Model;
-using Game.Gameplay.View;
-using Game.Localization;
+using Slime.Gameplay.Core.Model;
+using Slime.Gameplay.View;
+using Slime.Localization;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// Runs the tutorial steps of one attempt. Explanation steps pause the game and wait for a tap; action steps let

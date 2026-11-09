@@ -1,0 +1,24 @@
+{
+  "name": "Slime.Diagnostics",
+  "rootNamespace": "Slime.Diagnostics",
+  "references": [
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "GUID:44b1270a4efce154f82ba0106a125bf6",
+    "GUID:6a206aff7600dc945b4fd7a54f32f50a",
+    "GUID:a996807419652a443a29bb1262d35555",
+    "GUID:3ea074f0615e5ef4d8f7c40c1c129e80",
+    "UniTask",
+    "VContainer"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [
+    "GAME_DEBUG"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

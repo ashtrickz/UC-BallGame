@@ -1,9 +1,9 @@
 using System;
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
-using Game.Gameplay.Level;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Generation;
+using Slime.Gameplay.Core.Level;
 
-namespace Game.Gameplay.Levels
+namespace Slime.Gameplay.Core.Levels
 {
     /// <summary>Builds levels for one request type.</summary>
     public interface ILevelSource

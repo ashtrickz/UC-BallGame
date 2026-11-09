@@ -2,17 +2,19 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 using Cysharp.Threading.Tasks;
-using Game.Foundation;
-using Game.Gameplay.Config;
-using Game.Gameplay.Level;
+using Slime.Foundation;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Level;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>
     /// The level's crystals by id, rented from the crystal view pool and returned on the next build. The shot preview
     /// is drawn by <see cref="CrystalHighlighter"/>, the clearing wave by <see cref="CrystalShatterAnimator"/>.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "CrystalFieldView")]
     public sealed class CrystalFieldView : MonoBehaviour, IFrameTickable
     {
         [SerializeField] private SplashPool debris;

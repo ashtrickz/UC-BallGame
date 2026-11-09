@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Geometry;
+using Slime.Gameplay.Core.Geometry;
 using UnityEngine;
+using Slime.Gameplay.Core.Config;
 
-namespace Game.Gameplay.Config
+namespace Slime.Gameplay.Config
 {
     /// <summary>
     /// Playable crystal variants: the visible shards of each variant and the convex XZ projection baked from those
@@ -11,6 +12,7 @@ namespace Game.Gameplay.Config
     /// one coordinate system. Re-bake (Tools/Ball Game/Gameplay/Bake Crystal Contours) after changing shards.
     /// </summary>
     [CreateAssetMenu(menuName = "Ball Game/Crystal Catalog", fileName = "CrystalCatalog")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.Config", sourceAssembly: "Game.Gameplay.Config", sourceClassName: "CrystalCatalog")]
     public sealed class CrystalCatalog : ScriptableObject
     {
         private const int MinContourVertices = 3;

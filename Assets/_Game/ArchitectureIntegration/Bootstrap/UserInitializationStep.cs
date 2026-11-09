@@ -1,9 +1,9 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Foundation;
-using Game.Users;
+using Slime.Foundation;
+using Slime.Users;
 
-namespace Game.Integration.Bootstrap
+namespace Slime.Infrastructure.Bootstrap
 {
     public sealed class UserInitializationStep : IInitializationStep
     {

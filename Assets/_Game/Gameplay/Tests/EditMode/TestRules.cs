@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Level;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Level;
 
-namespace Game.Gameplay.Tests
+namespace Slime.Gameplay.Tests.EditMode
 {
     internal static class TestRules
     {

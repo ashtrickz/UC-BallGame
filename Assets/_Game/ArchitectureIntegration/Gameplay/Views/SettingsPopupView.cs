@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Game.Settings;
-using Game.UI;
+using Slime.Settings;
+using Slime.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Integration.Gameplay
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Passive settings presentation and input events.</summary>
     public interface ISettingsPopupView : IPopupView
@@ -26,6 +26,7 @@ namespace Game.Integration.Gameplay
     }
 
     /// <summary>Displays settings and reports input without retaining application services.</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Gameplay", sourceAssembly: "Game.Services", sourceClassName: "SettingsPopupView")]
     public sealed class SettingsPopupView : PopupBase, ISettingsPopupView
     {
         /// <summary>Authored association between a volume channel and its slider.</summary>

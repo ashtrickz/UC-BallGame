@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Gameplay.Config
+namespace Slime.Gameplay.Core.Config
 {
     /// <summary>
     /// Settings of the "Wall" mode: the whole field is filled with crystals; the core band around the route is the

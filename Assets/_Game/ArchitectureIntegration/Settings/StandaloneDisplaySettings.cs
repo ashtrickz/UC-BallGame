@@ -1,10 +1,10 @@
 #if UNITY_STANDALONE
 using System;
 using System.Collections.Generic;
-using Game.Settings;
+using Slime.Settings;
 using UnityEngine;
 
-namespace Game.Integration.Settings
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Applies and persists resolution and window mode in standalone players.</summary>
     public sealed class StandaloneDisplaySettings : IDisplaySettings

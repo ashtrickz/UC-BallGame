@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
 
-namespace Game.Prototypes.SlimeLab
+namespace Slime.Prototypes.SlimeLab
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Prototypes.SlimeLab", sourceAssembly: "Game.SlimeLab", sourceClassName: "SlimeLabHud")]
     public sealed class SlimeLabHud : MonoBehaviour
     {
         [SerializeField] private SlimeLabDemo demo;

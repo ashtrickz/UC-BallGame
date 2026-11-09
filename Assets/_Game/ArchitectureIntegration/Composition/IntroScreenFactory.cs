@@ -1,12 +1,14 @@
-using Game.App.Loading;
-using Game.Integration.Audio;
-using Game.Audio;
-using Game.Settings;
+using Slime.App.Loading;
+using Slime.Audio;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Settings;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Slime.Infrastructure.Frame;
 
-namespace Game.Integration.Composition
+namespace Slime.Composition
 {
     /// <summary>Creates the authored intro and coordinates its temporary music mute.</summary>
     public sealed class IntroScreenFactory

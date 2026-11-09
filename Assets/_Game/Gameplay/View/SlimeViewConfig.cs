@@ -1,9 +1,10 @@
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Presentation-only tuning. Never affects rules, generation or outcomes.</summary>
     [CreateAssetMenu(menuName = "Ball Game/Slime View Config", fileName = "SlimeViewConfig")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "SlimeViewConfig")]
     public sealed class SlimeViewConfig : ScriptableObject
     {
         private const float WeakImpactRadius = 0.2f;

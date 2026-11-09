@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Loads the shared audio library while preserving an authored scene override.</summary>
     public sealed class AudioLibraryProvider

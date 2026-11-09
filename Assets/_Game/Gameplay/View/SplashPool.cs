@@ -1,11 +1,13 @@
-using Game.Foundation;
-using Game.Gameplay.Config;
+using Slime.Foundation;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
 using UnityEngine.Rendering;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Pooled jelly and crystal specks (secondary effect: never awaited, never gameplay).</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "SplashPool")]
     public sealed class SplashPool : MonoBehaviour, IFrameTickable
     {
         private const string WobbleProperty = "_Wobble";

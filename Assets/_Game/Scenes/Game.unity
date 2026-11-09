@@ -93,8 +93,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 2a14390437b861d44b03b8dfec19460c, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 52833eb17cfab8f4ab0a3a0ea3b1349c, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -221,6 +221,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrailBank
       objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.12
@@ -339,6 +343,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -360,6 +368,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -479,6 +491,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -497,6 +513,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -540,6 +560,10 @@ PrefabInstance:
     - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_Name
       value: GroundTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -615,6 +639,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -636,6 +664,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -763,6 +795,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -773,96 +809,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7033074725276840329, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
   m_PrefabInstance: {fileID: 34710053}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &38988285
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 38988286}
-  - component: {fileID: 38988288}
-  - component: {fileID: 38988287}
-  m_Layer: 0
-  m_Name: Lintel glow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &38988286
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 38988285}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.84, z: -0.26}
-  m_LocalScale: {x: 3.2, y: 0.06, z: 0.04}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1162721091}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &38988287
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 38988285}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c55b9d91b5c61194cafd4c2d1f3e4b96, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &38988288
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 38988285}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &50033752
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,6 +985,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -1222,7 +1172,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -1385,6 +1335,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1445,7 +1399,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -1588,6 +1542,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1606,6 +1564,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1649,6 +1611,10 @@ PrefabInstance:
     - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_Name
       value: GroundTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6508,6 +6474,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrailBank
       objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.12
@@ -6612,7 +6582,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -6703,6 +6673,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentB
       objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.9718543
@@ -6776,6 +6750,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -6903,6 +6881,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6977,6 +6959,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7017,9 +7003,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1576394987}
-  - {fileID: 1275942070}
-  - {fileID: 2142659276}
-  - {fileID: 357050417}
   m_Father: {fileID: 714943472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &172361825
@@ -7151,6 +7134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockTall
       objectReference: {fileID: 0}
+    - target: {fileID: 6341291909909365972, guid: 4e965af32ace0f548afd13a84aad0754, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7224,6 +7211,10 @@ PrefabInstance:
     - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
       propertyPath: m_Name
       value: RockWide
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7309,6 +7300,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canyon Gate Frame
       objectReference: {fileID: 0}
+    - target: {fileID: 8227699412857878352, guid: 0992a196c0a9e794bb5ec5731c996b78, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8747531624648093162, guid: 0992a196c0a9e794bb5ec5731c996b78, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7387,7 +7382,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbfe2289f7534e3489928a41e716765f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Game.GameScope
+  m_EditorClassIdentifier: Slime.Composition::Slime.Composition.GameScope
   parentReference:
     TypeName: 
   autoRun: 1
@@ -7564,6 +7559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentB
       objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.8003769
@@ -7654,7 +7653,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 033de0d3377410041aef49b02133f880, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.TrackView
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.TrackView
   lane: {fileID: 665165133}
   leftEdge: {fileID: 676619}
   rightEdge: {fileID: 1454291896}
@@ -7688,6 +7687,10 @@ PrefabInstance:
     - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_Name
       value: CliffChunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1961918024289734528, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_LocalScale.x
@@ -7763,6 +7766,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassTuft
       objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.7
@@ -7836,6 +7843,10 @@ PrefabInstance:
     - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_Name
       value: CliffChunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1961918024289734528, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_LocalScale.x
@@ -7911,6 +7922,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassTuft
       objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.83613473
@@ -7982,6 +7997,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -8025,6 +8044,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundTile
       objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8046,6 +8069,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -8112,6 +8139,10 @@ PrefabInstance:
     - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_Name
       value: SucculentB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
@@ -8300,7 +8331,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.UI::Game.UI.FeedbackButton
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -8390,6 +8421,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -8516,6 +8551,10 @@ PrefabInstance:
     - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
       propertyPath: m_Name
       value: RockWide
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8771,96 +8810,6 @@ Material:
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!1 &357050416
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 357050417}
-  - component: {fileID: 357050419}
-  - component: {fileID: 357050418}
-  m_Layer: 0
-  m_Name: Start pad
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &357050417
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357050416}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.004, z: 0}
-  m_LocalScale: {x: 2.2, y: 0.004, z: 2.2}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 153635533}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &357050418
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357050416}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c0ceb69209951be4bbfaf04eaa611a9b, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &357050419
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357050416}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &362528572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8872,6 +8821,10 @@ PrefabInstance:
     - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_Name
       value: RockSmall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6724662819890076231, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -8998,6 +8951,10 @@ PrefabInstance:
     - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
       propertyPath: m_Name
       value: RockWide
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13999,6 +13956,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockTall
       objectReference: {fileID: 0}
+    - target: {fileID: 6341291909909365972, guid: 4e965af32ace0f548afd13a84aad0754, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14162,6 +14123,10 @@ PrefabInstance:
     - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
       propertyPath: m_Name
       value: RockWide
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14327,6 +14292,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14438,6 +14407,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -14580,6 +14553,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassTuft
       objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.067743
@@ -14706,6 +14683,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14727,6 +14708,10 @@ PrefabInstance:
     - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_Name
       value: RockSmall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6724662819890076231, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -14799,6 +14784,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -14841,6 +14830,10 @@ PrefabInstance:
     - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_Name
       value: GroundTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14916,6 +14909,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14926,186 +14923,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7033074725276840329, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
   m_PrefabInstance: {fileID: 505940623}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &509257959
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 509257960}
-  - component: {fileID: 509257962}
-  - component: {fileID: 509257961}
-  m_Layer: 0
-  m_Name: Lintel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &509257960
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 509257959}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.05, z: 0}
-  m_LocalScale: {x: 3.95, y: 0.36, z: 0.5}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1162721091}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &509257961
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 509257959}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c0ceb69209951be4bbfaf04eaa611a9b, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &509257962
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 509257959}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &512867387
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 512867388}
-  - component: {fileID: 512867390}
-  - component: {fileID: 512867389}
-  m_Layer: 0
-  m_Name: Leaf glow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &512867388
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 512867387}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.765, y: 1.3, z: -0.08}
-  m_LocalScale: {x: 0.07, y: 2.1, z: 0.03}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1635311122}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &512867389
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 512867387}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c55b9d91b5c61194cafd4c2d1f3e4b96, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &512867390
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 512867387}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &534532302
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15117,6 +14934,10 @@ PrefabInstance:
     - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_Name
       value: SucculentB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
@@ -15191,6 +15012,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -20524,6 +20349,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20545,6 +20374,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -20710,6 +20543,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassTuft
       objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.93795097
@@ -20836,6 +20673,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20857,6 +20698,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -20929,6 +20774,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -20971,6 +20820,10 @@ PrefabInstance:
     - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_Name
       value: GroundTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21046,6 +20899,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21067,6 +20924,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -21324,7 +21185,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a25df222ebedfd46a3059548e2a53a9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Features.Game::Game.Integration.Game.WorldStarsView
+  m_EditorClassIdentifier: Slime.Gameplay.Presentation::Slime.Gameplay.Presentation.WorldStarsView
   stars:
   - {fileID: 67935965}
   - {fileID: 2088953249}
@@ -21466,7 +21327,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -21518,6 +21379,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -21602,8 +21467,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1612685799}
-  - {fileID: 726215161}
   - {fileID: 1938631924}
   m_Father: {fileID: 1162721091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21636,7 +21499,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bffbbbc205d76f34997525fa9c2541d4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.PointerChargeInput
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.PointerChargeInput
 --- !u!114 &714943471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21648,7 +21511,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d87be33084ecb04e9fb12f32bbd2186, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.GameplayStage
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.GameplayStage
   viewConfig: {fileID: 11400000, guid: a98251c88e602b7408844b3b4320e6d9, type: 2}
   slime: {fileID: 1506350107}
   crystals: {fileID: 2129274002}
@@ -21684,96 +21547,6 @@ Transform:
   - {fileID: 1505190624}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &726215160
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 726215161}
-  - component: {fileID: 726215163}
-  - component: {fileID: 726215162}
-  m_Layer: 0
-  m_Name: Leaf glow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &726215161
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726215160}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.765, y: 1.3, z: -0.08}
-  m_LocalScale: {x: 0.07, y: 2.1, z: 0.03}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 703708188}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &726215162
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726215160}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c55b9d91b5c61194cafd4c2d1f3e4b96, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &726215163
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726215160}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &728118502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21838,6 +21611,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockTall
       objectReference: {fileID: 0}
+    - target: {fileID: 6341291909909365972, guid: 4e965af32ace0f548afd13a84aad0754, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21876,7 +21653,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 585eacf5a3faf63459e0b216288a243a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.SplashPool
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.SplashPool
   defaultMaterial: {fileID: 2100000, guid: 923173186166f0442be2b1cf359d5e05, type: 2}
   speckMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   capacity: 64
@@ -21906,6 +21683,10 @@ PrefabInstance:
     - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_Name
       value: CliffChunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1961918024289734528, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_LocalScale.x
@@ -22056,6 +21837,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrailBank
       objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.12
@@ -22197,6 +21982,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassTuft
       objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.0552342
@@ -22270,6 +22059,10 @@ PrefabInstance:
     - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_Name
       value: CliffChunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1961918024289734528, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_LocalScale.x
@@ -22487,6 +22280,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22508,6 +22305,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -22574,6 +22375,10 @@ PrefabInstance:
     - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_Name
       value: SucculentB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
@@ -22701,6 +22506,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22719,6 +22528,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -22763,6 +22576,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundTile
       objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22784,6 +22601,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -22889,7 +22710,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -23070,11 +22891,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 484430817ac3eab42ab8b979b7a8cdb7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.ImpactPreviewView
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.ImpactPreviewView
   ring: {fileID: 1534655880}
   ringRenderer: {fileID: 1534655879}
   marker: {fileID: 1833314879}
-  thickness: 0.13
+  thickness: 0.221
 --- !u!4 &917061816
 Transform:
   m_ObjectHideFlags: 0
@@ -23156,6 +22977,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23177,6 +23002,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -23304,6 +23133,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23377,6 +23210,10 @@ PrefabInstance:
     - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
       propertyPath: m_Name
       value: RockWide
+      objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23710,7 +23547,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: common.skip
   arguments: []
 --- !u!1001 &1028186754
@@ -23724,6 +23561,10 @@ PrefabInstance:
     - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_Name
       value: SucculentB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
@@ -23798,6 +23639,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -23958,7 +23803,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6bce0510d997034ba05aed289879e9e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.CameraRig
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.CameraRig
 --- !u!114 &1040848427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24067,6 +23912,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24077,96 +23926,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7033074725276840329, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
   m_PrefabInstance: {fileID: 1048485978}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1052844764
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1052844765}
-  - component: {fileID: 1052844767}
-  - component: {fileID: 1052844766}
-  m_Layer: 0
-  m_Name: Pillar L
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1052844765
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052844764}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.75, y: 1.45, z: 0}
-  m_LocalScale: {x: 0.4, y: 2.9, z: 0.45}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1162721091}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1052844766
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052844764}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 830570aacb89818409895f2a15ed6ffc, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1052844767
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052844764}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1058159436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24178,6 +23937,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -24244,6 +24007,10 @@ PrefabInstance:
     - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_Name
       value: RockSmall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6724662819890076231, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -24371,6 +24138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockTall
       objectReference: {fileID: 0}
+    - target: {fileID: 6341291909909365972, guid: 4e965af32ace0f548afd13a84aad0754, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24469,6 +24240,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -24728,6 +24503,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24738,96 +24517,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3942839742561528653, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
   m_PrefabInstance: {fileID: 1096986685}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1116829384
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1116829385}
-  - component: {fileID: 1116829387}
-  - component: {fileID: 1116829386}
-  m_Layer: 0
-  m_Name: Pillar R
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1116829385
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116829384}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.75, y: 1.45, z: 0}
-  m_LocalScale: {x: 0.4, y: 2.9, z: 0.45}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1162721091}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1116829386
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116829384}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 830570aacb89818409895f2a15ed6ffc, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1116829387
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116829384}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1130838020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24839,6 +24528,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -24913,6 +24606,10 @@ PrefabInstance:
     - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_Name
       value: CliffChunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1961918024289734528, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_LocalScale.x
@@ -25216,7 +24913,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d933cdc16b560484b9bf95eca2225253, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.PoolSplashEffect
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.PoolSplashEffect
   fountain: {fileID: 122979578}
   crown: {fileID: 374148841}
   ripples: {fileID: 550263603}
@@ -25315,7 +25012,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48df07031cd81bf43aff41296c642b53, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.DoorsView
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.DoorsView
   leftHinge: {fileID: 1635311122}
   rightHinge: {fileID: 703708188}
   openDuration: 0.65
@@ -25333,10 +25030,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1052844765}
-  - {fileID: 1116829385}
-  - {fileID: 509257960}
-  - {fileID: 38988286}
   - {fileID: 1635311122}
   - {fileID: 703708188}
   - {fileID: 213784203}
@@ -25353,6 +25046,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -25419,6 +25116,10 @@ PrefabInstance:
     - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_Name
       value: CliffChunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1961918024289734528, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_LocalScale.x
@@ -25621,6 +25322,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockTall
       objectReference: {fileID: 0}
+    - target: {fileID: 6341291909909365972, guid: 4e965af32ace0f548afd13a84aad0754, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25681,7 +25386,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -25824,6 +25529,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25845,6 +25554,10 @@ PrefabInstance:
     - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_Name
       value: CliffChunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184994950254269754, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1961918024289734528, guid: e267a9a07bd7b914f878a22e27583c4a, type: 3}
       propertyPath: m_LocalScale.x
@@ -25972,6 +25685,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26010,7 +25727,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5efe6a980e4b7194ea5960c70486c44c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.TutorialOverlay
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.TutorialOverlay
   dimmer: {fileID: 794458603}
   card: {fileID: 1068427125}
   message: {fileID: 1137136606}
@@ -26104,6 +25821,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26114,96 +25835,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7033074725276840329, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
   m_PrefabInstance: {fileID: 1271026116}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1275942069
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1275942070}
-  - component: {fileID: 1275942072}
-  - component: {fileID: 1275942071}
-  m_Layer: 0
-  m_Name: Ceramic course
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1275942070
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275942069}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.2, z: 16}
-  m_LocalScale: {x: 9.5, y: 0.4, z: 46}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 153635533}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1275942071
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275942069}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 830570aacb89818409895f2a15ed6ffc, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1275942072
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275942069}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1281042931
 GameObject:
   m_ObjectHideFlags: 0
@@ -26343,6 +25974,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26364,6 +25999,10 @@ PrefabInstance:
     - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_Name
       value: SucculentB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
@@ -26577,6 +26216,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrailBank
       objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.12
@@ -26642,6 +26285,10 @@ PrefabInstance:
     - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_Name
       value: SucculentB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
@@ -26716,6 +26363,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -26843,6 +26494,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26864,6 +26519,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -27063,7 +26722,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a3a0a49bb170254787467cfbf7470ed, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Game.GameView
+  m_EditorClassIdentifier: Slime.Gameplay.Presentation::Slime.Gameplay.Presentation.GameView
   canvasGroup: {fileID: 1435864823}
   initiallyVisible: 0
   animateFade: 1
@@ -27161,6 +26820,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27235,6 +26898,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27256,6 +26923,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -27420,6 +27091,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -27766,6 +27441,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockTall
       objectReference: {fileID: 0}
+    - target: {fileID: 6341291909909365972, guid: 4e965af32ace0f548afd13a84aad0754, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27824,7 +27503,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06b2a6922001abb4585fccf24f51255e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.UI::Game.UI.SafeAreaFitter
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.SafeAreaFitter
 --- !u!1 &1505190623
 GameObject:
   m_ObjectHideFlags: 0
@@ -27835,11 +27514,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1505190624}
   m_Layer: 0
-  m_Name: Canyon Dressing
+  m_Name: CanyonDressing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1505190624
 Transform:
@@ -28004,7 +27683,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fb57803ea0650346ac880969a67cf97, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.SlimeView
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.SlimeView
 --- !u!4 &1506350108 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 70268179156919973, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
@@ -28164,6 +27843,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28182,6 +27865,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -28226,6 +27913,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundTile
       objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28252,7 +27943,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1576394987
 Transform:
@@ -28335,6 +28026,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -28377,6 +28072,10 @@ PrefabInstance:
     - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_Name
       value: GroundTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28445,7 +28144,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Next time just try to waste less shots
+  m_text: Next time, try using fewer shots.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1c6000f10160d0740b9d52bd2f3f95bb, type: 2}
   m_sharedMaterial: {fileID: -6773832582820153084, guid: 1c6000f10160d0740b9d52bd2f3f95bb, type: 2}
@@ -28536,6 +28235,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -28666,96 +28369,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607731312}
   m_CullTransparentMesh: 1
---- !u!1 &1612685798
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1612685799}
-  - component: {fileID: 1612685801}
-  - component: {fileID: 1612685800}
-  m_Layer: 0
-  m_Name: Leaf
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1612685799
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1612685798}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.765, y: 1.3, z: 0}
-  m_LocalScale: {x: 1.5, y: 2.6, z: 0.14}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 703708188}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1612685800
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1612685798}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: e64df080ed70fac40a4fd496c786937e, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1612685801
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1612685798}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1613507426
 GameObject:
   m_ObjectHideFlags: 0
@@ -28858,6 +28471,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrailBank
       objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.12
@@ -28923,6 +28540,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -29050,6 +28671,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29164,8 +28789,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2096451833}
-  - {fileID: 512867388}
   - {fileID: 239062170}
   m_Father: {fileID: 1162721091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29180,6 +28803,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -29576,6 +29203,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockTall
       objectReference: {fileID: 0}
+    - target: {fileID: 6341291909909365972, guid: 4e965af32ace0f548afd13a84aad0754, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29650,6 +29281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29671,6 +29306,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -29746,6 +29385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentB
       objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.84235466
@@ -29819,6 +29462,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -29938,6 +29585,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29959,6 +29610,10 @@ PrefabInstance:
     - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_Name
       value: SucculentB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
@@ -30033,6 +29688,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -30261,7 +29920,7 @@ GameObject:
   - component: {fileID: 1799659266}
   - component: {fileID: 1799659265}
   - component: {fileID: 1799659267}
-  - component: {fileID: 1799659268}
+  - component: {fileID: 1799659269}
   m_Layer: 0
   m_Name: ResultView
   m_TagString: Untagged
@@ -30338,35 +29997,33 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 618e4ee72767d424a855f937da3958b6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Game.ResultView
-  canvasGroup: {fileID: 0}
+  m_EditorClassIdentifier: Slime.Gameplay.Presentation::Slime.Gameplay.Presentation.ResultView
+  canvasGroup: {fileID: 1799659269}
   initiallyVisible: 0
   animateFade: 1
   transitionDuration: 0.2
   title: {fileID: 554362494}
   subtitle: {fileID: 1603038137}
   primaryButton: {fileID: 116532921}
-  primaryLabel: {fileID: 0}
   secondaryButton: {fileID: 143580870}
-  secondaryLabel: {fileID: 0}
   menuButton: {fileID: 2072484507}
   card: {fileID: 2081736789}
   dim: {fileID: 1799659265}
   flyInDuration: 0.55
   stars: {fileID: 1948328440}
   starFlight: {fileID: 679511037}
---- !u!114 &1799659268
-MonoBehaviour:
+--- !u!225 &1799659269
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1799659263}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06b2a6922001abb4585fccf24f51255e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.UI::Slime.UI.SafeAreaFitter
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1805136316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30378,6 +30035,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -30452,6 +30113,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -30579,6 +30244,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30653,6 +30322,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30674,6 +30347,10 @@ PrefabInstance:
     - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_Name
       value: RockSmall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6724662819890076231, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -30746,6 +30423,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -30789,6 +30470,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundTile
       objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30810,6 +30495,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -31027,6 +30716,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentA
       objectReference: {fileID: 0}
+    - target: {fileID: 4466470732714242551, guid: 4239a6290341ebc4bb8c5cac427fb1aa, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31048,6 +30741,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -31334,7 +31031,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: common.tap_continue
   arguments: []
 --- !u!1 &1888481469
@@ -31407,7 +31104,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1040848424}
-  m_PlaneDistance: 5
+  m_PlaneDistance: 5.03
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -31503,6 +31200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31524,6 +31225,10 @@ PrefabInstance:
     - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_Name
       value: RockSmall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204022501146837245, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6724662819890076231, guid: d7f381d098960d541be2ef636d6146e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -31599,6 +31304,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrailBank
       objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.12
@@ -31662,6 +31371,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1505190624}
     m_Modifications:
     - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 345605915101548309, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -31705,6 +31418,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundTile
       objectReference: {fileID: 0}
+    - target: {fileID: 1116899387123340719, guid: 8ab438c2c1c06464d89e5802e6de5d4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31726,6 +31443,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -31894,7 +31615,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7833bd622a9a2b459049e5539dfa42b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.UI::Game.UI.StarRowView
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.StarRowView
   slots:
   - {fileID: 339453909}
   - {fileID: 2139091579}
@@ -31972,7 +31693,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -32062,6 +31783,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -32181,6 +31906,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32202,6 +31931,10 @@ PrefabInstance:
     - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_Name
       value: SucculentB
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
@@ -32277,6 +32010,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SucculentB
       objectReference: {fileID: 0}
+    - target: {fileID: 3679694197909999320, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4060899739188434018, guid: d2b9bf10ae6d7144dae50831c3e90e66, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.8904921
@@ -32350,6 +32087,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -32477,6 +32218,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32538,6 +32283,10 @@ PrefabInstance:
     - target: {fileID: 7725950896990526730, guid: 36c063db732659f409be386bad96e1fb, type: 3}
       propertyPath: m_Name
       value: StartMedallion
+      objectReference: {fileID: 0}
+    - target: {fileID: 7725950896990526730, guid: 36c063db732659f409be386bad96e1fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32613,6 +32362,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockWide
       objectReference: {fileID: 0}
+    - target: {fileID: 7697021885142739763, guid: 04cecf9ad7798b0408e2f9830e18512d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32634,6 +32387,10 @@ PrefabInstance:
     - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_Name
       value: TrailBank
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316192166010960171, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8656723439467914129, guid: a2ed1c008b4a0ca44839e12c16c80f8e, type: 3}
       propertyPath: m_LocalScale.z
@@ -32700,6 +32457,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -32887,7 +32648,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -33051,6 +32812,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -33627,96 +33392,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093643499}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2096451832
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2096451833}
-  - component: {fileID: 2096451835}
-  - component: {fileID: 2096451834}
-  m_Layer: 0
-  m_Name: Leaf
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2096451833
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2096451832}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.765, y: 1.3, z: 0}
-  m_LocalScale: {x: 1.5, y: 2.6, z: 0.14}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1635311122}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &2096451834
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2096451832}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: e64df080ed70fac40a4fd496c786937e, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2096451835
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2096451832}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &2105028714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33728,6 +33403,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -33802,6 +33481,10 @@ PrefabInstance:
     - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_Name
       value: GrassTuft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8107005687501589366, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8919957494397850060, guid: 6c16355bc33906342b8752283ddc5570, type: 3}
       propertyPath: m_LocalScale.x
@@ -33894,7 +33577,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e34ffdc95704864da4a634497a1bcbe, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.CrystalFieldView
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.CrystalFieldView
   debris: {fileID: 749383694}
 --- !u!4 &2129274003
 Transform:
@@ -33922,7 +33605,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c7186ecef8104644be3137b61f6964e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.CrystalContourGizmos
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.CrystalContourGizmos
 --- !u!1 &2139091577
 GameObject:
   m_ObjectHideFlags: 0
@@ -33998,96 +33681,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139091577}
   m_CullTransparentMesh: 1
---- !u!1 &2142659275
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2142659276}
-  - component: {fileID: 2142659278}
-  - component: {fileID: 2142659277}
-  m_Layer: 0
-  m_Name: Course rim
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2142659276
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142659275}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.43, z: 16}
-  m_LocalScale: {x: 9.8, y: 0.08, z: 46.3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 153635533}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &2142659277
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142659275}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c0ceb69209951be4bbfaf04eaa611a9b, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2142659278
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142659275}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &131796496536302528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34136,9 +33729,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2153873576288874122, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Gameplay.View::Slime.Gameplay.View.SplashPool
+      objectReference: {fileID: 0}
     - target: {fileID: 2476559240998424871, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
       propertyPath: m_Name
       value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012049225168249720, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Gameplay.View::Slime.Gameplay.View.SlimeView
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

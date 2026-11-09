@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28b0c70fce2948f4492bc80dcffd7e60, type: 3}
   m_Name: SlimeViewConfig
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.SlimeViewConfig
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.SlimeViewConfig
   hopPrepare: 0.12
   hopFlight: 0.56
   hopHeight: 0.85
@@ -24,6 +24,11 @@ MonoBehaviour:
   waveSpeed: 7
   infectDuration: 0.12
   shatterDuration: 0.22
+  previewTint: 0.18
+  previewBrightness: 1.28
+  surroundingCrystalBrightness: 0.8
+  previewEdgeWidth: 0.018
+  strongImpactRadius: 2.2
   defeatHopHeight: 0.32
   defeatHopDuration: 0.45
   popSquash: 0.28

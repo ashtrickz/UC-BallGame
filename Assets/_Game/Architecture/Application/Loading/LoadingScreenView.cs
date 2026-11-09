@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Game.UI;
+using Slime.UI;
 using TMPro;
 using UnityEngine;
 
-namespace Game.App.Loading
+namespace Slime.App.Loading
 {
     /// <summary>
     /// Loading curtain: the shader cascade covers the screen, the content fades in after it, and the progress bar
     /// eases to each reported value with one reusable tween.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.App.Loading", sourceAssembly: "Game.Application", sourceClassName: "LoadingScreenView")]
     public sealed class LoadingScreenView : ViewBase, ILoadingScreenView
     {
         private const string CoverageProperty = "_Coverage";

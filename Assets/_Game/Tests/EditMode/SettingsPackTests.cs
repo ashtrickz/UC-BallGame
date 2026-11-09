@@ -1,7 +1,8 @@
-using Game.Settings;
+using Slime.Foundation;
+using Slime.Settings;
 using NUnit.Framework;
 
-namespace Game.Settings.Tests
+namespace Slime.Tests.EditMode
 {
     public class SettingsPackTests
     {

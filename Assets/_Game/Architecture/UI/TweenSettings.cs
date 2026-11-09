@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>
     /// DOTween setup before the first scene: a fixed pool capacity, no recycling (views keep and replay their own

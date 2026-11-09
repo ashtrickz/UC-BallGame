@@ -1,13 +1,14 @@
 using System;
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>Confirms an action after an unscaled hold and rewinds cancelled progress.</summary>
     [AddComponentMenu("UI/Hold Button")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.UI", sourceAssembly: "Game.UI", sourceClassName: "HoldButton")]
     public class HoldButton : FeedbackButton, ITickRegistryClient
     {
         public const float MinHoldSeconds = 0.3f;

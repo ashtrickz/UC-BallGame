@@ -1,7 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Game.UI
+namespace Slime.UI
 {
     public interface IView
     {

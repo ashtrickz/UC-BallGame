@@ -1,0 +1,10 @@
+{
+  "name": "Slime.Prototypes.SlimeLab",
+  "rootNamespace": "Slime.Prototypes.SlimeLab",
+  "references": [
+    "Unity.InputSystem",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI"
+  ],
+  "autoReferenced": true
+}

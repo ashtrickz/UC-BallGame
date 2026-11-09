@@ -1,11 +1,12 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Game;
-using Game.Foundation;
+using Slime.App.Game;
+using Slime.Foundation;
 using VContainer.Unity;
+using Slime.Menu;
 
-namespace Game.Integration.Menu
+namespace Slime.Composition
 {
     public sealed class MenuEntryPoint : IStartable, ISceneReadiness, IDisposable
     {

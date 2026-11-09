@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace Game.Foundation
+namespace Slime.Foundation
 {
     /// <summary>Compiles diagnostic calls and their arguments out of players without the debug symbol.</summary>
     public static class GameLog

@@ -1,9 +1,10 @@
-using Game.Integration.Settings;
-using Game.Settings;
+using Slime.Foundation;
 using NUnit.Framework;
+using Slime.Infrastructure.Settings;
+using Slime.Settings;
 using UnityEngine;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class SettingsRuntimeTests
     {

@@ -1,21 +1,24 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Audio;
-using Game.Integration.Audio;
-using Game.Integration.Composition;
 using VContainer.Unity;
-using Game.UI;
 using NUnit.Framework;
+using Slime.Audio;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 using VContainer;
 using Object = UnityEngine.Object;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.PlayMode
 {
     public sealed class FeedbackButtonTests
     {

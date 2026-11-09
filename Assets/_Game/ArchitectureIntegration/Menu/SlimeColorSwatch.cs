@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Integration.Menu
+namespace Slime.Menu
 {
     /// <summary>Resolution-independent glossy colour button and selected check mark.</summary>
     [AddComponentMenu("Ball Game/UI/Slime Color Swatch")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Menu", sourceAssembly: "Game.Features.Menu", sourceClassName: "SlimeColorSwatch")]
     public sealed class SlimeColorSwatch : MaskableGraphic
     {
         private const int EllipseSegments = 64;

@@ -1,8 +1,8 @@
 using System;
-using Game.Gameplay.Config;
-using Game.Gameplay.Level;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Level;
 
-namespace Game.Gameplay.Levels
+namespace Slime.Gameplay.Core.Levels
 {
     /// <summary>A playable level produced for a request: geometry, the rule snapshot it was proven with and its seed.</summary>
     public sealed class BuiltLevel

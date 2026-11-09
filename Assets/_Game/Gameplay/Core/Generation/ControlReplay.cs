@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Level;
-using Game.Gameplay.Model;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Level;
+using Slime.Gameplay.Core.Model;
 
-namespace Game.Gameplay.Generation
+namespace Slime.Gameplay.Core.Generation
 {
     public readonly struct ReplayResult
     {

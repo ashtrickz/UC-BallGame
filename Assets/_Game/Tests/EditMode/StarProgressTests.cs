@@ -1,9 +1,10 @@
+using Slime.Foundation;
 using System;
-using Game.App.Game;
 using NUnit.Framework;
+using Slime.App.Game;
 using UnityEngine;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>Best local star results survive service recreation and cannot be lowered by replays or defeats.</summary>
     public sealed class StarProgressTests

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Level;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Level;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Hands out crystal views for placements and takes them back.</summary>
     public interface ICrystalViewFactory

@@ -2,9 +2,9 @@ using System;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
-using Game.Gameplay.Level;
+using Slime.Gameplay.Core.Level;
 
-namespace Game.Gameplay.Levels
+namespace Slime.Gameplay.Core.Levels
 {
     /// <summary>Independent bonus stars: finish within the shot limit and retain the required initial mass percentage.</summary>
     public readonly struct StarCriteria
@@ -36,13 +36,23 @@ namespace Game.Gameplay.Levels
                 return 0;
 
             var stars = 1;
-            if (shots <= MaxShots)
+            if (MeetsShotLimit(shots))
                 stars++;
 
-            if (remainingMassPercent + ComparisonTolerance >= MinRemainingMassPercent)
+            if (MeetsMassTarget(remainingMassPercent))
                 stars++;
 
             return stars;
+        }
+
+        public bool MeetsShotLimit(int shots)
+        {
+            return shots <= MaxShots;
+        }
+
+        public bool MeetsMassTarget(double remainingMassPercent)
+        {
+            return remainingMassPercent + ComparisonTolerance >= MinRemainingMassPercent;
         }
 
         public static double RemainingMassPercent(double diameter, double initialDiameter)

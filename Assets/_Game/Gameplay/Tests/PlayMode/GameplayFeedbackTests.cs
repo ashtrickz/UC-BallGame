@@ -2,13 +2,15 @@ using System;
 using System.Collections;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Game.Gameplay.Model;
-using Game.Integration.Game;
 using NUnit.Framework;
+using Slime.Gameplay.Core.Model;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Game.Gameplay.PlayModeTests
+namespace Slime.Gameplay.Tests.PlayMode
 {
     public sealed partial class GameplayLifecycleTests
     {

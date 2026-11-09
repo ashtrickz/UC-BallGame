@@ -1,18 +1,19 @@
+using Slime.Foundation;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Integration.Localization;
-using Game.Localization;
-using Game.Settings;
 using NUnit.Framework;
+using Slime.Infrastructure.Localization;
+using Slime.Localization;
+using Slime.Settings;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class LocalizationTests
     {

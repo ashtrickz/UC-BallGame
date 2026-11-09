@@ -1,8 +1,8 @@
 using System;
-using Game.Audio;
-using Game.UI;
+using Slime.Audio;
+using Slime.UI;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Translates UI feedback into audio cues and native tap feedback.</summary>
     public sealed class UiFeedback : IUiFeedback
@@ -27,7 +27,7 @@ namespace Game.Integration.Audio
                 // Loading and retry buttons must remain usable before audio initialization.
             }
 
-            _haptics.Play(global::Game.Audio.HapticKind.Tap);
+            _haptics.Play(Slime.Audio.HapticKind.Tap);
         }
 
         private static GameSound ToGameSound(UiFeedbackSound sound)

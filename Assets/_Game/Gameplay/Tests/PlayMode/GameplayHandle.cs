@@ -1,9 +1,11 @@
-using Game.App.Game;
-using Game.Gameplay.View;
-using Game.Integration.Game;
+using Slime.App.Game;
+using Slime.Gameplay.View;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
 using VContainer;
 
-namespace Game.Gameplay.PlayModeTests
+namespace Slime.Gameplay.Tests.PlayMode
 {
     /// <summary>Test access to the gameplay scene services resolved from its container.</summary>
     public sealed class GameplayHandle : IGameplayDebug

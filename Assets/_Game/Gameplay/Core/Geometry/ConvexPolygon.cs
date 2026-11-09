@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Gameplay.Geometry
+namespace Slime.Gameplay.Core.Geometry
 {
     /// <summary>
     /// Immutable convex polygon on the XZ plane, counter-clockwise by <see cref="Vec2.Cross"/>.

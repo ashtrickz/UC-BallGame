@@ -1,10 +1,10 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Loading;
-using Game.Foundation;
+using Slime.App.Loading;
+using Slime.Foundation;
 
-namespace Game.App.Scenes
+namespace Slime.App.Scenes
 {
     /// <summary>Owns project-lifetime navigation, loading context and retry state.</summary>
     public sealed class GameNavigation : IDisposable

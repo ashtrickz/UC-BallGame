@@ -1,13 +1,14 @@
+using Slime.Foundation;
 using System.Diagnostics;
 using System.Linq;
-using Game.Editor;
 using NUnit.Framework;
+using Slime.Editor;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>Protects conditional diagnostics and development versus release build preparation.</summary>
     public sealed class GameDebugPolicyTests

@@ -1,9 +1,9 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Game.App.Scenes;
-using Game.Gameplay.Levels;
+using Slime.App.Scenes;
+using Slime.Gameplay.Core.Levels;
 
-namespace Game.App.Game
+namespace Slime.App.Game
 {
     /// <summary>Starts a round for a level request: writes it into the session and opens the Game scene.</summary>
     public interface IGameLauncher

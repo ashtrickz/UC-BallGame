@@ -1,13 +1,14 @@
-using Game.Foundation;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Game.Audio;
-using Game.Integration.Audio;
+using Slime.Audio;
+using Slime.Foundation;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
 using UnityEditor;
 using UnityEngine;
 
-namespace Game.Editor
+namespace Slime.Editor
 {
     /// <summary>Installs the selected audio assets, preserving existing authored cue/mixer settings.</summary>
     public static class SelectedAudioLibraryInstaller

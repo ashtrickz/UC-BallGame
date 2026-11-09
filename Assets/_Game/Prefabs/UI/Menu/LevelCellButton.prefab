@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7833bd622a9a2b459049e5539dfa42b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.UI::Game.UI.StarRowView
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.StarRowView
   slots:
   - {fileID: 8613300448692032180}
   - {fileID: 5700177512580408736}

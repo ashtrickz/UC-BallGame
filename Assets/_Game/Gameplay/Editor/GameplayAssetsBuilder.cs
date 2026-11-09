@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.View;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.View;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Object = UnityEngine.Object;
 
-namespace Game.Gameplay.Editor
+namespace Slime.Gameplay.Editor
 {
     /// <summary>
     /// Creates the gameplay assets: game copies of the SlimeLab materials (the lab stays untouched), the crystal

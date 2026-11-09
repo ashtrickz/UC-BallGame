@@ -1,0 +1,10 @@
+{
+  "name": "Slime.Localization",
+  "rootNamespace": "Slime.Localization",
+  "references": [
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "GUID:4fe53e4e854b9cb4d962c89512c29091",
+    "UniTask"
+  ],
+  "autoReferenced": true
+}

@@ -2,9 +2,10 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Gameplay.Model;
+using Slime.Gameplay.Core.Model;
+using Slime.Gameplay.Presentation;
 
-namespace Game.Integration.Game
+namespace Slime.Diagnostics
 {
     public enum AutoplayMode
     {

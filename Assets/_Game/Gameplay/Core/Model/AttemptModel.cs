@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Level;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Level;
 
-namespace Game.Gameplay.Model
+namespace Slime.Gameplay.Core.Model
 {
     public enum AttemptPhase { Preparing, Moving, Waiting, Charging, Shooting, Clearing, DefeatAnimation, Won, Lost }
     public enum DefeatReason { None, Overcharge, OutOfResource }

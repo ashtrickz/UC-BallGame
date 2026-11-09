@@ -1,4 +1,4 @@
-namespace Game.App.Loading
+namespace Slime.App.Loading
 {
     /// <summary>Owns shared localization keys for scene-loading transitions.</summary>
     public static class LoadingMessageKeys

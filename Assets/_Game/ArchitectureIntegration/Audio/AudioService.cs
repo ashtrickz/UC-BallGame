@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Assets;
-using Game.Audio;
+using Slime.Assets;
+using Slime.Audio;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Coordinates authored audio cues through dedicated playback, music and volume services.</summary>
     public sealed class AudioService : IAudioService

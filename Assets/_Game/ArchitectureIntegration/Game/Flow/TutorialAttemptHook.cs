@@ -1,10 +1,10 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Game.Gameplay.View;
-using Game.Localization;
+using Slime.Gameplay.View;
+using Slime.Localization;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Extension of the attempt start: runs after the attempt is presented, ends before the next one begins.</summary>
     public interface IAttemptStartHook

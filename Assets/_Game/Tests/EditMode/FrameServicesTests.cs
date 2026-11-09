@@ -1,16 +1,19 @@
+using Slime.Foundation;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Game.Integration.Composition;
-using Game.Integration.Audio;
-using Game.UI;
 using NUnit.Framework;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>Protects frame registration, unscaled input and event-based layout behavior.</summary>
     public sealed class FrameServicesTests

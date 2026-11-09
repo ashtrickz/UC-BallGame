@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Level;
-using Model = Game.Gameplay.Model;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Level;
+using Model = Slime.Gameplay.Core.Model;
 
-namespace Game.Gameplay.Generation
+namespace Slime.Gameplay.Core.Generation
 {
     /// <summary>
     /// Design tool for fixed levels: exhaustive cheapest winning sequence (branch and bound over distinct shot

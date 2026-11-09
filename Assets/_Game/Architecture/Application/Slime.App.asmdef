@@ -1,0 +1,25 @@
+{
+  "name": "Slime.App",
+  "rootNamespace": "Slime.App",
+  "references": [
+    "UniTask",
+    "VContainer",
+    "DOTween.Modules",
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "GUID:dee1813af771f554eb094f0b8438b6d7",
+    "GUID:d40d1a3658e75a64fb6e4c4f1840be99",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
+    "GUID:6a206aff7600dc945b4fd7a54f32f50a",
+    "GUID:aa357f12ba38b9f47834681b4f33b5ba"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Audio
+namespace Slime.Audio
 {
     /// <summary>Native feedback presets shared by UI and gameplay integration.</summary>
     public enum HapticKind

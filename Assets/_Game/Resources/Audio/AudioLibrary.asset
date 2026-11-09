@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 864971fc4c170b04585dbbcd0b50c86c, type: 3}
   m_Name: AudioLibrary
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Audio.AudioLibrary
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Audio.AudioLibrary
   mixerRoutes:
   - group: 4
     output: {fileID: -501827600997958173, guid: d814f4dc56c943b42ab636c1658c0263, type: 2}

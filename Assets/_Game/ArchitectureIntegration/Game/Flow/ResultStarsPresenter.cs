@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Audio;
-using Game.Gameplay.View;
+using Slime.Audio;
+using Slime.Gameplay.View;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Owns celebration cancellation and audio; views only animate the already earned result.</summary>
     public sealed class ResultStarsPresenter : IDisposable

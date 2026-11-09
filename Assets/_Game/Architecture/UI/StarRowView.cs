@@ -1,8 +1,9 @@
 using UnityEngine;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>Three authored star slots shared by result cards and level selection cells.</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.UI", sourceAssembly: "Game.UI", sourceClassName: "StarRowView")]
     public sealed class StarRowView : MonoBehaviour
     {
         public const int SlotCount = 3;

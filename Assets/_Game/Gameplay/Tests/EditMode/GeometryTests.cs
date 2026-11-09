@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Game.Gameplay.Geometry;
 using NUnit.Framework;
+using Slime.Gameplay.Core.Geometry;
 using UnityEngine;
 
-namespace Game.Gameplay.Tests
+namespace Slime.Gameplay.Tests.EditMode
 {
     public sealed class GeometryTests
     {

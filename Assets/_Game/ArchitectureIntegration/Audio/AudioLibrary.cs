@@ -1,10 +1,10 @@
-using Game.Audio;
 using System;
+using Slime.Audio;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Audio;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     [Serializable]
     public sealed class SoundDefinition
@@ -65,6 +65,7 @@ namespace Game.Integration.Audio
     }
 
     [CreateAssetMenu(fileName = "AudioLibrary", menuName = "Game/Audio/Audio Library")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Audio", sourceAssembly: "Game.Services", sourceClassName: "AudioLibrary")]
     public sealed class AudioLibrary : ScriptableObject
     {
         public const string ResourcePath = "Audio/AudioLibrary";

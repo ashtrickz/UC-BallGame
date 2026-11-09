@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
-namespace Game.Prototypes.SlimeLab.Editor
+namespace Slime.Prototypes.SlimeLab.Editor
 {
     public static class SlimeLabSceneBuilder
     {
@@ -397,7 +397,7 @@ namespace Game.Prototypes.SlimeLab.Editor
             var rect = Rect(name, parent, Vector2.right, Vector2.right, new Vector2(0.5f, 0), position, size);
             var image = rect.gameObject.AddComponent<UnityEngine.UI.Image>();
             image.color = SlimeLabPalette.Platform;
-            var button = rect.gameObject.AddComponent<global::Game.UI.FeedbackButton>();
+            var button = rect.gameObject.AddComponent<Slime.UI.FeedbackButton>();
             var colors = button.colors;
             colors.normalColor = SlimeLabPalette.Text;
             colors.highlightedColor = SlimeLabPalette.JellyLight;

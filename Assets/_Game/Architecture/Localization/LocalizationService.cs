@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Foundation;
-using Game.Settings;
+using Slime.Foundation;
+using Slime.Settings;
 using UnityEngine;
 
-namespace Game.Localization
+namespace Slime.Localization
 {
     /// <summary>Main-thread singleton. Bundled translations are available before remote initialization.</summary>
     public sealed class LocalizationService : ILocalizationService, IInitializationStep, IDisposable

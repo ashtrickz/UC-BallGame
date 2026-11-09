@@ -1,10 +1,11 @@
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEngine.Rendering;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Stays active; toggles its children. Ring on the floor showing the predicted blast circle (centre = contact point, radius = b × S).</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "ImpactPreviewView")]
     public sealed class ImpactPreviewView : MonoBehaviour, IFrameTickable
     {
         private const string BaseColorProperty = "_BaseColor";

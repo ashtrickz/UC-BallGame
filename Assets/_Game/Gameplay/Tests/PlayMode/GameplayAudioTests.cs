@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Audio;
-using Game.Gameplay.Model;
-using Game.Integration.Audio;
-using Game.Integration.Composition;
-using Game.Integration.Game;
 using NUnit.Framework;
+using Slime.Audio;
+using Slime.Gameplay.Core.Model;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.Diagnostics;
 using UnityEngine;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Gameplay.PlayModeTests
+namespace Slime.Gameplay.Tests.PlayMode
 {
     public sealed partial class GameplayLifecycleTests
     {

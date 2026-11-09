@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>Fits its anchors to the screen service snapshot when layout changes.</summary>
     [RequireComponent(typeof(RectTransform))]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.UI", sourceAssembly: "Game.UI", sourceClassName: "SafeAreaFitter")]
     public sealed class SafeAreaFitter : MonoBehaviour
     {
         private RectTransform _rectTransform;

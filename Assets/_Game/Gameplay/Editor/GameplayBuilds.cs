@@ -6,7 +6,7 @@ using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-namespace Game.Gameplay.Editor
+namespace Slime.Gameplay.Editor
 {
     /// <summary>Player builds for delivery (Android APK) and for demo recordings (Windows player).</summary>
     public static class GameplayBuilds

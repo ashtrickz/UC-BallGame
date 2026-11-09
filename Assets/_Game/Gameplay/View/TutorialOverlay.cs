@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>A screen-space cut-out: a rounded rectangle (or circle) in screen pixels, with an optional pulsing ring.</summary>
     public readonly struct SpotlightHole
@@ -36,6 +36,7 @@ namespace Game.Gameplay.View
     /// card placed away from the cut-outs, "tap to continue" and SKIP. While it waits for a tap it blocks the game;
     /// during action steps it lets touches through to the game.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "TutorialOverlay")]
     public sealed class TutorialOverlay : MonoBehaviour
     {
         private const string HolesProperty = "_Holes";

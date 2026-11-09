@@ -206,7 +206,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: settings.title
   arguments: []
 --- !u!1 &1109713651199801099
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca2a43d182ea1984aa8f781eeb990c30, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Gameplay.SettingsPopupView
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Settings.SettingsPopupView
   canvasGroup: {fileID: 129171844984539707}
   initiallyVisible: 0
   animateFade: 1
@@ -444,31 +444,31 @@ MonoBehaviour:
   - channel: 0
     slider: {fileID: 4849720385274757179}
   - channel: 1
-    slider: {fileID: 0}
+    slider: {fileID: 958959600104001241}
   - channel: 2
-    slider: {fileID: 0}
+    slider: {fileID: 4778518212823879082}
   - channel: 3
-    slider: {fileID: 0}
+    slider: {fileID: 5588822223925584457}
   fpsChoices:
   - fps: 30
     button: {fileID: 3943328662531904244}
   - fps: 60
-    button: {fileID: 0}
+    button: {fileID: 202526465832758591}
   - fps: 120
-    button: {fileID: 0}
+    button: {fileID: 4074818825803495273}
   chosenFpsSprite: {fileID: 0}
   otherFpsSprite: {fileID: 0}
   buildText: {fileID: 9180698526283359322}
   resetButton: {fileID: 7446791362160862490}
   languageChoices:
   - code: en
-    button: {fileID: 0}
+    button: {fileID: 6950610424717802529}
   - code: uk
-    button: {fileID: 0}
+    button: {fileID: 4371899472202880948}
   - code: es
-    button: {fileID: 0}
+    button: {fileID: 2448421463039693498}
   - code: zh-CN
-    button: {fileID: 0}
+    button: {fileID: 7264458258235798940}
 --- !u!1 &2735759276180144907
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: settings.language
   arguments: []
 --- !u!1 &4941410761273946518
@@ -1048,7 +1048,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: common.reset
   arguments: []
 --- !u!1 &6436283812378346128
@@ -1373,7 +1373,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -1507,6 +1507,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8960407974585827988}
     m_Modifications:
+    - target: {fileID: 379035287466922981, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: key
+      value: settings.music_volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 379035287466922981, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
     - target: {fileID: 1836925706234853215, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1612,6 +1620,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+--- !u!114 &958959600104001241 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 605513327846693184, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+  m_PrefabInstance: {fileID: 372074207417685913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!224 &2042327144949752006 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1836925706234853215, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
@@ -1625,6 +1644,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1026207587264897785}
     m_Modifications:
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: 'arguments.Array.data[0]'
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
+    - target: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.FeedbackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 6887887273258483304, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
       propertyPath: m_text
       value: 60 FPS
@@ -1722,6 +1753,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+--- !u!114 &202526465832758591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+  m_PrefabInstance: {fileID: 836992080964135893}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
 --- !u!224 &9039611324393102050 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8569982063655137591, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
@@ -1735,6 +1777,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7361625348744207060}
     m_Modifications:
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: key
+      value: language.es
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: arguments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
+    - target: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.FeedbackButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887887273258483304, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_text
+      value: "Espa\xF1ol"
+      objectReference: {fileID: 0}
     - target: {fileID: 7934261010389835607, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
       propertyPath: m_Name
       value: EsButton
@@ -1824,6 +1886,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+--- !u!114 &2448421463039693498 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+  m_PrefabInstance: {fileID: 2929760035092386896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
 --- !u!224 &6793161606402631015 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8569982063655137591, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
@@ -1837,6 +1910,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1026207587264897785}
     m_Modifications:
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: 'arguments.Array.data[0]'
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
+    - target: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.FeedbackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 6887887273258483304, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
       propertyPath: m_text
       value: 120 FPS
@@ -1930,6 +2015,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+--- !u!114 &4074818825803495273 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+  m_PrefabInstance: {fileID: 3593513247554826627}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
 --- !u!224 &5129608795618033844 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8569982063655137591, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
@@ -1943,6 +2039,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7361625348744207060}
     m_Modifications:
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: key
+      value: language.uk
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: arguments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
+    - target: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.FeedbackButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887887273258483304, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_text
+      value: "\u0423\u043A\u0440\u0430\u0457\u043D\u0441\u044C\u043A\u0430"
+      objectReference: {fileID: 0}
     - target: {fileID: 7934261010389835607, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
       propertyPath: m_Name
       value: UaButton
@@ -2032,6 +2148,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+--- !u!114 &4371899472202880948 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+  m_PrefabInstance: {fileID: 3890555973821256030}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
 --- !u!224 &4832566138212835433 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8569982063655137591, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
@@ -2045,6 +2172,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1026207587264897785}
     m_Modifications:
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
+    - target: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.FeedbackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7934261010389835607, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
       propertyPath: m_Name
       value: Fps30
@@ -2144,7 +2279,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
 --- !u!224 &5261654220323136809 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8569982063655137591, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
@@ -2158,6 +2293,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8960407974585827988}
     m_Modifications:
+    - target: {fileID: 379035287466922981, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: key
+      value: settings.ui_volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 379035287466922981, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
     - target: {fileID: 1836925706234853215, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2254,11 +2397,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: UiLabel
       objectReference: {fileID: 0}
+    - target: {fileID: 8711375522713195954, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: m_text
+      value: Ui
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+--- !u!114 &5588822223925584457 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 605513327846693184, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+  m_PrefabInstance: {fileID: 5037358760217393929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!224 &6671617930391506006 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1836925706234853215, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
@@ -2272,6 +2430,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8960407974585827988}
     m_Modifications:
+    - target: {fileID: 379035287466922981, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: key
+      value: settings.sfx_volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 379035287466922981, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
     - target: {fileID: 1836925706234853215, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2368,11 +2534,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: SfxLabel
       objectReference: {fileID: 0}
+    - target: {fileID: 8711375522713195954, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: m_text
+      value: Sfx
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+--- !u!114 &4778518212823879082 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 605513327846693184, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+  m_PrefabInstance: {fileID: 5347888041581810922}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!224 &6001488388763575221 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1836925706234853215, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
@@ -2386,6 +2567,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8960407974585827988}
     m_Modifications:
+    - target: {fileID: 379035287466922981, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
     - target: {fileID: 1836925706234853215, guid: f0eaaf14f6889184fbb1a8502d6843c8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2503,6 +2688,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7361625348744207060}
     m_Modifications:
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: key
+      value: language.en
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: arguments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
+    - target: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.FeedbackButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887887273258483304, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_text
+      value: English
+      objectReference: {fileID: 0}
     - target: {fileID: 7934261010389835607, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
       propertyPath: m_Name
       value: EnButton
@@ -2597,6 +2802,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8569982063655137591, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
   m_PrefabInstance: {fileID: 7577187872442383051}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6950610424717802529 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+  m_PrefabInstance: {fileID: 7577187872442383051}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
 --- !u!1001 &7891037926865318774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2605,6 +2821,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7361625348744207060}
     m_Modifications:
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: key
+      value: language.zh-CN
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: arguments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 576204833889509711, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
+      objectReference: {fileID: 0}
+    - target: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.FeedbackButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6887887273258483304, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+      propertyPath: m_text
+      value: "\u7B80\u4F53\u4E2D\u6587"
+      objectReference: {fileID: 0}
     - target: {fileID: 7934261010389835607, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
       propertyPath: m_Name
       value: CnButton
@@ -2699,3 +2935,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8569982063655137591, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
   m_PrefabInstance: {fileID: 7891037926865318774}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7264458258235798940 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 671620612841342698, guid: 8356d3559e4fbd341811e1e0b8be6835, type: 3}
+  m_PrefabInstance: {fileID: 7891037926865318774}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton

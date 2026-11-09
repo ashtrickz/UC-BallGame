@@ -2,18 +2,21 @@ using System;
 using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Game;
-using Game.App.Scenes;
-using Game.Foundation;
-using Game.Integration.Menu;
-using Game.UI;
-using Game.Gameplay.Config;
+using Slime.Foundation;
 using System.Collections.Generic;
 using UnityEngine;
 using NUnit.Framework;
+using Slime.App.Game;
+using Slime.App.Scenes;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Levels;
+using Slime.Composition;
+using Slime.Menu;
+using Slime.UI;
 using UnityEngine.TestTools;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class MenuControllerTests
     {
@@ -83,7 +86,7 @@ namespace Game.Foundation.Tests
                 view.ChooseColor(-1);
                 view.ChooseColor(999);
                 Assert.AreEqual(3, view.SelectedColor);
-                session.StartRound(new Game.Gameplay.Levels.WallLevelRequest(null));
+                session.StartRound(new WallLevelRequest(null));
                 view.ChooseColor(1);
                 Assert.AreEqual(3, view.SelectedColor, "the menu is gone once a round starts");
                 session.ReturnToMenu();

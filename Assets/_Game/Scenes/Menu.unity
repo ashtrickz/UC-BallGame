@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06b2a6922001abb4585fccf24f51255e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.UI::Game.UI.SafeAreaFitter
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.SafeAreaFitter
 --- !u!1 &108640233
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +508,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: menu.levels
   arguments: []
 --- !u!1 &223905779
@@ -636,7 +636,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fb57803ea0650346ac880969a67cf97, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.SlimeView
+  m_EditorClassIdentifier: Slime.Gameplay.View::Slime.Gameplay.View.SlimeView
 --- !u!1 &362563781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1138,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: menu.levels
   arguments: []
 --- !u!21 &655274020
@@ -1805,7 +1805,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2397503a611e4994a89015dfcc2d0bb2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Menu.MenuView
+  m_EditorClassIdentifier: Slime.Menu::Slime.Menu.MenuView
   canvasGroup: {fileID: 558737089}
   initiallyVisible: 1
   animateFade: 1
@@ -1843,7 +1843,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2290a087234037543a657557881f06a3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Menu.MenuScope
+  m_EditorClassIdentifier: Slime.Composition::Slime.Composition.MenuScope
   parentReference:
     TypeName: 
   autoRun: 1
@@ -1922,6 +1922,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2153873576288874122, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Gameplay.View::Slime.Gameplay.View.SplashPool
+      objectReference: {fileID: 0}
     - target: {fileID: 2476559240998424871, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
       propertyPath: m_Name
       value: Slime
@@ -1941,6 +1945,10 @@ PrefabInstance:
     - target: {fileID: 4012049225168249720, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
       propertyPath: bodyYaw
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012049225168249720, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.Gameplay.View::Slime.Gameplay.View.SlimeView
       objectReference: {fileID: 0}
     - target: {fileID: 4222367559249172820, guid: ab4a20e0f59dec846bbaa9d030501149, type: 3}
       propertyPath: m_Layer
@@ -2116,7 +2124,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: menu.wall
   arguments: []
 --- !u!1 &1536591643
@@ -2169,7 +2177,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -2397,7 +2405,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: menu.pick_color
   arguments: []
 --- !u!224 &1773685659 stripped
@@ -2415,7 +2423,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
 --- !u!1 &1825004372
 GameObject:
   m_ObjectHideFlags: 0
@@ -2604,7 +2612,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bb815ab3c95fe64f92ee09d71d6d464, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Menu.LevelSelectView
+  m_EditorClassIdentifier: Slime.Menu::Slime.Menu.LevelSelectView
   canvasGroup: {fileID: 1883809115}
   initiallyVisible: 0
   animateFade: 1
@@ -2685,7 +2693,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d76e985e1d54b47941295c41d68d47, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Slime.UI::Slime.UI.FeedbackButton
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -3027,7 +3035,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548ba672ce412134080710c91309e957, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Integration::Game.Integration.Localization.LocalizedText
+  m_EditorClassIdentifier: Slime.Infrastructure::Slime.Infrastructure.Localization.LocalizedText
   key: common.back
   arguments: []
 --- !u!1001 &7171384874812571631
@@ -3045,6 +3053,10 @@ PrefabInstance:
     - target: {fileID: 854524582833449284, guid: e8ff1e7824180e8498c31ebc4b28c04d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1905442987493808217, guid: e8ff1e7824180e8498c31ebc4b28c04d, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.StarRowView
       objectReference: {fileID: 0}
     - target: {fileID: 4847549991904846757, guid: e8ff1e7824180e8498c31ebc4b28c04d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3074,6 +3086,10 @@ PrefabInstance:
       propertyPath: m_fontMaterial
       value: 
       objectReference: {fileID: 655274020}
+    - target: {fileID: 7065810575640612377, guid: e8ff1e7824180e8498c31ebc4b28c04d, type: 3}
+      propertyPath: m_EditorClassIdentifier
+      value: Slime.UI::Slime.UI.FeedbackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8065239106355513001, guid: e8ff1e7824180e8498c31ebc4b28c04d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

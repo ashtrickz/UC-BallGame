@@ -1,9 +1,10 @@
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
+using Slime.Gameplay.Core.Generation;
 using NUnit.Framework;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
 using UnityEditor;
 
-namespace Game.Gameplay.Tests
+namespace Slime.Gameplay.Tests.EditMode
 {
     /// <summary>Checks on the shipped configuration assets (final balance and baked crystal contours).</summary>
     public sealed class ProjectConfigTests

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Game.App.Bootstrap
+namespace Slime.App.Bootstrap
 {
     public static class BootstrapEntry
     {

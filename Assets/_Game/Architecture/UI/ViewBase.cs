@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>
     /// Base of every shown and hidden view. A transition is one sequence built on first use and replayed afterwards:

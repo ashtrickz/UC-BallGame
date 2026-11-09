@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>
     /// Portrait orthographic follow camera. Following owns the position (XZ of the slime's logical anchor, so hops
@@ -8,6 +8,7 @@ namespace Game.Gameplay.View
     /// current value: a charge pull-back is one continuous animation, and the release eases to the new base frame.
     /// </summary>
     [RequireComponent(typeof(Camera))]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "CameraRig")]
     public sealed class CameraRig : MonoBehaviour
     {
         private const float DefaultTourSmoothTime = 0.55f;

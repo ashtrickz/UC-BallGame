@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Scenes;
-using Game.Foundation;
+using Slime.Foundation;
 using NUnit.Framework;
+using Slime.App.Scenes;
 using UnityEngine.TestTools;
 
-namespace Game.Application.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class SceneTransitionTests
     {

@@ -103,3 +103,7 @@ loading.menu,Loading menu...,Завантаження меню...,Cargando el me
 loading.ready,Ready!,Готово!,¡Listo!,准备就绪！
 loading.cancelled,Scene transition cancelled.,Перехід між сценами скасовано.,Se ha cancelado el cambio de escena.,场景切换已取消。
 loading.error,Could not load the game.,Не вдалося завантажити гру.,No se pudo cargar el juego.,无法加载游戏。
+result.hint_perfect,Perfect! All three stars are yours.,Чудово! Усі три зірки твої.,¡Perfecto! Las tres estrellas son tuyas.,太棒了！三颗星都属于你。
+result.hint_shots,"Next time, try using fewer shots.",Наступного разу спробуй зробити менше пострілів.,"La próxima vez, intenta usar menos disparos.",下次试着减少射击次数。
+result.hint_mass,"Next time, try keeping more mass.",Наступного разу збережи більше маси.,"La próxima vez, conserva más masa.",下次试着保留更多质量。
+result.hint_both,Use fewer shots and keep more mass for more stars.,Менше пострілів і більше збереженої маси — більше зірок.,Usa menos disparos y conserva más masa para ganar más estrellas.,减少射击并保留更多质量，就能获得更多星星。

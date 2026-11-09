@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Settings;
-using Game.UI;
+using Slime.Settings;
+using Slime.UI;
 using UnityEngine;
 
-namespace Game.Integration.Gameplay
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Presents volume, frame-rate and language settings with reset and build information.</summary>
     public sealed class SettingsPopupController : PopupController<ISettingsPopupView>, ISimplePopupController

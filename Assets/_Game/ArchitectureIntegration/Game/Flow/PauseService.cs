@@ -1,9 +1,9 @@
 using System;
-using Game.Gameplay.Model;
-using Game.Gameplay.View;
-using Game.Integration.Audio;
+using Slime.Gameplay.Core.Model;
+using Slime.Gameplay.View;
+using Slime.Infrastructure.Audio;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     [Flags]
     public enum PauseReason

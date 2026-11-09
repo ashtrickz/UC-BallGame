@@ -1,17 +1,22 @@
-using Game.App.Scenes;
-using Game.Integration.Composition;
+using Slime.App.Scenes;
+using Slime.Infrastructure.Frame;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+#if GAME_DEBUG
+using Slime.Diagnostics;
+#endif
+using Slime.Gameplay.Presentation;
 
-namespace Game.Integration.Game
+namespace Slime.Composition
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Game", sourceAssembly: "Game.Composition", sourceClassName: "GameScope")]
     public sealed class GameScope : ReadySceneScope
     {
         [SerializeField] private GameView view;
         [SerializeField] private ResultView resultView;
-        [SerializeField] private global::Game.Gameplay.Config.SlimeGameConfig gameConfig;
-        [SerializeField] private global::Game.Gameplay.View.GameplayStage gameplayStage;
+        [SerializeField] private Slime.Gameplay.Config.SlimeGameConfig gameConfig;
+        [SerializeField] private Slime.Gameplay.View.GameplayStage gameplayStage;
 
         protected override void Awake()
         {
@@ -35,29 +40,29 @@ namespace Game.Integration.Game
 
             builder.RegisterInstance(view);
             builder.RegisterInstance(resultView);
-            builder.RegisterInstance(gameConfig).AsSelf().As<global::Game.Gameplay.Levels.ILevelConfig>();
+            builder.RegisterInstance(gameConfig).AsSelf().As<Slime.Gameplay.Core.Levels.ILevelConfig>();
             builder.RegisterInstance(gameplayStage);
-            builder.Register<global::Game.Gameplay.Generation.LevelGenerator>(Lifetime.Scoped);
-            builder.Register<global::Game.Gameplay.Generation.WallGenerator>(Lifetime.Scoped);
-            builder.Register<global::Game.Gameplay.Levels.ISeedProvider>(_ =>
-                    new global::Game.Gameplay.Levels.SeedProvider(gameConfig.DebugFixedSeed,
+            builder.Register<Slime.Gameplay.Core.Generation.LevelGenerator>(Lifetime.Scoped);
+            builder.Register<Slime.Gameplay.Core.Generation.WallGenerator>(Lifetime.Scoped);
+            builder.Register<Slime.Gameplay.Core.Levels.ISeedProvider>(_ =>
+                    new Slime.Gameplay.Core.Levels.SeedProvider(gameConfig.DebugFixedSeed,
                         System.Environment.TickCount),
                 Lifetime.Scoped);
-            builder.Register<global::Game.Gameplay.Levels.CampaignLevelSource>(Lifetime.Scoped)
-                .As<global::Game.Gameplay.Levels.ILevelSource>();
-            builder.Register<global::Game.Gameplay.Levels.WallLevelSource>(Lifetime.Scoped)
-                .As<global::Game.Gameplay.Levels.ILevelSource>();
-            builder.Register<global::Game.Gameplay.Levels.EndlessLevelSource>(Lifetime.Scoped)
-                .As<global::Game.Gameplay.Levels.ILevelSource>();
-            builder.Register<global::Game.Gameplay.Levels.ILevelFactory, global::Game.Gameplay.Levels.LevelFactory>(
+            builder.Register<Slime.Gameplay.Core.Levels.CampaignLevelSource>(Lifetime.Scoped)
+                .As<Slime.Gameplay.Core.Levels.ILevelSource>();
+            builder.Register<Slime.Gameplay.Core.Levels.WallLevelSource>(Lifetime.Scoped)
+                .As<Slime.Gameplay.Core.Levels.ILevelSource>();
+            builder.Register<Slime.Gameplay.Core.Levels.EndlessLevelSource>(Lifetime.Scoped)
+                .As<Slime.Gameplay.Core.Levels.ILevelSource>();
+            builder.Register<Slime.Gameplay.Core.Levels.ILevelFactory, Slime.Gameplay.Core.Levels.LevelFactory>(
                 Lifetime.Scoped);
             builder.Register<CampaignAttemptPolicy>(Lifetime.Scoped).As<IAttemptModePolicy>();
             builder.Register<WallAttemptPolicy>(Lifetime.Scoped).As<IAttemptModePolicy>();
             builder.Register<EndlessAttemptPolicy>(Lifetime.Scoped).As<IAttemptModePolicy>();
             builder.Register<IAttemptFactory, AttemptFactory>(Lifetime.Scoped);
             builder.Register<ILevelPresenter, LevelPresenter>(Lifetime.Scoped);
-            builder.Register<global::Game.Integration.Audio.GameplayAudioPresenter>(Lifetime.Scoped);
-            builder.Register<global::Game.Integration.Audio.GameplayHapticsPresenter>(Lifetime.Scoped);
+            builder.Register<Slime.Gameplay.Presentation.GameplayAudioPresenter>(Lifetime.Scoped);
+            builder.Register<Slime.Gameplay.Presentation.GameplayHapticsPresenter>(Lifetime.Scoped);
             builder.Register<CurrentAttempt>(Lifetime.Scoped);
             builder.Register<PauseService>(Lifetime.Scoped).AsSelf().As<IPauseService>();
             builder.Register<AttemptRunner>(Lifetime.Scoped);
@@ -82,17 +87,17 @@ namespace Game.Integration.Game
             builder.RegisterBuildCallback(r =>
             {
                 r.InjectGameObject(view.gameObject);
-                r.Resolve<global::Game.Integration.Audio.UiFeedbackBinder>().Bind(view.gameObject);
+                r.Resolve<Slime.Infrastructure.Audio.UiFeedbackBinder>().Bind(view.gameObject);
                 r.InjectGameObject(resultView.gameObject);
-                r.Resolve<global::Game.Integration.Audio.UiFeedbackBinder>().Bind(resultView.gameObject);
+                r.Resolve<Slime.Infrastructure.Audio.UiFeedbackBinder>().Bind(resultView.gameObject);
                 if (gameplayStage.Tutorial != null)
                 {
                     r.InjectGameObject(gameplayStage.Tutorial.gameObject);
-                    r.Resolve<global::Game.Integration.Audio.UiFeedbackBinder>()
+                    r.Resolve<Slime.Infrastructure.Audio.UiFeedbackBinder>()
                         .Bind(gameplayStage.Tutorial.gameObject);
                 }
             });
-            builder.RegisterEntryPoint<GameEntryPoint>().As<global::Game.Foundation.ISceneReadiness>();
+            builder.RegisterEntryPoint<GameEntryPoint>().As<Slime.Foundation.ISceneReadiness>();
         }
     }
 }

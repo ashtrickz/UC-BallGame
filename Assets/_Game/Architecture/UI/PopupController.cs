@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>
     /// The shared life of a popup controller: show the view, wait until the popup is closed, hide it. The popup service disposes the

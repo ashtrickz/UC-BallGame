@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Game.Settings;
+using Slime.Settings;
 
-namespace Game.Integration.Settings
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Retains requested display values without applying unsupported platform controls.</summary>
     public sealed class NullDisplaySettings : IDisplaySettings

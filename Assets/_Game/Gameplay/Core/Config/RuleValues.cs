@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Gameplay.Config
+namespace Slime.Gameplay.Core.Config
 {
     /// <summary>
     /// Balance and generation numbers. Serialized by <see cref="SlimeGameConfig"/>; copied by value into an

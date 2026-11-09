@@ -1,12 +1,13 @@
+using Slime.Gameplay.Core.Level;
 using UnityEngine;
 #if UNITY_EDITOR
-using Game.Gameplay.Level;
 #endif
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Editor diagnostic: draws the logical crystal contours over the visible variants. Disable the component to hide them.</summary>
     [RequireComponent(typeof(CrystalFieldView))]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "CrystalContourGizmos")]
     public sealed class CrystalContourGizmos : MonoBehaviour
     {
 #if UNITY_EDITOR

@@ -5,7 +5,7 @@ using UnityEditor.Build;
 using UnityEditor.Build.Profile;
 using UnityEditor.Build.Reporting;
 
-namespace Game.Editor
+namespace Slime.Editor
 {
     /// <summary>Rejects mismatched player diagnostics before compilation and restores the editor afterwards.</summary>
     public sealed class GameDebugBuildProcessor : BuildPlayerProcessor, IPostprocessBuildWithReport

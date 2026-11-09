@@ -1,24 +1,26 @@
+using Slime.Foundation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Loading;
-using Game.App.Scenes;
-using Game.Audio;
-using Game.Integration.Audio;
-using Game.Integration.Composition;
-using Game.Integration.Gameplay;
-using Game.Integration.Game;
-using Game.Integration.Settings;
-using Game.Settings;
-using Game.UI;
 using NUnit.Framework;
+using Slime.App.Loading;
+using Slime.App.Scenes;
+using Slime.Audio;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.Diagnostics;
+using Slime.Infrastructure.Settings;
+using Slime.Settings;
+using Slime.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using VContainer;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>Protects feedback bindings, scene context and source gains during framework decomposition.</summary>
     public sealed class FrameworkServicesTests
@@ -114,7 +116,7 @@ namespace Game.Foundation.Tests
         {
             var references = typeof(FeedbackButton).Assembly.GetReferencedAssemblies().Select(assembly => assembly.Name);
             CollectionAssert.DoesNotContain(references, "VContainer");
-            CollectionAssert.DoesNotContain(references, "Game.Audio");
+            CollectionAssert.DoesNotContain(references, "Slime.Audio");
         }
 
         [Test]
@@ -136,7 +138,7 @@ namespace Game.Foundation.Tests
         [Test]
         public void Settings_prefab_has_no_player_identity_copy_control()
         {
-            var root = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Game/Prefabs/UI/SettingsPopup.prefab");
+            var root = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Game/Prefabs/UI/Popups/SettingsPopup.prefab");
             Assert.IsNull(root.transform.Find("RootTransform/CopyPlayerId"));
             Assert.IsNotNull(root.transform.Find("RootTransform/Reset"));
         }

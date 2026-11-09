@@ -1,11 +1,12 @@
 using System;
 using System.Threading;
-using Game.Gameplay.Config;
-using Game.Gameplay.Level;
-using Game.Gameplay.Levels;
-using Game.Gameplay.Model;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Level;
+using Slime.Gameplay.Core.Levels;
+using Slime.Gameplay.Core.Model;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Identity, built level, model, mode policy and cancellation of one attempt.</summary>
     public sealed class AttemptContext : IDisposable

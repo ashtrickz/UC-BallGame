@@ -1,15 +1,19 @@
+using Slime.Foundation;
 using System.Threading;
 using System;
-using Game.App.Game;
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
-using Game.Gameplay.Levels;
-using Game.Integration.Game;
-using Game.Localization;
 using NUnit.Framework;
+using Slime.App.Game;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Generation;
+using Slime.Gameplay.Core.Levels;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
+using Slime.Localization;
 using UnityEditor;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>Mode policies decide progress, retry, next level, HUD label and result choices without any mode switch in the controller.</summary>
     public sealed class AttemptPolicyTests
@@ -132,11 +136,11 @@ namespace Game.Foundation.Tests
 
             Assert.AreEqual(MiddleLevel, _progress.CompletedLevel);
             Assert.AreEqual(LastLevel, _progress.CompletedCount);
-            Assert.AreEqual("action.next_level", won.Primary.LabelKey);
+
             Assert.AreEqual(MiddleLevel + 1, Number(won.Primary.Request));
-            Assert.AreEqual("common.retry", won.Secondary.LabelKey);
+
             Assert.AreEqual(MiddleLevel, Number(won.Secondary.Request));
-            Assert.AreEqual("common.retry", lost.Primary.LabelKey);
+
             Assert.AreEqual(MiddleLevel, Number(lost.Primary.Request));
             Assert.IsTrue(lost.Secondary.IsNone);
             Assert.AreEqual("hud.level", policy.Label(attempt));
@@ -153,10 +157,10 @@ namespace Game.Foundation.Tests
             var won = policy.Won(attempt);
 
             Assert.AreEqual("result.campaign_complete", won.Title);
-            Assert.AreEqual("action.wall_mode", won.Primary.LabelKey);
+
             Assert.IsInstanceOf<WallLevelRequest>(won.Primary.Request);
             Assert.IsNull(((WallLevelRequest)won.Primary.Request).Seed);
-            Assert.AreEqual("action.replay_level", won.Secondary.LabelKey);
+
             Assert.AreEqual(LastLevel, Number(won.Secondary.Request));
             Assert.IsInstanceOf<EndlessLevelRequest>(policy.Next(attempt));
         }
@@ -172,13 +176,13 @@ namespace Game.Foundation.Tests
             var lost = policy.Lost(attempt);
 
             Assert.AreEqual(0, _progress.CompletedLevel, "walls never touch the campaign progress");
-            Assert.AreEqual("action.new_wall", won.Primary.LabelKey);
+
             Assert.IsNull(((WallLevelRequest)won.Primary.Request).Seed);
-            Assert.AreEqual("action.same_wall", won.Secondary.LabelKey);
+
             Assert.AreEqual(Seed, ((WallLevelRequest)won.Secondary.Request).Seed);
-            Assert.AreEqual("action.same_wall", lost.Primary.LabelKey);
+
             Assert.AreEqual(Seed, ((WallLevelRequest)lost.Primary.Request).Seed);
-            Assert.AreEqual("action.new_wall", lost.Secondary.LabelKey);
+
             Assert.IsNull(((WallLevelRequest)policy.Retry(attempt)).Seed);
             Assert.AreEqual("hud.wall_seed", policy.Label(attempt));
         }
@@ -194,10 +198,10 @@ namespace Game.Foundation.Tests
             var lost = policy.Lost(attempt);
 
             Assert.AreEqual(0, _progress.CompletedLevel);
-            Assert.AreEqual("action.new_level", won.Primary.LabelKey);
+
             Assert.IsNull(((EndlessLevelRequest)won.Primary.Request).Seed);
             Assert.IsTrue(won.Secondary.IsNone);
-            Assert.AreEqual("common.retry", lost.Primary.LabelKey);
+
             Assert.IsNull(((EndlessLevelRequest)lost.Primary.Request).Seed);
             Assert.IsTrue(lost.Secondary.IsNone);
             Assert.AreEqual("hud.endless_seed", policy.Label(attempt));

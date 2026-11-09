@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6df356f33f3d74ab9427b6e8db22a9, type: 3}
   m_Name: Campaign
-  m_EditorClassIdentifier: Game.Gameplay::Game.Gameplay.Config.CampaignAsset
+  m_EditorClassIdentifier: Slime.Gameplay.Config::Slime.Gameplay.Config.CampaignAsset
   levels:
   - title: First Taps
     idea: Short taps are enough for single crystals; extra charge only wastes size.

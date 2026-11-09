@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Applies infection tint, brightness and the preview edge to a crystal through one shared property block.</summary>
     public sealed class CrystalTinter

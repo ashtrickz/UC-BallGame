@@ -1,15 +1,16 @@
 using System;
-using Game.Foundation;
 using System.Collections.Generic;
-using Game.Audio;
+using Slime.Audio;
+using Slime.Foundation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Plays toggle and slider feedback from the current EventSystem raycast.</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Audio", sourceAssembly: "Game.Services", sourceClassName: "UiClickSounds")]
     public sealed class UiClickSounds : MonoBehaviour, ITickRegistryClient
     {
         private const float SliderTickStep = 0.04f;
@@ -99,7 +100,7 @@ namespace Game.Integration.Audio
             try
             {
                 _audio.PlaySound(toggle.isOn ? GameSound.UiToggleOff : GameSound.UiToggleOn);
-                _haptics.Play(global::Game.Audio.HapticKind.Tap);
+                _haptics.Play(Slime.Audio.HapticKind.Tap);
             }
             catch (InvalidOperationException) { } // the audio is not set up yet (the loading screen): no click, nothing broken
         }

@@ -2,14 +2,15 @@ using System;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Bootstrap;
-using Game.App.Scenes;
-using Game.Integration.Composition;
+using Slime.App.Bootstrap;
+using Slime.App.Scenes;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
-namespace Game.Integration.Scenes
+namespace Slime.Composition.Scenes
 {
     /// <summary>Adapts native scene operations and readiness scopes to the scene-transition service.</summary>
     public sealed class UnitySceneLoader : ISceneRuntime

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Game.Localization;
+using Slime.Localization;
 using TMPro;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Game", sourceAssembly: "Game.Features.Game", sourceClassName: "GameView")]
     public sealed class GameView : UI.ViewBase
     {
         private const string SizeKey = "hud.size";

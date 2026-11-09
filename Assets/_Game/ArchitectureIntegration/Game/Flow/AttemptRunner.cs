@@ -1,14 +1,14 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Model;
-using Game.Gameplay.View;
-using Game.Integration.Audio;
-using Game.App.Game;
+using Slime.App.Game;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Model;
+using Slime.Gameplay.View;
+using Slime.Infrastructure.Audio;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// Runs the model's action chain through the view: every view action is awaited to its real end and confirmed

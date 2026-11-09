@@ -1,11 +1,12 @@
 using System;
 using System.IO;
-using Game.Gameplay.Config;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Game.Gameplay.Editor
+namespace Slime.Gameplay.Editor
 {
     /// <summary>Bakes alpha silhouettes of the actual gameplay shard meshes for the UI transition.</summary>
     public static class CrystalTransitionAtlasBuilder

@@ -1,9 +1,10 @@
 #if GAME_DEBUG
 using System;
-using Game.Gameplay.Levels;
-using Game.Gameplay.View;
+using Slime.Gameplay.Core.Levels;
+using Slime.Gameplay.View;
+using Slime.Gameplay.Presentation;
 
-namespace Game.Integration.Game
+namespace Slime.Diagnostics
 {
     /// <summary>Narrow simulation surface for the autoplay, demo runs, the editor debug menu and tests.</summary>
     public interface IGameplayDebug

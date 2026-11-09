@@ -1,13 +1,14 @@
 using System.Diagnostics;
 using System.Text;
-using Game.Gameplay.Config;
-using Game.Gameplay.Generation;
-using Game.Gameplay.Level;
-using Game.Gameplay.Model;
 using NUnit.Framework;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Generation;
+using Slime.Gameplay.Core.Level;
+using Slime.Gameplay.Core.Model;
 using UnityEditor;
 
-namespace Game.Gameplay.Tests
+namespace Slime.Gameplay.Tests.EditMode
 {
     /// <summary>The generated crystal wall: reproducible, really blocking, and always proven passable within B / 1.2.</summary>
     public sealed class WallTests

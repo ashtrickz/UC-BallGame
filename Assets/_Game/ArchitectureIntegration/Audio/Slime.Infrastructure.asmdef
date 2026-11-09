@@ -1,0 +1,29 @@
+{
+  "name": "Slime.Infrastructure",
+  "rootNamespace": "Slime.Infrastructure",
+  "references": [
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "GUID:d53dea1b37dfc874db8ba0f01970bded",
+    "GUID:d40d1a3658e75a64fb6e4c4f1840be99",
+    "GUID:44b1270a4efce154f82ba0106a125bf6",
+    "GUID:4fe53e4e854b9cb4d962c89512c29091",
+    "GUID:dee1813af771f554eb094f0b8438b6d7",
+    "GUID:b4517358f190e234e925cec921c0cb53",
+    "GUID:b8ade7ee5ade01149b5577e8738c3706",
+    "UniTask",
+    "VContainer",
+    "Unity.TextMeshPro",
+    "UnityEngine.UI",
+    "Unity.InputSystem",
+    "Unity.Addressables"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

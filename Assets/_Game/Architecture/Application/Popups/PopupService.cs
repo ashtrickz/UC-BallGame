@@ -1,10 +1,10 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.UI;
+using Slime.UI;
 using VContainer;
 
-namespace Game.App.Popups
+namespace Slime.App.Popups
 {
     public sealed class PopupService : IPopupService, IDisposable
     {

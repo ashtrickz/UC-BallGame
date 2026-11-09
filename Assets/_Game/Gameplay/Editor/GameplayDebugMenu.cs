@@ -1,12 +1,16 @@
 #if GAME_DEBUG
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Integration.Game;
+using Slime.Gameplay.Core.Model;
+using Slime.Gameplay.View;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
 using UnityEditor;
 using UnityEngine;
 using VContainer;
 
-namespace Game.Gameplay.Editor
+namespace Slime.Gameplay.Editor
 {
     /// <summary>Play Mode helpers: replay a seed and drive the attempt with the autoplay (demo videos, smoke checks).</summary>
     public static class GameplayDebugMenu
@@ -56,7 +60,7 @@ namespace Game.Gameplay.Editor
         {
             var gameplay = Find();
             if (gameplay == null) { Debug.LogWarning("[Gameplay] start the Game scene first."); return; }
-            var recorder = new GameObject("Frame Recorder").AddComponent<Game.Gameplay.View.FrameRecorder>();
+            var recorder = new GameObject("Frame Recorder").AddComponent<FrameRecorder>();
             try
             {
                 gameplay.PlaySeed(seed);
@@ -75,8 +79,8 @@ namespace Game.Gameplay.Editor
             if (gameplay == null) return;
             System.IO.Directory.CreateDirectory(folder);
             var context = gameplay.Current;
-            await UniTask.WaitUntil(() => context.Model.Phase == Game.Gameplay.Model.AttemptPhase.Won);
-            var camera = Resolve<Game.Gameplay.View.GameplayStage>().CameraRig.Camera;
+            await UniTask.WaitUntil(() => context.Model.Phase == AttemptPhase.Won);
+            var camera = Resolve<GameplayStage>().CameraRig.Camera;
             var target = new RenderTexture(428, 926, 24);
             var read = new Texture2D(428, 926, TextureFormat.RGB24, false);
             var elapsed = 0f;

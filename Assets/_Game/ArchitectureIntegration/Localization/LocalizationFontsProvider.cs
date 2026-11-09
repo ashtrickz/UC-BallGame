@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Integration.Localization
+namespace Slime.Infrastructure.Localization
 {
     /// <summary>Loads and configures fallback fonts once before localization starts.</summary>
     public sealed class LocalizationFontsProvider

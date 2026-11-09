@@ -1,10 +1,10 @@
 using System;
-using Game.Integration.Audio;
+using Slime.Infrastructure.Audio;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Game.Integration.Gameplay
+namespace Slime.Infrastructure.Settings
 {
     /// <summary>Instantiates popup views and binds their feedback at the integration boundary.</summary>
     public sealed class SettingsPopupViewFactory

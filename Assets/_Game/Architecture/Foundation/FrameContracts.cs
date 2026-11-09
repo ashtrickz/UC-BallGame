@@ -1,4 +1,4 @@
-namespace Game.Foundation
+namespace Slime.Foundation
 {
     /// <summary>Receives one explicit frame step from its owning loop.</summary>
     public interface IFrameTickable

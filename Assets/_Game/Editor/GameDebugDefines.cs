@@ -1,11 +1,11 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEditor;
 using UnityEditor.Build;
 
-namespace Game.Editor
+namespace Slime.Editor
 {
     /// <summary>Enables editor diagnostics and stages player defines before the player compilation starts.</summary>
     [InitializeOnLoad]

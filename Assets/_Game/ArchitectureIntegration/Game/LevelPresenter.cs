@@ -1,11 +1,12 @@
 using System;
-using Game.App.Game;
-using Game.Gameplay.Config;
-using Game.Gameplay.Levels;
-using Game.Gameplay.View;
+using Slime.App.Game;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Levels;
+using Slime.Gameplay.View;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Lays a built level out on the gameplay stage.</summary>
     public interface ILevelPresenter

@@ -1,19 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Audio;
-using Game.Gameplay.Config;
-using Game.Integration.Audio;
-using Game.Integration.Game;
-using Game.Integration.Menu;
-using Game.UI;
+using Slime.Audio;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.View;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Menu;
+using Slime.UI;
 using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Game.Gameplay.Editor
+namespace Slime.Gameplay.Editor
 {
     /// <summary>Adds star presentation to the existing scenes and initializes editable targets without rebuilding gameplay.</summary>
     public static class StarRatingInstaller
@@ -38,7 +42,7 @@ namespace Game.Gameplay.Editor
                 throw new InvalidOperationException("Both star sprites must be imported as sprites.");
 
             var result = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<ResultView>(true)).Single();
-            var stage = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<Game.Gameplay.View.GameplayStage>(true)).Single();
+            var stage = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<GameplayStage>(true)).Single();
             var camera = stage.CameraRig.GetComponent<Camera>();
             var resultCanvasObject = scene.GetRootGameObjects().FirstOrDefault(root => root.name == "Result Canvas");
             if (resultCanvasObject == null)

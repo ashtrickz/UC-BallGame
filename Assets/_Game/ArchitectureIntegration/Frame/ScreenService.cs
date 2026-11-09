@@ -1,9 +1,9 @@
 using System;
-using Game.UI;
+using Slime.UI;
 using UnityEngine;
 using VContainer.Unity;
 
-namespace Game.Integration.Composition
+namespace Slime.Infrastructure.Frame
 {
     /// <summary>Reads the native screen state independently of layout consumers.</summary>
     public interface IScreenMetrics

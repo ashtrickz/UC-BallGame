@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Selects nonrepeating takes and pitches from the audio-only random stream.</summary>
     public sealed class AudioVariation

@@ -1,9 +1,10 @@
 using System;
-using Game.App.Game;
-using Game.Gameplay.Config;
+using Slime.App.Game;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
 using VContainer.Unity;
 
-namespace Game.Integration.Menu
+namespace Slime.Menu
 {
     /// <summary>Slime colour choice in the menu: shows the palette with the saved colour and stores a new choice.</summary>
     public sealed class SlimeColorController : IStartable, IDisposable

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>Publishes a coherent safe-area and screen-size snapshot for view layout.</summary>
     public interface IScreenService

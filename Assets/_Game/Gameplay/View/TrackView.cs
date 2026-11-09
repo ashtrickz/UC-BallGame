@@ -1,12 +1,13 @@
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>
     /// Visual lane on the floor whose width is the corridor the slime currently needs (D + 2 × gap).
     /// It narrows with the slime, so the player can read which crystals still block the way.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "TrackView")]
     public sealed class TrackView : MonoBehaviour, IFrameTickable
     {
         private const float DefaultEdgeWidth = 0.05f;

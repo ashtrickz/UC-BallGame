@@ -1,9 +1,9 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Localization;
+using Slime.Localization;
 
-namespace Game.App.Loading
+namespace Slime.App.Loading
 {
     public sealed class LoadingScreenController : ILoadingScreen, IDisposable
     {

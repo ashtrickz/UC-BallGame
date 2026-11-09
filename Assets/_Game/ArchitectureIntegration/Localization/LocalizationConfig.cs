@@ -1,11 +1,12 @@
 using System;
-using Game.Localization;
-using Game.Settings;
+using Slime.Localization;
+using Slime.Settings;
 using UnityEngine;
 
-namespace Game.Integration.Localization
+namespace Slime.Infrastructure.Localization
 {
     [CreateAssetMenu(menuName = "Ball Game/Localization Config")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Localization", sourceAssembly: "Game.Services", sourceClassName: "LocalizationConfig")]
     public sealed class LocalizationConfig : ScriptableObject
     {
         public const string ResourcePath = "Localization/LocalizationConfig";

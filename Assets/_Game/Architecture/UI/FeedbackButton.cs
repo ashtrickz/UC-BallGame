@@ -2,13 +2,14 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.UI
+namespace Slime.UI
 {
     /// <summary>
     /// Shared press animation and explicitly bound interaction feedback for UI buttons. The punch is one tween built on
     /// the first press and replayed from the rest scale, so repeated presses never drift the scale.
     /// </summary>
     [AddComponentMenu("UI/Feedback Button")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.UI", sourceAssembly: "Game.UI", sourceClassName: "FeedbackButton")]
     public class FeedbackButton : UnityEngine.UI.Button
     {
         private const float DefaultPunchStrength = 0.08f;

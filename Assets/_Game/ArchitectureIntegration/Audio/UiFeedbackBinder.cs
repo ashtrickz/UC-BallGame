@@ -1,8 +1,8 @@
-using Game.UI;
-using Game.Integration.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.UI;
 using UnityEngine;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Binds authored and dynamically created buttons at integration boundaries.</summary>
     public sealed class UiFeedbackBinder

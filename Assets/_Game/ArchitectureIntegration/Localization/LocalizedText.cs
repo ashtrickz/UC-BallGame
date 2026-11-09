@@ -1,12 +1,13 @@
 using System;
-using Game.Localization;
+using Slime.Localization;
 using TMPro;
 using UnityEngine;
 using VContainer;
 
-namespace Game.Integration.Localization
+namespace Slime.Infrastructure.Localization
 {
     [DisallowMultipleComponent, RequireComponent(typeof(TMP_Text))]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Localization", sourceAssembly: "Game.Services", sourceClassName: "LocalizedText")]
     public sealed class LocalizedText : MonoBehaviour
     {
         [SerializeField] private string key;

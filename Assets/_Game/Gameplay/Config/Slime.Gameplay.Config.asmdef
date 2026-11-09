@@ -1,0 +1,16 @@
+{
+  "name": "Slime.Gameplay.Config",
+  "rootNamespace": "Slime.Gameplay.Config",
+  "references": [
+    "GUID:6a206aff7600dc945b4fd7a54f32f50a"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

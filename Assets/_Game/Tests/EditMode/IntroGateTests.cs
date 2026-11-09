@@ -1,12 +1,13 @@
+using Slime.Foundation;
 using System;
 using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Loading;
 using NUnit.Framework;
+using Slime.App.Loading;
 using UnityEngine.TestTools;
 
-namespace Game.Application.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class IntroGateTests
     {

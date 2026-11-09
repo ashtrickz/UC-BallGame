@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System;
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>
     /// Scene root of the gameplay presentation. Holds the views the controller drives and reports application
     /// pause and focus changes. Contains no rules.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "GameplayStage")]
     public sealed class GameplayStage : MonoBehaviour
     {
         [SerializeField] private SlimeViewConfig viewConfig;

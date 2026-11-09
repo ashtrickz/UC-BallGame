@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Geometry;
+using Slime.Gameplay.Core.Geometry;
 
-namespace Game.Gameplay.Config
+namespace Slime.Gameplay.Core.Config
 {
     /// <summary>A crystal variant as the rules see it: a stable id and its baked local XZ hull.</summary>
     public sealed class CrystalVariantData

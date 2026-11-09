@@ -2,20 +2,22 @@ using System;
 using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Game;
-using Game.App.Loading;
-using Game.App.Scenes;
-using Game.Integration.Menu;
-using Game.Gameplay.Model;
-using Game.Integration.Composition;
-using Game.Integration.Game;
 using NUnit.Framework;
+using Slime.App.Game;
+using Slime.App.Loading;
+using Slime.App.Scenes;
+using Slime.Gameplay.Core.Model;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
+using Slime.Menu;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Gameplay.PlayModeTests
+namespace Slime.Gameplay.Tests.PlayMode
 {
     /// <summary>The full attempt in the real Game scene: animations, waits, confirmations, pause and restart.</summary>
     public sealed partial class GameplayLifecycleTests
@@ -93,7 +95,7 @@ namespace Game.Gameplay.PlayModeTests
         [UnityTest]
         public IEnumerator Slime_colors_update_preview_and_survive_game_restart_and_return_to_menu() => UniTask.ToCoroutine(async () =>
         {
-            void CheckColors(global::Game.Gameplay.View.SlimeView slime, global::Game.Gameplay.Config.SlimeColorPreset preset)
+            void CheckColors(Slime.Gameplay.View.SlimeView slime, Slime.Gameplay.Config.SlimeColorPreset preset)
             {
                 var count = 0;
                 var block = new MaterialPropertyBlock();
@@ -111,11 +113,11 @@ namespace Game.Gameplay.PlayModeTests
             try
             {
                 var project = await StartMenuAsync();
-                var config = UnityEngine.Object.FindFirstObjectByType<MenuScope>().Container.Resolve<global::Game.Gameplay.Config.SlimeGameConfig>();
+                var config = UnityEngine.Object.FindFirstObjectByType<MenuScope>().Container.Resolve<Slime.Gameplay.Config.SlimeGameConfig>();
                 var menu = UnityEngine.Object.FindFirstObjectByType<MenuView>();
                 var swatches = menu.GetComponentsInChildren<SlimeColorSwatch>();
                 Assert.AreEqual(config.SlimeColors.Count, swatches.Length);
-                var preview = UnityEngine.Object.FindFirstObjectByType<global::Game.Gameplay.View.SlimeView>();
+                var preview = UnityEngine.Object.FindFirstObjectByType<Slime.Gameplay.View.SlimeView>();
                 var material = preview.transform.Find("Body").GetComponent<MeshRenderer>().sharedMaterial;
                 var originalBase = material.GetColor("_BaseColor");
                 var originalTop = material.GetColor("_TopColor");
@@ -138,7 +140,7 @@ namespace Game.Gameplay.PlayModeTests
                 CheckColors(gameplay.Stage.Slime, selected);
                 project.Container.Resolve<GameSession>().ReturnToMenu();
                 await navigation.OpenAsync(GameNavigation.MenuScene);
-                CheckColors(UnityEngine.Object.FindFirstObjectByType<global::Game.Gameplay.View.SlimeView>(), selected);
+                CheckColors(UnityEngine.Object.FindFirstObjectByType<Slime.Gameplay.View.SlimeView>(), selected);
                 Assert.AreEqual(swatches.Length - 1, new PlayerPrefsSlimeColorPreferences().SelectedIndex(config.SlimeColors));
             }
             finally { await TearDownAsync(); }
@@ -299,7 +301,7 @@ namespace Game.Gameplay.PlayModeTests
                     System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(menu)).onClick.Invoke();
                 var gameplay = await LoadedGameplayAsync();
                 var wall = gameplay.Current;
-                Assert.IsInstanceOf<global::Game.Gameplay.Levels.WallLevelRequest>(wall.Request);
+                Assert.IsInstanceOf<Slime.Gameplay.Core.Levels.WallLevelRequest>(wall.Request);
                 Assert.Greater(wall.Level.Crystals.Count, 200);
 
                 Time.timeScale = 4;
@@ -322,13 +324,13 @@ namespace Game.Gameplay.PlayModeTests
                 session.StartRound(GameMode.Wall);
                 await navigation.OpenAsync(GameNavigation.GameScene);
                 gameplay = await LoadedGameplayAsync();
-                Assert.IsInstanceOf<global::Game.Gameplay.Levels.WallLevelRequest>(gameplay.Current.Request);
+                Assert.IsInstanceOf<Slime.Gameplay.Core.Levels.WallLevelRequest>(gameplay.Current.Request);
                 Assert.AreNotEqual(wall.Seed, gameplay.Current.Seed, "a new wall every time");
                 await navigation.OpenAsync(GameNavigation.MenuScene);
                 session.StartRound(GameMode.Campaign);
                 await navigation.OpenAsync(GameNavigation.GameScene);
                 gameplay = await LoadedGameplayAsync();
-                Assert.IsInstanceOf<global::Game.Gameplay.Levels.CampaignLevelRequest>(gameplay.Current.Request, "LEVELS starts the campaign");
+                Assert.IsInstanceOf<Slime.Gameplay.Core.Levels.CampaignLevelRequest>(gameplay.Current.Request, "LEVELS starts the campaign");
             }
             finally { await TearDownAsync(); }
         });
@@ -342,13 +344,13 @@ namespace Game.Gameplay.PlayModeTests
                 var project = await StartMenuAsync();
                 var session = project.Container.Resolve<GameSession>();
                 var navigation = project.Container.Resolve<GameNavigation>();
-                var config = UnityEngine.Object.FindFirstObjectByType<MenuScope>().Container.Resolve<global::Game.Gameplay.Config.SlimeGameConfig>();
-                var menu = UnityEngine.Object.FindFirstObjectByType<Game.Integration.Menu.MenuView>();
-                var levels = (UnityEngine.UI.Button)typeof(Game.Integration.Menu.MenuView)
+                var config = UnityEngine.Object.FindFirstObjectByType<MenuScope>().Container.Resolve<Slime.Gameplay.Config.SlimeGameConfig>();
+                var menu = UnityEngine.Object.FindFirstObjectByType<MenuView>();
+                var levels = (UnityEngine.UI.Button)typeof(MenuView)
                     .GetField("playButton", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(menu);
 
                 levels.onClick.Invoke();
-                var grid = UnityEngine.Object.FindFirstObjectByType<Game.Integration.Menu.LevelSelectView>();
+                var grid = UnityEngine.Object.FindFirstObjectByType<LevelSelectView>();
                 Assert.IsNotNull(grid);
                 var group = grid.GetComponent<CanvasGroup>();
                 Assert.IsNotNull(group, "level selection uses the shared view transition");

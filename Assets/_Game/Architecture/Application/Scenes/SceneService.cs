@@ -1,10 +1,10 @@
-using Game.App.Loading;
-using Game.Foundation;
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Slime.App.Loading;
+using Slime.Foundation;
 
-namespace Game.App.Scenes
+namespace Slime.App.Scenes
 {
     /// <summary>Coordinates loading presentation around an exclusive scene transition.</summary>
     public sealed class SceneService : ISceneRequestService

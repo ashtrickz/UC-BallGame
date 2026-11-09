@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Game.Localization
+namespace Slime.Localization
 {
     public interface ILocalizationService
     {

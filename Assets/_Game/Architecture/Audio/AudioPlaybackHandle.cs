@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Audio
+namespace Slime.Audio
 {
     /// <summary>Controls the pooled voice behind a playback handle; implemented once by the owning pool, not per sound.</summary>
     public interface IAudioVoices

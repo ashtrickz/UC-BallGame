@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Level;
-using Game.Gameplay.Levels;
+using Slime.Gameplay.Core.Level;
+using Slime.Gameplay.Core.Levels;
 using UnityEngine;
+using Slime.Gameplay.Core.Config;
 
-namespace Game.Gameplay.Config
+namespace Slime.Gameplay.Config
 {
     /// <summary>
     /// Balance, generation and available slime palettes (animation tuning lives in a separate view config).
     /// Registered in GameScope with RegisterInstance; each attempt takes an immutable <see cref="GameRules"/> snapshot.
     /// </summary>
     [CreateAssetMenu(menuName = "Ball Game/Slime Game Config", fileName = "SlimeGameConfig")]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.Config", sourceAssembly: "Game.Gameplay.Config", sourceClassName: "SlimeGameConfig")]
     public sealed class SlimeGameConfig : ScriptableObject, ILevelConfig
     {
         private const string MissingCatalogMessage = "SlimeGameConfig needs a crystal catalog.";

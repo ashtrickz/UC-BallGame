@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 
-namespace Game.Assets
+namespace Slime.Assets
 {
     // Each returned operation represents one native acquisition. Completion is consumed once,
     // and Dispose releases that acquisition after completion, including failed operations.

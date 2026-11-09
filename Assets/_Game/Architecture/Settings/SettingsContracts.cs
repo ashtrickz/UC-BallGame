@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Settings
+namespace Slime.Settings
 {
     public enum VolumeChannel { Master, Music, Sfx, Ui, Voice }
     public enum PreferenceToggle { VSync, FixTooltipOnlyByClick, MarketAutoLevelUp }

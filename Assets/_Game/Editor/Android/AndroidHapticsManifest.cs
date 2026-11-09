@@ -4,7 +4,7 @@ using System.Xml;
 using UnityEditor.Android;
 using UnityEditor.Build;
 
-namespace Game.Editor.Android
+namespace Slime.Editor.Android
 {
     // Native JNI calls do not rely on Unity detecting an otherwise unused Handheld.Vibrate method.
     public sealed class AndroidHapticsManifest : IPostGenerateGradleAndroidProject

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.View;
-using Game.UI;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.View;
+using Slime.UI;
 using UnityEngine;
 using VContainer;
 
-namespace Game.Integration.Menu
+namespace Slime.Menu
 {
     public interface IMenuView : IView
     {
@@ -19,6 +20,7 @@ namespace Game.Integration.Menu
         void SetInteractable(bool interactable);
     }
 
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Menu", sourceAssembly: "Game.Features.Menu", sourceClassName: "MenuView")]
     public sealed class MenuView : ViewBase, IMenuView
     {
         private const string SwatchName = "Color ";

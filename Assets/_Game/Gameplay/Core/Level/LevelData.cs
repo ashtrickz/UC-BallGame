@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
 
-namespace Game.Gameplay.Level
+namespace Slime.Gameplay.Core.Level
 {
     public enum CrystalRole { Single, Pair, Group, Decor }
 

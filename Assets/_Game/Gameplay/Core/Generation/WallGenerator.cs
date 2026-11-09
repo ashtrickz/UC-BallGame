@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
-using Game.Gameplay.Geometry;
-using Game.Gameplay.Level;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Geometry;
+using Slime.Gameplay.Core.Level;
 
-namespace Game.Gameplay.Generation
+namespace Slime.Gameplay.Core.Generation
 {
     /// <summary>
     /// "Wall" mode generator: a dense, jittered field of crystals covering the whole frame. Only the core band can

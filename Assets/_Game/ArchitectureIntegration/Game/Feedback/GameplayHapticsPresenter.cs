@@ -1,8 +1,9 @@
 using System;
-using Game.Audio;
-using Game.Gameplay.View;
+using Slime.Audio;
+using Slime.Gameplay.View;
+using Slime.Infrastructure.Audio;
 
-namespace Game.Integration.Audio
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>Drives gameplay feedback independently from audio volume and library availability.</summary>
     public sealed class GameplayHapticsPresenter : IDisposable

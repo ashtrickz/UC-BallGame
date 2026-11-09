@@ -1,11 +1,12 @@
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>
     /// Splash of the colony pool when the slime dives in: a fountain of jelly drops, a crown of drops thrown out
     /// around the entry point and expanding ripples on the surface. Secondary effect: never awaited.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "PoolSplashEffect")]
     public sealed class PoolSplashEffect : MonoBehaviour
     {
         private const float MinStrength = 0.4f;

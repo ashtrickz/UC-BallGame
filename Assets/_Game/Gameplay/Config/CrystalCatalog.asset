@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e6f1fab95a0b804c812002eec5bf40c, type: 3}
   m_Name: CrystalCatalog
-  m_EditorClassIdentifier: Game.Gameplay::Game.Gameplay.Config.CrystalCatalog
+  m_EditorClassIdentifier: Slime.Gameplay.Config::Slime.Gameplay.Config.CrystalCatalog
   materials:
   - {fileID: 2100000, guid: 9bb3976643b56a54e9a69f36388b9071, type: 2}
   - {fileID: 2100000, guid: 97efa826509f2d5448b662ac58ca1aea, type: 2}

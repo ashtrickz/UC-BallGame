@@ -1,8 +1,8 @@
 using System;
-using Game.Gameplay.Levels;
+using Slime.Gameplay.Core.Levels;
 using UnityEngine;
 
-namespace Game.App.Game
+namespace Slime.App.Game
 {
     /// <summary>Best earned stars for an exact level layout, balance and criteria.</summary>
     public interface IStarProgress

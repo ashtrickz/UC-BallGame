@@ -1,29 +1,26 @@
 using System;
-using Game.App.Game;
-using Game.Gameplay.Config;
-using Game.Gameplay.Levels;
-using Game.Gameplay.Model;
-using Game.Localization;
-using UnityEngine;
+using Slime.App.Game;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
+using Slime.Gameplay.Core.Levels;
+using Slime.Gameplay.Core.Model;
+using Slime.Localization;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
-    /// <summary>One result card button: its localization key and the level it plays.</summary>
+    /// <summary>The destination of one icon action on the result card.</summary>
     public readonly struct ResultChoice
     {
         public static readonly ResultChoice None = default;
 
-        public ResultChoice(string labelKey, LevelRequest request)
+        public ResultChoice(LevelRequest request)
         {
-            LabelKey = labelKey;
             Request = request;
         }
 
-        public string LabelKey { get; }
-
         public LevelRequest Request { get; }
 
-        public bool IsNone => string.IsNullOrEmpty(LabelKey);
+        public bool IsNone => Request == null;
     }
 
     /// <summary>Localized copy and choices of the result card for a finished attempt.</summary>
@@ -69,9 +66,10 @@ namespace Game.Integration.Game
     /// <summary>Shared result copy of all modes; a mode overrides only what differs.</summary>
     public abstract class AttemptModePolicy<TRequest> : IAttemptModePolicy where TRequest : LevelRequest
     {
-        protected const string RetryKey = "common.retry";
-
-        private const string StarStatsKey = "result.star_stats";
+        private const string PerfectHintKey = "result.hint_perfect";
+        private const string ShotsHintKey = "result.hint_shots";
+        private const string MassHintKey = "result.hint_mass";
+        private const string BothHintKey = "result.hint_both";
         private const string PopTitleKey = "result.pop";
         private const string OverchargeKey = "result.overcharge";
         private const string NoAmmoKey = "result.no_ammo";
@@ -108,7 +106,7 @@ namespace Game.Integration.Game
 
         public virtual AttemptResult Lost(AttemptContext context)
         {
-            return Popped(context, new ResultChoice(RetryKey, Retry(context)), ResultChoice.None);
+            return Popped(context, new ResultChoice(Retry(context)), ResultChoice.None);
         }
 
         protected static TRequest RequestOf(AttemptContext context)
@@ -116,14 +114,17 @@ namespace Game.Integration.Game
             return (TRequest)context.Request;
         }
 
-        protected string Stats(AttemptContext context)
+        protected string WinFeedback(AttemptContext context)
         {
             var model = context.Model;
-            var rules = model.Rules;
-            var left = Mathf.RoundToInt((float)StarCriteria.RemainingMassPercent(model.Diameter, rules.D0));
+            var criteria = context.Built.Stars;
+            var shots = criteria.MeetsShotLimit(model.ShotsFired);
+            var mass = criteria.MeetsMassTarget(StarCriteria.RemainingMassPercent(model.Diameter, model.Rules.D0));
+            var key = shots && mass ? PerfectHintKey
+                : !shots && !mass ? BothHintKey
+                : !shots ? ShotsHintKey : MassHintKey;
 
-            return Localization.Format(StarStatsKey, model.ShotsFired, left, context.Built.Stars.MaxShots,
-                context.Built.Stars.MinRemainingMassPercent.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture));
+            return Localization.Get(key);
         }
 
         protected AttemptResult Popped(AttemptContext context, ResultChoice primary, ResultChoice secondary)
@@ -144,9 +145,6 @@ namespace Game.Integration.Game
         private const string LevelClearKey = "result.level_clear";
         private const string CampaignCompleteKey = "result.campaign_complete";
         private const string ColonyHomeKey = "result.colony_home";
-        private const string NextLevelKey = "action.next_level";
-        private const string WallModeKey = "action.wall_mode";
-        private const string ReplayLevelKey = "action.replay_level";
         private const string Separator = " ";
 
         private readonly SlimeGameConfig _config;
@@ -197,16 +195,16 @@ namespace Game.Integration.Game
             {
                 return new AttemptResult(
                     Localization.Format(LevelClearKey, number),
-                    Stats(context),
-                    new ResultChoice(NextLevelKey, Next(context)),
-                    new ResultChoice(RetryKey, Retry(context)));
+                    WinFeedback(context),
+                    new ResultChoice(Next(context)),
+                    new ResultChoice(Retry(context)));
             }
 
             return new AttemptResult(
                 Localization.Get(CampaignCompleteKey),
-                Localization.Get(ColonyHomeKey) + Separator + Stats(context),
-                new ResultChoice(WallModeKey, new WallLevelRequest(null)),
-                new ResultChoice(ReplayLevelKey, Retry(context)));
+                Localization.Get(ColonyHomeKey) + Separator + WinFeedback(context),
+                new ResultChoice(new WallLevelRequest(null)),
+                new ResultChoice(Retry(context)));
         }
     }
 
@@ -215,8 +213,6 @@ namespace Game.Integration.Game
     {
         private const string LabelKey = "hud.wall_seed";
         private const string WallBrokenKey = "result.wall_broken";
-        private const string NewWallKey = "action.new_wall";
-        private const string SameWallKey = "action.same_wall";
 
         public WallAttemptPolicy(ILocalizationService localization)
             : base(localization)
@@ -237,17 +233,17 @@ namespace Game.Integration.Game
         {
             return new AttemptResult(
                 Localization.Get(WallBrokenKey),
-                Stats(context),
-                new ResultChoice(NewWallKey, Retry(context)),
-                new ResultChoice(SameWallKey, new WallLevelRequest(context.Seed)));
+                WinFeedback(context),
+                new ResultChoice(Retry(context)),
+                new ResultChoice(new WallLevelRequest(context.Seed)));
         }
 
         public override AttemptResult Lost(AttemptContext context)
         {
             return Popped(
                 context,
-                new ResultChoice(SameWallKey, new WallLevelRequest(context.Seed)),
-                new ResultChoice(NewWallKey, Retry(context)));
+                new ResultChoice(new WallLevelRequest(context.Seed)),
+                new ResultChoice(Retry(context)));
         }
     }
 
@@ -256,7 +252,6 @@ namespace Game.Integration.Game
     {
         private const string LabelKey = "hud.endless_seed";
         private const string HomeKey = "result.home";
-        private const string NewLevelKey = "action.new_level";
 
         public EndlessAttemptPolicy(ILocalizationService localization)
             : base(localization)
@@ -277,8 +272,8 @@ namespace Game.Integration.Game
         {
             return new AttemptResult(
                 Localization.Get(HomeKey),
-                Stats(context),
-                new ResultChoice(NewLevelKey, Retry(context)),
+                WinFeedback(context),
+                new ResultChoice(Retry(context)),
                 ResultChoice.None);
         }
     }

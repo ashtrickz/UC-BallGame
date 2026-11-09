@@ -1,12 +1,13 @@
 using System.Threading;
 using System;
 using Cysharp.Threading.Tasks;
-using Game.Foundation;
+using Slime.Foundation;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Finish doors: two hinged leaves that swing open when the model reports the 5 m threshold.</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "DoorsView")]
     public sealed class DoorsView : MonoBehaviour, IFrameTickable
     {
         [SerializeField] private Transform leftHinge;

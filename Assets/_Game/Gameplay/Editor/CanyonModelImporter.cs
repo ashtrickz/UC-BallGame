@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace Game.Gameplay.Editor
+namespace Slime.Gameplay.Editor
 {
     /// <summary>Import policy only for the Blender-authored canyon kit, validated with AxisProbe.fbx.</summary>
     public sealed class CanyonModelImporter : AssetPostprocessor

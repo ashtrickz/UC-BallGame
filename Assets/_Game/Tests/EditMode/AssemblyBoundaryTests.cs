@@ -1,22 +1,25 @@
+using Slime.Foundation;
 using System;
 using System.Linq;
 using System.Reflection;
-using Game.Gameplay.Levels;
-using Game.Integration.Audio;
-using Game.Integration.Composition;
-using Game.Integration.Game;
-using Game.Integration.Menu;
 using NUnit.Framework;
+using Slime.Gameplay.Core.Levels;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.Diagnostics;
+using Slime.Menu;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>Feature boundaries are enforced by assembly references, not by convention.</summary>
     public sealed class AssemblyBoundaryTests
     {
-        private const string MenuFeature = "Game.Features.Menu";
-        private const string GameFeature = "Game.Features.Game";
-        private const string Composition = "Game.Composition";
-        private const string DebugTools = "Game.Debug";
+        private const string MenuFeature = "Slime.Menu";
+        private const string GameFeature = "Slime.Gameplay.Presentation";
+        private const string Composition = "Slime.Composition";
+        private const string DebugTools = "Slime.Diagnostics";
         private const string UnityPrefix = "UnityEngine";
 
         [Test]

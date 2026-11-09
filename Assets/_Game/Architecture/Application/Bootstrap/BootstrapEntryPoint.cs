@@ -1,14 +1,14 @@
-using Game.App.Loading;
-using Game.Foundation;
-using Game.App.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Slime.App.Loading;
+using Slime.App.Scenes;
+using Slime.Foundation;
 using UnityEngine;
 using VContainer.Unity;
 
-namespace Game.App.Bootstrap
+namespace Slime.App.Bootstrap
 {
     public sealed class BootstrapEntryPoint : IStartable, IDisposable
     {

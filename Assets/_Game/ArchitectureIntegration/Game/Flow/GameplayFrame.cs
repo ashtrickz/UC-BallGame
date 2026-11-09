@@ -1,9 +1,9 @@
 using System;
-using Game.Gameplay.View;
+using Slime.Gameplay.View;
 using UnityEngine;
 using VContainer.Unity;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// The single per-frame pass of the gameplay scene, in an explicit order:

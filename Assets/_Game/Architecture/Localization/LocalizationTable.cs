@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace Game.Localization
+namespace Slime.Localization
 {
     /// <summary>Both sources produce the same immutable lookup table. Empty cells are untranslated.</summary>
     public sealed class LocalizationTable

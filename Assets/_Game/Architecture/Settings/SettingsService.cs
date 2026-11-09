@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Settings
+namespace Slime.Settings
 {
     public sealed class SettingsService : ISettingsService
     {

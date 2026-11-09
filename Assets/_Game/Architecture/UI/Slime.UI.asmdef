@@ -1,0 +1,14 @@
+{
+  "name": "Slime.UI",
+  "rootNamespace": "Slime.UI",
+  "references": [
+    "UniTask",
+    "DOTween.Modules",
+    "GUID:c1f7712b2e8b18547877ac6e04175194",
+    "UnityEngine.UI",
+    "GUID:b4517358f190e234e925cec921c0cb53",
+    "VContainer"
+  ],
+  "includePlatforms": [],
+  "autoReferenced": true
+}

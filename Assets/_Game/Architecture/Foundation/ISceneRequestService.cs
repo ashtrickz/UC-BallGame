@@ -1,7 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Game.Foundation
+namespace Slime.Foundation
 {
     /// <summary>Accepts loading presentation context while preserving the original scene-service contract.</summary>
     public interface ISceneRequestService : ISceneService

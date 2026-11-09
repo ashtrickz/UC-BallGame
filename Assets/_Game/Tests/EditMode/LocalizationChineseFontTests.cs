@@ -1,18 +1,20 @@
+using Slime.Foundation;
 using System;
 using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Game.Editor;
-using Game.Integration.Localization;
-using Game.Localization;
-using Game.Settings;
 using NUnit.Framework;
+using Slime.Editor;
+using Slime.Infrastructure.Localization;
+using Slime.Localization;
+using Slime.Settings;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
+using SettingsService = Slime.Settings.SettingsService;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>Protects the Chinese subset, its build dependencies and the fallback for unsupported remote translations.</summary>
     public sealed class LocalizationChineseFontTests
@@ -63,7 +65,7 @@ namespace Game.Foundation.Tests
             var fonts = Resources.Load<LocalizationFonts>(LocalizationFonts.ResourcePath);
             var fallback = LocalizationTable.FromJson(Resources.Load<TextAsset>("Localization/fallback").text);
             var remote = LocalizationTable.FromCsv("key,zh-CN\nmenu.levels,\u6C49");
-            var settings = new Game.Settings.SettingsService(new ChineseSettingsRuntime());
+            var settings = new SettingsService(new ChineseSettingsRuntime());
             using var service = new LocalizationService(settings, fallback, new ValidatingSource(fonts, remote));
             LogAssert.Expect(LogType.Warning, new System.Text.RegularExpressions.Regex("Localization: remote translations unavailable;.*U\\+6C49"));
             service.InitializeAsync(default).GetAwaiter().GetResult();

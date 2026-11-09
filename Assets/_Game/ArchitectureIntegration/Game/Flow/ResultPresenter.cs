@@ -1,9 +1,9 @@
 using System;
-using Game.Gameplay.Levels;
-using Game.Localization;
+using Slime.Gameplay.Core.Levels;
+using Slime.Localization;
 using UnityEngine;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// Result card of a finished attempt: copy and choices from the mode policy, hidden while the menu covers the
@@ -99,9 +99,7 @@ namespace Game.Integration.Game
             var model = new ResultViewModel(
                 result.Title,
                 result.Subtitle,
-                _localization.Get(primary.LabelKey),
                 () => Choose(primary.Request),
-                secondary.IsNone ? null : _localization.Get(secondary.LabelKey),
                 secondary.IsNone ? null : (Action)(() => Choose(secondary.Request)),
                 RequestMenu);
 

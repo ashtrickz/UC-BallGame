@@ -1,12 +1,14 @@
+using Slime.Foundation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Audio;
-using Game.Gameplay.View;
-using Game.Integration.Audio;
 using NUnit.Framework;
+using Slime.Audio;
+using Slime.Gameplay.View;
+using Slime.Gameplay.Presentation;
+using Slime.Infrastructure.Audio;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class HapticsGameplayTests
     {

@@ -1,12 +1,12 @@
 using System;
-using Game.Assets;
-using Game.Audio;
+using Slime.Assets;
+using Slime.Audio;
 using UnityEngine;
 using UnityEngine.Audio;
 using VContainer.Unity;
 using Object = UnityEngine.Object;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>
     /// Owns bounded effect voices, leases and versioned playback handles. Handles call back into the pool by slot,

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System;
-using Game.Foundation;
-using Game.Gameplay.View;
+using Slime.Gameplay.View;
+using Slime.Foundation;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using VContainer.Unity;
+using Slime.Infrastructure.Frame;
 
-namespace Game.Integration.Composition
+namespace Slime.Composition
 {
     /// <summary>
     /// Ticks frame views that live outside the gameplay frame, such as the slime preview in the menu,

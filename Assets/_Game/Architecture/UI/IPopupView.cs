@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.UI
+namespace Slime.UI
 {
     public interface IPopupView : IView, IDisposable
     {

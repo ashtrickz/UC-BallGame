@@ -1,7 +1,8 @@
-using Game.Gameplay.Config;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
 using UnityEngine;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>Scene object of one placed crystal: its shard renderers, their base look and the per-attempt state.</summary>
     public sealed class CrystalView

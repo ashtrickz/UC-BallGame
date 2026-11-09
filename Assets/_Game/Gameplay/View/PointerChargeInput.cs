@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace Game.Gameplay.View
+namespace Slime.Gameplay.View
 {
     /// <summary>
     /// Press-and-release reader for the charge, independent of UI <c>HoldButton</c>. One active pointer: the primary
     /// touch on devices, the left mouse button in the Editor. Presses that start over UI are ignored until released.
     /// After a pause or focus loss the pointer must be lifted and pressed again: an old release never fires a shot.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Gameplay.View", sourceAssembly: "Game.Gameplay.View", sourceClassName: "PointerChargeInput")]
     public sealed class PointerChargeInput : MonoBehaviour
     {
         private enum State { Idle, Held, IgnoredUntilRelease }

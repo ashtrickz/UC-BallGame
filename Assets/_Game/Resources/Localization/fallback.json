@@ -294,6 +294,22 @@
         {
           "key": "result.star_stats",
           "value": "{0} SHOTS · {1}% MASS LEFT\nBONUS: SHOTS <= {2} · MASS >= {3}%"
+        },
+        {
+          "key": "result.hint_perfect",
+          "value": "Perfect! All three stars are yours."
+        },
+        {
+          "key": "result.hint_shots",
+          "value": "Next time, try using fewer shots."
+        },
+        {
+          "key": "result.hint_mass",
+          "value": "Next time, try keeping more mass."
+        },
+        {
+          "key": "result.hint_both",
+          "value": "Use fewer shots and keep more mass for more stars."
         }
       ]
     },
@@ -591,6 +607,22 @@
         {
           "key": "result.star_stats",
           "value": "ПОСТРІЛИ: {0} · МАСА: {1}%\nБОНУСИ: ПОСТРІЛИ <= {2} · МАСА >= {3}%"
+        },
+        {
+          "key": "result.hint_perfect",
+          "value": "Чудово! Усі три зірки твої."
+        },
+        {
+          "key": "result.hint_shots",
+          "value": "Наступного разу спробуй зробити менше пострілів."
+        },
+        {
+          "key": "result.hint_mass",
+          "value": "Наступного разу збережи більше маси."
+        },
+        {
+          "key": "result.hint_both",
+          "value": "Менше пострілів і більше збереженої маси — більше зірок."
         }
       ]
     },
@@ -888,6 +920,22 @@
         {
           "key": "result.star_stats",
           "value": "{0} DISPAROS · {1}% DE MASA\nBONUS: DISPAROS <= {2} · MASA >= {3}%"
+        },
+        {
+          "key": "result.hint_perfect",
+          "value": "¡Perfecto! Las tres estrellas son tuyas."
+        },
+        {
+          "key": "result.hint_shots",
+          "value": "La próxima vez, intenta usar menos disparos."
+        },
+        {
+          "key": "result.hint_mass",
+          "value": "La próxima vez, conserva más masa."
+        },
+        {
+          "key": "result.hint_both",
+          "value": "Usa menos disparos y conserva más masa para ganar más estrellas."
         }
       ]
     },
@@ -1185,6 +1233,22 @@
         {
           "key": "result.star_stats",
           "value": "射击 {0} 次 · 剩余质量 {1}%\n奖励：射击 <= {2} · 质量 >= {3}%"
+        },
+        {
+          "key": "result.hint_perfect",
+          "value": "太棒了！三颗星都属于你。"
+        },
+        {
+          "key": "result.hint_shots",
+          "value": "下次试着减少射击次数。"
+        },
+        {
+          "key": "result.hint_mass",
+          "value": "下次试着保留更多质量。"
+        },
+        {
+          "key": "result.hint_both",
+          "value": "减少射击并保留更多质量，就能获得更多星星。"
         }
       ]
     }

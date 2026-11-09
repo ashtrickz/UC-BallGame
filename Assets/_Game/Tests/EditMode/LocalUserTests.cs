@@ -1,9 +1,10 @@
+using Slime.Foundation;
 using System;
 using System.IO;
-using Game.Users;
 using NUnit.Framework;
+using Slime.Users;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class LocalUserTests
     {

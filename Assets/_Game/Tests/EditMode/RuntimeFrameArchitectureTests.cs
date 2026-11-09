@@ -1,3 +1,4 @@
+using Slime.Foundation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,14 +7,14 @@ using NUnit.Framework;
 using UnityEditor.Compilation;
 using UnityEngine;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     /// <summary>Prevents project runtime components from introducing hidden Unity frame loops.</summary>
     public sealed class RuntimeFrameArchitectureTests
     {
-        private const string ProjectAssemblyPrefix = "Game.";
-        private const string SlimeLabAssembly = "Game.SlimeLab";
-        private const string CameraType = "Game.Gameplay.View.CameraRig";
+        private const string ProjectAssemblyPrefix = "Slime.";
+        private const string SlimeLabAssembly = "Slime.Prototypes.SlimeLab";
+        private static readonly string CameraType = typeof(Slime.Gameplay.View.CameraRig).FullName;
         private const string UpdateMethod = "Update";
         private const string LateUpdateMethod = "LateUpdate";
         private const string FixedUpdateMethod = "FixedUpdate";

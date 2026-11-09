@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-namespace Game.Users
+namespace Slime.Users
 {
     public sealed class FileUserCache : IUserCache
     {

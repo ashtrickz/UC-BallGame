@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using Slime.Gameplay.Core.Config;
 
-namespace Game.Gameplay.Config
+namespace Slime.Gameplay.Config
 {
     /// <summary>A two-colour jelly palette, embedded in the main game config.</summary>
     [Serializable]

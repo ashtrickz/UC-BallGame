@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Model;
-using Game.Gameplay.View;
+using Slime.Gameplay.Core.Model;
+using Slime.Gameplay.View;
 using UnityEngine;
 using VContainer.Unity;
 
-namespace Game.Integration.Game
+namespace Slime.Gameplay.Presentation
 {
     /// <summary>
     /// Screen cut-outs of the tutorial overlay. Computed after the camera has moved this frame (post late tick),

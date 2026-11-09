@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.App.Scenes;
-using Game.Gameplay.Model;
-using Game.Integration.Composition;
-using Game.Integration.Game;
 using NUnit.Framework;
+using Slime.App.Scenes;
+using Slime.Gameplay.Core.Model;
+using Slime.Composition;
+using Slime.Infrastructure.Frame;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 using VContainer;
 
-namespace Game.Gameplay.PlayModeTests
+namespace Slime.Gameplay.Tests.PlayMode
 {
     public sealed partial class GameplayLifecycleTests
     {
@@ -103,10 +105,10 @@ namespace Game.Gameplay.PlayModeTests
                 ClickVisible(settings);
                 CollectionAssert.AreEqual(new[] { true, false }, changes);
                 Assert.IsFalse(hud.IsActionsMenuOpen);
-                await UniTask.WaitUntil(() => UnityEngine.Object.FindFirstObjectByType<global::Game.Integration.Gameplay.SettingsPopupView>() != null)
+                await UniTask.WaitUntil(() => UnityEngine.Object.FindFirstObjectByType<Slime.Infrastructure.Settings.SettingsPopupView>() != null)
                     .Timeout(TimeSpan.FromSeconds(10));
                 Assert.IsTrue((gameplay.Pause & PauseReason.Settings) != 0);
-                var popup = UnityEngine.Object.FindFirstObjectByType<global::Game.Integration.Gameplay.SettingsPopupView>();
+                var popup = UnityEngine.Object.FindFirstObjectByType<Slime.Infrastructure.Settings.SettingsPopupView>();
                 await UniTask.WaitUntil(() => popup.IsVisible && popup.GetComponent<CanvasGroup>().interactable).Timeout(TimeSpan.FromSeconds(10));
                 ClickVisible(popup.GetComponentsInChildren<UnityEngine.UI.Button>().Single(button => button.name == "CloseButton"));
                 await UniTask.WaitUntil(() => (gameplay.Pause & PauseReason.Settings) == 0).Timeout(TimeSpan.FromSeconds(10));
@@ -187,12 +189,12 @@ namespace Game.Gameplay.PlayModeTests
                 Time.timeScale = 4;
                 var result = UnityEngine.Object.FindFirstObjectByType<GameScope>().Container.Resolve<ResultView>();
                 var hud = UnityEngine.Object.FindFirstObjectByType<GameView>();
-                foreach (var mode in new[] { typeof(global::Game.Gameplay.Levels.CampaignLevelRequest), typeof(global::Game.Gameplay.Levels.WallLevelRequest), typeof(global::Game.Gameplay.Levels.EndlessLevelRequest) })
+                foreach (var mode in new[] { typeof(Slime.Gameplay.Core.Levels.CampaignLevelRequest), typeof(Slime.Gameplay.Core.Levels.WallLevelRequest), typeof(Slime.Gameplay.Core.Levels.EndlessLevelRequest) })
                 {
                     foreach (var won in new[] { false, true })
                     {
-                        if (mode == typeof(global::Game.Gameplay.Levels.CampaignLevelRequest)) gameplay.PlayCampaignLevel(1);
-                        else if (mode == typeof(global::Game.Gameplay.Levels.WallLevelRequest)) gameplay.PlayWall(Seed);
+                        if (mode == typeof(Slime.Gameplay.Core.Levels.CampaignLevelRequest)) gameplay.PlayCampaignLevel(1);
+                        else if (mode == typeof(Slime.Gameplay.Core.Levels.WallLevelRequest)) gameplay.PlayWall(Seed);
                         else gameplay.RestartWithSeed(Seed);
                         var phase = await GameplayAutoplay.PlayAsync(gameplay, won ? AutoplayMode.ControlPlan : AutoplayMode.Overcharge,
                             CancellationToken.None).Timeout(TimeSpan.FromSeconds(90));
@@ -201,7 +203,7 @@ namespace Game.Gameplay.PlayModeTests
                         Assert.IsFalse(hud.transform.Find("BurgerButton").gameObject.activeSelf, "Burger must not distract from result actions.");
                         Assert.IsFalse(hud.IsActionsMenuOpen);
                         var buttons = result.GetComponentsInChildren<UnityEngine.UI.Button>();
-                        var hasAlternate = mode == typeof(global::Game.Gameplay.Levels.CampaignLevelRequest) && won || mode == typeof(global::Game.Gameplay.Levels.WallLevelRequest) && !won;
+                        var hasAlternate = mode == typeof(Slime.Gameplay.Core.Levels.CampaignLevelRequest) && won || mode == typeof(Slime.Gameplay.Core.Levels.WallLevelRequest) && !won;
                         CollectionAssert.AreEquivalent(hasAlternate ? new[] { "Primary", "Secondary", "Menu" } : new[] { "Primary", "Menu" },
                             buttons.Select(button => button.name), mode.Name + "/" + won);
                         var primary = buttons.Single(button => button.name == "Primary");
@@ -212,9 +214,9 @@ namespace Game.Gameplay.PlayModeTests
                         Assert.IsFalse(hud.IsActionsMenuOpen);
                         Assert.IsTrue(previous.IsDisposed);
                         Assert.AreEqual(mode, gameplay.Current.Request.GetType());
-                        if (mode == typeof(global::Game.Gameplay.Levels.CampaignLevelRequest))
+                        if (mode == typeof(Slime.Gameplay.Core.Levels.CampaignLevelRequest))
                             Assert.AreEqual(won ? 2 : 1, gameplay.Current.LevelNumber);
-                        if (mode == typeof(global::Game.Gameplay.Levels.WallLevelRequest) && !won)
+                        if (mode == typeof(Slime.Gameplay.Core.Levels.WallLevelRequest) && !won)
                             Assert.AreEqual(previous.Seed, gameplay.Current.Seed, "Defeat retries the same wall by default.");
                     }
                 }

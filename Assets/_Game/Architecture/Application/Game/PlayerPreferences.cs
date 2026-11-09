@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Game.Gameplay.Config;
+using Slime.Gameplay.Config;
+using Slime.Gameplay.Core.Config;
 using UnityEngine;
 
-namespace Game.App.Game
+namespace Slime.App.Game
 {
     /// <summary>Highest playable campaign level; the level count + 1 means the campaign is complete.</summary>
     public interface ICampaignProgress

@@ -1,10 +1,10 @@
 #if UNITY_ANDROID && !UNITY_EDITOR
-using Game.Foundation;
+using Slime.Foundation;
 using System;
-using Game.Audio;
+using Slime.Audio;
 using UnityEngine;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Owns Android vibrator handles and submits finite native charge envelopes.</summary>
     public sealed class AndroidHaptics : IHaptics
@@ -55,7 +55,7 @@ namespace Game.Integration.Audio
             }
         }
 
-        public void Play(global::Game.Audio.HapticKind kind)
+        public void Play(Slime.Audio.HapticKind kind)
         {
             if (!Enabled)
                 return;
@@ -65,14 +65,14 @@ namespace Game.Integration.Audio
                 if (_sdk >= PredefinedSdk)
                 {
                     using var effects = new AndroidJavaClass(EffectClass);
-                    var preset = kind == global::Game.Audio.HapticKind.Success ? SuccessEffect : TapEffect;
+                    var preset = kind == Slime.Audio.HapticKind.Success ? SuccessEffect : TapEffect;
                     using var effect = effects.CallStatic<AndroidJavaObject>(PredefinedMethod, preset);
                     _vibrator.Call(VibrateMethod, effect);
                 }
                 else
                 {
-                    var duration = kind == global::Game.Audio.HapticKind.Success ? SuccessMilliseconds : TapMilliseconds;
-                    var amplitude = kind == global::Game.Audio.HapticKind.Success ? SuccessAmplitude : TapAmplitude;
+                    var duration = kind == Slime.Audio.HapticKind.Success ? SuccessMilliseconds : TapMilliseconds;
+                    var amplitude = kind == Slime.Audio.HapticKind.Success ? SuccessAmplitude : TapAmplitude;
                     PlayOneShot(duration, amplitude);
                 }
             });

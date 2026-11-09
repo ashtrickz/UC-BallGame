@@ -1,6 +1,0 @@
-{
-    "name": "Game.Localization",
-    "rootNamespace": "Game.Localization",
-    "references": ["Game.Foundation", "Game.Settings", "UniTask"],
-    "autoReferenced": true
-}

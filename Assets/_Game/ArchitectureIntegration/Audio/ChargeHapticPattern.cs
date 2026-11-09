@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>A finite native envelope: one submission per hold, with no motor restarts every frame.</summary>
     public sealed class ChargeHapticPattern

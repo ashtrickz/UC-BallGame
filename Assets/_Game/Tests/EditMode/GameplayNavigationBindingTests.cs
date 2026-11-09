@@ -1,11 +1,14 @@
+using Slime.Foundation;
 using System.Linq;
-using Game.Integration.Game;
 using NUnit.Framework;
+using Slime.Composition;
+using Slime.Diagnostics;
+using Slime.Gameplay.Presentation;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace Game.Foundation.Tests
+namespace Slime.Tests.EditMode
 {
     public sealed class GameplayNavigationBindingTests
     {
@@ -48,8 +51,13 @@ namespace Game.Foundation.Tests
                 var resultMenu = Button(resultData, "menuButton");
                 CollectionAssert.AreEquivalent(new[] { primary, secondary, resultMenu },
                     result.GetComponentsInChildren<UnityEngine.UI.Button>(true), "Every result button must be managed by ResultView.");
+                foreach (var button in new[] { primary, secondary, resultMenu })
+                {
+                    Assert.IsNull(button.GetComponentInChildren<TMPro.TMP_Text>(true), "Result actions use icons.");
+                    Assert.IsNotNull(button.transform.Find("Icon").GetComponent<UnityEngine.UI.Image>().sprite, button.name);
+                }
                 Assert.AreSame(secondary.transform.parent, resultMenu.transform.parent);
-                var layout = secondary.GetComponentInParent<UnityEngine.UI.HorizontalLayoutGroup>(true);
+                var layout = secondary.GetComponentInParent<UnityEngine.UI.LayoutGroup>(true);
                 Assert.IsNotNull(layout, "The alternate action and Menu must share a row that collapses hidden actions.");
                 Assert.AreEqual(TextAnchor.MiddleCenter, layout.childAlignment);
             }

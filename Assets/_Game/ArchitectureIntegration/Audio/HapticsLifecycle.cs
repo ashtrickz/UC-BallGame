@@ -1,9 +1,10 @@
-using Game.Audio;
+using Slime.Audio;
 using UnityEngine;
 
-namespace Game.Integration.Audio
+namespace Slime.Infrastructure.Audio
 {
     /// <summary>Cancels native vibration when the application loses focus or its root is destroyed.</summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(true, sourceNamespace: "Slime.Integration.Audio", sourceAssembly: "Game.Services", sourceClassName: "HapticsLifecycle")]
     public sealed class HapticsLifecycle : MonoBehaviour
     {
         private IHaptics _haptics;
