@@ -38,9 +38,16 @@ namespace Game.Foundation.Tests
             PlayerPrefs.SetInt(PlayerPrefsCampaignProgress.Key, 2);
             try
             {
-                void OnLoaded(Scene scene, LoadSceneMode mode) { if (scene.name == "Loading") SceneManager.SetActiveScene(scene); }
+                void OnLoaded(Scene scene, LoadSceneMode mode)
+                {
+                    if (scene.name == "Loading")
+                        SceneManager.SetActiveScene(scene);
+                }
                 SceneManager.sceneLoaded += OnLoaded;
-                try { await SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive).ToUniTask(); }
+                try
+                {
+                    await SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive).ToUniTask();
+                }
                 finally { SceneManager.sceneLoaded -= OnLoaded; }
                 await UniTask.WaitUntil(() => ProjectScope.Instance != null && ProjectScope.Instance.Container.Resolve<IInitializationModel>().IsComplete)
                     .Timeout(TimeSpan.FromSeconds(30));
@@ -62,7 +69,7 @@ namespace Game.Foundation.Tests
                     Assert.AreEqual(localization.Get("menu.levels"), Label(menu.gameObject, "menu.levels").text);
                     AssertNoMissingGlyphs(popup.gameObject);
                 }
-                Assert.AreEqual(settings.CurrentLanguage, new UnitySettingsRuntime(SettingsPack.Mobile).CurrentLanguage);
+                Assert.AreEqual(settings.CurrentLanguage, new UnitySettingsRuntime(SettingsPack.Mobile, new LanguageOptionsProvider(), new NullDisplaySettings()).CurrentLanguage);
                 popup.transform.Find("RootTransform/Close").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
                 await popupTask;
 
@@ -72,7 +79,8 @@ namespace Game.Foundation.Tests
                 await navigation.OpenAsync(GameNavigation.GameScene);
                 var gameScope = UnityEngine.Object.FindFirstObjectByType<GameScope>();
                 await gameScope.Ready;
-                var gameplay = gameScope.Container.Resolve<GameplayController>();
+                var gameplay = gameScope.Container.Resolve<GameplayFlow>();
+                var debug = gameScope.Container.Resolve<IGameplayDebug>();
                 var context = gameplay.Current;
                 await UniTask.Yield();
                 var labels = gameScope.Container.Resolve<GameView>().DynamicTextLabels.ToArray();
@@ -85,15 +93,15 @@ namespace Game.Foundation.Tests
                 Assert.AreEqual(localization.Format("hud.level", 2), labels[1].text);
 
                 gameplay.PlayCampaignLevel(1);
-                await UniTask.WaitUntil(() => gameplay.Tutorial != null && gameplay.Tutorial.Step == "tour").Timeout(TimeSpan.FromSeconds(10));
-                var tutorial = gameplay.Tutorial;
+                await UniTask.WaitUntil(() => debug.Tutorial != null && debug.Tutorial.Step == "tour").Timeout(TimeSpan.FromSeconds(10));
+                var tutorial = debug.Tutorial;
                 Select(settings, "zh-CN");
-                Assert.AreEqual(localization.Get("tutorial.tour"), gameplay.Stage.Tutorial.Message);
-                Assert.AreSame(tutorial, gameplay.Tutorial);
+                Assert.AreEqual(localization.Get("tutorial.tour"), gameScope.Container.Resolve<global::Game.Gameplay.View.GameplayStage>().Tutorial.Message);
+                Assert.AreSame(tutorial, debug.Tutorial);
                 Assert.AreEqual("tour", tutorial.Step);
-                gameplay.SkipTutorial();
+                debug.SkipTutorial();
                 await UniTask.WaitUntil(() => !tutorial.IsRunning).Timeout(TimeSpan.FromSeconds(5));
-                await GameplayAutoplay.PlayAsync(gameplay, AutoplayMode.Overcharge, CancellationToken.None).Timeout(TimeSpan.FromSeconds(30));
+                await GameplayAutoplay.PlayAsync(debug, AutoplayMode.Overcharge, CancellationToken.None).Timeout(TimeSpan.FromSeconds(30));
                 await UniTask.WaitUntil(() => !resultView.IsAnimating).Timeout(TimeSpan.FromSeconds(5));
                 Assert.AreEqual(localization.Get("result.pop"), resultLabels[0].text);
                 Assert.AreEqual(localization.Get("result.overcharge"), resultLabels[1].text);
@@ -108,13 +116,22 @@ namespace Game.Foundation.Tests
             }
             finally
             {
-                if (testScene.IsValid() && testScene.isLoaded) SceneManager.SetActiveScene(testScene);
-                if (ProjectScope.Instance != null) UnityEngine.Object.Destroy(ProjectScope.Instance.gameObject);
+                if (testScene.IsValid() && testScene.isLoaded)
+                    SceneManager.SetActiveScene(testScene);
+                if (ProjectScope.Instance != null)
+                    UnityEngine.Object.Destroy(ProjectScope.Instance.gameObject);
                 await UniTask.Yield();
                 foreach (var name in new[] { "Menu", "Game", "Loading", "Transit" })
-                    if (SceneManager.GetSceneByName(name).isLoaded) await SceneManager.UnloadSceneAsync(name).ToUniTask();
-                if (savedLanguage == null) PlayerPrefs.DeleteKey("Settings.Language"); else PlayerPrefs.SetString("Settings.Language", savedLanguage);
-                if (savedProgress.HasValue) PlayerPrefs.SetInt(PlayerPrefsCampaignProgress.Key, savedProgress.Value); else PlayerPrefs.DeleteKey(PlayerPrefsCampaignProgress.Key);
+                    if (SceneManager.GetSceneByName(name).isLoaded)
+                        await SceneManager.UnloadSceneAsync(name).ToUniTask();
+                if (savedLanguage == null)
+                    PlayerPrefs.DeleteKey("Settings.Language");
+                else
+                    PlayerPrefs.SetString("Settings.Language", savedLanguage);
+                if (savedProgress.HasValue)
+                    PlayerPrefs.SetInt(PlayerPrefsCampaignProgress.Key, savedProgress.Value);
+                else
+                    PlayerPrefs.DeleteKey(PlayerPrefsCampaignProgress.Key);
                 PlayerPrefs.Save();
                 UnityEngine.Application.targetFrameRate = fps;
                 QualitySettings.vSyncCount = vsync;

@@ -26747,10 +26747,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a3a0a49bb170254787467cfbf7470ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Integration::Game.Integration.Game.GameView
-  _canvasGroup: {fileID: 1435864823}
-  _initiallyVisible: 0
-  _animateFade: 1
-  _transitionDuration: 0.2
+  canvasGroup: {fileID: 1435864823}
+  initiallyVisible: 0
+  animateFade: 1
+  transitionDuration: 0.2
   burgerButton: {fileID: 320337446}
   actionsMenu: {fileID: 172361825}
   settingsButton: {fileID: 902414321}
@@ -30100,6 +30100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618e4ee72767d424a855f937da3958b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Integration::Game.Integration.Game.ResultView
+  canvasGroup: {fileID: 0}
+  initiallyVisible: 0
+  animateFade: 1
+  transitionDuration: 0.2
   title: {fileID: 554362494}
   subtitle: {fileID: 1603038137}
   primaryButton: {fileID: 116532921}
@@ -33320,6 +33324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2129274003}
   - component: {fileID: 2129274002}
+  - component: {fileID: 2129274004}
   m_Layer: 0
   m_Name: Crystals
   m_TagString: Untagged
@@ -33340,7 +33345,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.CrystalFieldView
   debris: {fileID: 749383694}
-  drawContours: 1
 --- !u!4 &2129274003
 Transform:
   m_ObjectHideFlags: 0
@@ -33356,6 +33360,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 714943472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2129274004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129274001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c7186ecef8104644be3137b61f6964e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Gameplay.View::Game.Gameplay.View.CrystalContourGizmos
 --- !u!1 &2142659275
 GameObject:
   m_ObjectHideFlags: 0

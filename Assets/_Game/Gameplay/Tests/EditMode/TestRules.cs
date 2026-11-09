@@ -41,7 +41,6 @@ namespace Game.Gameplay.Tests
             return new GameRules(values, Variants());
         }
 
-        /// <summary>Hand-made level with given crystal contours (no control plan).</summary>
         public static LevelData Level(GameRules rules, params ConvexPolygon[] contours)
         {
             var crystals = new List<CrystalPlacement>();

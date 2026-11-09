@@ -1,0 +1,29 @@
+{
+    "name": "Game.Services",
+    "rootNamespace": "Game.Integration",
+    "references": [
+        "Game.Foundation",
+        "Game.Assets",
+        "Game.UI",
+        "Game.Application",
+        "Game.Settings",
+        "Game.Localization",
+        "Game.Audio",
+        "Game.Users",
+        "UniTask",
+        "VContainer",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Unity.InputSystem",
+        "Unity.Addressables"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

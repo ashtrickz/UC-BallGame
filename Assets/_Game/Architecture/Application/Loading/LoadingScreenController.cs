@@ -7,6 +7,9 @@ namespace Game.App.Loading
 {
     public sealed class LoadingScreenController : ILoadingScreen, IDisposable
     {
+        private const string CancelledKey = "loading.cancelled";
+        private const string ErrorKey = "loading.error";
+
         private readonly ILoadingScreenView _view;
         private readonly IInitializationModel _model;
         private UniTaskCompletionSource _showTransition;
@@ -74,7 +77,8 @@ namespace Game.App.Loading
             }
             finally
             {
-                if (ReferenceEquals(_showTransition, completion)) _showTransition = null;
+                if (ReferenceEquals(_showTransition, completion))
+                    _showTransition = null;
             }
         }
 
@@ -99,7 +103,7 @@ namespace Game.App.Loading
 
         private void RefreshContent()
         {
-            var key = _error && _message != "loading.cancelled" ? "loading.error" : _message;
+            var key = _error && _message != CancelledKey ? ErrorKey : _message;
             _view.SetContent(_percentage, _localization.Get(key), _error, _canRetry);
         }
 

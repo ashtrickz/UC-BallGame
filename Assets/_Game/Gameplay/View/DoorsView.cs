@@ -1,12 +1,13 @@
-using System;
 using System.Threading;
+using System;
 using Cysharp.Threading.Tasks;
+using Game.Foundation;
 using UnityEngine;
 
 namespace Game.Gameplay.View
 {
     /// <summary>Finish doors: two hinged leaves that swing open when the model reports the 5 m threshold.</summary>
-    public sealed class DoorsView : MonoBehaviour
+    public sealed class DoorsView : MonoBehaviour, IFrameTickable
     {
         [SerializeField] private Transform leftHinge;
         [SerializeField] private Transform rightHinge;
@@ -38,29 +39,35 @@ namespace Game.Gameplay.View
 
         public void Open()
         {
-            if (_opening) return;
+            if (_opening)
+                return;
+
             _opening = true;
             Opening?.Invoke();
         }
 
-        /// <summary>Waits until the leaves are fully open (used before the slime passes the door plane).</summary>
         public async UniTask WaitOpenAsync(CancellationToken token)
         {
-            while (!IsOpen) await UniTask.Yield(PlayerLoopTiming.Update, token);
+            while (!IsOpen)
+                await _clock.NextFrame(token);
         }
 
-        private void Update()
+        public void Tick(float deltaTime)
         {
-            if (!_opening || _t >= 1) return;
-            _t = Mathf.Min(1, _t + _clock.Delta / openDuration);
+            if (!_opening || _t >= 1)
+                return;
+
+            _t = Mathf.Min(1, _t + deltaTime / openDuration);
             Apply();
         }
 
         private void Apply()
         {
             var angle = openAngle * GameClock.Smooth(_t);
-            if (leftHinge != null) leftHinge.localRotation = Quaternion.Euler(0, -angle, 0);
-            if (rightHinge != null) rightHinge.localRotation = Quaternion.Euler(0, angle, 0);
+            if (leftHinge != null)
+                leftHinge.localRotation = Quaternion.Euler(0, -angle, 0);
+            if (rightHinge != null)
+                rightHinge.localRotation = Quaternion.Euler(0, angle, 0);
         }
     }
 }

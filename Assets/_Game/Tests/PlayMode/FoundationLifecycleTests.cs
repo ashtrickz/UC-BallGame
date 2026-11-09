@@ -79,7 +79,7 @@ namespace Game.Foundation.Tests
                 var popup = UnityEngine.Object.FindFirstObjectByType<SettingsPopupView>();
                 Assert.IsNotNull(popup);
                 Assert.IsTrue(popup.IsVisible);
-                AssignedButton(popup, "_closeButton").onClick.Invoke();
+                AssignedButton(popup, "closeButton").onClick.Invoke();
                 await UniTask.WaitUntil(() => popup == null).Timeout(TimeSpan.FromSeconds(5));
                 Assert.IsTrue(popup == null);
                 Assert.AreEqual(GamePhase.Menu, session.Phase);

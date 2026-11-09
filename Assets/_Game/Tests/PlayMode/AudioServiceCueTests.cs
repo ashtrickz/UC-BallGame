@@ -32,12 +32,24 @@ namespace Game.Foundation.Tests
             public float GetVolume(VolumeChannel channel) => _volumes.TryGetValue(channel, out var value) ? value : 1;
             public bool GetToggle(PreferenceToggle toggle) => false;
             public void SetVolume(VolumeChannel channel, float value) => _volumes[channel] = value;
-            public void SetToggle(PreferenceToggle toggle, bool value) { }
-            public void SetTargetFps(int value) { }
-            public void SetCursor(int index) { }
-            public void SetLanguage(LanguageOption language) { }
-            public void SetDisplay(ResolutionOption resolution, WindowMode mode) { }
-            public void ResetSetting(SettingId setting) { }
+            public void SetToggle(PreferenceToggle toggle, bool value)
+            {
+            }
+            public void SetTargetFps(int value)
+            {
+            }
+            public void SetCursor(int index)
+            {
+            }
+            public void SetLanguage(LanguageOption language)
+            {
+            }
+            public void SetDisplay(ResolutionOption resolution, WindowMode mode)
+            {
+            }
+            public void ResetSetting(SettingId setting)
+            {
+            }
         }
 
         private sealed class CueFixture : IDisposable
@@ -53,7 +65,7 @@ namespace Game.Foundation.Tests
             {
                 if (Object.FindFirstObjectByType<AudioListener>() == null)
                     _listener = new GameObject("CueTest Listener", typeof(AudioListener));
-                Audio = new AudioService(Settings, new UnusedAssets(), Library, null);
+                Audio = CreateAudio(Settings, new UnusedAssets(), Library, null);
             }
 
             public void Dispose()
@@ -62,7 +74,8 @@ namespace Game.Foundation.Tests
                 Object.Destroy(A);
                 Object.Destroy(B);
                 Object.Destroy(Library);
-                if (_listener != null) Object.Destroy(_listener);
+                if (_listener != null)
+                    Object.Destroy(_listener);
             }
         }
 
@@ -91,7 +104,8 @@ namespace Game.Foundation.Tests
                     Assert.IsNotNull(handle);
                     Assert.AreNotEqual(lastClip, handle.Clip, "Take must not immediately repeat.");
                     Assert.That(handle.Pitch, Is.InRange(0.9f, 1.1f));
-                    if (!float.IsNaN(lastPitch)) Assert.Greater(Mathf.Abs(handle.Pitch - lastPitch), 0.001f);
+                    if (!float.IsNaN(lastPitch))
+                        Assert.Greater(Mathf.Abs(handle.Pitch - lastPitch), 0.001f);
                     Assert.AreEqual(0.12f, handle.Volume, 0.00001f);
                     lastClip = handle.Clip;
                     lastPitch = handle.Pitch;
@@ -253,7 +267,8 @@ namespace Game.Foundation.Tests
             Assert.IsNotNull(library);
             var ids = new HashSet<GameSound>();
             foreach (var cue in library.Sounds)
-                if (cue != null) Assert.IsTrue(ids.Add(cue.id), "Duplicate audio ID: " + cue.id);
+                if (cue != null)
+                    Assert.IsTrue(ids.Add(cue.id), "Duplicate audio ID: " + cue.id);
             foreach (var id in new[] { GameSound.SlimeJump, GameSound.SlimeShoot, GameSound.ChargeStart,
                 GameSound.ChargeLoop, GameSound.ProjectileImpact, GameSound.CrystalBreakSmall,
                 GameSound.GateOpen, GameSound.Victory, GameSound.Defeat, GameSound.UiClick })
@@ -265,8 +280,10 @@ namespace Game.Foundation.Tests
             Assert.AreEqual(3, jump.ClipCount);
             Assert.IsTrue(library.TryGet(GameSound.SlimeShoot, out var shoot));
             Assert.AreEqual(2, shoot.ClipCount);
-            for (var i = 0; i < jump.ClipCount; i++) Assert.Less(jump.GetClip(i).length, 0.4f, "Do not import the three-hit audition montage.");
-            for (var i = 0; i < shoot.ClipCount; i++) Assert.Less(shoot.GetClip(i).length, 0.6f, "Do not import the two-hit audition montage.");
+            for (var i = 0; i < jump.ClipCount; i++)
+                Assert.Less(jump.GetClip(i).length, 0.4f, "Do not import the three-hit audition montage.");
+            for (var i = 0; i < shoot.ClipCount; i++)
+                Assert.Less(shoot.GetClip(i).length, 0.6f, "Do not import the two-hit audition montage.");
         }
     }
 }

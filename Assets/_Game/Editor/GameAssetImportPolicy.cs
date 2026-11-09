@@ -114,7 +114,6 @@ namespace Game.Editor
             return true;
         }
 
-        /// <summary>One-time application to existing assets; new/reimported assets use the callbacks above.</summary>
         public static int ApplyToExisting()
         {
             if (EditorApplication.isPlaying || EditorApplication.isCompiling || BuildPipeline.isBuildingPlayer)

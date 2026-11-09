@@ -10,11 +10,17 @@ namespace Game.Localization
     /// <summary>Main-thread singleton. Bundled translations are available before remote initialization.</summary>
     public sealed class LocalizationService : ILocalizationService, IInitializationStep, IDisposable
     {
+        private const string LoadingKey = "loading.translations";
+        private const string RemoteFailurePrefix = "Localization: remote translations unavailable; using bundled JSON. ";
         public event Action Changed;
         public string CurrentLanguage => _settings.CurrentLanguage;
-        public string Name => "loading.translations";
+        public string Name => LoadingKey;
         public bool CanRetry => false;
-        public Exception LastLoadError { get; private set; }
+        public Exception LastLoadError
+        {
+            get;
+            private set;
+        }
 
         private readonly ISettingsService _settings;
         private readonly LocalizationTable _fallback;
@@ -39,48 +45,70 @@ namespace Game.Localization
 
         public string Get(string key)
         {
-            if (string.IsNullOrEmpty(key)) return string.Empty;
-            if (_remote != null && _remote.TryGet(key, CurrentLanguage, out var remote)) return remote;
-            if (_fallback.TryGet(key, CurrentLanguage, out var local)) return local;
-            if (_remote != null && _remote.TryGet(key, _defaultLanguage, out remote)) return remote;
+            if (string.IsNullOrEmpty(key))
+                return string.Empty;
+
+            if (_remote != null && _remote.TryGet(key, CurrentLanguage, out var remote))
+                return remote;
+
+            if (_fallback.TryGet(key, CurrentLanguage, out var local))
+                return local;
+
+            if (_remote != null && _remote.TryGet(key, _defaultLanguage, out remote))
+                return remote;
+
             return _fallback.TryGet(key, _defaultLanguage, out local) ? local : key;
         }
 
         public async UniTask InitializeAsync(CancellationToken cancellationToken)
         {
-            if (_disposed) throw new ObjectDisposedException(nameof(LocalizationService));
+            if (_disposed)
+                throw new ObjectDisposedException(nameof(LocalizationService));
+
             cancellationToken.ThrowIfCancellationRequested();
-            if (_primary == null) return;
+            if (_primary == null)
+                return;
+
             LocalizationTable next;
             try
             {
                 next = await _primary.LoadAsync(cancellationToken);
                 cancellationToken.ThrowIfCancellationRequested();
             }
-            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                throw;
+            }
             catch (Exception exception)
             {
                 LastLoadError = exception;
-                Debug.LogWarning($"Localization: remote translations unavailable; using bundled JSON. {exception.Message}");
+                GameLog.Warning(RemoteFailurePrefix + exception.Message);
                 return;
             }
-            if (_disposed) return;
+            if (_disposed)
+                return;
+
             LastLoadError = null;
-            if (next == null) return; // Remote source is not configured.
+            if (next == null)
+                return; // Remote source is not configured.
             _remote = next;
             Changed?.Invoke();
         }
 
         private void OnSettingsChanged()
         {
-            if (string.Equals(_previousLanguage, CurrentLanguage, StringComparison.OrdinalIgnoreCase)) return;
+            if (string.Equals(_previousLanguage, CurrentLanguage, StringComparison.OrdinalIgnoreCase))
+                return;
+
             _previousLanguage = CurrentLanguage;
             Changed?.Invoke();
         }
 
         public void Dispose()
         {
-            if (_disposed) return;
+            if (_disposed)
+                return;
+
             _disposed = true;
             _settings.Changed -= OnSettingsChanged;
         }

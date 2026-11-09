@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System;
+using Game.Foundation;
 using UnityEngine;
 
 namespace Game.Gameplay.View
@@ -33,29 +35,38 @@ namespace Game.Gameplay.View
         public Transform FinishMarker => finishMarker;
         public TutorialOverlay Tutorial => tutorial;
         public PoolSplashEffect PoolSplash => poolSplash;
-        /// <summary>The colony pool the slime dives into at the finish.</summary>
+        public IReadOnlyList<IFrameTickable> FrameViews => _frameViews;
         public Transform FinishPool => finishMarker != null ? finishMarker.Find("Living pool") : null;
 
-        /// <summary>True while the application is in the background or has lost focus.</summary>
         public event Action<bool> BackgroundChanged;
 
         private bool _paused, _unfocused;
+        private IFrameTickable[] _frameViews = Array.Empty<IFrameTickable>();
 
         private void Awake()
         {
             if (viewConfig == null || slime == null || crystals == null || track == null || doors == null || preview == null
                 || cameraRig == null || input == null)
-                throw new InvalidOperationException("GameplayStage has unassigned references. Run Tools/Ball Game/Gameplay/Install Into Game Scene.");
+                throw new InvalidOperationException("GameplayStage has unassigned references in the Game scene.");
             slime.Bind(Clock, viewConfig);
             crystals.Bind(Clock, viewConfig);
-            preview.Bind(Clock, viewConfig);
-            track.Bind(Clock, viewConfig);
+            preview.Bind(viewConfig);
+            track.Bind(viewConfig);
             doors.Bind(Clock);
             cameraRig.Bind(Clock, viewConfig);
+            _frameViews = new IFrameTickable[] { slime, crystals, doors, preview, track };
         }
 
-        private void OnApplicationPause(bool paused) { _paused = paused; Report(); }
-        private void OnApplicationFocus(bool focused) { _unfocused = !focused; Report(); }
+        private void OnApplicationPause(bool paused)
+        {
+            _paused = paused;
+            Report();
+        }
+        private void OnApplicationFocus(bool focused)
+        {
+            _unfocused = !focused;
+            Report();
+        }
 
         private void Report()
         {

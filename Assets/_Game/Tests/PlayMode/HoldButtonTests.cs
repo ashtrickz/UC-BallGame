@@ -1,3 +1,7 @@
+using Game.Foundation;
+using Game.Integration.Composition;
+using VContainer;
+using VContainer.Unity;
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using Game.UI;
@@ -12,8 +16,15 @@ namespace Game.Bootstrap.Tests
     public sealed class HoldButtonTests
     {
         private GameObject _root;
+        private IObjectResolver _container;
 
-        [TearDown] public void TearDown() { if (_root != null) Object.Destroy(_root); }
+        [TearDown]
+        public void TearDown()
+        {
+            if (_root != null)
+                Object.Destroy(_root);
+            _container?.Dispose();
+        }
 
         private HoldButton Make(float seconds)
         {
@@ -21,6 +32,11 @@ namespace Game.Bootstrap.Tests
             var go = new GameObject("Button", typeof(RectTransform), typeof(Image));
             go.transform.SetParent(_root.transform, false);
             var button = go.AddComponent<HoldButton>();
+            var builder = new ContainerBuilder();
+            builder.Register<IFrameTimeSource, UnityFrameTimeSource>(Lifetime.Singleton);
+            builder.RegisterEntryPoint<TickRegistry>().AsSelf();
+            _container = builder.Build();
+            button.BindTicks(_container.Resolve<ITickRegistry>());
             button.HoldSeconds = seconds;
             return button;
         }
@@ -28,7 +44,8 @@ namespace Game.Bootstrap.Tests
         private static PointerEventData Pointer() => new PointerEventData(EventSystem.current) { button = PointerEventData.InputButton.Left };
 
         // The hold is the confirmation: it fires once, only after the full time, never on a tap, and letting go early cancels it.
-        [UnityTest] public IEnumerator Acts_once_after_the_full_hold_and_never_on_a_tap_or_an_early_release() => UniTask.ToCoroutine(async () =>
+        [UnityTest]
+        public IEnumerator Acts_once_after_the_full_hold_and_never_on_a_tap_or_an_early_release() => UniTask.ToCoroutine(async () =>
         {
             var button = Make(0.4f);
             int completed = 0, clicked = 0, cancelled = 0;

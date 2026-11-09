@@ -2,117 +2,141 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.App.Game;
-using Game.App.Scenes;
+using Game.Gameplay.Levels;
 using Game.Integration.Gameplay;
-using Game.Integration.Game;
-using Game.Gameplay.Config;
 using Game.UI;
 using UnityEngine;
 
 namespace Game.Integration.Menu
 {
+    /// <summary>Menu scenario: level choice, the crystal wall and settings. Starting a round is delegated to the launcher.</summary>
     public sealed class MenuController : IController
     {
+        private const int ContinueCampaign = 0;
+
         private readonly IMenuView _view;
         private readonly GameSession _session;
-        private readonly GameNavigation _navigation;
         private readonly IPopupService _popups;
+        private readonly IGameLauncher _launcher;
         private readonly ILevelSelect _levelSelect;
-        private readonly SlimeGameConfig _config;
         private readonly CancellationTokenSource _lifetime = new CancellationTokenSource();
+
         private bool _initialized;
         private bool _popupOpen;
         private bool _disposed;
 
-        public MenuController(IMenuView view, GameSession session, IPopupService popups, GameNavigation navigation,
-            ILevelSelect levelSelect = null, SlimeGameConfig config = null)
+        public MenuController(IMenuView view, GameSession session, IPopupService popups, IGameLauncher launcher, ILevelSelect levelSelect)
         {
-            _config = config;
-            _levelSelect = levelSelect;
             _view = view ?? throw new ArgumentNullException(nameof(view));
             _session = session ?? throw new ArgumentNullException(nameof(session));
             _popups = popups ?? throw new ArgumentNullException(nameof(popups));
-            _navigation = navigation ?? throw new ArgumentNullException(nameof(navigation));
+            _launcher = launcher ?? throw new ArgumentNullException(nameof(launcher));
+            _levelSelect = levelSelect ?? throw new ArgumentNullException(nameof(levelSelect));
         }
+
+        private bool CanAct => !_disposed && _initialized && !_popupOpen && _session.Phase == GamePhase.Menu;
 
         public async UniTask InitializeAsync(CancellationToken cancellationToken = default)
         {
-            if (_disposed) throw new ObjectDisposedException(nameof(MenuController));
+            if (_disposed)
+                throw new ObjectDisposedException(nameof(MenuController));
+
             cancellationToken.ThrowIfCancellationRequested();
-            if (_initialized) return;
+            if (_initialized)
+                return;
+
             _initialized = true;
             _view.PlayRequested += OnPlay;
             _view.WallRequested += OnWall;
             _view.SettingsRequested += OnSettings;
-            _view.SlimeColorRequested += OnSlimeColor;
-            if (_config != null) _view.SetSlimeColors(_config.SlimeColors, SlimeColorPreferences.SelectedIndex(_config));
             using var linked = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _lifetime.Token);
             await RefreshAsync(linked.Token);
         }
 
-        private void OnPlay()
+        public void Dispose()
         {
-            if (_levelSelect == null) Start(GameMode.Campaign);
-            else if (!_disposed && _initialized && !_popupOpen && _session.Phase == GamePhase.Menu) ChooseLevelAsync().Forget(Debug.LogException);
+            if (_disposed)
+                return;
+
+            _disposed = true;
+            _view.PlayRequested -= OnPlay;
+            _view.WallRequested -= OnWall;
+            _view.SettingsRequested -= OnSettings;
+            _lifetime.Cancel();
+            _lifetime.Dispose();
         }
 
-        /// <summary>LEVELS opens the level grid; a picked level starts the round, BACK returns to the menu.</summary>
+        private void OnPlay()
+        {
+            if (CanAct)
+                ChooseLevelAsync().Forget(Debug.LogException);
+        }
+
+        private void OnWall()
+        {
+            Launch(new WallLevelRequest(null));
+        }
+
+        private void OnSettings()
+        {
+            if (CanAct)
+                ShowSettingsAsync().Forget(Debug.LogException);
+        }
+
         private async UniTask ChooseLevelAsync()
         {
             _popupOpen = true;
             _view.SetInteractable(false);
             int? level = null;
-            try { level = await _levelSelect.ChooseAsync(_lifetime.Token); }
-            catch (OperationCanceledException) { }
+            try
+            {
+                level = await _levelSelect.ChooseAsync(_lifetime.Token);
+            }
+            catch (OperationCanceledException)
+            {
+            }
             finally
             {
                 _popupOpen = false;
-                if (!_disposed) _view.SetInteractable(true);
+                if (!_disposed)
+                    _view.SetInteractable(true);
             }
-            if (level.HasValue && !_disposed && _session.Phase == GamePhase.Menu)
-            {
-                _view.SetInteractable(false);
-                StartGameAsync(GameMode.Campaign, level.Value).Forget(Debug.LogException);
-            }
-        }
-        private void OnWall() => Start(GameMode.Wall);
 
-        private void OnSlimeColor(int index)
-        {
-            if (_disposed || !_initialized || _popupOpen || _session.Phase != GamePhase.Menu) return;
-            if (SlimeColorPreferences.Select(_config, index)) _view.SetSelectedSlimeColor(index);
+            if (!level.HasValue)
+                return;
+
+            // A null request continues the campaign from the saved progress.
+            var request = level.Value > ContinueCampaign
+                ? new CampaignLevelRequest(level.Value)
+                : null;
+            Launch(request);
         }
 
-        private void Start(GameMode mode)
+        private void Launch(LevelRequest request)
         {
-            if (_disposed || !_initialized || _popupOpen || _session.Phase != GamePhase.Menu) return;
+            if (!CanAct)
+                return;
+
             _view.SetInteractable(false);
-            StartGameAsync(mode).Forget(Debug.LogException);
-        }
-
-        private async UniTask StartGameAsync(GameMode mode, int level = 0)
-        {
-            _session.StartRound(mode, level);
-            // Navigation belongs to ProjectScope and survives disposal of this menu.
-            await _navigation.OpenAsync(GameNavigation.GameScene);
-        }
-
-        private void OnSettings()
-        {
-            if (_disposed || !_initialized || _popupOpen || _session.Phase != GamePhase.Menu) return;
-            ShowSettingsAsync().Forget(Debug.LogException);
+            _launcher.LaunchAsync(request).Forget(Debug.LogException);
         }
 
         private async UniTask ShowSettingsAsync()
         {
             _popupOpen = true;
             _view.SetInteractable(false);
-            try { await _popups.ShowAsync<SettingsPopupController>(_lifetime.Token); }
-            catch (OperationCanceledException) { }
+            try
+            {
+                await _popups.ShowAsync<SettingsPopupController>(_lifetime.Token);
+            }
+            catch (OperationCanceledException)
+            {
+            }
             finally
             {
                 _popupOpen = false;
-                if (!_disposed) _view.SetInteractable(true);
+                if (!_disposed)
+                    _view.SetInteractable(true);
             }
         }
 
@@ -120,24 +144,15 @@ namespace Game.Integration.Menu
         {
             try
             {
-                var inMenu = _session.Phase == GamePhase.Menu;
                 _view.SetInteractable(!_popupOpen);
-                if (inMenu) await _view.ShowAsync(token);
-                else await _view.HideAsync(token);
+                if (_session.Phase == GamePhase.Menu)
+                    await _view.ShowAsync(token);
+                else
+                    await _view.HideAsync(token);
             }
-            catch (OperationCanceledException) { }
-        }
-
-        public void Dispose()
-        {
-            if (_disposed) return;
-            _disposed = true;
-            _view.PlayRequested -= OnPlay;
-            _view.WallRequested -= OnWall;
-            _view.SettingsRequested -= OnSettings;
-            _view.SlimeColorRequested -= OnSlimeColor;
-            _lifetime.Cancel();
-            _lifetime.Dispose();
+            catch (OperationCanceledException)
+            {
+            }
         }
     }
 }

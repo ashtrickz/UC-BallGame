@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Audio;
 using Game.Gameplay.View;
 using Game.Integration.Audio;
 using NUnit.Framework;
@@ -50,8 +51,8 @@ namespace Game.Foundation.Tests
         public void Every_landing_and_water_entry_pulses_but_takeoff_does_not()
         {
             var pulses = new List<int>();
-            var presenter = new GameplayHapticsPresenter((duration, intensity) => pulses.Add(duration),
-                (initial, rate, seconds) => { }, () => { });
+            var presenter = new GameplayHapticsPresenter(new CallbackHaptics((duration, intensity) => pulses.Add(duration),
+                (initial, rate, seconds) => { }, () => { }));
             presenter.OnSlimeCue(SlimePresentationCue.HopPreparing);
             presenter.OnSlimeCue(SlimePresentationCue.Takeoff);
             presenter.OnSlimeCue(SlimePresentationCue.Landed);
@@ -74,14 +75,17 @@ namespace Game.Foundation.Tests
         {
             var starts = 0;
             var stops = 0;
-            var presenter = new GameplayHapticsPresenter((duration, intensity) => { },
-                (initial, rate, seconds) => starts++, () => stops++);
+            var presenter = new GameplayHapticsPresenter(new CallbackHaptics((duration, intensity) => { },
+                (initial, rate, seconds) => starts++, () => stops++));
             presenter.BeginCharge(0.05f, 0.2f, 4.5f);
             Assert.AreEqual(1, starts);
             Assert.AreEqual(0, stops);
-            if (action == "release") presenter.CancelCharge();
-            else if (action == "pause") presenter.SetPaused(true);
-            else presenter.Dispose();
+            if (action == "release")
+                presenter.CancelCharge();
+            else if (action == "pause")
+                presenter.SetPaused(true);
+            else
+                presenter.Dispose();
             Assert.AreEqual(1, stops);
             presenter.SetPaused(false);
             presenter.CancelCharge();
@@ -93,11 +97,38 @@ namespace Game.Foundation.Tests
         public void Replacement_charge_cancels_the_previous_envelope()
         {
             var commands = new List<string>();
-            var presenter = new GameplayHapticsPresenter((duration, intensity) => { },
-                (initial, rate, seconds) => commands.Add("start"), () => commands.Add("stop"));
+            var presenter = new GameplayHapticsPresenter(new CallbackHaptics((duration, intensity) => { },
+                (initial, rate, seconds) => commands.Add("start"), () => commands.Add("stop")));
             presenter.BeginCharge(0.05f, 0.2f, 4);
             presenter.BeginCharge(0.05f, 0.2f, 2);
             CollectionAssert.AreEqual(new[] { "start", "stop", "start" }, commands);
+        }
+        /// <summary>Adapts test callbacks to the project feedback contract.</summary>
+        private sealed class CallbackHaptics : IHaptics
+        {
+            private readonly Action<int, float> _pulse;
+            private readonly Action<float, float, float> _charge;
+            private readonly Action _cancel;
+            public bool Enabled { get; set; } = true;
+
+            public CallbackHaptics(Action<int, float> pulse, Action<float, float, float> charge, Action cancel)
+            {
+                _pulse = pulse;
+                _charge = charge;
+                _cancel = cancel;
+            }
+
+            public void Play(HapticKind kind)
+            {
+            }
+
+            public void Vibrate(int milliseconds, float intensity) => _pulse(milliseconds, intensity);
+            public void StartCharge(float initialCharge, float chargePerSecond, float seconds) => _charge(initialCharge, chargePerSecond, seconds);
+            public void Cancel() => _cancel();
+
+            public void Dispose()
+            {
+            }
         }
     }
 }

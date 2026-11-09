@@ -4,9 +4,12 @@ namespace Game.App.Loading
 {
     public sealed class InitializationModel : IInitializationModel
     {
+        private const string DefaultMessageKey = "loading.default";
+        private const float CompletePercentage = 100f;
+
         public event Action Changed;
         public float InitPercentage { get; private set; } = 0;
-        public string Message { get; private set; } = "loading.default";
+        public string Message { get; private set; } = DefaultMessageKey;
         public bool HasError { get; private set; }
         public bool CanRetry { get; private set; }
         public bool IsComplete { get; private set; }
@@ -29,7 +32,7 @@ namespace Game.App.Loading
 
         public void Complete()
         {
-            InitPercentage = 100f;
+            InitPercentage = CompletePercentage;
             IsComplete = true;
             HasError = CanRetry = false;
             Changed?.Invoke();

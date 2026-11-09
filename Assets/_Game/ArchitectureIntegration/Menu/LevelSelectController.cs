@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Gameplay.Config;
-using Game.Integration.Game;
+using Game.App.Game;
 
 namespace Game.Integration.Menu
 {
@@ -10,6 +10,19 @@ namespace Game.Integration.Menu
     public interface ILevelSelect
     {
         UniTask<int?> ChooseAsync(CancellationToken cancellationToken);
+    }
+
+    /// <summary>Menu without the level grid: LEVELS continues the campaign from the saved progress.</summary>
+    public sealed class ContinueCampaignSelect : ILevelSelect
+    {
+        private const int ContinueCampaign = 0;
+
+        public UniTask<int?> ChooseAsync(CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return UniTask.FromResult<int?>(ContinueCampaign);
+        }
     }
 
     /// <summary>Shows the level grid with the saved progress; only unlocked levels can be chosen.</summary>
@@ -35,9 +48,13 @@ namespace Game.Integration.Menu
 
         public async UniTask<int?> ChooseAsync(CancellationToken cancellationToken)
         {
-            if (_disposed) throw new ObjectDisposedException(nameof(LevelSelectController));
+            if (_disposed)
+                throw new ObjectDisposedException(nameof(LevelSelectController));
+
             cancellationToken.ThrowIfCancellationRequested();
-            if (_pending != null) throw new InvalidOperationException("Level selection is already open.");
+            if (_pending != null)
+                throw new InvalidOperationException("Level selection is already open.");
+
             var pending = _pending = new UniTaskCompletionSource<int?>();
             try
             {
@@ -51,21 +68,29 @@ namespace Game.Integration.Menu
                 {
                     if (_view)
                     {
-                        if (_disposed || cancellationToken.IsCancellationRequested) _view.HideInstant();
-                        else await _view.HideAsync(cancellationToken);
+                        if (_disposed || cancellationToken.IsCancellationRequested)
+                            _view.HideInstant();
+                        else
+                            await _view.HideAsync(cancellationToken);
                     }
                 }
                 catch (OperationCanceledException)
                 {
-                    if (_view) _view.HideInstant();
+                    if (_view)
+                        _view.HideInstant();
                 }
-                finally { _pending = null; }
+                finally
+                {
+                    _pending = null;
+                }
             }
         }
 
         private void OnChosen(int level)
         {
-            if (level < 1 || level > Count || level > _progress.Unlocked) return;
+            if (level < 1 || level > Count || level > _progress.Unlocked)
+                return;
+
             _pending?.TrySetResult(level);
         }
 
@@ -73,7 +98,9 @@ namespace Game.Integration.Menu
 
         public void Dispose()
         {
-            if (_disposed) return;
+            if (_disposed)
+                return;
+
             _disposed = true;
             _pending?.TrySetResult(null);
             if (_view)

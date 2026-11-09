@@ -33,7 +33,9 @@ namespace Game.App.Popups
         private async UniTask<TResult> RunAsync<TPopup, TResult>(Func<TPopup, CancellationToken, UniTask<TResult>> show, CancellationToken token)
             where TPopup : IPopupController
         {
-            if (_disposed) throw new ObjectDisposedException(nameof(PopupService));
+            if (_disposed)
+                throw new ObjectDisposedException(nameof(PopupService));
+
             using var linked = CancellationTokenSource.CreateLinkedTokenSource(token, _lifetime.Token);
             await _semaphore.WaitAsync(linked.Token);
             try
@@ -42,12 +44,17 @@ namespace Game.App.Popups
                 using var popup = _resolver.Resolve<TPopup>();
                 return await show(popup, linked.Token);
             }
-            finally { _semaphore.Release(); }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public void Dispose()
         {
-            if (_disposed) return;
+            if (_disposed)
+                return;
+
             _disposed = true;
             _lifetime.Cancel();
             _lifetime.Dispose();

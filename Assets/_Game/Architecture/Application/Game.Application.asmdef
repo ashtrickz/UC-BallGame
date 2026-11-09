@@ -9,7 +9,9 @@
         "Game.Localization",
         "Game.UI",
         "Unity.TextMeshPro",
-        "UnityEngine.UI"
+        "UnityEngine.UI",
+        "Game.Gameplay",
+        "Game.Gameplay.Config"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

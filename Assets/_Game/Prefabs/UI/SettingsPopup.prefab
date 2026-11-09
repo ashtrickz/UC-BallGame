@@ -1346,14 +1346,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2a43d182ea1984aa8f781eeb990c30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Integration::Game.Integration.Gameplay.SettingsPopupView
-  _canvasGroup: {fileID: 129171844984539707}
-  _initiallyVisible: 0
-  _animateFade: 1
-  _transitionDuration: 0.2
-  _scaleRoot: {fileID: 8960407974585827988}
-  _closeButton: {fileID: 7031721699158283347}
-  _animatePunch: 1
-  _punchStrength: 0.08
+  canvasGroup: {fileID: 129171844984539707}
+  initiallyVisible: 0
+  animateFade: 1
+  transitionDuration: 0.2
+  scaleRoot: {fileID: 8960407974585827988}
+  closeButton: {fileID: 7031721699158283347}
+  animatePunch: 1
+  punchStrength: 0.08
   volumes:
   - channel: 0
     slider: {fileID: 4849720385274757179}
@@ -1375,9 +1375,6 @@ MonoBehaviour:
   chosenFpsSprite: {fileID: 0}
   otherFpsSprite: {fileID: 0}
   buildText: {fileID: 9180698526283359322}
-  copyKeyButton: {fileID: 0}
-  copyKeyLabel: {fileID: 0}
-  copiedSeconds: 1.5
   resetButton: {fileID: 7446791362160862490}
   languageChoices:
   - code: en

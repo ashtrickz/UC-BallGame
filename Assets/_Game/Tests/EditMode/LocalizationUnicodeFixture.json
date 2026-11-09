@@ -1,0 +1,9 @@
+{
+  "values": [
+    "{\"code\":\"uk\",\"entries\":[{\"key\":\"hello\",\"value\":\"Привіт\"}]}]}",
+    "Українська",
+    "Привіт",
+    "﻿key,en,zh-CN\r\nhello,\"Hello, \"\"player\"\"\",\"你好\n世界\"\r\n\r\nshort,Value\r\n",
+    "你好\n世界"
+  ]
+}

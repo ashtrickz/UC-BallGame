@@ -2,12 +2,13 @@
     "name": "Game.Gameplay.View",
     "rootNamespace": "Game.Gameplay.View",
     "references": [
+        "Game.Foundation",
         "Game.Gameplay",
-        "Game.Localization",
         "UniTask",
         "Unity.InputSystem",
         "Unity.TextMeshPro",
-        "UnityEngine.UI"
+        "UnityEngine.UI",
+        "Game.Gameplay.Config"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

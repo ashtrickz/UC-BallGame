@@ -22,7 +22,8 @@ namespace Game.Integration.Localization
             Unsubscribe();
             _localization = localization;
             _text = GetComponent<TMP_Text>();
-            if (isActiveAndEnabled) Subscribe();
+            if (isActiveAndEnabled)
+                Subscribe();
         }
 
         public void SetKey(string value, params object[] values)
@@ -37,7 +38,9 @@ namespace Game.Integration.Localization
 
         private void Subscribe()
         {
-            if (_localization == null) return;
+            if (_localization == null)
+                return;
+
             _localization.Changed -= Refresh;
             _localization.Changed += Refresh;
             Refresh();
@@ -45,7 +48,8 @@ namespace Game.Integration.Localization
 
         private void Unsubscribe()
         {
-            if (_localization != null) _localization.Changed -= Refresh;
+            if (_localization != null)
+                _localization.Changed -= Refresh;
         }
 
         private void Refresh()

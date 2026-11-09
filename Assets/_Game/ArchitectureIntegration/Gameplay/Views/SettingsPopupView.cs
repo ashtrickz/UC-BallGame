@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Game.Integration.Localization;
 using Game.Settings;
 using Game.UI;
 using TMPro;
@@ -10,44 +8,43 @@ using UnityEngine.UI;
 
 namespace Game.Integration.Gameplay
 {
+    /// <summary>Passive settings presentation and input events.</summary>
     public interface ISettingsPopupView : IPopupView
     {
         event Action<VolumeChannel, float> VolumeChanged;
         event Action<int> FpsChosen;
-        event Action CopyKeyClicked;
         event Action ResetClicked;
         event Action<string> LanguageChosen;
 
-        /// <summary>Shows a value without reporting it back as a change.</summary>
         void ShowVolume(VolumeChannel channel, float value);
 
-        /// <summary>Marks the button of this frame rate as the chosen one.</summary>
         void ShowFps(int fps);
 
-        void ShowBuild(string version, bool canCopyKey);
+        void ShowBuild(string version);
         void ShowLanguages(IReadOnlyList<LanguageOption> languages, string selectedLanguage);
 
-        /// <summary>Puts the player's key on the clipboard and says so on the button for a moment.</summary>
-        void CopyKey(string key);
     }
 
-    /// <summary>The settings popup: the volume sliders, the frame rate, a reset, the build's version and a button that copies the player's key. Passive; the controller talks to the settings service.</summary>
+    /// <summary>Displays settings and reports input without retaining application services.</summary>
     public sealed class SettingsPopupView : PopupBase, ISettingsPopupView
     {
+        /// <summary>Authored association between a volume channel and its slider.</summary>
         [Serializable]
         public sealed class VolumeRow
         {
             public VolumeChannel channel;
-            public Slider slider;
+            public UnityEngine.UI.Slider slider;
         }
 
+        /// <summary>Authored frame-rate choice.</summary>
         [Serializable]
         public sealed class FpsChoice
         {
             public int fps;
-            public Button button;
+            public UnityEngine.UI.Button button;
         }
 
+        /// <summary>Authored language choice.</summary>
         [Serializable]
         public sealed class LanguageChoice
         {
@@ -55,9 +52,11 @@ namespace Game.Integration.Gameplay
             public UnityEngine.UI.Button button;
         }
 
+        private static readonly Color SelectedColor = Color.white;
+        private static readonly Color UnselectedColor = new Color(0.8f, 0.8f, 0.8f);
+
         public event Action<VolumeChannel, float> VolumeChanged;
         public event Action<int> FpsChosen;
-        public event Action CopyKeyClicked;
         public event Action ResetClicked;
         public event Action<string> LanguageChosen;
 
@@ -66,110 +65,109 @@ namespace Game.Integration.Gameplay
         [SerializeField] private Sprite chosenFpsSprite;
         [SerializeField] private Sprite otherFpsSprite;
         [SerializeField] private TMP_Text buildText;
-        [SerializeField] private Button copyKeyButton;
-        [SerializeField] private TMP_Text copyKeyLabel;
-        [SerializeField, Min(0.1f)] private float copiedSeconds = 1.5f;
-        [SerializeField] private Button resetButton;
+        [SerializeField] private UnityEngine.UI.Button resetButton;
         [SerializeField] private LanguageChoice[] languageChoices = Array.Empty<LanguageChoice>();
-
-        private LocalizedText _copyKeyText;
-        private Coroutine _copied;
 
         protected override void Awake()
         {
             foreach (var row in volumes)
             {
-                if (row.slider == null) continue;
+                if (row.slider == null)
+                    continue;
+
                 var channel = row.channel;
-                row.slider.minValue = 0f; row.slider.maxValue = 1f;
+                row.slider.minValue = 0f;
+                row.slider.maxValue = 1f;
                 row.slider.onValueChanged.AddListener(value => VolumeChanged?.Invoke(channel, value));
             }
             foreach (var choice in fpsChoices)
             {
-                if (choice.button == null) continue;
+                if (choice.button == null)
+                    continue;
+
                 var fps = choice.fps;
                 choice.button.onClick.AddListener(() => FpsChosen?.Invoke(fps));
             }
             foreach (var choice in languageChoices)
             {
-                if (choice.button == null) continue;
+                if (choice.button == null)
+                    continue;
+
                 var code = choice.code;
                 choice.button.onClick.AddListener(() => LanguageChosen?.Invoke(code));
             }
-            if (copyKeyButton != null) copyKeyButton.onClick.AddListener(OnCopyKey);
-            if (copyKeyLabel != null) _copyKeyText = copyKeyLabel.GetComponent<LocalizedText>();
-            if (resetButton != null) resetButton.onClick.AddListener(OnReset);
+            if (resetButton != null)
+                resetButton.onClick.AddListener(OnReset);
             base.Awake();
         }
 
         protected override void OnDestroy()
         {
-            foreach (var row in volumes) if (row.slider != null) row.slider.onValueChanged.RemoveAllListeners();
-            foreach (var choice in fpsChoices) if (choice.button != null) choice.button.onClick.RemoveAllListeners();
-            foreach (var choice in languageChoices) if (choice.button != null) choice.button.onClick.RemoveAllListeners();
-            if (copyKeyButton != null) copyKeyButton.onClick.RemoveListener(OnCopyKey);
-            if (resetButton != null) resetButton.onClick.RemoveListener(OnReset);
+            foreach (var row in volumes)
+                if (row.slider != null)
+                    row.slider.onValueChanged.RemoveAllListeners();
+            foreach (var choice in fpsChoices)
+                if (choice.button != null)
+                    choice.button.onClick.RemoveAllListeners();
+            foreach (var choice in languageChoices)
+                if (choice.button != null)
+                    choice.button.onClick.RemoveAllListeners();
+            if (resetButton != null)
+                resetButton.onClick.RemoveListener(OnReset);
             base.OnDestroy();
         }
 
         private void OnReset() => ResetClicked?.Invoke();
-        private void OnCopyKey() => CopyKeyClicked?.Invoke();
 
         public void ShowVolume(VolumeChannel channel, float value)
         {
             foreach (var row in volumes)
-                if (row.channel == channel && row.slider != null) row.slider.SetValueWithoutNotify(value);
+                if (row.channel == channel && row.slider != null)
+                    row.slider.SetValueWithoutNotify(value);
         }
 
         public void ShowFps(int fps)
         {
             foreach (var choice in fpsChoices)
-                if (choice.button != null && choice.button.targetGraphic is Image image)
+                if (choice.button != null && choice.button.targetGraphic is UnityEngine.UI.Image image)
                 {
                     if (chosenFpsSprite != null && otherFpsSprite != null)
                         image.sprite = choice.fps == fps ? chosenFpsSprite : otherFpsSprite;
-                    else image.color = choice.fps == fps ? new Color(1f, 1, 1) : new Color(0.8f, 0.8f, 0.8f);
+                    else
+                        image.color = choice.fps == fps ? SelectedColor : UnselectedColor;
                 }
         }
 
-        public void ShowBuild(string version, bool canCopyKey)
+        public void ShowBuild(string version)
         {
-            if (buildText != null) buildText.text = version;
-            if (copyKeyButton != null) copyKeyButton.interactable = canCopyKey;
+            if (buildText != null)
+                buildText.text = version;
         }
 
         public void ShowLanguages(IReadOnlyList<LanguageOption> languages, string selectedLanguage)
         {
             foreach (var choice in languageChoices)
             {
-                if (choice.button == null) continue;
+                if (choice.button == null)
+                    continue;
+
                 var supported = false;
-                foreach (var language in languages) if (language.Code == choice.code) { supported = true; break; }
+                foreach (var language in languages)
+                    if (language.Code == choice.code)
+                    {
+                        supported = true;
+                        break;
+                    }
                 choice.button.interactable = supported;
                 if (choice.button.targetGraphic is UnityEngine.UI.Image image)
                 {
                     var selected = string.Equals(choice.code, selectedLanguage, StringComparison.OrdinalIgnoreCase);
                     if (chosenFpsSprite != null && otherFpsSprite != null)
                         image.sprite = selected ? chosenFpsSprite : otherFpsSprite;
-                    else image.color = selected ? new Color(1f, 1, 1) : new Color(0.8f, 0.8f, 0.8f);
+                    else
+                        image.color = selected ? SelectedColor : UnselectedColor;
                 }
             }
-        }
-
-        public void CopyKey(string key)
-        {
-            GUIUtility.systemCopyBuffer = key;
-            if (copyKeyLabel == null) return;
-            if (_copied != null) StopCoroutine(_copied);
-            _copied = StartCoroutine(SayCopied());
-        }
-
-        private IEnumerator SayCopied()
-        {
-            if (_copyKeyText != null) _copyKeyText.SetKey("settings.copied");
-            yield return new WaitForSecondsRealtime(copiedSeconds);
-            if (_copyKeyText != null) _copyKeyText.SetKey("settings.copy_key");
-            _copied = null;
         }
     }
 }

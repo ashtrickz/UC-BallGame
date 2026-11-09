@@ -8,14 +8,16 @@ namespace Game.Gameplay.Geometry
         public readonly bool Hit;
         public readonly double Distance;
         public readonly int CrystalId;
-        /// <summary>Centre of the swept circle at first touch.</summary>
         public readonly Vec2 Center;
-        /// <summary>Point of the crystal contour closest to <see cref="Center"/> at first touch.</summary>
         public readonly Vec2 Contact;
 
         public SweepHit(double distance, int crystalId, Vec2 center, Vec2 contact)
         {
-            Hit = true; Distance = distance; CrystalId = crystalId; Center = center; Contact = contact;
+            Hit = true;
+            Distance = distance;
+            CrystalId = crystalId;
+            Center = center;
+            Contact = contact;
         }
 
         public static SweepHit None => default;
@@ -41,55 +43,83 @@ namespace Game.Gameplay.Geometry
             }
         }
 
-        private CrystalField(ConvexPolygon[] polygons, bool[] alive) { _polygons = polygons; _alive = alive; }
+        private CrystalField(ConvexPolygon[] polygons, bool[] alive)
+        {
+            _polygons = polygons;
+            _alive = alive;
+        }
 
         public int Count => _polygons.Length;
         public ConvexPolygon Polygon(int id) => _polygons[id];
         public bool IsAlive(int id) => _alive[id];
-        public int AliveCount { get { var n = 0; foreach (var a in _alive) if (a) n++; return n; } }
+        public int AliveCount
+        {
+            get
+            {
+                var count = 0;
+                foreach (var alive in _alive)
+                {
+                    if (alive)
+                        count++;
+                }
+
+                return count;
+            }
+        }
 
         public void Kill(int id) => _alive[id] = false;
 
-        /// <summary>Copy sharing the immutable contours, with an independent alive mask.</summary>
         public CrystalField Clone() => new CrystalField(_polygons, (bool[])_alive.Clone());
 
-        /// <summary>First live crystal touched by a circle swept from origin along a unit direction.</summary>
         public SweepHit SweepCircle(Vec2 origin, Vec2 direction, double radius, double maxDistance, double tolerance)
         {
             var best = SweepHit.None;
             for (var id = 0; id < _polygons.Length; id++)
             {
-                if (!_alive[id]) continue;
+                if (!_alive[id])
+                    continue;
+
                 var polygon = _polygons[id];
                 // Broad phase: the polygon lies within its bounding circle.
                 var rel = polygon.Center - origin;
                 var along = Vec2.Dot(rel, direction);
                 var reach = polygon.BoundingRadius + radius + tolerance;
-                if (along < -reach || along > maxDistance + reach) continue;
+                if (along < -reach || along > maxDistance + reach)
+                    continue;
+
                 var side = Math.Abs(Vec2.Cross(direction, rel));
-                if (side > reach) continue;
+                if (side > reach)
+                    continue;
 
                 var t = polygon.SweepCircle(origin, direction, radius, maxDistance, tolerance);
-                if (double.IsPositiveInfinity(t)) continue;
+                if (double.IsPositiveInfinity(t))
+                    continue;
+
                 // Equal distances within tolerance resolve to the lower id, independent of float noise.
-                if (best.Hit && !(t < best.Distance - tolerance)) continue;
+                if (best.Hit && !(t < best.Distance - tolerance))
+                    continue;
+
                 var center = origin + direction * t;
                 best = new SweepHit(t, id, center, polygon.ClosestPoint(center));
             }
             return best;
         }
 
-        /// <summary>Live crystals whose contour touches or intersects a circle, in ascending id order.</summary>
         public List<int> Overlapping(Vec2 center, double radius, double tolerance, List<int> into = null)
         {
             var result = into ?? new List<int>();
             result.Clear();
             for (var id = 0; id < _polygons.Length; id++)
             {
-                if (!_alive[id]) continue;
+                if (!_alive[id])
+                    continue;
+
                 var polygon = _polygons[id];
-                if (Vec2.Distance(polygon.Center, center) > polygon.BoundingRadius + radius + tolerance) continue;
-                if (polygon.DistanceTo(center) <= radius + tolerance) result.Add(id);
+                if (Vec2.Distance(polygon.Center, center) > polygon.BoundingRadius + radius + tolerance)
+                    continue;
+
+                if (polygon.DistanceTo(center) <= radius + tolerance)
+                    result.Add(id);
             }
             return result;
         }

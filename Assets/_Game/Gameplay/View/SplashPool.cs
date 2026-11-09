@@ -1,37 +1,63 @@
-using UnityEngine;
-using UnityEngine.Rendering;
+using Game.Foundation;
 using Game.Gameplay.Config;
+using UnityEngine.Rendering;
+using UnityEngine;
 
 namespace Game.Gameplay.View
 {
     /// <summary>Pooled jelly and crystal specks (secondary effect: never awaited, never gameplay).</summary>
-    public sealed class SplashPool : MonoBehaviour
+    public sealed class SplashPool : MonoBehaviour, IFrameTickable
     {
+        private const string WobbleProperty = "_Wobble";
+        private const string BaseColorProperty = "_BaseColor";
+        private const string TopColorProperty = "_TopColor";
+        private const string SpeckName = "Speck ";
+        private const int DefaultCapacity = 64;
+        private const int RandomSeed = 17;
+        private const float GoldenAngle = 2.399963f;
+        private const float AngleJitter = 0.8f;
+        private const float Lift = 1.4f;
+        private const int LiftVariants = 3;
+        private const float LiftStep = 0.3f;
+        private const float Duration = 0.42f;
+        private const int DurationVariants = 4;
+        private const float DurationStep = 0.075f;
+        private const float SpeckSize = 0.055f;
+        private const int SizeVariants = 3;
+        private const float SizeStep = 0.025f;
+        private const float HalfGravity = 4.5f;
+
+        private static readonly int WobbleId = Shader.PropertyToID(WobbleProperty);
+        private static readonly int BaseColorId = Shader.PropertyToID(BaseColorProperty);
+        private static readonly int TopColorId = Shader.PropertyToID(TopColorProperty);
+
         [SerializeField] private Material defaultMaterial;
         [SerializeField] private Mesh speckMesh;
-        [SerializeField, Min(4)] private int capacity = 64;
+        [SerializeField, Min(4)] private int capacity = DefaultCapacity;
+
+        // Visual variation only: its own stream, never the generator's.
+        private readonly System.Random _random = new System.Random(RandomSeed);
+
+        private MaterialPropertyBlock _properties;
+        private SlimeColorPreset? _colors;
+        private Speck[] _specks;
+        private int _cursor;
 
         private sealed class Speck
         {
             public Transform Transform;
             public MeshRenderer Renderer;
-            public Vector3 Origin, Velocity;
-            public float Age, Duration, Size;
+            public Vector3 Origin;
+            public Vector3 Velocity;
+            public float Age;
+            public float Duration;
+            public float Size;
         }
 
-        private static readonly int WobbleId = Shader.PropertyToID("_Wobble");
-        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
-        private static readonly int TopColorId = Shader.PropertyToID("_TopColor");
-        private MaterialPropertyBlock _properties;
-        private SlimeColorPreset? _colors;
-        private Speck[] _specks;
-        private int _cursor;
-        private GameClock _clock;
-        // Visual variation only: its own stream, never the generator's.
-        private System.Random _random = new System.Random(17);
-
-        public void Bind(GameClock clock) => _clock = clock;
-        public void SetColors(SlimeColorPreset preset) => _colors = preset;
+        public void SetColors(SlimeColorPreset preset)
+        {
+            _colors = preset;
+        }
 
         private void Awake()
         {
@@ -42,7 +68,7 @@ namespace Game.Gameplay.View
             var sphere = speckMesh;
             for (var i = 0; i < capacity; i++)
             {
-                var go = new GameObject("Speck " + i, typeof(MeshFilter), typeof(MeshRenderer));
+                var go = new GameObject(SpeckName + i, typeof(MeshFilter), typeof(MeshRenderer));
                 go.transform.SetParent(transform, false);
                 go.GetComponent<MeshFilter>().sharedMesh = sphere;
                 var renderer = go.GetComponent<MeshRenderer>();
@@ -56,17 +82,22 @@ namespace Game.Gameplay.View
 
         public void Burst(Vector3 origin, int count, float strength, Material material = null, float size = 1f)
         {
-            if (_specks == null) return;
+            if (_specks == null)
+                return;
+
             for (var i = 0; i < count; i++)
             {
                 var speck = _specks[_cursor++ % _specks.Length];
-                var angle = i * 2.399963f + (float)_random.NextDouble() * 0.8f;
+                var angle = i * GoldenAngle + (float)_random.NextDouble() * AngleJitter;
+                var lift = Lift + i % LiftVariants * LiftStep;
                 speck.Origin = origin;
-                speck.Velocity = new Vector3(Mathf.Cos(angle), 1.4f + i % 3 * 0.3f, Mathf.Sin(angle)) * strength;
+                speck.Velocity = new Vector3(Mathf.Cos(angle), lift, Mathf.Sin(angle)) * strength;
                 speck.Age = 0;
-                speck.Duration = 0.42f + i % 4 * 0.075f;
-                speck.Size = (0.055f + i % 3 * 0.025f) * size;
-                speck.Renderer.sharedMaterial = material != null ? material : defaultMaterial;
+                speck.Duration = Duration + i % DurationVariants * DurationStep;
+                speck.Size = (SpeckSize + i % SizeVariants * SizeStep) * size;
+                speck.Renderer.sharedMaterial = material != null
+                    ? material
+                    : defaultMaterial;
                 _properties.Clear();
                 _properties.SetFloat(WobbleId, 0);
                 if (material == null && _colors.HasValue)
@@ -83,20 +114,32 @@ namespace Game.Gameplay.View
 
         public void Clear()
         {
-            if (_specks == null) return;
-            foreach (var speck in _specks) speck.Transform.gameObject.SetActive(false);
+            if (_specks == null)
+                return;
+
+            foreach (var speck in _specks)
+                speck.Transform.gameObject.SetActive(false);
         }
 
-        private void Update()
+        public void Tick(float deltaTime)
         {
-            var dt = _clock?.Delta ?? Time.deltaTime;
+            if (_specks == null)
+                return;
+
             foreach (var speck in _specks)
             {
-                if (!speck.Transform.gameObject.activeSelf) continue;
-                speck.Age += dt;
-                if (speck.Age > speck.Duration) { speck.Transform.gameObject.SetActive(false); continue; }
+                if (!speck.Transform.gameObject.activeSelf)
+                    continue;
+
+                speck.Age += deltaTime;
+                if (speck.Age > speck.Duration)
+                {
+                    speck.Transform.gameObject.SetActive(false);
+                    continue;
+                }
+
                 var age = speck.Age;
-                speck.Transform.position = speck.Origin + speck.Velocity * age + Vector3.down * (4.5f * age * age);
+                speck.Transform.position = speck.Origin + speck.Velocity * age + Vector3.down * (HalfGravity * age * age);
                 speck.Transform.localScale = Vector3.one * (speck.Size * (1 - age / speck.Duration));
             }
         }

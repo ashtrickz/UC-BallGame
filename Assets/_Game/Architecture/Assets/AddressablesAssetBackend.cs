@@ -17,15 +17,24 @@ namespace Game.Assets
         {
             private readonly AsyncOperationHandle<IResourceLocator> _handle;
             private bool _released;
-            public InitializationOperation(AsyncOperationHandle<IResourceLocator> handle) { _handle = handle; }
+            public InitializationOperation(AsyncOperationHandle<IResourceLocator> handle)
+            {
+                _handle = handle;
+            }
             // No cancellation token and no adapter auto-release: the service owns cleanup.
             public UniTask Completion => WaitAsync();
-            private async UniTask WaitAsync() { await _handle.ToUniTask(autoReleaseWhenCanceled: false); }
+            private async UniTask WaitAsync()
+            {
+                await _handle.ToUniTask(autoReleaseWhenCanceled: false);
+            }
             public void Dispose()
             {
-                if (_released) return;
+                if (_released)
+                    return;
+
                 _released = true;
-                if (_handle.IsValid()) Addressables.Release(_handle);
+                if (_handle.IsValid())
+                    Addressables.Release(_handle);
             }
         }
 
@@ -33,13 +42,19 @@ namespace Game.Assets
         {
             private readonly AsyncOperationHandle<T> _handle;
             private bool _released;
-            public LoadOperation(AsyncOperationHandle<T> handle) { _handle = handle; }
+            public LoadOperation(AsyncOperationHandle<T> handle)
+            {
+                _handle = handle;
+            }
             public UniTask<T> Completion => _handle.ToUniTask(autoReleaseWhenCanceled: false);
             public void Dispose()
             {
-                if (_released) return;
+                if (_released)
+                    return;
+
                 _released = true;
-                if (_handle.IsValid()) Addressables.Release(_handle);
+                if (_handle.IsValid())
+                    Addressables.Release(_handle);
             }
         }
     }

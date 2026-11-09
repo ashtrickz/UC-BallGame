@@ -5,6 +5,9 @@ namespace Game.Settings
 {
     public sealed class SettingsService : ISettingsService
     {
+        private const int MinWidth = 640;
+        private const int MinHeight = 480;
+
         public event Action Changed;
 
         public SettingsPack Pack => _runtime.Pack;
@@ -33,8 +36,12 @@ namespace Game.Settings
 
         public void SetVolume(VolumeChannel channel, float value)
         {
-            if (!Pack.Contains(SettingsPack.VolumeSetting(channel))) return;
-            if (float.IsNaN(value) || float.IsInfinity(value)) return;
+            if (!Pack.Contains(SettingsPack.VolumeSetting(channel)))
+                return;
+
+            if (float.IsNaN(value) || float.IsInfinity(value))
+                return;
+
             value = Math.Max(0f, Math.Min(1f, value));
             _runtime.SetVolume(channel, value);
             Changed?.Invoke();
@@ -42,14 +49,18 @@ namespace Game.Settings
 
         public void SetToggle(PreferenceToggle toggle, bool value)
         {
-            if (!Pack.Contains(SettingsPack.ToggleSetting(toggle))) return;
+            if (!Pack.Contains(SettingsPack.ToggleSetting(toggle)))
+                return;
+
             _runtime.SetToggle(toggle, value);
             Changed?.Invoke();
         }
 
         public void SetTargetFps(int value)
         {
-            if (!Pack.Contains(SettingId.TargetFps)) return;
+            if (!Pack.Contains(SettingId.TargetFps))
+                return;
+
             value = Math.Max(Pack.MinimumFps, Math.Min(Pack.MaximumFps, value));
             _runtime.SetTargetFps(value);
             Changed?.Invoke();
@@ -57,17 +68,23 @@ namespace Game.Settings
 
         public void SetCursor(int index)
         {
-            if (!Pack.Contains(SettingId.Cursor) || index < 0 || index >= CursorCount) return;
+            if (!Pack.Contains(SettingId.Cursor) || index < 0 || index >= CursorCount)
+                return;
+
             _runtime.SetCursor(index);
             Changed?.Invoke();
         }
 
         public void SetLanguage(LanguageOption language)
         {
-            if (!Pack.Contains(SettingId.Language)) return;
+            if (!Pack.Contains(SettingId.Language))
+                return;
+
             foreach (var supported in Languages)
             {
-                if (supported.Name != language.Name) continue;
+                if (supported.Name != language.Name)
+                    continue;
+
                 _runtime.SetLanguage(supported);
                 Changed?.Invoke();
                 return;
@@ -76,18 +93,28 @@ namespace Game.Settings
 
         public void SetDisplay(ResolutionOption resolution, WindowMode mode)
         {
-            if (!Pack.Contains(SettingId.Resolution) && !Pack.Contains(SettingId.WindowMode)) return;
-            if (!Pack.Contains(SettingId.Resolution)) resolution = Resolution;
-            if (!Pack.Contains(SettingId.WindowMode)) mode = WindowMode;
-            if (Pack.Contains(SettingId.WindowMode) && !Enum.IsDefined(typeof(WindowMode), mode)) return;
-            if (Pack.Contains(SettingId.Resolution) && (resolution.Width < 640 || resolution.Height < 480)) return;
+            if (!Pack.Contains(SettingId.Resolution) && !Pack.Contains(SettingId.WindowMode))
+                return;
+
+            if (!Pack.Contains(SettingId.Resolution))
+                resolution = Resolution;
+            if (!Pack.Contains(SettingId.WindowMode))
+                mode = WindowMode;
+            if (Pack.Contains(SettingId.WindowMode) && !Enum.IsDefined(typeof(WindowMode), mode))
+                return;
+
+            if (Pack.Contains(SettingId.Resolution) && (resolution.Width < MinWidth || resolution.Height < MinHeight))
+                return;
+
             _runtime.SetDisplay(resolution, mode);
             Changed?.Invoke();
         }
 
         public void ResetSetting(SettingId setting)
         {
-            if (!Pack.Contains(setting)) return;
+            if (!Pack.Contains(setting))
+                return;
+
             _runtime.ResetSetting(setting);
             Changed?.Invoke();
         }
@@ -96,8 +123,11 @@ namespace Game.Settings
         {
             foreach (var definition in Pack.Tabs)
             {
-                if (definition.Tab != tab) continue;
-                foreach (var setting in definition.Settings) _runtime.ResetSetting(setting);
+                if (definition.Tab != tab)
+                    continue;
+
+                foreach (var setting in definition.Settings)
+                    _runtime.ResetSetting(setting);
                 Changed?.Invoke();
                 return;
             }
@@ -106,7 +136,8 @@ namespace Game.Settings
         public void ResetAll()
         {
             foreach (var tab in Pack.Tabs)
-                foreach (var setting in tab.Settings) _runtime.ResetSetting(setting);
+                foreach (var setting in tab.Settings)
+                    _runtime.ResetSetting(setting);
             Changed?.Invoke();
         }
     }

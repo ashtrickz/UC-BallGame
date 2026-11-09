@@ -28,9 +28,18 @@ namespace Game.Foundation.Tests
         [TearDown]
         public void TearDown()
         {
-            if (_hadFps) PlayerPrefs.SetInt("Settings.TargetFps", _fps); else PlayerPrefs.DeleteKey("Settings.TargetFps");
-            if (_hadVolume) PlayerPrefs.SetFloat("Settings.Volume.Master", _volume); else PlayerPrefs.DeleteKey("Settings.Volume.Master");
-            if (_hadLanguage) PlayerPrefs.SetString("Settings.Language", _language); else PlayerPrefs.DeleteKey("Settings.Language");
+            if (_hadFps)
+                PlayerPrefs.SetInt("Settings.TargetFps", _fps);
+            else
+                PlayerPrefs.DeleteKey("Settings.TargetFps");
+            if (_hadVolume)
+                PlayerPrefs.SetFloat("Settings.Volume.Master", _volume);
+            else
+                PlayerPrefs.DeleteKey("Settings.Volume.Master");
+            if (_hadLanguage)
+                PlayerPrefs.SetString("Settings.Language", _language);
+            else
+                PlayerPrefs.DeleteKey("Settings.Language");
             UnityEngine.Application.targetFrameRate = _targetFps;
             QualitySettings.vSyncCount = _vsync;
         }
@@ -41,7 +50,7 @@ namespace Game.Foundation.Tests
             PlayerPrefs.SetInt("Settings.TargetFps", int.MaxValue);
             PlayerPrefs.SetFloat("Settings.Volume.Master", float.NaN);
             PlayerPrefs.SetString("Settings.Language", "unsupported");
-            var runtime = new UnitySettingsRuntime(SettingsPack.Mobile);
+            var runtime = new UnitySettingsRuntime(SettingsPack.Mobile, new LanguageOptionsProvider(), new NullDisplaySettings());
             Assert.AreEqual(120, runtime.TargetFps);
             Assert.AreEqual(120, UnityEngine.Application.targetFrameRate);
             Assert.AreEqual(1f, runtime.GetVolume(VolumeChannel.Master));
@@ -52,10 +61,10 @@ namespace Game.Foundation.Tests
         [Test]
         public void Changed_values_survive_runtime_recreation_and_stay_within_pack_limits()
         {
-            var settings = new SettingsService(new UnitySettingsRuntime(SettingsPack.Mobile));
+            var settings = new SettingsService(new UnitySettingsRuntime(SettingsPack.Mobile, new LanguageOptionsProvider(), new NullDisplaySettings()));
             settings.SetTargetFps(900);
             settings.SetVolume(VolumeChannel.Master, -2f);
-            var restored = new UnitySettingsRuntime(SettingsPack.Mobile);
+            var restored = new UnitySettingsRuntime(SettingsPack.Mobile, new LanguageOptionsProvider(), new NullDisplaySettings());
             Assert.AreEqual(120, restored.TargetFps);
             Assert.AreEqual(0, restored.GetVolume(VolumeChannel.Master));
             settings.SetVolume(VolumeChannel.Master, 0.5f);

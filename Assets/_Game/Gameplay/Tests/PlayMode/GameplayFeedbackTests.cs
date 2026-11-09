@@ -12,7 +12,7 @@ namespace Game.Gameplay.PlayModeTests
 {
     public sealed partial class GameplayLifecycleTests
     {
-        private static MeshRenderer FeedbackCrystal(GameplayController gameplay, int id) =>
+        private static MeshRenderer FeedbackCrystal(GameplayHandle gameplay, int id) =>
             gameplay.Stage.Crystals.transform.Cast<Transform>()
                 .First(t => t.name.StartsWith("Crystal " + id + " (", StringComparison.Ordinal))
                 .GetComponentInChildren<MeshRenderer>();
@@ -20,7 +20,7 @@ namespace Game.Gameplay.PlayModeTests
         [UnityTest]
         public IEnumerator Shot_feedback_keeps_accepted_targets_until_the_projectile_hits() => UniTask.ToCoroutine(async () =>
         {
-            GameplayController gameplay = null;
+            GameplayHandle gameplay = null;
             try
             {
                 gameplay = await StartGameAsync();
@@ -54,7 +54,6 @@ namespace Game.Gameplay.PlayModeTests
             }
             finally
             {
-                gameplay?.Dispose();
                 await TearDownAsync();
             }
         });
@@ -62,7 +61,7 @@ namespace Game.Gameplay.PlayModeTests
         [UnityTest]
         public IEnumerator Shot_feedback_cancel_restores_material_properties_without_a_shot() => UniTask.ToCoroutine(async () =>
         {
-            GameplayController gameplay = null;
+            GameplayHandle gameplay = null;
             try
             {
                 gameplay = await StartGameAsync();
@@ -87,7 +86,6 @@ namespace Game.Gameplay.PlayModeTests
             }
             finally
             {
-                gameplay?.Dispose();
                 await TearDownAsync();
             }
         });
@@ -95,7 +93,7 @@ namespace Game.Gameplay.PlayModeTests
         [UnityTest]
         public IEnumerator Shot_feedback_waves_scale_pause_reuse_and_reset_with_the_attempt() => UniTask.ToCoroutine(async () =>
         {
-            GameplayController gameplay = null;
+            GameplayHandle gameplay = null;
             try
             {
                 gameplay = await StartGameAsync();
@@ -125,7 +123,6 @@ namespace Game.Gameplay.PlayModeTests
             }
             finally
             {
-                gameplay?.Dispose();
                 await TearDownAsync();
             }
         });

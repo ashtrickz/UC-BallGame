@@ -1,44 +1,43 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Game.Users;
 using Game.Settings;
 using Game.UI;
 using UnityEngine;
 
 namespace Game.Integration.Gameplay
 {
-    /// <summary>The settings window: volume sliders and the frame rate applied at once, a reset to defaults, the build's version, and a copy of the player's id for reports (the id only finds the player, it does not log in).</summary>
+    /// <summary>Presents volume, frame-rate and language settings with reset and build information.</summary>
     public sealed class SettingsPopupController : PopupController<ISettingsPopupView>, ISimplePopupController
     {
+        private const string VersionPrefix = "v";
         private static readonly VolumeChannel[] Channels = { VolumeChannel.Master, VolumeChannel.Music, VolumeChannel.Sfx, VolumeChannel.Ui, VolumeChannel.Voice };
 
         private readonly ISettingsService _settings;
-        private readonly IUserRepository _users;
 
-        public SettingsPopupController(ISettingsPopupView view, ISettingsService settings, IUserRepository users) : base(view)
+        public SettingsPopupController(ISettingsPopupView view, ISettingsService settings) : base(view)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            _users = users ?? throw new ArgumentNullException(nameof(users));
         }
 
         public async UniTask ShowAsync(CancellationToken cancellationToken = default)
         {
             ShowAll();
-            View.ShowBuild("v" + Application.version, _users.HasProfile);
+            View.ShowBuild(VersionPrefix + Application.version);
             _settings.Changed += ShowAll;
             View.VolumeChanged += OnVolume;
             View.FpsChosen += OnFps;
-            View.CopyKeyClicked += OnCopyKey;
             View.ResetClicked += OnReset;
             View.LanguageChosen += OnLanguage;
-            try { await PresentAsync(cancellationToken); }
+            try
+            {
+                await PresentAsync(cancellationToken);
+            }
             finally
             {
                 _settings.Changed -= ShowAll;
                 View.VolumeChanged -= OnVolume;
                 View.FpsChosen -= OnFps;
-                View.CopyKeyClicked -= OnCopyKey;
                 View.ResetClicked -= OnReset;
                 View.LanguageChosen -= OnLanguage;
             }
@@ -52,11 +51,6 @@ namespace Game.Integration.Gameplay
             View.ShowFps(_settings.TargetFps);
         }
 
-        private void OnCopyKey()
-        {
-            if (_users.HasProfile) View.CopyKey(_users.Profile.UserId);
-        }
-
         private void OnReset()
         {
             _settings.ResetAll();
@@ -66,12 +60,17 @@ namespace Game.Integration.Gameplay
         private void OnLanguage(string code)
         {
             foreach (var language in _settings.Languages)
-                if (language.Code == code) { _settings.SetLanguage(language); return; }
+                if (language.Code == code)
+                {
+                    _settings.SetLanguage(language);
+                    return;
+                }
         }
 
         private void ShowAll()
         {
-            foreach (var channel in Channels) View.ShowVolume(channel, _settings.GetVolume(channel));
+            foreach (var channel in Channels)
+                View.ShowVolume(channel, _settings.GetVolume(channel));
             View.ShowFps(_settings.TargetFps);
             View.ShowLanguages(_settings.Languages, _settings.CurrentLanguage);
         }

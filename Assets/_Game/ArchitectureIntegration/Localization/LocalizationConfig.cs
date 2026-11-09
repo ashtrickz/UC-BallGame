@@ -18,7 +18,9 @@ namespace Game.Integration.Localization
 
         public LocalizationService CreateService(ISettingsService settings)
         {
-            if (fallbackJson == null) throw new InvalidOperationException("LocalizationConfig needs a fallback JSON asset.");
+            if (fallbackJson == null)
+                throw new InvalidOperationException("LocalizationConfig needs a fallback JSON asset.");
+
             return new LocalizationService(settings, LocalizationTable.FromJson(fallbackJson.text),
                 new GoogleSheetsLocalizationSource(googleSheetsCsvUrl, timeoutSeconds), defaultLanguage);
         }

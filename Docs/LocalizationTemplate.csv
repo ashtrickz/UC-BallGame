@@ -6,8 +6,6 @@ common.close,CLOSE,ЗАКРИТИ,CERRAR,关闭
 common.reset,RESET,СКИНУТИ,RESTABLECER,重置
 settings.title,SETTINGS,НАЛАШТУВАННЯ,AJUSTES,设置
 settings.language,Language,Мова,Idioma,语言
-settings.copy_key,Copy player ID,Скопіювати ID гравця,Copiar ID del jugador,复制玩家ID
-settings.copied,Copied,Скопійовано,Copiado,已复制
 common.menu,MENU,МЕНЮ,MENÚ,菜单
 common.retry,RETRY,ЩЕ РАЗ,REINTENTAR,重试
 common.skip,SKIP,ПРОПУСТИТИ,SALTAR,跳过

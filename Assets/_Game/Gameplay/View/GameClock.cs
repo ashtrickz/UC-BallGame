@@ -1,28 +1,94 @@
-using System;
 using System.Threading;
+using System;
 using Cysharp.Threading.Tasks;
+using Game.Foundation;
 using UnityEngine;
 
 namespace Game.Gameplay.View
 {
+    /// <summary>Pausable presentation time of the gameplay scene, advanced once per frame by the scene frame.</summary>
+    public interface IGameClock
+    {
+        bool Paused { get; set; }
+
+        float Delta { get; }
+
+        UniTask NextFrame(CancellationToken token);
+
+        UniTask Animate(float duration, Action<float> step, CancellationToken token);
+
+        UniTask Wait(float seconds, CancellationToken token);
+    }
+
     /// <summary>
     /// Pausable presentation time. Every gameplay animation advances with <see cref="Delta"/>, so a pause freezes
-    /// actions in place and they resume and finish only after the pause is lifted.
+    /// actions in place and they resume and finish only after the pause is lifted. Awaiters of a frame resume
+    /// inside <see cref="Tick"/>, so the frame order is set by the caller, not by the player loop.
     /// </summary>
-    public sealed class GameClock
+    public sealed class GameClock : IGameClock
     {
-        public bool Paused { get; set; }
-        public float Delta => Paused ? 0f : Time.deltaTime;
+        private const float SmoothStepA = 3f;
+        private const float SmoothStepB = 2f;
 
-        /// <summary>Runs <paramref name="step"/> with normalized time 0..1 and completes after step(1).</summary>
+        private UniTaskCompletionSource _frame = new UniTaskCompletionSource();
+        private float _frameDelta;
+        private bool _stopped;
+
+        public bool Paused { get; set; }
+
+        public float Delta => Paused ? 0f : _frameDelta;
+
+        public static float Smooth(float t)
+        {
+            t = Mathf.Clamp01(t);
+
+            return t * t * (SmoothStepA - SmoothStepB * t);
+        }
+
+        public static float EaseOut(float t)
+        {
+            t = Mathf.Clamp01(t);
+
+            return 1 - (1 - t) * (1 - t);
+        }
+
+        public void Tick(float deltaTime)
+        {
+            if (_stopped)
+                return;
+
+            _frameDelta = deltaTime;
+            var frame = _frame;
+            _frame = new UniTaskCompletionSource();
+            frame.TrySetResult();
+        }
+
+        public void Stop()
+        {
+            _stopped = true;
+            _frame.TrySetCanceled();
+        }
+
+        public async UniTask NextFrame(CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            await _frame.Task;
+            token.ThrowIfCancellationRequested();
+        }
+
         public async UniTask Animate(float duration, Action<float> step, CancellationToken token)
         {
             step(0);
-            if (duration <= 0) { step(1); return; }
+            if (duration <= 0)
+            {
+                step(1);
+                return;
+            }
+
             var t = 0f;
             while (t < duration)
             {
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                await NextFrame(token);
                 t += Delta;
                 step(Mathf.Clamp01(t / duration));
             }
@@ -33,12 +99,9 @@ namespace Game.Gameplay.View
             var t = 0f;
             while (t < seconds)
             {
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                await NextFrame(token);
                 t += Delta;
             }
         }
-
-        public static float Smooth(float t) { t = Mathf.Clamp01(t); return t * t * (3 - 2 * t); }
-        public static float EaseOut(float t) { t = Mathf.Clamp01(t); return 1 - (1 - t) * (1 - t); }
     }
 }

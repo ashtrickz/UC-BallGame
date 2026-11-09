@@ -1,4 +1,5 @@
 using System;
+using Game.Foundation;
 using System.Collections.Generic;
 using Game.Audio;
 using UnityEngine;
@@ -8,41 +9,81 @@ using UnityEngine.UI;
 
 namespace Game.Integration.Audio
 {
-    /// <summary>
-    /// Sounds for toggles and sliders, found through the EventSystem's own raycast.
-    /// Buttons own their feedback through Game.UI.FeedbackButton and DI.
-    /// Lives on ProjectScope (all scenes).
-    /// </summary>
-    public sealed class UiClickSounds : MonoBehaviour
+    /// <summary>Plays toggle and slider feedback from the current EventSystem raycast.</summary>
+    public sealed class UiClickSounds : MonoBehaviour, ITickRegistryClient
     {
+        private const float SliderTickStep = 0.04f;
+        private ITickRegistry _ticks;
         private readonly List<RaycastResult> _hits = new List<RaycastResult>();
         private PointerEventData _pointer;
         private EventSystem _system;
         private IAudioService _audio;
+        private IHaptics _haptics;
         private Slider _slider;
         private float _sliderValue;
 
-        public void Bind(IAudioService audio) => _audio = audio;
-
-        private void Update()
+        public void BindTicks(ITickRegistry registry)
         {
+            if (registry == null)
+                throw new ArgumentNullException(nameof(registry));
+
+            if (ReferenceEquals(_ticks, registry))
+                return;
+
+            _ticks?.Unregister(this);
+            _ticks = registry;
+            if (isActiveAndEnabled)
+                _ticks.Register(this);
+        }
+
+        public void Bind(IAudioService audio, IHaptics haptics)
+        {
+            _audio = audio;
+            _haptics = haptics;
+        }
+
+        private void OnEnable() => _ticks?.Register(this);
+        private void OnDisable() => _ticks?.Unregister(this);
+        private void OnDestroy() => _ticks?.Unregister(this);
+
+        public void Tick(float deltaTime)
+        {
+            if (!isActiveAndEnabled)
+                return;
+
             var pointer = Pointer.current;
-            if (_audio == null || pointer == null) return;
-            if (!pointer.press.isPressed) _slider = null;
-            if (_slider != null && Mathf.Abs(_slider.normalizedValue - _sliderValue) >= 0.04f)
+            if (_audio == null || pointer == null)
+                return;
+
+            if (!pointer.press.isPressed)
+                _slider = null;
+            if (_slider != null && Mathf.Abs(_slider.normalizedValue - _sliderValue) >= SliderTickStep)
             {
                 _sliderValue = _slider.normalizedValue;
-                try { _audio.PlaySound(GameSound.UiSliderTick); }
+                try
+                {
+                    _audio.PlaySound(GameSound.UiSliderTick);
+                }
                 catch (InvalidOperationException) { }
             }
-            if (!pointer.press.wasPressedThisFrame) return;
+            if (!pointer.press.wasPressedThisFrame)
+                return;
+
             var system = EventSystem.current;
-            if (system == null) return;
-            if (_pointer == null || _system != system) { _pointer = new PointerEventData(system); _system = system; }
+            if (system == null)
+                return;
+
+            if (_pointer == null || _system != system)
+            {
+                _pointer = new PointerEventData(system);
+                _system = system;
+            }
             _pointer.position = pointer.position.ReadValue();
             _hits.Clear();
             system.RaycastAll(_pointer, _hits);
-            if (_hits.Count == 0) return;
+            if (_hits.Count == 0)
+                return;
+
             var handler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(_hits[0].gameObject)
                           ?? ExecuteEvents.GetEventHandler<IPointerDownHandler>(_hits[0].gameObject);
             var selectable = handler != null ? handler.GetComponent<Selectable>() : null;
@@ -52,12 +93,15 @@ namespace Game.Integration.Audio
                 _sliderValue = slider.normalizedValue;
                 return;
             }
-            if (!(selectable is Toggle toggle) || !toggle.IsInteractable()) return;
+            if (!(selectable is Toggle toggle) || !toggle.IsInteractable())
+                return;
+
             try
             {
                 _audio.PlaySound(toggle.isOn ? GameSound.UiToggleOff : GameSound.UiToggleOn);
+                _haptics.Play(global::Game.Audio.HapticKind.Tap);
             }
-            catch (InvalidOperationException) { }   // the audio is not set up yet (the loading screen): no click, nothing broken
+            catch (InvalidOperationException) { } // the audio is not set up yet (the loading screen): no click, nothing broken
         }
     }
 }

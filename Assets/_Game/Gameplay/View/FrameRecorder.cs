@@ -1,3 +1,4 @@
+#if GAME_DEBUG
 using System.Collections;
 using System.IO;
 using UnityEngine;
@@ -24,7 +25,8 @@ namespace Game.Gameplay.View
         {
             Folder = folder;
             Directory.CreateDirectory(folder);
-            foreach (var file in Directory.GetFiles(folder, "*.jpg")) File.Delete(file);
+            foreach (var file in Directory.GetFiles(folder, "*.jpg"))
+                File.Delete(file);
             Frames = 0;
             Time.captureFramerate = FrameRate;
             _scaled = new RenderTexture(Width, Height, 0);
@@ -61,8 +63,11 @@ namespace Game.Gameplay.View
         private void OnDestroy()
         {
             End();
-            if (_scaled != null) _scaled.Release();
-            if (_readback != null) Destroy(_readback);
+            if (_scaled != null)
+                _scaled.Release();
+            if (_readback != null)
+                Destroy(_readback);
         }
     }
 }
+#endif

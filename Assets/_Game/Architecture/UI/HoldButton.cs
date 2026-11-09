@@ -1,48 +1,53 @@
 using System;
+using Game.Foundation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game.UI
 {
-    /// <summary>
-    /// A button that acts only after it has been held for <see cref="HoldSeconds"/>: holding is the confirmation, so a deliberate action
-    /// needs no confirmation popup. While the finger is down a progress visual fills; letting go early, sliding off the button or losing
-    /// interactability cancels and the progress rewinds. On completion <see cref="onHoldCompleted"/> fires once and the progress stays full
-    /// until the button is pressed again or becomes interactable again (the caller usually disables it while the command is in flight).
-    /// With <see cref="RequireHold"/> off it is an ordinary button (<c>onClick</c>), so one prefab serves both kinds of actions.
-    /// Keyboard/gamepad Submit completes at once: it is a deliberate press already.
-    /// The C# events (<see cref="HoldStarted"/>, <see cref="HoldCancelled"/>, <see cref="HoldCompleted"/>) are the hook for haptics later.
-    /// </summary>
+    /// <summary>Confirms an action after an unscaled hold and rewinds cancelled progress.</summary>
     [AddComponentMenu("UI/Hold Button")]
-    public class HoldButton : FeedbackButton
+    public class HoldButton : FeedbackButton, ITickRegistryClient
     {
-        /// <summary>Below this a hold is too easy to trigger by accident.</summary>
         public const float MinHoldSeconds = 0.3f;
+        private const float DefaultHoldSeconds = 1f;
+        private const float DefaultRewindSeconds = 0.25f;
+        private const float MinimumRewindSeconds = 0.05f;
 
         [SerializeField] private bool requireHold = true;
-        [SerializeField, Min(MinHoldSeconds)] private float holdSeconds = 1f;
+        [SerializeField, Min(MinHoldSeconds)] private float holdSeconds = DefaultHoldSeconds;
         [Tooltip("How long a released, unfinished hold takes to empty again.")]
-        [SerializeField, Min(0.05f)] private float rewindSeconds = 0.25f;
+        [SerializeField, Min(MinimumRewindSeconds)] private float rewindSeconds = DefaultRewindSeconds;
         [Tooltip("Optional: an Image of type Filled; its fillAmount follows the progress (round or simple shapes).")]
-        [SerializeField] private Image progressFill;
+        [SerializeField] private UnityEngine.UI.Image progressFill;
         [Tooltip("Optional: a RectMask2D over a copy of the plate; its right padding uncovers it from left to right (9-sliced plates).")]
-        [SerializeField] private RectMask2D progressMask;
+        [SerializeField] private UnityEngine.UI.RectMask2D progressMask;
         [SerializeField] private ButtonClickedEvent onHoldCompleted = new ButtonClickedEvent();
+
+        private ITickRegistry _ticks;
+        private bool _holding;
+        private bool _done;
+        private bool _wasInteractable;
 
         public event Action HoldStarted;
         public event Action HoldCancelled;
         public event Action HoldCompleted;
 
-        private bool _holding, _done, _wasInteractable;
-
-        /// <summary>0..1 while holding; 1 after completion.</summary>
-        public float Progress { get; private set; }
+        public float Progress
+        {
+            get;
+            private set;
+        }
 
         public bool RequireHold
         {
             get => requireHold;
-            set { requireHold = value; ResetProgress(); }
+            set
+            {
+                requireHold = value;
+                ResetProgress();
+            }
         }
 
         public float HoldSeconds
@@ -57,7 +62,50 @@ namespace Game.UI
             set => onHoldCompleted = value;
         }
 
-        /// <summary>Back to empty and not holding (for a button reused for another action).</summary>
+        public void BindTicks(ITickRegistry registry)
+        {
+            if (registry == null)
+                throw new ArgumentNullException(nameof(registry));
+
+            if (ReferenceEquals(_ticks, registry))
+                return;
+
+            _ticks?.Unregister(this);
+            _ticks = registry;
+            if (isActiveAndEnabled)
+                _ticks.Register(this);
+        }
+
+        public void Tick(float deltaTime)
+        {
+            if (!isActiveAndEnabled)
+                return;
+
+            bool interactable = IsInteractable();
+            if (interactable && !_wasInteractable)
+                _done = false; // enabled again after a command: the full bar may empty
+            _wasInteractable = interactable;
+
+            if (_holding)
+            {
+                if (!interactable)
+                {
+                    Release();
+                }
+                else
+                {
+                    Progress = Mathf.Min(1f, Progress + deltaTime / holdSeconds);
+                    if (Progress >= 1f)
+                        Complete();
+                }
+            }
+            else if (!_done && Progress > 0f)
+            {
+                Progress = Mathf.Max(0f, Progress - deltaTime / rewindSeconds);
+            }
+            ApplyProgress();
+        }
+
         public void ResetProgress()
         {
             _holding = false;
@@ -69,20 +117,34 @@ namespace Game.UI
         protected override void OnEnable()
         {
             base.OnEnable();
+            _ticks?.Register(this);
             _wasInteractable = IsInteractable();
             ResetProgress();
         }
 
         protected override void OnDisable()
         {
-            if (_holding) { _holding = false; HoldCancelled?.Invoke(); }
+            _ticks?.Unregister(this);
+            if (_holding)
+            {
+                _holding = false;
+                HoldCancelled?.Invoke();
+            }
             base.OnDisable();
+        }
+
+        protected override void OnDestroy()
+        {
+            _ticks?.Unregister(this);
+            base.OnDestroy();
         }
 
         public override void OnPointerDown(PointerEventData eventData)
         {
             base.OnPointerDown(eventData);
-            if (!requireHold || eventData.button != PointerEventData.InputButton.Left || !IsActive() || !IsInteractable()) return;
+            if (!requireHold || eventData.button != PointerEventData.InputButton.Left || !IsActive() || !IsInteractable())
+                return;
+
             _holding = true;
             _done = false;
             HoldStarted?.Invoke();
@@ -102,42 +164,31 @@ namespace Game.UI
 
         public override void OnPointerClick(PointerEventData eventData)
         {
-            if (!requireHold) base.OnPointerClick(eventData);   // a held button never acts on a plain tap
+            if (!requireHold)
+                base.OnPointerClick(eventData); // a held button never acts on a plain tap
         }
 
         public override void OnSubmit(BaseEventData eventData)
         {
-            if (!requireHold) { base.OnSubmit(eventData); return; }
-            if (IsActive() && IsInteractable()) { PlayPressFeedback(); Complete(); }
+            if (!requireHold)
+            {
+                base.OnSubmit(eventData);
+                return;
+            }
+            if (IsActive() && IsInteractable())
+            {
+                PlayPressFeedback();
+                Complete();
+            }
         }
 
         private void Release()
         {
-            if (!_holding) return;
+            if (!_holding)
+                return;
+
             _holding = false;
             HoldCancelled?.Invoke();
-        }
-
-        private void Update()
-        {
-            bool interactable = IsInteractable();
-            if (interactable && !_wasInteractable) _done = false;   // enabled again after a command: the full bar may empty
-            _wasInteractable = interactable;
-
-            if (_holding)
-            {
-                if (!interactable) { Release(); }
-                else
-                {
-                    Progress = Mathf.Min(1f, Progress + Time.unscaledDeltaTime / holdSeconds);
-                    if (Progress >= 1f) Complete();
-                }
-            }
-            else if (!_done && Progress > 0f)
-            {
-                Progress = Mathf.Max(0f, Progress - Time.unscaledDeltaTime / rewindSeconds);
-            }
-            ApplyProgress();
         }
 
         private void Complete()
@@ -153,7 +204,8 @@ namespace Game.UI
 
         private void ApplyProgress()
         {
-            if (progressFill != null) progressFill.fillAmount = Progress;
+            if (progressFill != null)
+                progressFill.fillAmount = Progress;
             if (progressMask != null)
             {
                 // Hidden while empty, so nothing shows before the layout has given the mask its width.

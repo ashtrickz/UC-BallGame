@@ -14,15 +14,11 @@ namespace Game.Gameplay.Model
         public double DiameterAfter { get; }
         public double ProjectileDiameter { get; }
         public double BlastRadius { get; }
-        /// <summary>Logical start of the projectile sweep (the body anchor).</summary>
         public Vec2 Origin { get; }
         public bool Hit { get; }
-        /// <summary>Projectile centre at first touch (or at the end of its range on a miss): where the flight ends.</summary>
         public Vec2 TouchCenter { get; }
-        /// <summary>Contact point on the first crystal contour: the centre of the blast circle.</summary>
         public Vec2 ImpactCenter { get; }
         public int FirstCrystalId { get; }
-        /// <summary>Every crystal destroyed by the blast, ascending id order.</summary>
         public IReadOnlyList<int> HitIds { get; }
         public bool IsOvercharged { get; }
 
@@ -30,9 +26,18 @@ namespace Game.Gameplay.Model
             double blastRadius, Vec2 origin, bool hit, Vec2 touchCenter, Vec2 impactCenter, int firstCrystalId,
             IReadOnlyList<int> hitIds, bool isOvercharged)
         {
-            HoldSeconds = holdSeconds; Cost = cost; DiameterBefore = diameterBefore; DiameterAfter = diameterAfter;
-            ProjectileDiameter = projectileDiameter; BlastRadius = blastRadius; Origin = origin; Hit = hit;
-            TouchCenter = touchCenter; ImpactCenter = impactCenter; FirstCrystalId = firstCrystalId; HitIds = hitIds;
+            HoldSeconds = holdSeconds;
+            Cost = cost;
+            DiameterBefore = diameterBefore;
+            DiameterAfter = diameterAfter;
+            ProjectileDiameter = projectileDiameter;
+            BlastRadius = blastRadius;
+            Origin = origin;
+            Hit = hit;
+            TouchCenter = touchCenter;
+            ImpactCenter = impactCenter;
+            FirstCrystalId = firstCrystalId;
+            HitIds = hitIds;
             IsOvercharged = isOvercharged;
         }
     }
@@ -44,21 +49,26 @@ namespace Game.Gameplay.Model
         public double ToZ { get; }
         public double Diameter { get; }
         public bool ReachesFinish { get; }
-        /// <summary>Crystal that stops the corridor, or −1 when the way to the finish is free.</summary>
         public int BlockingCrystalId { get; }
         public Vec2 BlockingContact { get; }
         public double Distance => ToZ - FromZ;
 
         public AdvancePlan(double fromZ, double toZ, double diameter, bool reachesFinish, int blockingCrystalId, Vec2 blockingContact)
         {
-            FromZ = fromZ; ToZ = toZ; Diameter = diameter; ReachesFinish = reachesFinish;
-            BlockingCrystalId = blockingCrystalId; BlockingContact = blockingContact;
+            FromZ = fromZ;
+            ToZ = toZ;
+            Diameter = diameter;
+            ReachesFinish = reachesFinish;
+            BlockingCrystalId = blockingCrystalId;
+            BlockingContact = blockingContact;
         }
     }
 
     /// <summary>The shared rules used by the preview, the release, the movement and the generator's validator.</summary>
     public static class ShotRules
     {
+        private const double HalfDiameter = 0.5;
+
         public static ShotPlan ComputeShot(GameRules rules, CrystalField field, double anchorZ, double diameterBefore, double holdSeconds)
         {
             var cost = rules.ChargeCost(holdSeconds);
@@ -70,7 +80,7 @@ namespace Game.Gameplay.Model
             // inside the cleared corridor and the first contact always lies on a crystal contour.
             var origin = new Vec2(0, anchorZ);
             var range = Math.Max(0, rules.FinishZ - origin.Z);
-            var hit = field.SweepCircle(origin, Vec2.Forward, projectile * 0.5, range, rules.Tolerance);
+            var hit = field.SweepCircle(origin, Vec2.Forward, projectile * HalfDiameter, range, rules.Tolerance);
             if (!hit.Hit)
             {
                 var end = origin + Vec2.Forward * range;
@@ -85,9 +95,13 @@ namespace Game.Gameplay.Model
         public static AdvancePlan ComputeAdvance(GameRules rules, CrystalField field, double fromZ, double diameter)
         {
             var range = rules.FinishZ - fromZ;
-            if (range <= rules.Tolerance) return new AdvancePlan(fromZ, Math.Max(fromZ, rules.FinishZ), diameter, true, -1, default);
+            if (range <= rules.Tolerance)
+                return new AdvancePlan(fromZ, Math.Max(fromZ, rules.FinishZ), diameter, true, -1, default);
+
             var hit = field.SweepCircle(new Vec2(0, fromZ), Vec2.Forward, rules.CorridorHalfWidth(diameter), range, rules.Tolerance);
-            if (!hit.Hit) return new AdvancePlan(fromZ, rules.FinishZ, diameter, true, -1, default);
+            if (!hit.Hit)
+                return new AdvancePlan(fromZ, rules.FinishZ, diameter, true, -1, default);
+
             var distance = hit.Distance < rules.Values.MinAdvance ? 0 : hit.Distance;
             return new AdvancePlan(fromZ, fromZ + distance, diameter, false, hit.CrystalId, hit.Contact);
         }

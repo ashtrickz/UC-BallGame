@@ -8,6 +8,8 @@ namespace Game.Users
     [Serializable]
     public sealed class UserSaveData
     {
+        private const int MaxNameLength = 64;
+
         public int FormatVersion = 1;
         public string UserId;
         public int Revision;
@@ -19,7 +21,7 @@ namespace Game.Users
         public void Validate(string userId)
         {
             if (FormatVersion != 1 || string.IsNullOrWhiteSpace(userId) || UserId != userId ||
-                Revision < 0 || string.IsNullOrWhiteSpace(PlayerName) || PlayerName.Length > 64 || Gold < 0)
+                Revision < 0 || string.IsNullOrWhiteSpace(PlayerName) || PlayerName.Length > MaxNameLength || Gold < 0)
                 throw new InvalidOperationException("Invalid local user profile.");
         }
     }

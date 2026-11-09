@@ -26,12 +26,9 @@ namespace Game.Gameplay.Editor
             public string Title, Idea;
             public double Route;
             public List<CrystalSpec> Crystals = new List<CrystalSpec>();
-            /// <summary>Named alternative strategies to compare (solver constraints).</summary>
             public List<(string name, int maxShots, double maxHold, double firstMaxHold)> Alternatives =
                 new List<(string, int, double, double)>();
-            /// <summary>Named fixed hold sequences to price (e.g. a tempting but wasteful shot).</summary>
             public List<(string name, double[] holds)> Fixed = new List<(string, double[])>();
-            /// <summary>Limit for the control sequence when the lesson is about a specific number of shots.</summary>
             public int ControlMaxShots = 8;
         }
 
@@ -55,7 +52,6 @@ namespace Game.Gameplay.Editor
             }
         }
 
-        /// <summary>Atmosphere on the sides, far outside any corridor (never blocks, may be caught by big blasts).</summary>
         private static IEnumerable<CrystalSpec> Decor(int seed, double route)
         {
             var state = (uint)(seed * 2654435761u + 12345u);
@@ -188,7 +184,6 @@ namespace Game.Gameplay.Editor
             return config.CreateSnapshot();
         }
 
-        /// <summary>Solves a design and places each control hold inside its window (so the release is forgiving).</summary>
         public static Result Analyse(GameRules campaignRules, Design design, int number)
         {
             var draft = new CampaignLevelSpec(number, design.Title, design.Idea, design.Route, design.Crystals, Array.Empty<double>());

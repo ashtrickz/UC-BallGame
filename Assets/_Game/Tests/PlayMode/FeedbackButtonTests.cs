@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Audio;
+using Game.Integration.Audio;
+using Game.Integration.Composition;
+using VContainer.Unity;
 using Game.UI;
 using NUnit.Framework;
 using UnityEngine;
@@ -29,6 +32,8 @@ namespace Game.Foundation.Tests
             _audio = new RecordingAudio();
             var builder = new ContainerBuilder();
             builder.RegisterInstance<IAudioService>(_audio);
+            builder.Register<IFrameTimeSource, UnityFrameTimeSource>(Lifetime.Singleton);
+            builder.RegisterEntryPoint<TickRegistry>().AsSelf();
             _container = builder.Build();
         }
 
@@ -36,7 +41,8 @@ namespace Game.Foundation.Tests
         public void TearDown()
         {
             Time.timeScale = _timeScale;
-            if (_root != null) Object.DestroyImmediate(_root);
+            if (_root != null)
+                Object.DestroyImmediate(_root);
             _container?.Dispose();
         }
 
@@ -45,7 +51,9 @@ namespace Game.Foundation.Tests
             var go = new GameObject(typeof(T).Name, typeof(RectTransform), typeof(UnityEngine.UI.Image));
             go.transform.SetParent(_root.transform, false);
             var button = go.AddComponent<T>();
-            _container.Inject(button);
+            button.Bind(new UiFeedback(_audio, new NullHaptics()));
+            if (button is ITickRegistryClient client)
+                client.BindTicks(_container.Resolve<ITickRegistry>());
             return button;
         }
 
@@ -155,18 +163,31 @@ namespace Game.Foundation.Tests
             public UniTask InitializeAsync(CancellationToken cancellationToken) => UniTask.CompletedTask;
             public AudioPlaybackHandle PlaySound(GameSound sound, float volume = 1f)
             {
-                if (NotReady) throw new InvalidOperationException("Not initialized");
+                if (NotReady)
+                    throw new InvalidOperationException("Not initialized");
                 Played.Add(sound);
                 return null;
             }
-            public void ChangeTheme(MusicTheme theme) { }
-            public void MuteMusic(bool muted) { }
-            public void PlayUiSound(UiSound sound) { }
-            public void SetGameplayPaused(bool paused) { }
+            public void ChangeTheme(MusicTheme theme)
+            {
+            }
+            public void MuteMusic(bool muted)
+            {
+            }
+            public void PlayUiSound(UiSound sound)
+            {
+            }
+            public void SetGameplayPaused(bool paused)
+            {
+            }
             public AudioPlaybackHandle PlayClip(AudioClip clip, AudioGroup group = AudioGroup.UI,
                 AudioSource settings = null, float? pitch = null) => null;
-            public void StopGroup(AudioGroup group) { }
-            public void Dispose() { }
+            public void StopGroup(AudioGroup group)
+            {
+            }
+            public void Dispose()
+            {
+            }
         }
     }
 }

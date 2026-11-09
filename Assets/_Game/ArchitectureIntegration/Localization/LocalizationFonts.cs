@@ -14,16 +14,22 @@ namespace Game.Integration.Localization
         public void ConfigureFallbacks()
         {
             AddFallback(multilingual, simplifiedChinese);
-            foreach (var font in Resources.LoadAll<TMP_FontAsset>("Fonts & Materials")) AddFallback(font, multilingual);
+            foreach (var font in Resources.LoadAll<TMP_FontAsset>("Fonts & Materials"))
+                AddFallback(font, multilingual);
             var global = TMP_Settings.fallbackFontAssets;
-            if (global != null && multilingual != null && !global.Contains(multilingual)) global.Add(multilingual);
+            if (global != null && multilingual != null && !global.Contains(multilingual))
+                global.Add(multilingual);
         }
 
         private static void AddFallback(TMP_FontAsset font, TMP_FontAsset fallback)
         {
-            if (font == null || fallback == null || font == fallback) return;
-            if (font.fallbackFontAssetTable == null) font.fallbackFontAssetTable = new List<TMP_FontAsset>();
-            if (!font.fallbackFontAssetTable.Contains(fallback)) font.fallbackFontAssetTable.Add(fallback);
+            if (font == null || fallback == null || font == fallback)
+                return;
+
+            if (font.fallbackFontAssetTable == null)
+                font.fallbackFontAssetTable = new List<TMP_FontAsset>();
+            if (!font.fallbackFontAssetTable.Contains(fallback))
+                font.fallbackFontAssetTable.Add(fallback);
         }
     }
 }

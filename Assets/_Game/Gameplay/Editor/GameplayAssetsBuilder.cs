@@ -85,7 +85,6 @@ namespace Game.Gameplay.Editor
             return set;
         }
 
-        /// <summary>Writes <see cref="WallValues.Defaults"/> into the config (used when the field is new or reset).</summary>
         public static void SetWallDefaults(SerializedObject config)
         {
             var d = WallValues.Defaults;
@@ -144,7 +143,6 @@ namespace Game.Gameplay.Editor
             AssetDatabase.SaveAssets();
         }
 
-        /// <summary>Bakes each variant's convex XZ projection from its visible shard meshes and their transforms.</summary>
         public static void Bake(CrystalCatalog catalog)
         {
             foreach (var variant in catalog.variants)
@@ -229,7 +227,6 @@ namespace Game.Gameplay.Editor
             return material;
         }
 
-        /// <summary>URP particle material: opaque drops, or alpha-blended (ripples) with an optional texture.</summary>
         private static Material ParticleMaterial(string name, Color color, bool transparent, Texture2D texture)
         {
             var path = Art + "/" + name;
@@ -256,7 +253,6 @@ namespace Game.Gameplay.Editor
             return material;
         }
 
-        /// <summary>Soft ring for the pool ripples.</summary>
         private static Texture2D RingTexture()
         {
             var path = Art + "/Ripple Ring.png";
@@ -282,7 +278,6 @@ namespace Game.Gameplay.Editor
             return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
         }
 
-        /// <summary>Radial alpha falloff texture for the contact shadow.</summary>
         private static Texture2D SoftDisc()
         {
             var path = Art + "/Soft Disc.png";

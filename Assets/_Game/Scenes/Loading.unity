@@ -251,10 +251,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb335746ef379904c9177df1fd058641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Application::Game.App.Loading.LoadingScreenView
-  _canvasGroup: {fileID: 0}
-  _initiallyVisible: 1
-  _animateFade: 0
-  _transitionDuration: 0.7
+  canvasGroup: {fileID: 0}
+  initiallyVisible: 1
+  animateFade: 0
+  transitionDuration: 0.7
   contentContainer: {fileID: 1283771783}
   message: {fileID: 1921944315}
   retryButton: {fileID: 1740670651}
@@ -2138,7 +2138,6 @@ MonoBehaviour:
   audioMixer: {fileID: 0}
   audioLibrary: {fileID: 0}
   introVideoPrefab: {fileID: 0}
-  mobileSettingsPack: 1
 --- !u!4 &2082300129
 Transform:
   m_ObjectHideFlags: 0

@@ -24,7 +24,6 @@ namespace Game.Gameplay.Tests
         private static LevelData Level(int number, out GameRules rules) =>
             CampaignLevels.Build(Config().CreateSnapshot(), Config().Campaign.Spec(number - 1), out rules);
 
-        /// <summary>Replays the control sequence and returns the model after the attempt.</summary>
         private static AttemptModel Replay(GameRules rules, LevelData level)
         {
             var model = new AttemptModel(1, rules, level);

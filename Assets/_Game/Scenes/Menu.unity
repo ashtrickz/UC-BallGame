@@ -1943,10 +1943,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2397503a611e4994a89015dfcc2d0bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Integration::Game.Integration.Menu.MenuView
-  _canvasGroup: {fileID: 558737089}
-  _initiallyVisible: 1
-  _animateFade: 1
-  _transitionDuration: 0.2
+  canvasGroup: {fileID: 558737089}
+  initiallyVisible: 1
+  animateFade: 1
+  transitionDuration: 0.2
   playButton: {fileID: 1956342494}
   settingsButton: {fileID: 23797867}
   wallButton: {fileID: 269153834}
@@ -2855,10 +2855,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb815ab3c95fe64f92ee09d71d6d464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Integration::Game.Integration.Menu.LevelSelectView
-  _canvasGroup: {fileID: 1883809115}
-  _initiallyVisible: 0
-  _animateFade: 1
-  _transitionDuration: 0.2
+  canvasGroup: {fileID: 1883809115}
+  initiallyVisible: 0
+  animateFade: 1
+  transitionDuration: 0.2
   grid: {fileID: 108640234}
   cellTemplate: {fileID: 1773685660}
   backButton: {fileID: 1536591645}

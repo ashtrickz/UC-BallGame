@@ -1,0 +1,30 @@
+{
+    "name": "Game.Features.Game",
+    "rootNamespace": "Game.Integration.Game",
+    "references": [
+        "Game.Foundation",
+        "Game.UI",
+        "Game.Application",
+        "Game.Localization",
+        "Game.Audio",
+        "Game.Users",
+        "Game.Gameplay",
+        "Game.Gameplay.Config",
+        "Game.Gameplay.View",
+        "Game.Services",
+        "DOTween.Modules",
+        "UniTask",
+        "VContainer",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

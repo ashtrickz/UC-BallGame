@@ -32,14 +32,6 @@
           "value": "Language"
         },
         {
-          "key": "settings.copy_key",
-          "value": "Copy player ID"
-        },
-        {
-          "key": "settings.copied",
-          "value": "Copied"
-        },
-        {
           "key": "common.menu",
           "value": "MENU"
         },
@@ -331,14 +323,6 @@
         {
           "key": "settings.language",
           "value": "Мова"
-        },
-        {
-          "key": "settings.copy_key",
-          "value": "Скопіювати ID гравця"
-        },
-        {
-          "key": "settings.copied",
-          "value": "Скопійовано"
         },
         {
           "key": "common.menu",
@@ -634,14 +618,6 @@
           "value": "Idioma"
         },
         {
-          "key": "settings.copy_key",
-          "value": "Copiar ID del jugador"
-        },
-        {
-          "key": "settings.copied",
-          "value": "Copiado"
-        },
-        {
           "key": "common.menu",
           "value": "MENÚ"
         },
@@ -933,14 +909,6 @@
         {
           "key": "settings.language",
           "value": "语言"
-        },
-        {
-          "key": "settings.copy_key",
-          "value": "复制玩家ID"
-        },
-        {
-          "key": "settings.copied",
-          "value": "已复制"
         },
         {
           "key": "common.menu",

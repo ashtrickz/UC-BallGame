@@ -13,6 +13,7 @@ namespace Game.App.Bootstrap
     public sealed class BootstrapEntryPoint : IStartable, IDisposable
     {
         private const string GameLoadingLabel = "loading.game";
+        private const float StepsShare = 35f;
         
         private readonly IReadOnlyList<IInitializationStep> _steps;
         private readonly IInitializationModel _model;
@@ -46,7 +47,7 @@ namespace Game.App.Bootstrap
 
         private async UniTask RunAsync()
         {
-            if (_running || _disposed || _model.IsComplete) 
+            if (_running || _disposed || _model.IsComplete)
                 return;
             
             _running = true;
@@ -60,7 +61,7 @@ namespace Game.App.Bootstrap
                     await _steps[_nextStep].InitializeAsync(token);
                 }
 
-                _model.SetStage(35, GameLoadingLabel);
+                _model.SetStage(StepsShare, GameLoadingLabel);
 
                 await IntroGate.PassAsync(_intro, t => UniTask.Delay(IntroGate.SettleMs, ignoreTimeScale: true, cancellationToken: t), token);
                 await _navigation.OpenAsync(GameNavigation.MenuScene);
@@ -81,11 +82,11 @@ namespace Game.App.Bootstrap
             }
         }
 
-        private float GetLoadingPercentage() => _steps.Count == 0 ? 35f : (float)_nextStep * 35 / _steps.Count;
+        private float GetLoadingPercentage() => _steps.Count == 0 ? StepsShare : (float)_nextStep * StepsShare / _steps.Count;
 
         public void Dispose()
         {
-            if (_disposed) 
+            if (_disposed)
                 return;
             
             _disposed = true;

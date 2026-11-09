@@ -1,3 +1,4 @@
+using Game.Foundation;
 using UnityEngine;
 
 namespace Game.Gameplay.View
@@ -6,57 +7,77 @@ namespace Game.Gameplay.View
     /// Visual lane on the floor whose width is the corridor the slime currently needs (D + 2 × gap).
     /// It narrows with the slime, so the player can read which crystals still block the way.
     /// </summary>
-    public sealed class TrackView : MonoBehaviour
+    public sealed class TrackView : MonoBehaviour, IFrameTickable
     {
+        private const float DefaultEdgeWidth = 0.05f;
+        private const float MinLength = 0.1f;
+        private const float Half = 0.5f;
+        private const float LaneHeight = 0.004f;
+        private const float LaneThickness = 0.008f;
+        private const float EdgeHeight = 0.008f;
+        private const float EdgeThickness = 0.016f;
+
         [SerializeField] private Transform lane;
         [SerializeField] private Transform leftEdge;
         [SerializeField] private Transform rightEdge;
-        [SerializeField, Min(0.005f)] private float edgeWidth = 0.05f;
+        [SerializeField, Min(0.005f)] private float edgeWidth = DefaultEdgeWidth;
 
-        private GameClock _clock = new GameClock();
         private SlimeViewConfig _config;
-        private float _width = 1, _target = 1, _velocity, _startZ, _endZ;
+        private float _width = 1;
+        private float _target = 1;
+        private float _velocity;
+        private float _startZ;
+        private float _endZ;
 
-        public void Bind(GameClock clock, SlimeViewConfig config) { _clock = clock; _config = config; }
+        public void Bind(SlimeViewConfig config)
+        {
+            _config = config;
+        }
 
         public void Build(float startZ, float endZ, float width)
         {
             _startZ = startZ;
             _endZ = endZ;
-            _width = _target = width;
+            _width = width;
+            _target = width;
             _velocity = 0;
             Apply();
         }
 
-        public void SetCorridorWidth(float width) => _target = width;
-
-        private void Update()
+        public void SetCorridorWidth(float width)
         {
-            var dt = _clock.Delta;
-            if (dt > 0 && _config != null)
-                _width = Mathf.SmoothDamp(_width, _target, ref _velocity, _config.trackSmoothTime, Mathf.Infinity, dt);
+            _target = width;
+        }
+
+        public void Tick(float deltaTime)
+        {
+            if (deltaTime > 0 && _config != null)
+                _width = Mathf.SmoothDamp(_width, _target, ref _velocity, _config.trackSmoothTime, Mathf.Infinity, deltaTime);
+
             Apply();
         }
 
         private void Apply()
         {
-            var length = Mathf.Max(0.1f, _endZ - _startZ);
-            var center = (_startZ + _endZ) * 0.5f;
+            var length = Mathf.Max(MinLength, _endZ - _startZ);
+            var center = (_startZ + _endZ) * Half;
             if (lane != null)
             {
-                lane.localPosition = new Vector3(0, 0.004f, center);
-                lane.localScale = new Vector3(_width, 0.008f, length);
+                lane.localPosition = new Vector3(0, LaneHeight, center);
+                lane.localScale = new Vector3(_width, LaneThickness, length);
             }
-            var half = _width * 0.5f + edgeWidth * 0.5f;
+
+            var half = _width * Half + edgeWidth * Half;
             if (leftEdge != null)
             {
-                leftEdge.localPosition = new Vector3(-half, 0.008f, center);
-                leftEdge.localScale = new Vector3(edgeWidth, 0.016f, length);
+                leftEdge.localPosition = new Vector3(-half, EdgeHeight, center);
+                leftEdge.localScale = new Vector3(edgeWidth, EdgeThickness, length);
             }
+
             if (rightEdge != null)
             {
-                rightEdge.localPosition = new Vector3(half, 0.008f, center);
-                rightEdge.localScale = new Vector3(edgeWidth, 0.016f, length);
+                rightEdge.localPosition = new Vector3(half, EdgeHeight, center);
+                rightEdge.localScale = new Vector3(edgeWidth, EdgeThickness, length);
             }
         }
     }

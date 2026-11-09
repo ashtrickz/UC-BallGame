@@ -21,7 +21,9 @@ namespace Game.Assets
             get
             {
                 _assertMainThread();
-                if (_disposed) throw new ObjectDisposedException(nameof(AssetLease<T>));
+                if (_disposed)
+                    throw new ObjectDisposedException(nameof(AssetLease<T>));
+
                 return _asset;
             }
         }
@@ -29,8 +31,9 @@ namespace Game.Assets
         public void Dispose()
         {
             _assertMainThread();
-            if (_disposed) 
+            if (_disposed)
                 return;
+
             _disposed = true;
             _release();
         }

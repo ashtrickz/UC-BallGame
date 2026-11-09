@@ -8,10 +8,6 @@ namespace Game.App.Scenes
     {
         string ActiveScene { get; }
         string BootstrapScene { get; }
-        /// <summary>
-        /// A scene to stand on while one game scene is swapped for another (Unity always needs a loaded scene): the bootstrap scene if it
-        /// is still loaded (the first transition), otherwise an empty transit scene made for the occasion. Returns its name.
-        /// </summary>
         string EnsureAnchor();
         bool IsLoaded(string name);
         void ValidateDestination(string name);
@@ -27,17 +23,28 @@ namespace Game.App.Scenes
     // bootstrap (its camera) draws over the game world.
     public sealed class SceneTransition
     {
+        private const float CurtainClosedProgress = 0.1f;
+        private const float SceneLoadShare = 0.7f;
+        private const float SceneLoadedProgress = 0.85f;
+        private const float SceneReadyProgress = 0.95f;
+
         private readonly ISceneRuntime _runtime;
         private bool _running;
         public SceneTransition(ISceneRuntime runtime) => _runtime = runtime ?? throw new ArgumentNullException(nameof(runtime));
 
         public async UniTask LoadAsync(string destination, CancellationToken token, IProgress<float> progress = null)
         {
-            if (_running) throw new InvalidOperationException("A scene transition is already running.");
+            if (_running)
+                throw new InvalidOperationException("A scene transition is already running.");
+
             token.ThrowIfCancellationRequested();
             _runtime.ValidateDestination(destination);
-            if (_runtime.ActiveScene == destination && _runtime.IsLoaded(destination)) return;
-            if (_runtime.IsLoaded(destination)) throw new InvalidOperationException("Destination is already loaded outside navigation.");
+            if (_runtime.ActiveScene == destination && _runtime.IsLoaded(destination))
+                return;
+
+            if (_runtime.IsLoaded(destination))
+                throw new InvalidOperationException("Destination is already loaded outside navigation.");
+
             _running = true;
             try
             {
@@ -46,30 +53,35 @@ namespace Game.App.Scenes
                 _runtime.Activate(anchor);
                 if (previous != anchor && _runtime.IsLoaded(previous))
                     await _runtime.UnloadAsync(previous);
-                progress?.Report(0.1f);
+                progress?.Report(CurtainClosedProgress);
                 token.ThrowIfCancellationRequested();
                 try
                 {
                     await _runtime.LoadAsync(destination, Progress.CreateOnlyValueChanged<float>(
-                        value => progress?.Report(0.1f + value * 0.7f)));
+                        value => progress?.Report(CurtainClosedProgress + value * SceneLoadShare)));
                     token.ThrowIfCancellationRequested();
-                    progress?.Report(0.85f);
+                    progress?.Report(SceneLoadedProgress);
                     await _runtime.WaitUntilReadyAsync(destination, token);
                     token.ThrowIfCancellationRequested();
-                    progress?.Report(0.95f);
+                    progress?.Report(SceneReadyProgress);
                     _runtime.Activate(destination);
                 }
                 catch
                 {
                     // The anchor stays: the loading screen (persistent) offers a retry from here.
                     _runtime.Activate(anchor);
-                    if (_runtime.IsLoaded(destination)) await _runtime.UnloadAsync(destination);
+                    if (_runtime.IsLoaded(destination))
+                        await _runtime.UnloadAsync(destination);
                     throw;
                 }
-                if (_runtime.IsLoaded(anchor)) await _runtime.UnloadAsync(anchor);
+                if (_runtime.IsLoaded(anchor))
+                    await _runtime.UnloadAsync(anchor);
                 progress?.Report(1f);
             }
-            finally { _running = false; }
+            finally
+            {
+                _running = false;
+            }
         }
     }
 }

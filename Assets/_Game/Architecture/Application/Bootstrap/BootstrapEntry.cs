@@ -18,7 +18,7 @@ namespace Game.App.Bootstrap
         static void EnsureBootstrap()
         {
 #if UNITY_EDITOR
-            if (IsHarnessActive) 
+            if (IsHarnessActive)
                 return;
 #endif
             

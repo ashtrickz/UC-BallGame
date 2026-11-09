@@ -4,9 +4,7 @@
     "references": [
         "UniTask",
         "DOTween.Modules",
-        "Game.Audio",
         "Game.Foundation",
-        "VContainer",
         "UnityEngine.UI"
     ],
     "includePlatforms": [],

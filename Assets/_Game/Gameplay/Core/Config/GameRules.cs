@@ -32,15 +32,22 @@ namespace Game.Gameplay.Config
     /// </summary>
     public sealed class GameRules
     {
-        /// <summary>The control solution must leave this share of the budget unused: B ≥ 1.2 × Cref.</summary>
         public const double BudgetReserve = 1.2;
+
+        private const double ShortRouteShare = 0.25;
+        private const double HalfDiameter = 0.5;
+        private const int MinGroupSize = 2;
+        private const int BytesPerValue = 8;
+        private const int BitsPerByte = 8;
+        private const ulong ByteMask = 0xFF;
+        private const ulong FnvOffset = 14695981039346656037UL;
+        private const ulong FnvPrime = 1099511628211UL;
 
         private readonly RuleValues _values;
         private readonly CrystalVariantData[] _variants;
 
         public RuleValues Values => _values;
         public IReadOnlyList<CrystalVariantData> Variants => _variants;
-        /// <summary>Stable hash of every value and variant hull: part of the seed reproducibility contract.</summary>
         public string Fingerprint { get; }
 
         public double D0 => _values.InitialDiameter;
@@ -56,34 +63,44 @@ namespace Game.Gameplay.Config
             _values = values;
             _variants = variants == null ? Array.Empty<CrystalVariantData>() : new List<CrystalVariantData>(variants).ToArray();
             var problems = Validate(_values, _variants);
-            if (problems.Count > 0) throw new InvalidRulesException(problems);
+            if (problems.Count > 0)
+                throw new InvalidRulesException(problems);
+
             Fingerprint = ComputeFingerprint(_values, _variants);
         }
 
-        /// <summary>Same rules with another route length (campaign levels differ only in geometry).</summary>
         public GameRules WithRouteLength(double routeLength)
         {
-            if (routeLength == _values.RouteLength) return this;
+            if (routeLength == _values.RouteLength)
+                return this;
+
             var values = _values;
             values.RouteLength = routeLength;
-            values.FirstObstacleZ = Math.Min(values.FirstObstacleZ, routeLength * 0.25);
-            values.FinishClearance = Math.Min(values.FinishClearance, routeLength * 0.25);
+            values.FirstObstacleZ = Math.Min(values.FirstObstacleZ, routeLength * ShortRouteShare);
+            values.FinishClearance = Math.Min(values.FinishClearance, routeLength * ShortRouteShare);
             return new GameRules(values, _variants);
         }
 
         public double ChargeCost(double holdSeconds) => _values.MinShotCost + _values.ChargeRate * Math.Max(0, holdSeconds);
         public double ProjectileDiameter(double cost) => cost / _values.TransferCoefficient;
         public double BlastRadius(double cost) => _values.BlastCoefficient * ProjectileDiameter(cost);
-        public double CorridorHalfWidth(double diameter) => diameter * 0.5 + _values.CorridorGap;
-        /// <summary>The minimum shot is allowed only if the diameter stays strictly above Dcrit after it.</summary>
+        public double CorridorHalfWidth(double diameter) => diameter * HalfDiameter + _values.CorridorGap;
         public bool CanAffordMinShot(double diameter) => diameter - _values.MinShotCost > _values.CriticalDiameter + _values.Tolerance;
         public bool IsCritical(double diameter) => diameter <= _values.CriticalDiameter + _values.Tolerance;
 
         public static List<string> Validate(RuleValues v, IReadOnlyList<CrystalVariantData> variants)
         {
             var problems = new List<string>();
-            void Positive(string name, double value) { if (!(value > 0) || double.IsInfinity(value)) problems.Add(name + " must be finite and positive"); }
-            void NonNegative(string name, double value) { if (!(value >= 0) || double.IsInfinity(value)) problems.Add(name + " must be finite and non-negative"); }
+            void Positive(string name, double value)
+            {
+                if (!(value > 0) || double.IsInfinity(value))
+                    problems.Add(name + " must be finite and positive");
+            }
+            void NonNegative(string name, double value)
+            {
+                if (!(value >= 0) || double.IsInfinity(value))
+                    problems.Add(name + " must be finite and non-negative");
+            }
             Positive(nameof(v.InitialDiameter), v.InitialDiameter);
             Positive(nameof(v.CriticalDiameter), v.CriticalDiameter);
             Positive(nameof(v.TransferCoefficient), v.TransferCoefficient);
@@ -96,57 +113,105 @@ namespace Game.Gameplay.Config
             Positive(nameof(v.RouteLength), v.RouteLength);
             Positive(nameof(v.DoorOpenDistance), v.DoorOpenDistance);
             NonNegative(nameof(v.DoorSetback), v.DoorSetback);
-            if (!(v.InitialDiameter > v.CriticalDiameter)) problems.Add("D0 must be greater than Dcrit");
+            if (!(v.InitialDiameter > v.CriticalDiameter))
+                problems.Add("D0 must be greater than Dcrit");
             var limit = (v.InitialDiameter - v.CriticalDiameter) / BudgetReserve;
-            if (!(v.MinShotCost < limit)) problems.Add("Budget B / 1.2 must exceed the minimum shot cost for a control shot");
-            if (v.MaxCandidates < 1) problems.Add("MaxCandidates must be at least 1");
-            if (v.ObstacleCountMin < 1 || v.ObstacleCountMax < v.ObstacleCountMin) problems.Add("Obstacle count range is invalid");
-            if (v.GroupSizeMin < 2 || v.GroupSizeMax < v.GroupSizeMin) problems.Add("Group size range is invalid");
+            if (!(v.MinShotCost < limit))
+                problems.Add("Budget B / 1.2 must exceed the minimum shot cost for a control shot");
+            if (v.MaxCandidates < 1)
+                problems.Add("MaxCandidates must be at least 1");
+            if (v.ObstacleCountMin < 1 || v.ObstacleCountMax < v.ObstacleCountMin)
+                problems.Add("Obstacle count range is invalid");
+            if (v.GroupSizeMin < MinGroupSize || v.GroupSizeMax < v.GroupSizeMin)
+                problems.Add("Group size range is invalid");
             Positive(nameof(v.ObstacleSpacingMin), v.ObstacleSpacingMin);
-            if (v.ObstacleSpacingMax < v.ObstacleSpacingMin) problems.Add("Obstacle spacing range is invalid");
+            if (v.ObstacleSpacingMax < v.ObstacleSpacingMin)
+                problems.Add("Obstacle spacing range is invalid");
             Positive(nameof(v.GroupRadiusMin), v.GroupRadiusMin);
-            if (v.GroupRadiusMax < v.GroupRadiusMin) problems.Add("Group radius range is invalid");
+            if (v.GroupRadiusMax < v.GroupRadiusMin)
+                problems.Add("Group radius range is invalid");
             Positive(nameof(v.ScaleMin), v.ScaleMin);
-            if (v.ScaleMax < v.ScaleMin) problems.Add("Scale range is invalid");
+            if (v.ScaleMax < v.ScaleMin)
+                problems.Add("Scale range is invalid");
             NonNegative(nameof(v.SingleWeight), v.SingleWeight);
             NonNegative(nameof(v.PairWeight), v.PairWeight);
             NonNegative(nameof(v.GroupWeight), v.GroupWeight);
-            if (!(v.SingleWeight + v.PairWeight + v.GroupWeight > 0)) problems.Add("At least one obstacle weight must be positive");
+            if (!(v.SingleWeight + v.PairWeight + v.GroupWeight > 0))
+                problems.Add("At least one obstacle weight must be positive");
             NonNegative(nameof(v.DecorPerMetre), v.DecorPerMetre);
-            if (v.DecorLateralMax < v.DecorLateralMin) problems.Add("Decor lateral range is invalid");
+            if (v.DecorLateralMax < v.DecorLateralMin)
+                problems.Add("Decor lateral range is invalid");
             Positive(nameof(v.ControlHoldStep), v.ControlHoldStep);
             NonNegative(nameof(v.ControlHoldMax), v.ControlHoldMax);
             if (!(v.FirstObstacleZ > 0) || !(v.FirstObstacleZ < v.RouteLength - v.FinishClearance))
                 problems.Add("Obstacles do not fit between the start and the finish clearance");
-            if (variants == null || variants.Count == 0) problems.Add("At least one crystal variant is required");
+            if (variants == null || variants.Count == 0)
+                problems.Add("At least one crystal variant is required");
             else
                 for (var i = 0; i < variants.Count; i++)
-                    if (variants[i] == null || variants[i].Id != i) problems.Add("Crystal variant ids must be dense and ordered (index " + i + ")");
+                    if (variants[i] == null || variants[i].Id != i)
+                        problems.Add("Crystal variant ids must be dense and ordered (index " + i + ")");
             return problems;
         }
 
         private static string ComputeFingerprint(RuleValues v, IReadOnlyList<CrystalVariantData> variants)
         {
-            var hash = 14695981039346656037UL;
+            var hash = FnvOffset;
             void Mix(ulong value)
             {
-                for (var i = 0; i < 8; i++) { hash ^= (value >> (i * 8)) & 0xFF; hash *= 1099511628211UL; }
+                for (var i = 0; i < BytesPerValue; i++)
+                {
+                    hash ^= (value >> (i * BitsPerByte)) & ByteMask;
+                    hash *= FnvPrime;
+                }
             }
             void D(double value) => Mix((ulong)BitConverter.DoubleToInt64Bits(value));
             void I(int value) => Mix((ulong)(uint)value);
-            D(v.InitialDiameter); D(v.CriticalDiameter); D(v.TransferCoefficient); D(v.MinShotCost); D(v.ChargeRate);
-            D(v.BlastCoefficient); D(v.CorridorGap); D(v.Tolerance); D(v.MinAdvance); D(v.RouteLength);
-            D(v.DoorOpenDistance); D(v.DoorSetback); I(v.MaxCandidates); I(v.ObstacleCountMin); I(v.ObstacleCountMax);
-            D(v.FirstObstacleZ); D(v.FinishClearance); D(v.ObstacleSpacingMin); D(v.ObstacleSpacingMax);
-            D(v.SingleWeight); D(v.PairWeight); D(v.GroupWeight); I(v.GroupSizeMin); I(v.GroupSizeMax);
-            D(v.GroupRadiusMin); D(v.GroupRadiusMax); D(v.LateralJitter); D(v.MemberSpacing); D(v.ScaleMin); D(v.ScaleMax);
-            D(v.DecorPerMetre); D(v.DecorLateralMin); D(v.DecorLateralMax); D(v.MinSpendFraction);
-            D(v.ControlHoldStep); D(v.ControlHoldMax);
+            D(v.InitialDiameter);
+            D(v.CriticalDiameter);
+            D(v.TransferCoefficient);
+            D(v.MinShotCost);
+            D(v.ChargeRate);
+            D(v.BlastCoefficient);
+            D(v.CorridorGap);
+            D(v.Tolerance);
+            D(v.MinAdvance);
+            D(v.RouteLength);
+            D(v.DoorOpenDistance);
+            D(v.DoorSetback);
+            I(v.MaxCandidates);
+            I(v.ObstacleCountMin);
+            I(v.ObstacleCountMax);
+            D(v.FirstObstacleZ);
+            D(v.FinishClearance);
+            D(v.ObstacleSpacingMin);
+            D(v.ObstacleSpacingMax);
+            D(v.SingleWeight);
+            D(v.PairWeight);
+            D(v.GroupWeight);
+            I(v.GroupSizeMin);
+            I(v.GroupSizeMax);
+            D(v.GroupRadiusMin);
+            D(v.GroupRadiusMax);
+            D(v.LateralJitter);
+            D(v.MemberSpacing);
+            D(v.ScaleMin);
+            D(v.ScaleMax);
+            D(v.DecorPerMetre);
+            D(v.DecorLateralMin);
+            D(v.DecorLateralMax);
+            D(v.MinSpendFraction);
+            D(v.ControlHoldStep);
+            D(v.ControlHoldMax);
             foreach (var variant in variants)
             {
                 I(variant.Id);
                 I(variant.Hull.Count);
-                foreach (var p in variant.Hull.Vertices) { D(p.X); D(p.Z); }
+                foreach (var p in variant.Hull.Vertices)
+                {
+                    D(p.X);
+                    D(p.Z);
+                }
             }
             return hash.ToString("x16");
         }

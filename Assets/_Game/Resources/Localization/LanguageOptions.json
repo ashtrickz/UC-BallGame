@@ -1,0 +1,24 @@
+{
+    "languages": [
+        {
+            "name": "en",
+            "culture": "en",
+            "displayName": "English"
+        },
+        {
+            "name": "uk",
+            "culture": "uk",
+            "displayName": "Українська"
+        },
+        {
+            "name": "es",
+            "culture": "es",
+            "displayName": "Español"
+        },
+        {
+            "name": "zh-CN",
+            "culture": "zh-CN",
+            "displayName": "简体中文"
+        }
+    ]
+}

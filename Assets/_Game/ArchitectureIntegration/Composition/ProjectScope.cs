@@ -27,8 +27,13 @@ using VContainer.Unity;
 
 namespace Game.Integration.Composition
 {
+    /// <summary>Registers project-lifetime services under the persistent bootstrap root.</summary>
     public sealed class ProjectScope : LifetimeScope
     {
+        private const string UserDirectoryName = "Users";
+        private const string MissingLoadingViewMessage = "ProjectScope needs a loading view under its persistent root.";
+        private const string MissingPopupRootMessage = "ProjectScope needs a popup root under its persistent root.";
+
         [SerializeField] private LoadingScreenView loadingView;
         [SerializeField] private Transform popupRoot;
         [SerializeField] private SettingsPopupView settingsPopupPrefab;
@@ -36,8 +41,11 @@ namespace Game.Integration.Composition
         [Tooltip("Optional override. Empty loads Resources/Audio/AudioLibrary.")]
         [SerializeField] private AudioLibrary audioLibrary;
         [SerializeField] private IntroVideoView introVideoPrefab;
-        [SerializeField] private bool mobileSettingsPack = true;
-        public static ProjectScope Instance { get; private set; }
+        public static ProjectScope Instance
+        {
+            get;
+            private set;
+        }
         private GameNavigation _navigation;
         private ILoadingScreen _loading;
         private IInitializationModel _initialization;
@@ -47,7 +55,11 @@ namespace Game.Integration.Composition
 
         protected override void Awake()
         {
-            if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
             Instance = this;
             DontDestroyOnLoad(gameObject);
             base.Awake();
@@ -56,57 +68,85 @@ namespace Game.Integration.Composition
         protected override void Configure(IContainerBuilder builder)
         {
             if (loadingView == null || !loadingView.transform.IsChildOf(transform))
-                throw new InvalidOperationException("ProjectScope needs a loading view under its persistent root.");
+                throw new InvalidOperationException(MissingLoadingViewMessage);
+
             if (popupRoot == null || !popupRoot.IsChildOf(transform))
-                throw new InvalidOperationException("ProjectScope needs a popup root under its persistent root.");
+                throw new InvalidOperationException(MissingPopupRootMessage);
 
             builder.Register<IInitializationModel, InitializationModel>(Lifetime.Singleton);
             builder.RegisterInstance<ILoadingScreenView>(loadingView);
             builder.Register<ILoadingScreen, LoadingScreenController>(Lifetime.Singleton);
             builder.Register<IAssetBackend, AddressablesAssetBackend>(Lifetime.Singleton);
             builder.Register<AssetService>(Lifetime.Singleton).AsSelf().As<IAssetService>();
-            builder.Register<ISettingsRuntime>(_ => new UnitySettingsRuntime(mobileSettingsPack ? SettingsPack.Mobile : SettingsPack.Desktop), Lifetime.Singleton);
+            builder.Register<SettingsPackProvider>(Lifetime.Singleton);
+            builder.Register(r => r.Resolve<SettingsPackProvider>().Value, Lifetime.Singleton);
+            builder.Register<LanguageOptionsProvider>(Lifetime.Singleton);
+#if UNITY_STANDALONE
+            builder.Register<IDisplaySettings, StandaloneDisplaySettings>(Lifetime.Singleton);
+#else
+            builder.Register<IDisplaySettings, NullDisplaySettings>(Lifetime.Singleton);
+#endif
+            builder.Register<ISettingsRuntime, UnitySettingsRuntime>(Lifetime.Singleton);
             builder.Register<ISettingsService, SettingsService>(Lifetime.Singleton);
-            var localizationFonts = Resources.Load<LocalizationFonts>(LocalizationFonts.ResourcePath);
-            if (localizationFonts == null) throw new InvalidOperationException("Install the localization font assets.");
-            localizationFonts.ConfigureFallbacks();
-            builder.Register<LocalizationService>(r =>
-            {
-                var config = Resources.Load<LocalizationConfig>(LocalizationConfig.ResourcePath);
-                if (config == null) throw new InvalidOperationException("Add LocalizationConfig to Resources/Localization.");
-                return config.CreateService(r.Resolve<ISettingsService>());
-            }, Lifetime.Singleton).AsSelf().As<ILocalizationService>();
-            if (audioLibrary == null) audioLibrary = Resources.Load<AudioLibrary>(AudioLibrary.ResourcePath);
-            builder.Register<AudioService>(r => new AudioService(r.Resolve<ISettingsService>(), r.Resolve<IAssetService>(), audioLibrary, audioMixer), Lifetime.Singleton)
-                .AsSelf().As<IAudioService>();
+            builder.Register<LocalizationConfigProvider>(Lifetime.Singleton);
+            builder.Register<LocalizationFontsProvider>(Lifetime.Singleton);
+            builder.Register<LocalizationServiceFactory>(Lifetime.Singleton);
+            builder.Register(r => r.Resolve<LocalizationServiceFactory>().Create(), Lifetime.Singleton)
+                .AsSelf().As<ILocalizationService>();
+            builder.RegisterInstance(new AudioReferences(audioLibrary, audioMixer, true));
+            builder.Register<AudioLibraryProvider>(Lifetime.Singleton);
+            builder.Register<AudioRandom>(Lifetime.Singleton);
+            builder.Register<AudioVariation>(Lifetime.Singleton);
+            builder.Register<AudioMixerVolumes>(Lifetime.Singleton);
+            builder.Register<AudioSourcePool>(Lifetime.Singleton);
+            builder.Register<MusicPlayer>(Lifetime.Singleton);
+            builder.Register<AudioService>(Lifetime.Singleton).AsSelf().As<IAudioService>();
+#if UNITY_ANDROID && !UNITY_EDITOR
+            builder.Register<IHaptics, AndroidHaptics>(Lifetime.Singleton);
+#else
+            builder.Register<IHaptics, NullHaptics>(Lifetime.Singleton);
+#endif
+            builder.Register<IUiFeedback, UiFeedback>(Lifetime.Singleton);
+            builder.Register<UiFeedbackBinder>(Lifetime.Singleton);
+            builder.Register<UiLifecycleBinder>(Lifetime.Singleton);
+            builder.Register<IFrameTimeSource, UnityFrameTimeSource>(Lifetime.Singleton);
+            builder.Register<IScreenMetrics, UnityScreenMetrics>(Lifetime.Singleton);
+            builder.RegisterEntryPoint<ScreenService>().AsSelf();
+            builder.RegisterEntryPoint<TickRegistry>().AsSelf();
             builder.Register<UserRepository>(Lifetime.Singleton).AsSelf().As<IUserRepository>();
-            builder.Register<IUserCache>(_ => new FileUserCache(Path.Combine(Application.persistentDataPath, "Users")), Lifetime.Singleton);
+            builder.Register<IUserCache, FileUserCache>(Lifetime.Singleton)
+                .WithParameter(Path.Combine(Application.persistentDataPath, UserDirectoryName));
             builder.Register<IUserService, UserService>(Lifetime.Singleton);
             builder.Register<UserInitializationStep>(Lifetime.Singleton);
             builder.Register<IPopupService, PopupService>(Lifetime.Singleton);
-            builder.Register(r =>
+            builder.Register<SettingsPopupViewFactory>(Lifetime.Singleton)
+                .WithParameter(settingsPopupPrefab)
+                .WithParameter(popupRoot);
+            builder.Register<ISettingsPopupView>(r => r.Resolve<SettingsPopupViewFactory>().Create(), Lifetime.Transient);
+            builder.Register<SettingsPopupController>(Lifetime.Transient);
+            builder.Register<ISceneRuntime, UnitySceneLoader>(Lifetime.Singleton);
+            builder.Register<SceneTransition>(Lifetime.Singleton);
+            builder.Register<Func<string, IProgress<float>, System.Threading.CancellationToken, UniTask>>(r =>
             {
-                if (settingsPopupPrefab == null) throw new InvalidOperationException("Assign the settings popup prefab in ProjectScope.");
-                return new SettingsPopupController(r.Instantiate(settingsPopupPrefab, popupRoot), r.Resolve<ISettingsService>(), r.Resolve<IUserRepository>());
-            }, Lifetime.Transient);
-            builder.Register<ISceneService>(r => new SceneService(new UnitySceneLoader(this).LoadAsync,
-                r.Resolve<ILoadingScreen>(), r.Resolve<IInitializationModel>()), Lifetime.Singleton);
+                var transition = r.Resolve<SceneTransition>();
+                return (scene, progress, token) => transition.LoadAsync(scene, token, progress);
+            }, Lifetime.Singleton);
+            builder.Register<SceneService>(Lifetime.Singleton).As<ISceneService>().As<ISceneRequestService>();
             builder.Register<GameNavigation>(Lifetime.Singleton);
             builder.Register<GameSession>(Lifetime.Singleton);
+            builder.Register<IGameLauncher, GameLauncher>(Lifetime.Singleton);
+            builder.Register<ICampaignProgress, PlayerPrefsCampaignProgress>(Lifetime.Singleton);
+            builder.Register<ISlimeColorPreferences, PlayerPrefsSlimeColorPreferences>(Lifetime.Singleton);
 
-            if (introVideoPrefab == null) builder.Register<IIntroScreen, NoIntroScreen>(Lifetime.Singleton);
+            if (introVideoPrefab == null)
+                builder.Register<IIntroScreen, NoIntroScreen>(Lifetime.Singleton);
             else
             {
-                var intro = Instantiate(introVideoPrefab, transform);
-                builder.RegisterInstance<IIntroScreen>(intro);
-                builder.RegisterBuildCallback(r =>
-                {
-                    r.InjectGameObject(intro.gameObject);
-                    var audio = r.Resolve<IAudioService>();
-                    var settings = r.Resolve<ISettingsService>();
-                    audio.MuteMusic(true);
-                    intro.Begin(settings.GetVolume(VolumeChannel.Master) * settings.GetVolume(VolumeChannel.Sfx), () => audio.MuteMusic(false));
-                });
+                builder.Register<IntroScreenFactory>(Lifetime.Singleton)
+                    .WithParameter(introVideoPrefab)
+                    .WithParameter(transform);
+                builder.Register<IIntroScreen>(r => r.Resolve<IntroScreenFactory>().Create(), Lifetime.Singleton);
+                builder.RegisterBuildCallback(r => r.Resolve<IIntroScreen>());
             }
 
             builder.Register<IReadOnlyList<IInitializationStep>>(r => new IInitializationStep[]
@@ -116,13 +156,16 @@ namespace Game.Integration.Composition
             builder.RegisterBuildCallback(r =>
             {
                 r.InjectGameObject(loadingView.gameObject);
+                r.Resolve<UiFeedbackBinder>().Bind(loadingView.gameObject);
                 _navigation = r.Resolve<GameNavigation>();
                 _loading = r.Resolve<ILoadingScreen>();
                 _initialization = r.Resolve<IInitializationModel>();
                 _loading.RetryRequested += RetryNavigation;
                 gameObject.AddComponent<SettingsPersistence>();
-                gameObject.AddComponent<HapticsLifecycle>();
-                gameObject.AddComponent<UiClickSounds>().Bind(r.Resolve<IAudioService>());
+                gameObject.AddComponent<HapticsLifecycle>().Bind(r.Resolve<IHaptics>());
+                var clicks = gameObject.AddComponent<UiClickSounds>();
+                clicks.Bind(r.Resolve<IAudioService>(), r.Resolve<IHaptics>());
+                clicks.BindTicks(r.Resolve<ITickRegistry>());
             });
             builder.RegisterEntryPoint<BootstrapEntryPoint>();
         }
@@ -135,8 +178,10 @@ namespace Game.Integration.Composition
 
         protected override void OnDestroy()
         {
-            if (_loading != null) _loading.RetryRequested -= RetryNavigation;
-            if (Instance == this) Instance = null;
+            if (_loading != null)
+                _loading.RetryRequested -= RetryNavigation;
+            if (Instance == this)
+                Instance = null;
             base.OnDestroy();
         }
     }

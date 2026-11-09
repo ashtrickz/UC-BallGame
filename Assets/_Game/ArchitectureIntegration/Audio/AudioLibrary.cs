@@ -9,6 +9,8 @@ namespace Game.Integration.Audio
     [Serializable]
     public sealed class SoundDefinition
     {
+        private static readonly Vector2 DefaultPitchRange = new Vector2(0.95f, 1.05f);
+
         [Tooltip("Use one entry per ID. Fill the existing music entries instead of adding duplicates.")]
         public GameSound id;
         public AudioClip clip;
@@ -16,7 +18,7 @@ namespace Game.Integration.Audio
         public AudioClip[] variants = Array.Empty<AudioClip>();
         [Range(0, 1)] public float volume = 1f;
         [Tooltip("Random pitch on each play. Equal values disable variation (useful for music/loops).")]
-        public Vector2 pitchRange = new Vector2(0.95f, 1.05f);
+        public Vector2 pitchRange = DefaultPitchRange;
         public AudioGroup group = AudioGroup.Sfx;
         [Tooltip("Optional per-sound override. Empty uses the library's routing for the selected group.")]
         public AudioMixerGroup mixerGroup;
@@ -29,17 +31,28 @@ namespace Game.Integration.Audio
             get
             {
                 var count = clip != null ? 1 : 0;
-                if (variants != null) foreach (var variant in variants) if (variant != null) count++;
+                if (variants != null)
+                    foreach (var variant in variants)
+                        if (variant != null)
+                            count++;
                 return count;
             }
         }
 
         public AudioClip GetClip(int index)
         {
-            if (clip != null) { if (index == 0) return clip; index--; }
+            if (clip != null)
+            {
+                if (index == 0)
+                    return clip;
+
+                index--;
+            }
             if (variants != null)
                 foreach (var variant in variants)
-                    if (variant != null && index-- == 0) return variant;
+                    if (variant != null && index-- == 0)
+                        return variant;
+
             return null;
         }
     }
@@ -67,27 +80,45 @@ namespace Game.Integration.Audio
         [SerializeField, HideInInspector] private AssetReference mainMenuTheme;
         [SerializeField, HideInInspector] private AssetReference gameplayTheme;
 
-        public SoundDefinition[] Sounds { get => sounds; set => sounds = value ?? Array.Empty<SoundDefinition>(); }
-        public AudioMixerRoute[] MixerRoutes { get => mixerRoutes; set => mixerRoutes = value ?? Array.Empty<AudioMixerRoute>(); }
+        public SoundDefinition[] Sounds
+        {
+            get => sounds;
+            set => sounds = value ?? Array.Empty<SoundDefinition>();
+        }
+        public AudioMixerRoute[] MixerRoutes
+        {
+            get => mixerRoutes;
+            set => mixerRoutes = value ?? Array.Empty<AudioMixerRoute>();
+        }
 
         public bool TryGet(GameSound id, out SoundDefinition definition)
         {
             definition = null;
             foreach (var sound in sounds)
             {
-                if (sound == null || sound.id != id) continue;
+                if (sound == null || sound.id != id)
+                    continue;
+
                 // An unfilled placeholder must not hide a later authored entry.
-                if (sound.ClipCount > 0) { definition = sound; return true; }
-                if (definition == null) definition = sound;
+                if (sound.ClipCount > 0)
+                {
+                    definition = sound;
+                    return true;
+                }
+                if (definition == null)
+                    definition = sound;
             }
             return definition != null;
         }
 
         public AudioMixerGroup GetMixerGroup(AudioGroup group)
         {
-            if (group == AudioGroup.Button) group = AudioGroup.UI;
+            if (group == AudioGroup.Button)
+                group = AudioGroup.UI;
             foreach (var route in mixerRoutes)
-                if (route != null && route.group == group && route.output != null) return route.output;
+                if (route != null && route.group == group && route.output != null)
+                    return route.output;
+
             return null;
         }
 

@@ -21,20 +21,14 @@ namespace Game.Gameplay.View
         private bool _virtualWasDown;
 
         public bool Enabled { get; set; }
-        /// <summary>An accepted press began this frame.</summary>
         public bool PressedThisFrame { get; private set; }
-        /// <summary>The accepted press is still held.</summary>
         public bool IsHeld => _state == State.Held;
 
-        /// <summary>Forget the current pointer and wait for a fresh, deliberate press.</summary>
-        /// <summary>
-        /// Debug/autoplay pointer: true presses, false releases, null returns to the real devices.
-        /// It goes through the same state machine (enabled check, fresh-press rule) as a real touch.
-        /// </summary>
         public void SetVirtualPointer(bool? down)
         {
             _virtualDown = down;
-            if (down == null) _virtualWasDown = false;
+            if (down == null)
+                _virtualWasDown = false;
         }
 
         public void RequireFreshPress()
@@ -43,7 +37,6 @@ namespace Game.Gameplay.View
             PressedThisFrame = false;
         }
 
-        /// <summary>Called once per frame by the gameplay loop, so reading never depends on script order.</summary>
         public void Poll()
         {
             PressedThisFrame = false;
@@ -56,21 +49,30 @@ namespace Game.Gameplay.View
                 _virtualWasDown = down;
                 position = new Vector2(-1, -1); // off-screen: never over UI
             }
-            else down = ReadPointer(out position, out pressedNow);
+            else
+                down = ReadPointer(out position, out pressedNow);
             switch (_state)
             {
                 case State.IgnoredUntilRelease:
-                    if (!down) _state = State.Idle;
+                    if (!down)
+                        _state = State.Idle;
                     break;
                 case State.Idle:
-                    if (!pressedNow) break;
-                    if (!Enabled || IsOverUi(position)) { _state = down ? State.IgnoredUntilRelease : State.Idle; break; }
+                    if (!pressedNow)
+                        break;
+
+                    if (!Enabled || IsOverUi(position))
+                    {
+                        _state = down ? State.IgnoredUntilRelease : State.Idle;
+                        break;
+                    }
                     // A tap may press and release within one frame: report the press with no hold (minimum shot).
                     _state = down ? State.Held : State.Idle;
                     PressedThisFrame = true;
                     break;
                 case State.Held:
-                    if (!down) _state = State.Idle;
+                    if (!down)
+                        _state = State.Idle;
                     break;
             }
         }
@@ -103,7 +105,9 @@ namespace Game.Gameplay.View
         private bool IsOverUi(Vector2 position)
         {
             var system = EventSystem.current;
-            if (system == null || position.x < 0) return false;
+            if (system == null || position.x < 0)
+                return false;
+
             _eventData ??= new PointerEventData(system);
             _eventData.Reset();
             _eventData.position = position;
@@ -112,7 +116,15 @@ namespace Game.Gameplay.View
             return _hits.Count > 0;
         }
 
-        private void OnApplicationFocus(bool focused) { if (!focused) RequireFreshPress(); }
-        private void OnApplicationPause(bool paused) { if (paused) RequireFreshPress(); }
+        private void OnApplicationFocus(bool focused)
+        {
+            if (!focused)
+                RequireFreshPress();
+        }
+        private void OnApplicationPause(bool paused)
+        {
+            if (paused)
+                RequireFreshPress();
+        }
     }
 }

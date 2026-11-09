@@ -18,15 +18,19 @@ namespace Game.Gameplay.Model
         public ActionKind Kind { get; }
         public ShotPlan Shot { get; }
         public AdvancePlan Advance { get; }
-        /// <summary>For <see cref="ActionKind.Defeat"/>: the blocking crystal to hop into, or −1 to pop in place.</summary>
         public int DefeatCrystalId { get; }
         public Vec2 DefeatTarget { get; }
 
         internal ActionRequest(int attemptId, int actionId, ActionKind kind, ShotPlan shot = null, AdvancePlan advance = null,
             int defeatCrystalId = -1, Vec2 defeatTarget = default)
         {
-            AttemptId = attemptId; ActionId = actionId; Kind = kind; Shot = shot; Advance = advance;
-            DefeatCrystalId = defeatCrystalId; DefeatTarget = defeatTarget;
+            AttemptId = attemptId;
+            ActionId = actionId;
+            Kind = kind;
+            Shot = shot;
+            Advance = advance;
+            DefeatCrystalId = defeatCrystalId;
+            DefeatTarget = defeatTarget;
         }
     }
 
@@ -46,12 +50,9 @@ namespace Game.Gameplay.Model
         public AttemptPhase Phase { get; private set; } = AttemptPhase.Preparing;
         public DefeatReason Defeat { get; private set; }
         public double Diameter { get; private set; }
-        /// <summary>Confirmed anchor position along the route (Z).</summary>
         public double AnchorZ { get; private set; }
-        /// <summary>Latest confirmed position, including progress reported during movement.</summary>
         public double ProgressZ { get; private set; }
         public double HoldSeconds { get; private set; }
-        /// <summary>Diameter when the current hold began (equals <see cref="Diameter"/> outside a charge).</summary>
         public double ChargeStartDiameter => Phase == AttemptPhase.Charging ? _chargeStartDiameter : Diameter;
         public bool IsPaused { get; private set; }
         public bool DoorsOpen { get; private set; }
@@ -71,6 +72,7 @@ namespace Game.Gameplay.Model
             Level = level ?? throw new ArgumentNullException(nameof(level));
             if (level.RulesFingerprint != rules.Fingerprint)
                 throw new ArgumentException("Level was generated with different rules.", nameof(level));
+
             AttemptId = attemptId;
             _field = level.CreateField();
             Diameter = rules.D0;
@@ -80,22 +82,26 @@ namespace Game.Gameplay.Model
         public bool IsAlive(int crystalId) => _field.IsAlive(crystalId);
         public int AliveCount => _field.AliveCount;
 
-        /// <summary>Leaves preparation with the first automatic advance.</summary>
         public ActionRequest Start()
         {
-            if (Phase != AttemptPhase.Preparing) throw new InvalidOperationException("Attempt already started.");
+            if (Phase != AttemptPhase.Preparing)
+                throw new InvalidOperationException("Attempt already started.");
+
             return BeginAdvance();
         }
 
         public void SetPaused(bool paused)
         {
             IsPaused = paused;
-            if (paused && Phase == AttemptPhase.Charging) CancelCharge();
+            if (paused && Phase == AttemptPhase.Charging)
+                CancelCharge();
         }
 
         public bool BeginCharge()
         {
-            if (!CanBeginCharge || !Rules.CanAffordMinShot(Diameter)) return false;
+            if (!CanBeginCharge || !Rules.CanAffordMinShot(Diameter))
+                return false;
+
             _chargeStartDiameter = Diameter;
             HoldSeconds = 0;
             Phase = AttemptPhase.Charging;
@@ -103,19 +109,23 @@ namespace Game.Gameplay.Model
             return true;
         }
 
-        /// <summary>Grows the charge. Returns false once the charge has caused a defeat.</summary>
         public bool TickCharge(double deltaSeconds)
         {
-            if (Phase != AttemptPhase.Charging) return false;
-            if (IsPaused || !(deltaSeconds > 0)) return true;
+            if (Phase != AttemptPhase.Charging)
+                return false;
+
+            if (IsPaused || !(deltaSeconds > 0))
+                return true;
+
             HoldSeconds += deltaSeconds;
             return ApplyCharge();
         }
 
-        /// <summary>Validator entry: sets the exact hold duration of the current charge.</summary>
         public bool SetHold(double holdSeconds)
         {
-            if (Phase != AttemptPhase.Charging) return false;
+            if (Phase != AttemptPhase.Charging)
+                return false;
+
             HoldSeconds = Math.Max(0, holdSeconds);
             return ApplyCharge();
         }
@@ -123,17 +133,20 @@ namespace Game.Gameplay.Model
         private bool ApplyCharge()
         {
             Diameter = _chargeStartDiameter - Rules.ChargeCost(HoldSeconds);
-            if (!Rules.IsCritical(Diameter)) return true;
+            if (!Rules.IsCritical(Diameter))
+                return true;
+
             // Reaching Dcrit while holding is a defeat at once; nothing is refunded.
             Diameter = Rules.Dcrit;
             BeginDefeat(DefeatReason.Overcharge);
             return false;
         }
 
-        /// <summary>Restores exactly the size invested since this hold began.</summary>
         public bool CancelCharge()
         {
-            if (Phase != AttemptPhase.Charging) return false;
+            if (Phase != AttemptPhase.Charging)
+                return false;
+
             Diameter = _chargeStartDiameter;
             HoldSeconds = 0;
             Phase = AttemptPhase.Waiting;
@@ -143,10 +156,11 @@ namespace Game.Gameplay.Model
         public ShotPlan PreviewShot() =>
             Phase == AttemptPhase.Charging ? ShotRules.ComputeShot(Rules, _field, AnchorZ, _chargeStartDiameter, HoldSeconds) : null;
 
-        /// <summary>Fixes the shot outcome. The resource is spent from here on.</summary>
         public ActionRequest ReleaseCharge()
         {
-            if (Phase != AttemptPhase.Charging || IsPaused) return null;
+            if (Phase != AttemptPhase.Charging || IsPaused)
+                return null;
+
             var plan = ShotRules.ComputeShot(Rules, _field, AnchorZ, _chargeStartDiameter, HoldSeconds);
             Diameter = plan.DiameterAfter;
             ShotsFired++;
@@ -156,10 +170,14 @@ namespace Game.Gameplay.Model
 
         public bool ConfirmImpact(int attemptId, int actionId)
         {
-            if (!Accept(attemptId, actionId, ActionKind.Shot, AttemptPhase.Shooting)) return false;
+            if (!Accept(attemptId, actionId, ActionKind.Shot, AttemptPhase.Shooting))
+                return false;
+
             var plan = Pending.Shot;
-            foreach (var id in plan.HitIds) _field.Kill(id);
-            if (plan.HitIds.Count > 0) CrystalsKilled?.Invoke(plan.HitIds.Count);
+            foreach (var id in plan.HitIds)
+                _field.Kill(id);
+            if (plan.HitIds.Count > 0)
+                CrystalsKilled?.Invoke(plan.HitIds.Count);
             Phase = AttemptPhase.Clearing;
             Pending = Issue(ActionKind.Clearing, shot: plan);
             return true;
@@ -167,15 +185,18 @@ namespace Game.Gameplay.Model
 
         public bool ConfirmClearing(int attemptId, int actionId)
         {
-            if (!Accept(attemptId, actionId, ActionKind.Clearing, AttemptPhase.Clearing)) return false;
+            if (!Accept(attemptId, actionId, ActionKind.Clearing, AttemptPhase.Clearing))
+                return false;
+
             Pending = BeginAdvance();
             return true;
         }
 
-        /// <summary>Progress along the current advance, measured on the route (body height is ignored).</summary>
         public bool ReportProgress(int attemptId, int actionId, double z)
         {
-            if (attemptId != AttemptId || Pending == null || Pending.ActionId != actionId || Pending.Kind != ActionKind.Advance) return false;
+            if (attemptId != AttemptId || Pending == null || Pending.ActionId != actionId || Pending.Kind != ActionKind.Advance)
+                return false;
+
             var plan = Pending.Advance;
             ProgressZ = Math.Max(ProgressZ, Math.Min(Math.Max(z, plan.FromZ), plan.ToZ));
             UpdateDoors();
@@ -184,7 +205,9 @@ namespace Game.Gameplay.Model
 
         public bool ConfirmMove(int attemptId, int actionId)
         {
-            if (!Accept(attemptId, actionId, ActionKind.Advance, AttemptPhase.Moving)) return false;
+            if (!Accept(attemptId, actionId, ActionKind.Advance, AttemptPhase.Moving))
+                return false;
+
             var plan = Pending.Advance;
             AnchorZ = ProgressZ = plan.ToZ;
             UpdateDoors();
@@ -193,7 +216,8 @@ namespace Game.Gameplay.Model
                 Phase = AttemptPhase.Won;
                 Pending = null;
             }
-            else if (!Rules.CanAffordMinShot(Diameter)) BeginDefeat(DefeatReason.OutOfResource, plan);
+            else if (!Rules.CanAffordMinShot(Diameter))
+                BeginDefeat(DefeatReason.OutOfResource, plan);
             else
             {
                 Phase = AttemptPhase.Waiting;
@@ -204,13 +228,14 @@ namespace Game.Gameplay.Model
 
         public bool ConfirmDefeat(int attemptId, int actionId)
         {
-            if (!Accept(attemptId, actionId, ActionKind.Defeat, AttemptPhase.DefeatAnimation)) return false;
+            if (!Accept(attemptId, actionId, ActionKind.Defeat, AttemptPhase.DefeatAnimation))
+                return false;
+
             Phase = AttemptPhase.Lost;
             Pending = null;
             return true;
         }
 
-        /// <summary>Current corridor check from the confirmed position; used by previews and the defeat hop.</summary>
         public AdvancePlan PeekAdvance() => ShotRules.ComputeAdvance(Rules, _field, AnchorZ, Diameter);
 
         private ActionRequest BeginAdvance()
@@ -242,16 +267,19 @@ namespace Game.Gameplay.Model
 
         private void UpdateDoors()
         {
-            if (DoorsOpen || Level.FinishZ - ProgressZ > Rules.Values.DoorOpenDistance + Rules.Tolerance) return;
+            if (DoorsOpen || Level.FinishZ - ProgressZ > Rules.Values.DoorOpenDistance + Rules.Tolerance)
+                return;
+
             DoorsOpen = true;
             DoorsOpened?.Invoke();
         }
 
-        /// <summary>Ids of live crystals, ascending; used by tests and diagnostics.</summary>
         public List<int> AliveIds()
         {
             var ids = new List<int>();
-            for (var i = 0; i < _field.Count; i++) if (_field.IsAlive(i)) ids.Add(i);
+            for (var i = 0; i < _field.Count; i++)
+                if (_field.IsAlive(i))
+                    ids.Add(i);
             return ids;
         }
     }

@@ -1,3 +1,4 @@
+#if GAME_DEBUG
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Game.Integration.Game;
@@ -12,16 +13,24 @@ namespace Game.Gameplay.Editor
     {
         private const string Menu = "Tools/Ball Game/Gameplay/Play Mode/";
 
-        public static GameplayController Find()
+        public static IGameplayDebug Find()
+        {
+            return Resolve<IGameplayDebug>();
+        }
+
+        private static T Resolve<T>() where T : class
         {
             var scope = Object.FindFirstObjectByType<GameScope>();
-            return scope != null && scope.Container != null ? scope.Container.Resolve<GameplayController>() : null;
+            if (scope == null || scope.Container == null)
+                return null;
+
+            return scope.Container.Resolve<T>();
         }
 
         [MenuItem(Menu + "Autoplay Control Plan")] private static void Control() => Run(AutoplayMode.ControlPlan);
         [MenuItem(Menu + "Autoplay Overcharge Defeat")] private static void Overcharge() => Run(AutoplayMode.Overcharge);
         [MenuItem(Menu + "Autoplay Out Of Resource Defeat")] private static void Starve() => Run(AutoplayMode.Starve);
-        [MenuItem(Menu + "Restart (New Seed)")] private static void Restart() => Find()?.Restart();
+        [MenuItem(Menu + "Restart (New Seed)")] private static void Restart() => Resolve<GameplayFlow>()?.Restart();
         [MenuItem(Menu + "Record Video/Victory (seed 424242)")] private static void RecordVictory() => Record(AutoplayMode.ControlPlan, DemoSeed, "victory").Forget();
         [MenuItem(Menu + "Record Video/Defeat (seed 424242)")] private static void RecordDefeat() => Record(AutoplayMode.Starve, DemoSeed, "defeat").Forget();
 
@@ -43,7 +52,6 @@ namespace Game.Gameplay.Editor
             RunAsync(gameplay, mode).Forget();
         }
 
-        /// <summary>Replays a seed with the autoplay and writes fixed-rate frames to Builds/Video/frames_{name}.</summary>
         public static async UniTaskVoid Record(AutoplayMode mode, int seed, string name)
         {
             var gameplay = Find();
@@ -51,7 +59,7 @@ namespace Game.Gameplay.Editor
             var recorder = new GameObject("Frame Recorder").AddComponent<Game.Gameplay.View.FrameRecorder>();
             try
             {
-                gameplay.RestartWithSeed(seed);
+                gameplay.PlaySeed(seed);
                 recorder.Begin(System.IO.Path.Combine(VideoFolder, "frames_" + name));
                 var result = await GameplayAutoplay.PlayAsync(gameplay, mode, CancellationToken.None, thinkSeconds: 0.7f);
                 await UniTask.Delay(System.TimeSpan.FromSeconds(3), DelayType.DeltaTime);
@@ -61,10 +69,6 @@ namespace Game.Gameplay.Editor
             finally { Object.Destroy(recorder.gameObject); }
         }
 
-        /// <summary>
-        /// Debug: after the next victory, renders the game camera into PNGs at fixed game times (no UI), so the finish
-        /// dive can be checked frame by frame regardless of Editor focus or command latency.
-        /// </summary>
         public static async UniTaskVoid CaptureVictoryFramesAsync(string folder, float step, int count)
         {
             var gameplay = Find();
@@ -72,7 +76,7 @@ namespace Game.Gameplay.Editor
             System.IO.Directory.CreateDirectory(folder);
             var context = gameplay.Current;
             await UniTask.WaitUntil(() => context.Model.Phase == Game.Gameplay.Model.AttemptPhase.Won);
-            var camera = gameplay.Stage.CameraRig.Camera;
+            var camera = Resolve<Game.Gameplay.View.GameplayStage>().CameraRig.Camera;
             var target = new RenderTexture(428, 926, 24);
             var read = new Texture2D(428, 926, TextureFormat.RGB24, false);
             var elapsed = 0f;
@@ -96,7 +100,7 @@ namespace Game.Gameplay.Editor
             Debug.Log("[Gameplay] victory frames written to " + folder);
         }
 
-        private static async UniTaskVoid RunAsync(GameplayController gameplay, AutoplayMode mode)
+        private static async UniTaskVoid RunAsync(IGameplayDebug gameplay, AutoplayMode mode)
         {
             try
             {
@@ -107,3 +111,4 @@ namespace Game.Gameplay.Editor
         }
     }
 }
+#endif

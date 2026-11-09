@@ -11,6 +11,7 @@ namespace Game.Gameplay.Editor
     public static class CrystalTransitionAtlasBuilder
     {
         public const string AtlasPath = "Assets/_Game/Architecture/Application/Loading/CrystalTransitionAtlas.png";
+        private const string TransitionMaterialPath = "Assets/_Game/Architecture/Application/Loading/CrystalTransition.mat";
         private const int TileSize = 256;
         private const int Columns = 4;
         private const int Rows = 2;
@@ -49,7 +50,7 @@ namespace Game.Gameplay.Editor
             importer.maxTextureSize = 1024;
             importer.SaveAndReimport();
 
-            var material = AssetDatabase.LoadAssetAtPath<Material>(SceneFlowInstaller.TransitionMaterialPath);
+            var material = AssetDatabase.LoadAssetAtPath<Material>(TransitionMaterialPath);
             if (material)
             {
                 material.SetTexture("_CrystalAtlas", AssetDatabase.LoadAssetAtPath<Texture2D>(AtlasPath));

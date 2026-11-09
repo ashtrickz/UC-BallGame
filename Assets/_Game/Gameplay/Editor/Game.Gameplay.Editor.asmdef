@@ -4,7 +4,6 @@
     "references": [
         "Game.Gameplay",
         "Game.Gameplay.View",
-        "Game.Integration",
         "Game.Application",
         "Game.Foundation",
         "VContainer",
@@ -16,7 +15,13 @@
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.Addressables",
         "Unity.Addressables.Editor",
-        "Unity.ResourceManager"
+        "Unity.ResourceManager",
+        "Game.Services",
+        "Game.Features.Game",
+        "Game.Features.Menu",
+        "Game.Composition",
+        "Game.Debug",
+        "Game.Gameplay.Config"
     ],
     "includePlatforms": [
         "Editor"

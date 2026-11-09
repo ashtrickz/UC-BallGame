@@ -1,3 +1,4 @@
+using Game.Foundation;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,8 +16,13 @@ namespace Game.Editor
         private const string SpecPath = "Art/Audio/Selected/library.json";
         private const string ClipFolder = "Assets/_Game/Audio/Selected";
 
-        [Serializable] private sealed class Specification { public Cue[] sounds; }
-        [Serializable] private sealed class Cue
+        [Serializable]
+        private sealed class Specification
+        {
+            public Cue[] sounds;
+        }
+        [Serializable]
+        private sealed class Cue
         {
             public string id, group;
             public string[] clips;
@@ -52,12 +58,14 @@ namespace Game.Editor
             foreach (var cue in spec.sounds)
             {
                 var id = (GameSound)Enum.Parse(typeof(GameSound), cue.id);
-                if (sounds.Exists(sound => sound != null && sound.id == id)) continue;
+                if (sounds.Exists(sound => sound != null && sound.id == id))
+                    continue;
                 var clips = new List<AudioClip>();
                 foreach (var path in cue.clips)
                 {
                     var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
-                    if (clip == null) throw new FileNotFoundException("Selected audio clip is missing: " + path);
+                    if (clip == null)
+                        throw new FileNotFoundException("Selected audio clip is missing: " + path);
                     clips.Add(clip);
                 }
                 var definition = new SoundDefinition
@@ -84,7 +92,7 @@ namespace Game.Editor
             AssetDatabase.SaveAssetIfDirty(library);
             Selection.activeObject = library;
             EditorGUIUtility.PingObject(library);
-            Debug.Log("Selected AudioLibrary installed: " + AssetPath);
+            GameLog.Info("Selected AudioLibrary installed: " + AssetPath);
         }
     }
 }

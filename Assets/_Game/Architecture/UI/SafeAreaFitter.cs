@@ -1,55 +1,74 @@
+using System;
 using UnityEngine;
 
 namespace Game.UI
 {
+    /// <summary>Fits its anchors to the screen service snapshot when layout changes.</summary>
     [RequireComponent(typeof(RectTransform))]
     public sealed class SafeAreaFitter : MonoBehaviour
     {
         private RectTransform _rectTransform;
-        private Rect _lastSafeArea;
-        private Vector2Int _lastScreenSize;
+        private IScreenService _screen;
+        private bool _subscribed;
 
         private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
+        }
+
+        public void BindScreen(IScreenService screen)
+        {
+            if (screen == null)
+                throw new ArgumentNullException(nameof(screen));
+
+            if (ReferenceEquals(_screen, screen))
+                return;
+
+            Unsubscribe();
+            _screen = screen;
+            if (isActiveAndEnabled)
+                Subscribe();
             Apply();
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            var screenSize = new Vector2Int(
-                Screen.width,
-                Screen.height
-            );
+            Subscribe();
+            Apply();
+        }
 
-            if (_lastSafeArea != Screen.safeArea ||
-                _lastScreenSize != screenSize)
-            {
-                Apply();
-            }
+        private void OnDisable() => Unsubscribe();
+        private void OnDestroy() => Unsubscribe();
+
+        private void Subscribe()
+        {
+            if (_screen == null || _subscribed)
+                return;
+
+            _screen.SafeAreaChanged += Apply;
+            _subscribed = true;
+        }
+
+        private void Unsubscribe()
+        {
+            if (!_subscribed)
+                return;
+
+            _screen.SafeAreaChanged -= Apply;
+            _subscribed = false;
         }
 
         private void Apply()
         {
-            if (Screen.width <= 0 || Screen.height <= 0) return;
-            Rect safeArea = Screen.safeArea;
+            if (_screen == null || _screen.Size.x <= 0 || _screen.Size.y <= 0)
+                return;
 
-            _lastSafeArea = safeArea;
-            _lastScreenSize = new Vector2Int(
-                Screen.width,
-                Screen.height
-            );
-
-            _rectTransform.anchorMin = new Vector2(
-                safeArea.xMin / Screen.width,
-                safeArea.yMin / Screen.height
-            );
-
-            _rectTransform.anchorMax = new Vector2(
-                safeArea.xMax / Screen.width,
-                safeArea.yMax / Screen.height
-            );
-
+            if (_rectTransform == null)
+                _rectTransform = GetComponent<RectTransform>();
+            var safeArea = _screen.SafeArea;
+            var size = _screen.Size;
+            _rectTransform.anchorMin = new Vector2(safeArea.xMin / size.x, safeArea.yMin / size.y);
+            _rectTransform.anchorMax = new Vector2(safeArea.xMax / size.x, safeArea.yMax / size.y);
             _rectTransform.offsetMin = Vector2.zero;
             _rectTransform.offsetMax = Vector2.zero;
         }

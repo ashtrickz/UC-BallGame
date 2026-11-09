@@ -15,7 +15,32 @@ namespace Game.Gameplay.Generation
     public sealed class WallGenerator
     {
         public const int Version = 1;
-        private const int StreamFill = 11, StreamLayout = 12;
+        private const int StreamFill = 11;
+        private const int StreamLayout = 12;
+        private const double MinFill = 0.12;
+        private const double FillShrink = 0.82;
+        private const double FillGrowth = 1.15;
+        private const int CheapCandidateShare = 2;
+        private const double ThinStart = 0.2;
+        private const double ThinStep = 0.05;
+        private const double Epsilon = 1e-9;
+        private const double WavePhaseMax = 6.283;
+        private const double WavePeriodMin = 2.2;
+        private const double WavePeriodMax = 3.4;
+        private const double FieldStartZ = -2.0;
+        private const double DoorRowClearance = 0.6;
+        private const double RowStep = 0.866;
+        private const double RowOffset = 0.5;
+        private const double CoreChanceBase = 0.78;
+        private const double CoreChanceWave = 0.3;
+        private const double StartClearZ = 1.0;
+        private const double StartClearPadding = 0.6;
+        private const double DoorFrameDepth = 1.8;
+        private const double DoorFrameHalfWidth = 2.6;
+        private const double TriangleScale = 4;
+        private const double TriangleCenter = 0.5;
+        private const double SmoothA = 1.5;
+        private const double SmoothB = 0.5;
 
         public LevelData Generate(GameRules baseRules, WallValues wall, int seed, out GameRules rules)
         {
@@ -28,21 +53,29 @@ namespace Game.Gameplay.Generation
             for (var candidate = 0; candidate < candidates; candidate++)
             {
                 var level = TryBuild(rules, wall, seed, candidate, fill, false, out failure);
-                if (level == null) { fill = Math.Max(0.12, fill * 0.82); continue; }
-                if (level.Control.TotalCost + rules.Tolerance < lowerSpend && candidate < candidates / 2)
+                if (level == null)
                 {
-                    if (cheapest == null || level.Control.TotalCost > cheapest.Control.TotalCost) cheapest = level;
-                    fill = Math.Min(1, fill * 1.15);
+                    fill = Math.Max(MinFill, fill * FillShrink);
+                    continue;
+                }
+                if (level.Control.TotalCost + rules.Tolerance < lowerSpend && candidate < candidates / CheapCandidateShare)
+                {
+                    if (cheapest == null || level.Control.TotalCost > cheapest.Control.TotalCost)
+                        cheapest = level;
+                    fill = Math.Min(1, fill * FillGrowth);
                     continue;
                 }
                 return level;
             }
-            if (cheapest != null) return cheapest;
+            if (cheapest != null)
+                return cheapest;
+
             // Simplified, still proven: an ever thinner core until the plan fits (an empty core always does).
-            for (var thin = 0.2; thin >= -1e-9; thin -= 0.05)
+            for (var thin = ThinStart; thin >= -Epsilon; thin -= ThinStep)
             {
                 var level = TryBuild(rules, wall, seed, candidates, Math.Max(0, thin), true, out _);
-                if (level != null) return level;
+                if (level != null)
+                    return level;
             }
             throw new InvalidOperationException("Wall generator could not build a passable wall: " + failure);
         }
@@ -54,9 +87,15 @@ namespace Game.Gameplay.Generation
             var report = new GenerationReport(candidate + 1, fallback, $"wall v{Version} {wall.Fingerprint()} core fill {coreFill:0.00}");
             var draft = new LevelData(seed, Version, rules, placements, null, report, "Wall");
             var holds = LevelGenerator.PlanControl(rules, draft, out failure);
-            if (holds == null) return null;
+            if (holds == null)
+                return null;
+
             var replay = ControlReplay.Run(rules, draft, holds);
-            if (!replay.Success) { failure = replay.Failure; return null; }
+            if (!replay.Success)
+            {
+                failure = replay.Failure;
+                return null;
+            }
             return new LevelData(seed, Version, rules, placements, new ControlPlan(holds, replay.Spent, replay.FinalDiameter), report, "Wall");
         }
 
@@ -67,12 +106,12 @@ namespace Game.Gameplay.Generation
             var doorZ = rules.DoorZ;
             var wallEnd = doorZ - wall.WallEndBeforeDoor;
             // Density wave along the route: denser bands and thinner pockets, so the wall has a shape to read.
-            var phase = rng.Range(0, 6.283);
-            var period = rng.Range(2.2, 3.4);
+            var phase = rng.Range(0, WavePhaseMax);
+            var period = rng.Range(WavePeriodMin, WavePeriodMax);
             var row = 0;
-            for (var z = -2.0; z < doorZ - 0.6; z += wall.Spacing * 0.866, row++)
+            for (var z = FieldStartZ; z < doorZ - DoorRowClearance; z += wall.Spacing * RowStep, row++)
             {
-                var offset = (row & 1) * wall.Spacing * 0.5;
+                var offset = (row & 1) * wall.Spacing * RowOffset;
                 for (var x = -wall.FieldHalfWidth + offset; x <= wall.FieldHalfWidth; x += wall.Spacing)
                 {
                     var px = x + rng.Range(-wall.Jitter, wall.Jitter) * wall.Spacing;
@@ -85,16 +124,24 @@ namespace Game.Gameplay.Generation
                     double chance;
                     if (core)
                     {
-                        if (pz < wall.WallStartZ || pz > wallEnd) continue; // free start and approach to the doors
-                        chance = coreFill * (0.78 + 0.3 * Wave(pz, phase, period));
+                        if (pz < wall.WallStartZ || pz > wallEnd) // free start and approach to the doors
+                            continue;
+
+                        chance = coreFill * (CoreChanceBase + CoreChanceWave * Wave(pz, phase, period));
                     }
                     else
                     {
-                        if (pz < 1.0 && Math.Abs(px) < wall.CoreHalfWidth + 0.6) continue; // keep the start readable
-                        if (pz > doorZ - 1.8 && Math.Abs(px) < 2.6) continue;              // keep the door frame clear
+                        if (pz < StartClearZ && Math.Abs(px) < wall.CoreHalfWidth + StartClearPadding) // keep the start readable
+                            continue;
+
+                        if (pz > doorZ - DoorFrameDepth && Math.Abs(px) < DoorFrameHalfWidth) // keep the door frame clear
+                            continue;
+
                         chance = wall.SideFill;
                     }
-                    if (roll >= chance) continue;
+                    if (roll >= chance)
+                        continue;
+
                     var position = new Vec2(px, pz);
                     var contour = rules.Variants[variant].Hull.Transformed(rotation, scale, position);
                     result.Add(new CrystalPlacement(result.Count, variant, position, rotation, scale,
@@ -104,13 +151,13 @@ namespace Game.Gameplay.Generation
             return result;
         }
 
-        /// <summary>Smooth deterministic wave in [-1, 1] built from a fixed polynomial (no platform trigonometry).</summary>
         private static double Wave(double z, double phase, double period)
         {
             var t = (z + phase) / period;
-            var f = t - Math.Floor(t);           // 0..1
-            var tri = 1 - 4 * Math.Abs(f - 0.5); // triangle −1..1
-            return tri * (1.5 - 0.5 * tri * tri); // smoothed
+            var f = t - Math.Floor(t); // 0..1
+            var tri = 1 - TriangleScale * Math.Abs(f - TriangleCenter); // triangle -1..1
+
+            return tri * (SmoothA - SmoothB * tri * tri); // smoothed
         }
     }
 }

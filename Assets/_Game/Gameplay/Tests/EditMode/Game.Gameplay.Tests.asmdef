@@ -1,7 +1,8 @@
 {
     "name": "Game.Gameplay.Tests",
     "references": [
-        "Game.Gameplay"
+        "Game.Gameplay",
+        "Game.Gameplay.Config"
     ],
     "includePlatforms": [
         "Editor"

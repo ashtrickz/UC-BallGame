@@ -8,7 +8,6 @@ using Game.Foundation;
 using Game.Integration.Menu;
 using Game.UI;
 using Game.Gameplay.Config;
-using Game.Integration.Game;
 using System.Collections.Generic;
 using UnityEngine;
 using NUnit.Framework;
@@ -57,72 +56,84 @@ namespace Game.Foundation.Tests
             public UniTask<TResult> ShowAsync<TPopup, TModel, TResult>(TModel model, CancellationToken token = default) where TPopup : IPopupController<TModel, TResult> => throw new NotSupportedException();
         }
 
-        [UnityTest]
-        public IEnumerator Color_selection_is_saved_and_blocked_while_a_popup_is_open() => UniTask.ToCoroutine(async () =>
+        private static MenuController Controller(View view, GameSession session, IPopupService popups, GameNavigation navigation)
         {
-            var hadColor = PlayerPrefs.HasKey(SlimeColorPreferences.Key);
-            var savedColor = PlayerPrefs.GetString(SlimeColorPreferences.Key);
+            return new MenuController(view, session, popups, new GameLauncher(session, navigation), new ContinueCampaignSelect());
+        }
+
+        [Test]
+        public void Color_selection_is_saved_and_only_while_the_menu_is_shown()
+        {
+            var hadColor = PlayerPrefs.HasKey(PlayerPrefsSlimeColorPreferences.Key);
+            var savedColor = PlayerPrefs.GetString(PlayerPrefsSlimeColorPreferences.Key);
             var config = ScriptableObject.CreateInstance<SlimeGameConfig>();
+            var preferences = new PlayerPrefsSlimeColorPreferences();
             try
             {
-                PlayerPrefs.DeleteKey(SlimeColorPreferences.Key);
+                PlayerPrefs.DeleteKey(PlayerPrefsSlimeColorPreferences.Key);
                 var view = new View();
-                var popups = new Popups();
-                using var navigation = new GameNavigation(new Scenes());
-                using var controller = new MenuController(view, new GameSession(), popups, navigation, config: config);
-                await controller.InitializeAsync();
+                var session = new GameSession();
+                var colors = new SlimeColorController(view, preferences, config, session);
+                colors.Start();
                 Assert.AreEqual(0, view.SelectedColor);
                 view.ChooseColor(3);
                 Assert.AreEqual(3, view.SelectedColor);
-                Assert.AreEqual(config.SlimeColors[3].Id, PlayerPrefs.GetString(SlimeColorPreferences.Key));
-                Assert.AreEqual(3, SlimeColorPreferences.SelectedIndex(config));
+                Assert.AreEqual(config.SlimeColors[3].Id, PlayerPrefs.GetString(PlayerPrefsSlimeColorPreferences.Key));
+                Assert.AreEqual(3, preferences.SelectedIndex(config.SlimeColors));
                 view.ChooseColor(-1);
                 view.ChooseColor(999);
                 Assert.AreEqual(3, view.SelectedColor);
-                view.Settings();
+                session.StartRound(new Game.Gameplay.Levels.WallLevelRequest(null));
                 view.ChooseColor(1);
-                Assert.AreEqual(3, view.SelectedColor);
-                popups.Closed.TrySetResult();
+                Assert.AreEqual(3, view.SelectedColor, "the menu is gone once a round starts");
+                session.ReturnToMenu();
                 view.ChooseColor(1);
                 Assert.AreEqual(1, view.SelectedColor);
-                controller.Dispose();
+                colors.Dispose();
                 view.ChooseColor(4);
-                Assert.AreEqual(1, SlimeColorPreferences.SelectedIndex(config));
+                Assert.AreEqual(1, preferences.SelectedIndex(config.SlimeColors));
             }
             finally
             {
-                if (hadColor) PlayerPrefs.SetString(SlimeColorPreferences.Key, savedColor);
-                else PlayerPrefs.DeleteKey(SlimeColorPreferences.Key);
+                if (hadColor)
+                    PlayerPrefs.SetString(PlayerPrefsSlimeColorPreferences.Key, savedColor);
+                else
+                    PlayerPrefs.DeleteKey(PlayerPrefsSlimeColorPreferences.Key);
+
                 PlayerPrefs.Save();
                 UnityEngine.Object.DestroyImmediate(config);
             }
-        });
+        }
 
         [Test]
         public void Saved_color_survives_config_reordering_and_a_removed_color_falls_back()
         {
-            var hadColor = PlayerPrefs.HasKey(SlimeColorPreferences.Key);
-            var savedColor = PlayerPrefs.GetString(SlimeColorPreferences.Key);
+            var hadColor = PlayerPrefs.HasKey(PlayerPrefsSlimeColorPreferences.Key);
+            var savedColor = PlayerPrefs.GetString(PlayerPrefsSlimeColorPreferences.Key);
             var config = ScriptableObject.CreateInstance<SlimeGameConfig>();
+            var preferences = new PlayerPrefsSlimeColorPreferences();
             try
             {
-                Assert.IsTrue(SlimeColorPreferences.Select(config, 3));
+                Assert.IsTrue(preferences.Select(config.SlimeColors, 3));
                 var serialized = new UnityEditor.SerializedObject(config);
                 serialized.FindProperty("slimeColors").MoveArrayElement(3, 0);
                 serialized.ApplyModifiedPropertiesWithoutUndo();
-                Assert.AreEqual(0, SlimeColorPreferences.SelectedIndex(config));
+                Assert.AreEqual(0, preferences.SelectedIndex(config.SlimeColors));
                 serialized.FindProperty("slimeColors").DeleteArrayElementAtIndex(0);
                 serialized.ApplyModifiedPropertiesWithoutUndo();
-                Assert.AreEqual(0, SlimeColorPreferences.SelectedIndex(config));
+                Assert.AreEqual(0, preferences.SelectedIndex(config.SlimeColors));
                 serialized.FindProperty("slimeColors").arraySize = 0;
                 serialized.ApplyModifiedPropertiesWithoutUndo();
-                Assert.AreEqual(-1, SlimeColorPreferences.SelectedIndex(config));
-                Assert.IsFalse(SlimeColorPreferences.Select(config, 0));
+                Assert.AreEqual(-1, preferences.SelectedIndex(config.SlimeColors));
+                Assert.IsFalse(preferences.Select(config.SlimeColors, 0));
             }
             finally
             {
-                if (hadColor) PlayerPrefs.SetString(SlimeColorPreferences.Key, savedColor);
-                else PlayerPrefs.DeleteKey(SlimeColorPreferences.Key);
+                if (hadColor)
+                    PlayerPrefs.SetString(PlayerPrefsSlimeColorPreferences.Key, savedColor);
+                else
+                    PlayerPrefs.DeleteKey(PlayerPrefsSlimeColorPreferences.Key);
+
                 PlayerPrefs.Save();
                 UnityEngine.Object.DestroyImmediate(config);
             }
@@ -137,7 +148,7 @@ namespace Game.Foundation.Tests
             session.RoundStarted += () => starts++;
             var scenes = new Scenes();
             using var navigation = new GameNavigation(scenes);
-            using var controller = new MenuController(view, session, new Popups(), navigation);
+            using var controller = Controller(view, session, new Popups(), navigation);
             await controller.InitializeAsync();
             await controller.InitializeAsync();
             Assert.IsTrue(view.IsVisible);
@@ -156,7 +167,7 @@ namespace Game.Foundation.Tests
             var session = new GameSession();
             var popups = new Popups();
             using var navigation = new GameNavigation(new Scenes());
-            using var controller = new MenuController(view, session, popups, navigation);
+            using var controller = Controller(view, session, popups, navigation);
             await controller.InitializeAsync();
             view.Settings(); view.Settings(); view.Play();
             Assert.AreEqual(1, popups.Calls);
@@ -174,7 +185,7 @@ namespace Game.Foundation.Tests
             var session = new GameSession();
             var popups = new Popups();
             using var navigation = new GameNavigation(new Scenes());
-            var controller = new MenuController(view, session, popups, navigation);
+            var controller = Controller(view, session, popups, navigation);
             await controller.InitializeAsync();
             view.Settings();
             controller.Dispose(); controller.Dispose();

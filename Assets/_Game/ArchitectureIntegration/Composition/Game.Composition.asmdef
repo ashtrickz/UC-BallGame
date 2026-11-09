@@ -1,0 +1,32 @@
+{
+    "name": "Game.Composition",
+    "rootNamespace": "Game.Integration.Composition",
+    "references": [
+        "Game.Foundation",
+        "Game.Assets",
+        "Game.UI",
+        "Game.Application",
+        "Game.Settings",
+        "Game.Localization",
+        "Game.Audio",
+        "Game.Users",
+        "Game.Gameplay",
+        "Game.Gameplay.Config",
+        "Game.Gameplay.View",
+        "Game.Services",
+        "Game.Features.Game",
+        "Game.Features.Menu",
+        "Game.Debug",
+        "UniTask",
+        "VContainer"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -7,7 +7,6 @@ namespace Game.App.Loading
     /// <summary>The company's intro over the loading screen: the game loads underneath while it plays.</summary>
     public interface IIntroScreen
     {
-        /// <summary>It has ended or been skipped, and the loading screen is fully visible again.</summary>
         bool IsOver { get; }
         UniTask WaitAsync(CancellationToken cancellationToken = default);
     }
@@ -30,9 +29,15 @@ namespace Game.App.Loading
 
         public static async UniTask PassAsync(IIntroScreen intro, Func<CancellationToken, UniTask> settle, CancellationToken cancellationToken = default)
         {
-            if (intro == null) throw new ArgumentNullException(nameof(intro));
-            if (settle == null) throw new ArgumentNullException(nameof(settle));
-            if (intro.IsOver) return;
+            if (intro == null)
+                throw new ArgumentNullException(nameof(intro));
+
+            if (settle == null)
+                throw new ArgumentNullException(nameof(settle));
+
+            if (intro.IsOver)
+                return;
+
             await intro.WaitAsync(cancellationToken);
             await settle(cancellationToken);
         }

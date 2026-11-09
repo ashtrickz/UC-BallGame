@@ -15,6 +15,18 @@ namespace Game.Foundation.Tests
 {
     public sealed partial class AudioServiceTests
     {
+        private static AudioService CreateAudio(ISettingsService settings, IAssetService assets, AudioLibrary library,
+            UnityEngine.Audio.AudioMixer mixer)
+        {
+            var configuration = new AudioReferences(library, mixer, false);
+            var provider = new AudioLibraryProvider(configuration);
+            var variation = new AudioVariation(new AudioRandom());
+            var volumes = new AudioMixerVolumes(settings, provider, configuration);
+            var sources = new AudioSourcePool(volumes);
+            var music = new MusicPlayer(assets, provider, volumes, sources, variation);
+            return new AudioService(assets, provider, sources, music, volumes, variation);
+        }
+
         private sealed class UnusedAssets : IAssetService
         {
             public UniTask<AssetLease<T>> LoadAsync<T>(string key, CancellationToken token = default) where T : UnityEngine.Object =>
@@ -47,7 +59,7 @@ namespace Game.Foundation.Tests
             var previousVsync = QualitySettings.vSyncCount;
             var clip = AudioClip.Create("AudioServiceTest", 44100 * 3, 1, 44100, false);
             var listener = new GameObject("TestListener", typeof(AudioListener));
-            var audio = new AudioService(new SettingsService(new UnitySettingsRuntime(SettingsPack.Mobile)), new UnusedAssets(), null, null);
+            var audio = CreateAudio(new SettingsService(new UnitySettingsRuntime(SettingsPack.Mobile, new LanguageOptionsProvider(), new NullDisplaySettings())), new UnusedAssets(), null, null);
             try
             {
                 await audio.InitializeAsync(default);

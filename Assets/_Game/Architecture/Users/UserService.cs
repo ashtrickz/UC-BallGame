@@ -30,8 +30,12 @@ namespace Game.Users
 
         public void SelectUser(string userId)
         {
-            if (string.IsNullOrWhiteSpace(userId)) throw new ArgumentException("A user ID is required.", nameof(userId));
-            if (UserId == userId) return;
+            if (string.IsNullOrWhiteSpace(userId))
+                throw new ArgumentException("A user ID is required.", nameof(userId));
+
+            if (UserId == userId)
+                return;
+
             var next = _cache.Load(userId)?.Copy() ?? new UserSaveData { UserId = userId };
             next.Validate(userId);
             Commit(next);
@@ -39,10 +43,15 @@ namespace Game.Users
 
         public void Submit(UserChange change)
         {
-            if (_data == null) throw new InvalidOperationException("Initialize or select a user first.");
-            if (change == null) throw new ArgumentNullException(nameof(change));
+            if (_data == null)
+                throw new InvalidOperationException("Initialize or select a user first.");
+
+            if (change == null)
+                throw new ArgumentNullException(nameof(change));
+
             var next = _data.Copy();
-            if (change.PlayerName != null) next.PlayerName = change.PlayerName;
+            if (change.PlayerName != null)
+                next.PlayerName = change.PlayerName;
             next.Gold = checked(next.Gold + change.GoldDelta);
             next.Revision = checked(next.Revision + 1);
             next.Validate(UserId);

@@ -35,7 +35,7 @@ namespace Game.Gameplay.PlayModeTests
             return ProjectScope.Instance;
         }
 
-        private static async UniTask<GameplayController> StartGameAsync()
+        private static async UniTask<GameplayHandle> StartGameAsync()
         {
             var project = await StartMenuAsync();
             project.Container.Resolve<GameSession>().StartRound();
@@ -43,14 +43,14 @@ namespace Game.Gameplay.PlayModeTests
             return await LoadedGameplayAsync();
         }
 
-        private static async UniTask<GameplayController> LoadedGameplayAsync()
+        private static async UniTask<GameplayHandle> LoadedGameplayAsync()
         {
             await UniTask.WaitUntil(() => !ProjectScope.Instance.Container.Resolve<GameNavigation>().IsTransitioning)
                 .Timeout(TimeSpan.FromSeconds(10));
             await UniTask.WaitUntil(() => UnityEngine.Object.FindFirstObjectByType<GameScope>() != null).Timeout(TimeSpan.FromSeconds(10));
             var scope = UnityEngine.Object.FindFirstObjectByType<GameScope>();
             await scope.Ready.Timeout(TimeSpan.FromSeconds(10));
-            var gameplay = scope.Container.Resolve<GameplayController>();
+            var gameplay = new GameplayHandle(scope.Container);
             gameplay.TutorialEnabled = false;
             gameplay.SkipTutorial();
             Assert.IsNotNull(gameplay.Current, "the first attempt exists when the scene is ready");
@@ -65,7 +65,7 @@ namespace Game.Gameplay.PlayModeTests
         public void SaveProgress()
         {
             _savedProgress = PlayerPrefs.HasKey(PlayerPrefsCampaignProgress.Key) ? PlayerPrefs.GetInt(PlayerPrefsCampaignProgress.Key) : (int?)null;
-            _savedColor = PlayerPrefs.HasKey(SlimeColorPreferences.Key) ? PlayerPrefs.GetString(SlimeColorPreferences.Key) : null;
+            _savedColor = PlayerPrefs.HasKey(PlayerPrefsSlimeColorPreferences.Key) ? PlayerPrefs.GetString(PlayerPrefsSlimeColorPreferences.Key) : null;
         }
 
         [TearDown]
@@ -73,8 +73,8 @@ namespace Game.Gameplay.PlayModeTests
         {
             if (_savedProgress.HasValue) PlayerPrefs.SetInt(PlayerPrefsCampaignProgress.Key, _savedProgress.Value);
             else PlayerPrefs.DeleteKey(PlayerPrefsCampaignProgress.Key);
-            if (_savedColor != null) PlayerPrefs.SetString(SlimeColorPreferences.Key, _savedColor);
-            else PlayerPrefs.DeleteKey(SlimeColorPreferences.Key);
+            if (_savedColor != null) PlayerPrefs.SetString(PlayerPrefsSlimeColorPreferences.Key, _savedColor);
+            else PlayerPrefs.DeleteKey(PlayerPrefsSlimeColorPreferences.Key);
             PlayerPrefs.Save();
         }
 
@@ -139,7 +139,7 @@ namespace Game.Gameplay.PlayModeTests
                 project.Container.Resolve<GameSession>().ReturnToMenu();
                 await navigation.OpenAsync(GameNavigation.MenuScene);
                 CheckColors(UnityEngine.Object.FindFirstObjectByType<global::Game.Gameplay.View.SlimeView>(), selected);
-                Assert.AreEqual(swatches.Length - 1, SlimeColorPreferences.SelectedIndex(config));
+                Assert.AreEqual(swatches.Length - 1, new PlayerPrefsSlimeColorPreferences().SelectedIndex(config.SlimeColors));
             }
             finally { await TearDownAsync(); }
         });
@@ -299,7 +299,7 @@ namespace Game.Gameplay.PlayModeTests
                     System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(menu)).onClick.Invoke();
                 var gameplay = await LoadedGameplayAsync();
                 var wall = gameplay.Current;
-                Assert.AreEqual(AttemptMode.Wall, wall.Mode);
+                Assert.IsInstanceOf<global::Game.Gameplay.Levels.WallLevelRequest>(wall.Request);
                 Assert.Greater(wall.Level.Crystals.Count, 200);
 
                 Time.timeScale = 4;
@@ -322,13 +322,13 @@ namespace Game.Gameplay.PlayModeTests
                 session.StartRound(GameMode.Wall);
                 await navigation.OpenAsync(GameNavigation.GameScene);
                 gameplay = await LoadedGameplayAsync();
-                Assert.AreEqual(AttemptMode.Wall, gameplay.Current.Mode);
+                Assert.IsInstanceOf<global::Game.Gameplay.Levels.WallLevelRequest>(gameplay.Current.Request);
                 Assert.AreNotEqual(wall.Seed, gameplay.Current.Seed, "a new wall every time");
                 await navigation.OpenAsync(GameNavigation.MenuScene);
                 session.StartRound(GameMode.Campaign);
                 await navigation.OpenAsync(GameNavigation.GameScene);
                 gameplay = await LoadedGameplayAsync();
-                Assert.AreEqual(AttemptMode.Campaign, gameplay.Current.Mode, "LEVELS starts the campaign");
+                Assert.IsInstanceOf<global::Game.Gameplay.Levels.CampaignLevelRequest>(gameplay.Current.Request, "LEVELS starts the campaign");
             }
             finally { await TearDownAsync(); }
         });
@@ -399,16 +399,16 @@ namespace Game.Gameplay.PlayModeTests
             finally { await TearDownAsync(); }
         });
 
-        private static async UniTask WaitStep(GameplayController gameplay, string step, float seconds = 20)
+        private static async UniTask WaitStep(GameplayHandle gameplay, string step, float seconds = 20)
         {
             await UniTask.WaitUntil(() => gameplay.Tutorial != null && gameplay.Tutorial.Step == step).Timeout(TimeSpan.FromSeconds(seconds));
             await UniTask.Delay(450, ignoreTimeScale: true); // the tap guard of an explanation card
         }
 
-        private static void TapContinue(GameplayController gameplay) =>
+        private static void TapContinue(GameplayHandle gameplay) =>
             gameplay.Stage.Tutorial.transform.Find("Continue").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
 
-        private static async UniTask TapGameAsync(GameplayController gameplay)
+        private static async UniTask TapGameAsync(GameplayHandle gameplay)
         {
             var input = gameplay.Stage.Input;
             input.SetVirtualPointer(false);

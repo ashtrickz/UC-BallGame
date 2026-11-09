@@ -9,6 +9,8 @@ namespace Game.Assets
 {
     public sealed class AssetService : IAssetService, IInitializationStep, IDisposable
     {
+        private const string LoadingKey = "loading.assets";
+
         private readonly IAssetBackend _backend;
         private readonly SynchronizationContext _mainContext;
         private readonly int _mainThread;
@@ -28,7 +30,7 @@ namespace Game.Assets
             _mainThread = Thread.CurrentThread.ManagedThreadId;
         }
 
-        public string Name => "loading.assets";
+        public string Name => LoadingKey;
 
         // Addressables retains initialization state after native failure. Retry has not been
         // demonstrated safe; callers may retry waiting after cancellation, not native failure.
@@ -47,7 +49,8 @@ namespace Game.Assets
         {
             AssertMainThread();
             var snapshots = new List<string>(_requests.Count);
-            foreach (var request in _requests) snapshots.Add(request.Diagnostic);
+            foreach (var request in _requests)
+                snapshots.Add(request.Diagnostic);
             return snapshots.ToArray();
         }
 
@@ -76,8 +79,10 @@ namespace Game.Assets
             var waiter = new UniTaskCompletionSource<bool>();
             using (token.Register(() =>
                    {
-                       if (Thread.CurrentThread.ManagedThreadId == _mainThread) waiter.TrySetCanceled(token);
-                       else _mainContext.Post(_ => waiter.TrySetCanceled(token), null);
+                       if (Thread.CurrentThread.ManagedThreadId == _mainThread)
+                           waiter.TrySetCanceled(token);
+                       else
+                           _mainContext.Post(_ => waiter.TrySetCanceled(token), null);
                    }))
             {
                 ForwardInitializationAsync(shared, waiter, token).Forget(Debug.LogException);
@@ -91,8 +96,10 @@ namespace Game.Assets
             try
             {
                 await shared;
-                if (token.IsCancellationRequested) waiter.TrySetCanceled(token);
-                else waiter.TrySetResult(true);
+                if (token.IsCancellationRequested)
+                    waiter.TrySetCanceled(token);
+                else
+                    waiter.TrySetResult(true);
             }
             catch (Exception error)
             {
@@ -180,7 +187,8 @@ namespace Game.Assets
 
         private void ThrowIfDisposed()
         {
-            if (_disposed) throw new ObjectDisposedException(nameof(AssetService));
+            if (_disposed)
+                throw new ObjectDisposedException(nameof(AssetService));
         }
 
         private interface IRequest
@@ -252,7 +260,8 @@ namespace Game.Assets
                     _completed = true;
                     if (_abandoned || _owner._disposed || _token.IsCancellationRequested)
                     {
-                        if (_token.IsCancellationRequested) Cancel();
+                        if (_token.IsCancellationRequested)
+                            Cancel();
                         Release();
                         return;
                     }
@@ -269,7 +278,8 @@ namespace Game.Assets
                 catch (Exception error)
                 {
                     _completed = true;
-                    if (_token.IsCancellationRequested) Cancel();
+                    if (_token.IsCancellationRequested)
+                        Cancel();
                     else
                         _source.TrySetException(new InvalidOperationException(
                             $"[AssetService] Asset request {_id} failed: key '{_key}', type '{typeof(T).FullName}'.",
@@ -278,8 +288,10 @@ namespace Game.Assets
                 }
                 finally
                 {
-                    if (_operation == null) Release();
-                    if (_lease == null) _registration.Dispose();
+                    if (_operation == null)
+                        Release();
+                    if (_lease == null)
+                        _registration.Dispose();
                 }
             }
 
@@ -298,13 +310,15 @@ namespace Game.Assets
 
             public void Shutdown()
             {
-                if (_lease != null) _lease.Dispose();
+                if (_lease != null)
+                    _lease.Dispose();
                 else
                 {
                     _abandoned = true;
                     _source.TrySetException(new ObjectDisposedException(nameof(AssetService)));
                     _registration.Dispose();
-                    if (_completed) Release();
+                    if (_completed)
+                        Release();
                 }
             }
 

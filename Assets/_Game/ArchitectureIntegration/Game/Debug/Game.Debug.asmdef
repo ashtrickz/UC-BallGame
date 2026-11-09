@@ -1,0 +1,24 @@
+{
+    "name": "Game.Debug",
+    "rootNamespace": "Game.Integration.Game",
+    "references": [
+        "Game.Foundation",
+        "Game.Application",
+        "Game.Gameplay",
+        "Game.Gameplay.View",
+        "Game.Features.Game",
+        "UniTask",
+        "VContainer"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "GAME_DEBUG"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -11,6 +11,12 @@ namespace Game.Gameplay.Geometry
     {
         public const int RotationSteps = 12;
         private const double Sqrt3Half = 0.86602540378443864676;
+        private const int MinVertices = 3;
+        private const double HalfArea = 0.5;
+        private const double DuplicateDistance = 1e-9;
+        private const double CollinearEpsilon = 1e-12;
+        private const int HullSlack = 2;
+        private const float FullTurnDegrees = 360f;
         // Exact constant table: generation never calls trigonometry, so seeds replay bit-for-bit on any CPU.
         private static readonly double[] StepCos = { 1, Sqrt3Half, 0.5, 0, -0.5, -Sqrt3Half, -1, -Sqrt3Half, -0.5, 0, 0.5, Sqrt3Half };
         private static readonly double[] StepSin = { 0, 0.5, Sqrt3Half, 1, Sqrt3Half, 0.5, 0, -0.5, -Sqrt3Half, -1, -Sqrt3Half, -0.5 };
@@ -18,22 +24,30 @@ namespace Game.Gameplay.Geometry
         private readonly Vec2[] _vertices;
         public IReadOnlyList<Vec2> Vertices => _vertices;
         public int Count => _vertices.Length;
-        /// <summary>Average of the vertices; used with <see cref="BoundingRadius"/> as a broad phase.</summary>
         public Vec2 Center { get; }
         public double BoundingRadius { get; }
 
         public ConvexPolygon(IReadOnlyList<Vec2> counterClockwiseVertices)
         {
-            if (counterClockwiseVertices == null || counterClockwiseVertices.Count < 3)
+            if (counterClockwiseVertices == null || counterClockwiseVertices.Count < MinVertices)
                 throw new ArgumentException("A convex polygon needs at least three vertices.");
+
             _vertices = new Vec2[counterClockwiseVertices.Count];
-            for (var i = 0; i < _vertices.Length; i++) _vertices[i] = counterClockwiseVertices[i];
-            if (SignedArea(_vertices) <= 0) throw new ArgumentException("Polygon must be counter-clockwise with positive area.");
+            for (var i = 0; i < _vertices.Length; i++)
+                _vertices[i] = counterClockwiseVertices[i];
+            if (SignedArea(_vertices) <= 0)
+                throw new ArgumentException("Polygon must be counter-clockwise with positive area.");
+
             double cx = 0, cz = 0;
-            foreach (var v in _vertices) { cx += v.X; cz += v.Z; }
+            foreach (var v in _vertices)
+            {
+                cx += v.X;
+                cz += v.Z;
+            }
             Center = new Vec2(cx / _vertices.Length, cz / _vertices.Length);
             double r = 0;
-            foreach (var v in _vertices) r = Math.Max(r, Vec2.Distance(v, Center));
+            foreach (var v in _vertices)
+                r = Math.Max(r, Vec2.Distance(v, Center));
             BoundingRadius = r;
         }
 
@@ -42,28 +56,32 @@ namespace Game.Gameplay.Geometry
             double area = 0;
             for (var i = 0; i < points.Count; i++)
                 area += Vec2.Cross(points[i], points[(i + 1) % points.Count]);
-            return area * 0.5;
+            return area * HalfArea;
         }
 
-        /// <summary>Monotone-chain convex hull; collinear points are dropped. Result is counter-clockwise.</summary>
         public static ConvexPolygon Hull(IEnumerable<Vec2> points)
         {
             var list = new List<Vec2>(points);
             list.Sort((a, b) => a.X != b.X ? a.X.CompareTo(b.X) : a.Z.CompareTo(b.Z));
             var unique = new List<Vec2>(list.Count);
             foreach (var p in list)
-                if (unique.Count == 0 || Vec2.Distance(unique[unique.Count - 1], p) > 1e-9) unique.Add(p);
-            if (unique.Count < 3) throw new ArgumentException("Hull needs at least three distinct points.");
-            var hull = new Vec2[unique.Count * 2];
+                if (unique.Count == 0 || Vec2.Distance(unique[unique.Count - 1], p) > DuplicateDistance)
+                    unique.Add(p);
+            if (unique.Count < MinVertices)
+                throw new ArgumentException("Hull needs at least three distinct points.");
+
+            var hull = new Vec2[unique.Count * HullSlack];
             var k = 0;
             for (var i = 0; i < unique.Count; i++)
             {
-                while (k >= 2 && Vec2.Cross(hull[k - 1] - hull[k - 2], unique[i] - hull[k - 2]) <= 1e-12) k--;
+                while (k >= HullSlack && Vec2.Cross(hull[k - 1] - hull[k - HullSlack], unique[i] - hull[k - HullSlack]) <= CollinearEpsilon)
+                    k--;
                 hull[k++] = unique[i];
             }
-            for (int i = unique.Count - 2, lower = k + 1; i >= 0; i--)
+            for (int i = unique.Count - HullSlack, lower = k + 1; i >= 0; i--)
             {
-                while (k >= lower && Vec2.Cross(hull[k - 1] - hull[k - 2], unique[i] - hull[k - 2]) <= 1e-12) k--;
+                while (k >= lower && Vec2.Cross(hull[k - 1] - hull[k - HullSlack], unique[i] - hull[k - HullSlack]) <= CollinearEpsilon)
+                    k--;
                 hull[k++] = unique[i];
             }
             var result = new Vec2[k - 1];
@@ -71,10 +89,8 @@ namespace Game.Gameplay.Geometry
             return new ConvexPolygon(result);
         }
 
-        /// <summary>Yaw in degrees matching Unity's <c>Quaternion.Euler(0, yaw, 0)</c> for a rotation step.</summary>
-        public static float YawDegrees(int rotationStep) => Mod(rotationStep, RotationSteps) * (360f / RotationSteps);
+        public static float YawDegrees(int rotationStep) => Mod(rotationStep, RotationSteps) * (FullTurnDegrees / RotationSteps);
 
-        /// <summary>Rotates a local point exactly like a Unity yaw rotation, then scales and offsets it.</summary>
         public static Vec2 TransformPoint(Vec2 local, int rotationStep, double scale, Vec2 offset)
         {
             var i = Mod(rotationStep, RotationSteps);
@@ -85,9 +101,12 @@ namespace Game.Gameplay.Geometry
 
         public ConvexPolygon Transformed(int rotationStep, double scale, Vec2 offset)
         {
-            if (!(scale > 0)) throw new ArgumentOutOfRangeException(nameof(scale));
+            if (!(scale > 0))
+                throw new ArgumentOutOfRangeException(nameof(scale));
+
             var points = new Vec2[_vertices.Length];
-            for (var i = 0; i < points.Length; i++) points[i] = TransformPoint(_vertices[i], rotationStep, scale, offset);
+            for (var i = 0; i < points.Length; i++)
+                points[i] = TransformPoint(_vertices[i], rotationStep, scale, offset);
             // Rotation and uniform positive scale keep the winding, so the order stays counter-clockwise.
             return new ConvexPolygon(points);
         }
@@ -98,36 +117,39 @@ namespace Game.Gameplay.Geometry
             {
                 var a = _vertices[i];
                 var b = _vertices[(i + 1) % _vertices.Length];
-                if (Vec2.Cross(b - a, p - a) < 0) return false;
+                if (Vec2.Cross(b - a, p - a) < 0)
+                    return false;
             }
             return true;
         }
 
-        /// <summary>Closest point on the polygon (boundary or interior) to <paramref name="p"/>.</summary>
         public Vec2 ClosestPoint(Vec2 p)
         {
-            if (Contains(p)) return p;
+            if (Contains(p))
+                return p;
+
             var best = _vertices[0];
             var bestDistance = double.MaxValue;
             for (var i = 0; i < _vertices.Length; i++)
             {
                 var candidate = ClosestOnSegment(p, _vertices[i], _vertices[(i + 1) % _vertices.Length]);
                 var d = (candidate - p).LengthSquared;
-                if (d < bestDistance) { bestDistance = d; best = candidate; }
+                if (d < bestDistance)
+                {
+                    bestDistance = d;
+                    best = candidate;
+                }
             }
             return best;
         }
 
-        /// <summary>Distance from a point to the filled polygon (zero inside).</summary>
         public double DistanceTo(Vec2 p) => Vec2.Distance(ClosestPoint(p), p);
 
-        /// <summary>
-        /// First distance along a unit direction at which a circle of <paramref name="radius"/> centred on
-        /// the ray touches the polygon, or <see cref="double.PositiveInfinity"/>. Zero if it already touches.
-        /// </summary>
         public double SweepCircle(Vec2 origin, Vec2 direction, double radius, double maxDistance, double tolerance)
         {
-            if (DistanceTo(origin) <= radius + tolerance) return 0;
+            if (DistanceTo(origin) <= radius + tolerance)
+                return 0;
+
             var best = double.PositiveInfinity;
             for (var i = 0; i < _vertices.Length; i++)
             {
@@ -135,7 +157,9 @@ namespace Game.Gameplay.Geometry
                 var b = _vertices[(i + 1) % _vertices.Length];
                 var edge = b - a;
                 var length = edge.Length;
-                if (length <= 0) continue;
+                if (length <= 0)
+                    continue;
+
                 var normal = new Vec2(edge.Z / length, -edge.X / length); // outward for a CCW polygon
                 var approach = Vec2.Dot(direction, normal);
                 if (approach < 0)
@@ -146,7 +170,8 @@ namespace Game.Gameplay.Geometry
                     {
                         var hit = origin + direction * t;
                         var u = Vec2.Dot(hit - shiftedA, edge) / (length * length);
-                        if (u >= 0 && u <= 1) best = t;
+                        if (u >= 0 && u <= 1)
+                            best = t;
                     }
                 }
                 // Rounded corner of the Minkowski sum.
@@ -157,7 +182,8 @@ namespace Game.Gameplay.Geometry
                 if (discriminant >= 0)
                 {
                     var t = -bq - Math.Sqrt(discriminant);
-                    if (t >= 0 && t < best) best = t;
+                    if (t >= 0 && t < best)
+                        best = t;
                 }
             }
             return best <= maxDistance + tolerance ? Math.Min(best, Math.Max(0, maxDistance)) : double.PositiveInfinity;
@@ -167,12 +193,21 @@ namespace Game.Gameplay.Geometry
         {
             var ab = b - a;
             var lengthSquared = ab.LengthSquared;
-            if (lengthSquared <= 0) return a;
+            if (lengthSquared <= 0)
+                return a;
+
             var t = Vec2.Dot(p - a, ab) / lengthSquared;
-            if (t < 0) t = 0; else if (t > 1) t = 1;
+            if (t < 0)
+                t = 0;
+            else if (t > 1)
+                t = 1;
             return a + ab * t;
         }
 
-        private static int Mod(int value, int modulus) { var r = value % modulus; return r < 0 ? r + modulus : r; }
+        private static int Mod(int value, int modulus)
+        {
+            var r = value % modulus;
+            return r < 0 ? r + modulus : r;
+        }
     }
 }

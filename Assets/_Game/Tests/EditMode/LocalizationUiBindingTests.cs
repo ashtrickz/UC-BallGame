@@ -20,19 +20,22 @@ namespace Game.Foundation.Tests
         public void Every_authored_label_has_a_key_or_a_dynamic_presenter(string name)
         {
             var scene = EditorSceneManager.OpenPreviewScene("Assets/_Game/Scenes/" + name + ".unity");
-            try { foreach (var root in scene.GetRootGameObjects()) CheckLabels(root); }
+            try
+            {
+                foreach (var root in scene.GetRootGameObjects())
+                    CheckLabels(root);
+            }
             finally { EditorSceneManager.ClosePreviewScene(scene); }
         }
 
         [Test]
-        public void Settings_prefab_has_all_four_language_buttons_and_copy_id_references()
+        public void Settings_prefab_has_all_four_language_buttons_without_player_id_controls()
         {
             var root = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Game/Prefabs/UI/SettingsPopup.prefab");
+            Assert.IsNull(root.transform.Find("RootTransform/CopyPlayerId"));
             CheckLabels(root);
             var view = root.GetComponent<Game.Integration.Gameplay.SettingsPopupView>();
             var serialized = new SerializedObject(view);
-            Assert.IsNotNull(serialized.FindProperty("copyKeyButton").objectReferenceValue);
-            Assert.IsNotNull(serialized.FindProperty("copyKeyLabel").objectReferenceValue);
             var choices = serialized.FindProperty("languageChoices");
             Assert.AreEqual(4, choices.arraySize);
             var codes = new HashSet<string>();
@@ -55,23 +58,29 @@ namespace Game.Foundation.Tests
             Assert.IsNotNull(fonts);
             fonts.ConfigureFallbacks();
             var dynamic = new HashSet<TMP_Text>();
-            foreach (var view in root.GetComponentsInChildren<Game.Integration.Game.GameView>(true)) dynamic.UnionWith(view.DynamicTextLabels);
-            foreach (var view in root.GetComponentsInChildren<Game.Integration.Game.ResultView>(true)) dynamic.UnionWith(view.DynamicTextLabels);
-            foreach (var loading in root.GetComponentsInChildren<LoadingScreenView>(true)) dynamic.UnionWith(loading.DynamicTextLabels);
-            foreach (var tutorial in root.GetComponentsInChildren<TutorialOverlay>(true)) dynamic.Add(tutorial.MessageLabel);
+            foreach (var view in root.GetComponentsInChildren<Game.Integration.Game.GameView>(true))
+                dynamic.UnionWith(view.DynamicTextLabels);
+            foreach (var view in root.GetComponentsInChildren<Game.Integration.Game.ResultView>(true))
+                dynamic.UnionWith(view.DynamicTextLabels);
+            foreach (var loading in root.GetComponentsInChildren<LoadingScreenView>(true))
+                dynamic.UnionWith(loading.DynamicTextLabels);
+            foreach (var tutorial in root.GetComponentsInChildren<TutorialOverlay>(true))
+                dynamic.Add(tutorial.MessageLabel);
             foreach (var view in root.GetComponentsInChildren<Game.Integration.Gameplay.SettingsPopupView>(true))
                 dynamic.Add(new SerializedObject(view).FindProperty("buildText").objectReferenceValue as TMP_Text);
             foreach (var label in root.GetComponentsInChildren<TMP_Text>(true))
             {
                 var path = AnimationUtility.CalculateTransformPath(label.transform, root.transform);
                 var binding = label.GetComponent<LocalizedText>();
-                if (dynamic.Contains(label) || int.TryParse(label.text, out _)) continue;
+                if (dynamic.Contains(label) || int.TryParse(label.text, out _))
+                    continue;
                 Assert.IsNotNull(binding, path + " has no localization key");
                 foreach (var language in new[] { "en", "uk", "es", "zh-CN" })
                 {
                     Assert.IsTrue(table.TryGet(binding.Key, language, out var translation), binding.Key + "/" + language);
                     var value = string.Format(translation, 30, 2);
-                    Assert.IsTrue(label.font.HasCharacters(value, out uint[] missing, true, false),
+                    // Dynamic Latin/Cyrillic fallbacks populate as they do when TMP renders; static Chinese cannot grow.
+                    Assert.IsTrue(label.font.HasCharacters(value, out uint[] missing, true, true),
                         path + "/" + language + " has missing glyphs: " + string.Join(",", missing ?? new uint[0]));
                 }
             }

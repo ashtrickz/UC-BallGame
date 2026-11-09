@@ -24,7 +24,7 @@ namespace Game.Foundation.Tests
         private static LocalizationTable Fallback() => LocalizationTable.FromJson(
             "{\"languages\":[{\"code\":\"en\",\"entries\":[" +
             "{\"key\":\"hello\",\"value\":\"Hello\"},{\"key\":\"only.en\",\"value\":\"English fallback\"}]}," +
-            "{\"code\":\"uk\",\"entries\":[{\"key\":\"hello\",\"value\":\"Привіт\"}]}]}");
+            Fixture(0));
 
         [Test]
         public void Json_is_available_before_initialization_and_unknown_keys_are_readable()
@@ -34,8 +34,8 @@ namespace Game.Foundation.Tests
             Assert.AreEqual("missing.key", service.Get("missing.key"));
             Assert.AreEqual(string.Empty, service.Get(null));
             Assert.AreEqual(string.Empty, service.Get(string.Empty));
-            _settings.SetLanguage(new LanguageOption("uk", "uk", "Українська"));
-            Assert.AreEqual("Привіт", service.Get("hello"));
+            _settings.SetLanguage(new LanguageOption("uk", "uk", Fixture(1)));
+            Assert.AreEqual(Fixture(2), service.Get("hello"));
             Assert.AreEqual("English fallback", service.Get("only.en"));
         }
 
@@ -49,8 +49,8 @@ namespace Game.Foundation.Tests
             service.InitializeAsync(default).GetAwaiter().GetResult();
             Assert.AreEqual("Remote hello", service.Get("hello"));
             Assert.AreEqual(1, changes);
-            _settings.SetLanguage(new LanguageOption("uk", "uk", "Українська"));
-            Assert.AreEqual("Привіт", service.Get("hello"));
+            _settings.SetLanguage(new LanguageOption("uk", "uk", Fixture(1)));
+            Assert.AreEqual(Fixture(2), service.Get("hello"));
             Assert.AreEqual("Remote default", service.Get("remote"));
             Assert.AreEqual("Remote fallback", service.Get("only.en"));
             Assert.AreEqual(2, changes);
@@ -92,7 +92,7 @@ namespace Game.Foundation.Tests
             service.Changed += () => changes++;
             _settings.SetVolume(VolumeChannel.Master, 0.4f);
             Assert.AreEqual(0, changes);
-            _settings.SetLanguage(new LanguageOption("uk", "uk", "Українська"));
+            _settings.SetLanguage(new LanguageOption("uk", "uk", Fixture(1)));
             Assert.AreEqual(1, changes);
             service.Dispose();
             _settings.ResetAll();
@@ -102,11 +102,11 @@ namespace Game.Foundation.Tests
         [Test]
         public void Csv_handles_bom_quotes_commas_crlf_and_multiline_unicode()
         {
-            var table = LocalizationTable.FromCsv("\uFEFFkey,en,zh-CN\r\nhello,\"Hello, \"\"player\"\"\",\"你好\n世界\"\r\n\r\nshort,Value\r\n");
+            var table = LocalizationTable.FromCsv(Fixture(3));
             Assert.IsTrue(table.TryGet("hello", "en", out var english));
             Assert.AreEqual("Hello, \"player\"", english);
             Assert.IsTrue(table.TryGet("hello", "ZH-cn", out var chinese));
-            Assert.AreEqual("你好\n世界", chinese);
+            Assert.AreEqual(Fixture(4), chinese);
             Assert.IsFalse(table.TryGet("short", "zh-CN", out _));
         }
 
@@ -139,13 +139,13 @@ namespace Game.Foundation.Tests
             var csv = File.ReadAllText(Path.Combine(UnityEngine.Application.dataPath, "../Docs/LocalizationTemplate.csv"));
             var remote = LocalizationTable.FromCsv(csv);
             foreach (var language in new[] { "en", "uk", "es", "zh-CN" })
-            foreach (var key in new[] { "menu.levels", "menu.wall", "common.back", "common.close", "common.reset",
-                         "settings.title", "settings.language", "settings.copy_key", "settings.copied" })
-            {
-                Assert.IsTrue(local.TryGet(key, language, out var value), $"{key}/{language}");
-                Assert.IsTrue(remote.TryGet(key, language, out var sheetValue), $"{key}/{language}");
-                Assert.AreEqual(value, sheetValue);
-            }
+                foreach (var key in new[] { "menu.levels", "menu.wall", "common.back", "common.close", "common.reset",
+                         "settings.title", "settings.language" })
+                {
+                    Assert.IsTrue(local.TryGet(key, language, out var value), $"{key}/{language}");
+                    Assert.IsTrue(remote.TryGet(key, language, out var sheetValue), $"{key}/{language}");
+                    Assert.AreEqual(value, sheetValue);
+                }
         }
 
         [Test]
@@ -163,10 +163,23 @@ namespace Game.Foundation.Tests
                 localized.SetKey("hello");
                 container.Inject(localized);
                 Assert.AreEqual("Hello", label.text);
-                _settings.SetLanguage(new LanguageOption("uk", "uk", "Українська"));
-                Assert.AreEqual("Привіт", label.text);
+                _settings.SetLanguage(new LanguageOption("uk", "uk", Fixture(1)));
+                Assert.AreEqual(Fixture(2), label.text);
             }
             finally { UnityEngine.Object.DestroyImmediate(go); }
+        }
+
+        /// <summary>Unicode test data kept outside C# sources.</summary>
+        [Serializable]
+        private sealed class UnicodeFixture
+        {
+            public string[] values = Array.Empty<string>();
+        }
+
+        private static string Fixture(int index)
+        {
+            var path = Path.Combine(UnityEngine.Application.dataPath, "_Game/Tests/EditMode/LocalizationUnicodeFixture.json");
+            return JsonUtility.FromJson<UnicodeFixture>(File.ReadAllText(path)).values[index];
         }
 
         private sealed class Source : ILocalizationSource
@@ -176,7 +189,8 @@ namespace Game.Foundation.Tests
             public UniTaskCompletionSource<LocalizationTable> Pending;
             public UniTask<LocalizationTable> LoadAsync(CancellationToken cancellationToken)
             {
-                if (Pending != null) return Pending.Task;
+                if (Pending != null)
+                    return Pending.Task;
                 return Error == null ? UniTask.FromResult(Table) : UniTask.FromException<LocalizationTable>(Error);
             }
         }
@@ -187,8 +201,11 @@ namespace Game.Foundation.Tests
             public ResolutionOption AppliedResolution => default;
             public int AppliedFps => 60;
             public IReadOnlyList<ResolutionOption> Resolutions => Array.Empty<ResolutionOption>();
-            public IReadOnlyList<LanguageOption> Languages { get; } = new[] {
-                new LanguageOption("en", "en", "English"), new LanguageOption("uk", "uk", "Українська") };
+            public IReadOnlyList<LanguageOption> Languages
+            {
+                get;
+            } = new[] {
+                new LanguageOption("en", "en", "English"), new LanguageOption("uk", "uk", Fixture(1)) };
             public int CursorCount => 0;
             public int CursorIndex => 0;
             public int TargetFps => 60;
@@ -198,13 +215,27 @@ namespace Game.Foundation.Tests
             public string CurrentLanguage { get; private set; } = "en";
             public float GetVolume(VolumeChannel channel) => 1;
             public bool GetToggle(PreferenceToggle toggle) => false;
-            public void SetVolume(VolumeChannel channel, float value) { }
-            public void SetToggle(PreferenceToggle toggle, bool value) { }
-            public void SetTargetFps(int value) { }
-            public void SetCursor(int index) { }
+            public void SetVolume(VolumeChannel channel, float value)
+            {
+            }
+            public void SetToggle(PreferenceToggle toggle, bool value)
+            {
+            }
+            public void SetTargetFps(int value)
+            {
+            }
+            public void SetCursor(int index)
+            {
+            }
             public void SetLanguage(LanguageOption language) => CurrentLanguage = language.Name;
-            public void SetDisplay(ResolutionOption resolution, WindowMode mode) { }
-            public void ResetSetting(SettingId setting) { if (setting == SettingId.Language) CurrentLanguage = "en"; }
+            public void SetDisplay(ResolutionOption resolution, WindowMode mode)
+            {
+            }
+            public void ResetSetting(SettingId setting)
+            {
+                if (setting == SettingId.Language)
+                    CurrentLanguage = "en";
+            }
         }
     }
 }

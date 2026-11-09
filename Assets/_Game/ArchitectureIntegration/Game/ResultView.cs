@@ -1,14 +1,28 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using Game.UI;
 using TMPro;
 using UnityEngine;
 
 namespace Game.Integration.Game
 {
-    /// <summary>Standalone result card. The controller supplies all copy and actions through its model.</summary>
-    public sealed class ResultView : MonoBehaviour
+    /// <summary>
+    /// Standalone result card. The presenter supplies all copy and actions through its model. The fly-in is one
+    /// sequence built on first show and replayed afterwards; an interrupted fly-in snaps the card to its rest pose.
+    /// </summary>
+    public sealed class ResultView : ViewBase
     {
+        private const float CardStartY = -1700f;
+        private const float CardStartAngle = -9f;
+        private const float CardStartScale = 0.8f;
+        private const float DimFadeSpeed = 2.2f;
+        private const float TitlePopScale = 1.25f;
+        private const float TitlePopDuration = 0.22f;
+        private const float BackOutOvershoot = 1.9f;
+        private const float Start = 0f;
+        private const float End = 1f;
+
         [SerializeField] private TMP_Text title;
         [SerializeField] private TMP_Text subtitle;
         [SerializeField] private UnityEngine.UI.Button primaryButton;
@@ -21,116 +35,189 @@ namespace Game.Integration.Game
         [SerializeField, Min(0.05f)] private float flyInDuration = 0.55f;
 
         private ResultViewModel _model;
-        private Coroutine _flyIn;
+        private Sequence _flyIn;
         private float _dimAlpha = -1;
 
-        public bool IsAnimating => _flyIn != null;
+        public bool IsAnimating => _flyIn != null && _flyIn.IsActive() && _flyIn.IsPlaying();
+
         public IEnumerable<TMP_Text> DynamicTextLabels => new[] { title, subtitle, primaryLabel, secondaryLabel };
 
-        private void Awake()
-        {
-            if (primaryButton != null) primaryButton.onClick.AddListener(OnPrimary);
-            if (secondaryButton != null) secondaryButton.onClick.AddListener(OnSecondary);
-            if (menuButton != null) menuButton.onClick.AddListener(OnMenu);
-        }
-
-        /// <summary>Also refreshes an open card without replaying its animation.</summary>
         public void Initialize(ResultViewModel model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
-            if (title != null) title.text = model.Title;
-            if (subtitle != null) subtitle.text = model.Subtitle;
-            if (primaryLabel != null) primaryLabel.text = model.PrimaryLabel;
+            if (title != null)
+                title.text = model.Title;
+
+            if (subtitle != null)
+                subtitle.text = model.Subtitle;
+
+            if (primaryLabel != null)
+                primaryLabel.text = model.PrimaryLabel;
+
             if (secondaryButton != null)
-                secondaryButton.gameObject.SetActive(!string.IsNullOrEmpty(model.SecondaryLabel) && model.SecondaryAction != null);
-            if (secondaryLabel != null) secondaryLabel.text = model.SecondaryLabel ?? string.Empty;
-            if (menuButton != null) menuButton.gameObject.SetActive(model.MenuAction != null);
+            {
+                var hasSecondary = !string.IsNullOrEmpty(model.SecondaryLabel) && model.SecondaryAction != null;
+                secondaryButton.gameObject.SetActive(hasSecondary);
+            }
+
+            if (secondaryLabel != null)
+                secondaryLabel.text = model.SecondaryLabel ?? string.Empty;
+
+            if (menuButton != null)
+                menuButton.gameObject.SetActive(model.MenuAction != null);
         }
 
         public void Show()
         {
-            if (_model == null) throw new InvalidOperationException("Initialize the result view before showing it.");
-            gameObject.SetActive(true);
+            if (_model == null)
+                throw new InvalidOperationException("Initialize the result view before showing it.");
+
+            ShowInstant();
             StopAnimation();
-            _flyIn = isActiveAndEnabled ? StartCoroutine(FlyIn()) : null;
+            FlyIn().Restart();
+            ApplyFrame(Start);
         }
 
         public void Hide()
         {
             _model = null;
             StopAnimation();
-            gameObject.SetActive(false);
+            HideInstant();
         }
 
-        private void OnPrimary() => InvokeAction(_model?.PrimaryAction);
-        private void OnSecondary() => InvokeAction(_model?.SecondaryAction);
-        private void OnMenu() => InvokeAction(_model?.MenuAction);
-
-        private void InvokeAction(Action action)
+        protected override void Awake()
         {
-            if (action == null) return;
-            Hide();
-            action.Invoke();
+            base.Awake();
+            if (primaryButton != null)
+                primaryButton.onClick.AddListener(OnPrimary);
+
+            if (secondaryButton != null)
+                secondaryButton.onClick.AddListener(OnSecondary);
+
+            if (menuButton != null)
+                menuButton.onClick.AddListener(OnMenu);
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             _model = null;
             StopAnimation();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
-            if (primaryButton != null) primaryButton.onClick.RemoveListener(OnPrimary);
-            if (secondaryButton != null) secondaryButton.onClick.RemoveListener(OnSecondary);
-            if (menuButton != null) menuButton.onClick.RemoveListener(OnMenu);
+            base.OnDestroy();
+            _flyIn?.Kill();
+            if (primaryButton != null)
+                primaryButton.onClick.RemoveListener(OnPrimary);
+
+            if (secondaryButton != null)
+                secondaryButton.onClick.RemoveListener(OnSecondary);
+
+            if (menuButton != null)
+                menuButton.onClick.RemoveListener(OnMenu);
         }
 
-        private IEnumerator FlyIn()
+        private void OnPrimary()
         {
-            if (dim != null && _dimAlpha < 0) _dimAlpha = dim.color.a;
-            var titleRect = title != null ? title.rectTransform : null;
-            var t = 0f;
-            while (t < 1)
+            InvokeAction(_model?.PrimaryAction);
+        }
+
+        private void OnSecondary()
+        {
+            InvokeAction(_model?.SecondaryAction);
+        }
+
+        private void OnMenu()
+        {
+            InvokeAction(_model?.MenuAction);
+        }
+
+        private void InvokeAction(Action action)
+        {
+            if (action == null)
+                return;
+
+            Hide();
+            action.Invoke();
+        }
+
+        private Sequence FlyIn()
+        {
+            if (_flyIn != null)
+                return _flyIn;
+
+            if (dim != null && _dimAlpha < 0)
+                _dimAlpha = dim.color.a;
+
+            // One driver in seconds: the card flies in, then the title pops. Rewinding it gives the exact start pose.
+            var total = flyInDuration + TitlePopDuration;
+            _flyIn = DOTween.Sequence()
+                .Append(DOVirtual.Float(Start, total, total, ApplyFrame).SetEase(Ease.Linear))
+                .SetUpdate(true)
+                .SetAutoKill(false)
+                .SetLink(gameObject)
+                .Pause();
+
+            return _flyIn;
+        }
+
+        private void ApplyFrame(float seconds)
+        {
+            if (seconds < flyInDuration)
             {
-                t = Mathf.Min(1, t + Time.unscaledDeltaTime / flyInDuration);
-                if (dim != null)
-                {
-                    var color = dim.color;
-                    color.a = _dimAlpha * Mathf.Clamp01(t * 2.2f);
-                    dim.color = color;
-                }
-                if (card != null)
-                {
-                    var e = BackOut(t);
-                    card.anchoredPosition = new Vector2(0, Mathf.LerpUnclamped(-1700, 0, e));
-                    card.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(-9, 0, e));
-                    card.localScale = Vector3.one * Mathf.LerpUnclamped(0.8f, 1, e);
-                }
-                yield return null;
+                ApplyFlyIn(seconds / flyInDuration);
+                ApplyTitlePop(End);
+                return;
             }
-            if (titleRect != null)
+
+            ApplyFlyIn(End);
+            ApplyTitlePop((seconds - flyInDuration) / TitlePopDuration);
+        }
+
+        private void ApplyFlyIn(float t)
+        {
+            if (dim != null)
             {
-                for (var p = 0f; p < 1; p += Time.unscaledDeltaTime / 0.22f)
-                {
-                    titleRect.localScale = Vector3.one * Mathf.Lerp(1.25f, 1, 1 - (1 - p) * (1 - p));
-                    yield return null;
-                }
-                titleRect.localScale = Vector3.one;
+                var color = dim.color;
+                color.a = _dimAlpha * Mathf.Clamp01(t * DimFadeSpeed);
+                dim.color = color;
             }
-            _flyIn = null;
+
+            if (card != null)
+            {
+                var eased = BackOut(t);
+                card.anchoredPosition = new Vector2(0, Mathf.LerpUnclamped(CardStartY, 0, eased));
+                card.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(CardStartAngle, 0, eased));
+                card.localScale = Vector3.one * Mathf.LerpUnclamped(CardStartScale, End, eased);
+            }
+        }
+
+        private void ApplyTitlePop(float t)
+        {
+            if (title == null)
+                return;
+
+            var eased = 1 - (1 - t) * (1 - t);
+            title.rectTransform.localScale = Vector3.one * Mathf.Lerp(TitlePopScale, End, eased);
         }
 
         private void StopAnimation()
         {
-            if (_flyIn != null) { StopCoroutine(_flyIn); _flyIn = null; }
+            if (_flyIn != null && _flyIn.IsActive())
+                _flyIn.Pause();
+
             if (card != null)
             {
                 card.anchoredPosition = Vector2.zero;
                 card.localRotation = Quaternion.identity;
                 card.localScale = Vector3.one;
             }
-            if (title != null) title.rectTransform.localScale = Vector3.one;
+
+            if (title != null)
+                title.rectTransform.localScale = Vector3.one;
+
             if (dim != null && _dimAlpha >= 0)
             {
                 var color = dim.color;
@@ -141,9 +228,9 @@ namespace Game.Integration.Game
 
         private static float BackOut(float t)
         {
-            const float s = 1.9f;
             t -= 1;
-            return t * t * ((s + 1) * t + s) + 1;
+
+            return t * t * ((BackOutOvershoot + 1) * t + BackOutOvershoot) + 1;
         }
     }
 }

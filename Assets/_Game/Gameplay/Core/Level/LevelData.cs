@@ -17,14 +17,19 @@ namespace Game.Gameplay.Level
         public double Scale { get; }
         public CrystalRole Role { get; }
         public int ObstacleIndex { get; }
-        /// <summary>Baked variant hull with this placement's yaw, scale and offset applied.</summary>
         public ConvexPolygon Contour { get; }
 
         public CrystalPlacement(int id, int variantId, Vec2 position, int rotationStep, double scale, CrystalRole role,
             int obstacleIndex, ConvexPolygon contour)
         {
-            Id = id; VariantId = variantId; Position = position; RotationStep = rotationStep; Scale = scale;
-            Role = role; ObstacleIndex = obstacleIndex; Contour = contour;
+            Id = id;
+            VariantId = variantId;
+            Position = position;
+            RotationStep = rotationStep;
+            Scale = scale;
+            Role = role;
+            ObstacleIndex = obstacleIndex;
+            Contour = contour;
         }
     }
 
@@ -37,7 +42,9 @@ namespace Game.Gameplay.Level
 
         public ControlPlan(IReadOnlyList<double> holdSeconds, double totalCost, double finalDiameter)
         {
-            HoldSeconds = holdSeconds; TotalCost = totalCost; FinalDiameter = finalDiameter;
+            HoldSeconds = holdSeconds;
+            TotalCost = totalCost;
+            FinalDiameter = finalDiameter;
         }
     }
 
@@ -48,7 +55,9 @@ namespace Game.Gameplay.Level
         public string Note { get; }
         public GenerationReport(int candidatesTried, bool usedFallback, string note)
         {
-            CandidatesTried = candidatesTried; UsedFallback = usedFallback; Note = note ?? "";
+            CandidatesTried = candidatesTried;
+            UsedFallback = usedFallback;
+            Note = note ?? "";
         }
     }
 
@@ -64,14 +73,15 @@ namespace Game.Gameplay.Level
         public IReadOnlyList<CrystalPlacement> Crystals { get; }
         public ControlPlan Control { get; }
         public GenerationReport Report { get; }
-        /// <summary>Campaign level title, or null for a generated level.</summary>
         public string Name { get; }
 
         public LevelData(int seed, int generatorVersion, GameRules rules, IReadOnlyList<CrystalPlacement> crystals,
             ControlPlan control, GenerationReport report, string name = null)
         {
             Name = name;
-            if (rules == null) throw new ArgumentNullException(nameof(rules));
+            if (rules == null)
+                throw new ArgumentNullException(nameof(rules));
+
             Seed = seed;
             GeneratorVersion = generatorVersion;
             RulesFingerprint = rules.Fingerprint;
@@ -86,7 +96,8 @@ namespace Game.Gameplay.Level
         public CrystalField CreateField()
         {
             var polygons = new ConvexPolygon[Crystals.Count];
-            for (var i = 0; i < polygons.Length; i++) polygons[i] = Crystals[i].Contour;
+            for (var i = 0; i < polygons.Length; i++)
+                polygons[i] = Crystals[i].Contour;
             return new CrystalField(polygons);
         }
 

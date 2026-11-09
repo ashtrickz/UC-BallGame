@@ -1,12 +1,24 @@
-using System;
 using System.Threading;
+using System;
 using Cysharp.Threading.Tasks;
+using Game.Foundation;
 using Game.Gameplay.Config;
 using UnityEngine;
 
 namespace Game.Gameplay.View
 {
-    public enum SlimePresentationCue { HopPreparing, Takeoff, Landed, ShotReleased, ShotImpact, DefeatPreparing, Popped, PoolSplash }
+    /// <summary>Moments of the slime presentation that sound and haptics react to.</summary>
+    public enum SlimePresentationCue
+    {
+        HopPreparing,
+        Takeoff,
+        Landed,
+        ShotReleased,
+        ShotImpact,
+        DefeatPreparing,
+        Popped,
+        PoolSplash,
+    }
 
     /// <summary>
     /// Procedural jelly slime ported from SlimeLab: hop preparation, arc, squash and stretch, damped landing
@@ -15,57 +27,212 @@ namespace Game.Gameplay.View
     /// Every critical action is an awaitable that completes when its animation really finishes and is cancelled
     /// (never completed) by the attempt token.
     /// </summary>
-    public sealed class SlimeView : MonoBehaviour
+    public sealed class SlimeView : MonoBehaviour, IFrameTickable
     {
+        private const string WobbleProperty = "_Wobble";
+        private const string ImpactProperty = "_Impact";
+        private const string PullProperty = "_Pull";
+        private const string PullDirectionProperty = "_PullDirection";
+        private const string PhaseProperty = "_Phase";
+        private const string BaseColorProperty = "_BaseColor";
+        private const string TopColorProperty = "_TopColor";
+        private const string BridgeMeshName = "Slime neck (runtime)";
+
+        private const int BridgeRings = 9;
+        private const int BridgeSides = 16;
+        private const int IndicesPerQuad = 6;
+
+        private const float DefaultBodyYaw = 150f;
+        private const float DefaultDiameter = 1.6f;
+        private const float DefaultWobble = 0.017f;
+        private const float MinDiameter = 0.05f;
+        private const float HalfDiameter = 0.5f;
+        private const float DiameterPerRadius = 2f;
+        private const float QuarterTurn = Mathf.PI * 0.5f;
+        private const float FullTurn = Mathf.PI * 2f;
+        private const float ParabolaPeak = 4f;
+        private const float ParabolaSlope = 2f;
+        private const float MinDirectionSqr = 1e-6f;
+        private const float NoFlight = -1f;
+
+        private const float LandingImpulse = -6.3f;
+        private const float LandingScaleMin = 0.3f;
+        private const float LandingScaleMax = 1f;
+        private const float LandingSplashHeight = 0.1f;
+        private const int LandingSplashCount = 6;
+        private const float LandingSplashSpeed = 0.4f;
+        private const float MinMoveDistance = 0.0001f;
+        private const float HopScaleMin = 0.45f;
+        private const float HopScaleMax = 1f;
+
+        private const float CancelChargeImpulse = 2.5f;
+        private const float ReleaseRecoil = 3.4f;
+        private const int ReleaseSplashMin = 4;
+        private const int ReleaseSplashMax = 8;
+        private const float ReleaseSplashSpeedMin = 0.35f;
+        private const float ReleaseSplashSpeedMax = 0.6f;
+        private const float MinTargetAhead = 0.1f;
+        private const float MinFlightHeight = 0.15f;
+        private const float ArcReferenceDistance = 4f;
+        private const float ArcScaleMin = 0.35f;
+        private const float ArcScaleMax = 1.4f;
+        private const float ImpactSplashHeight = 0.2f;
+        private const int ImpactSplashMin = 7;
+        private const int ImpactSplashMax = 20;
+        private const float ImpactSplashSpeedMin = 0.65f;
+        private const float ImpactSplashSpeedMax = 1.85f;
+        private const float ImpactSplashSizeMin = 0.8f;
+        private const float ImpactSplashSizeMax = 1.25f;
+
+        private const float DefeatReachShrink = 0.25f;
+        private const float DefeatCrouch = 0.6f;
+        private const float DefeatLandingImpulse = -4f;
+        private const float PoppedFlatten = 0.42f;
+        private const float PopSplashHeight = 0.3f;
+        private const int PopSplashCount = 26;
+        private const float PopSplashSpeed = 1.5f;
+        private const float PopSplashSize = 1.6f;
+
+        private const float DiveApexPoint = 0.55f;
+        private const float DiveApexHeight = 1.9f;
+        private const float CrouchDuration = 0.22f;
+        private const float CrouchSquashFrom = 0.9f;
+        private const float CrouchSquashTo = 0.56f;
+        private const float TakeoffSplashHeight = 0.08f;
+        private const int TakeoffSplashCount = 8;
+        private const float TakeoffSplashSpeed = 0.55f;
+        private const float LaunchDuration = 0.36f;
+        private const float LaunchStretch = 1.5f;
+        private const float LaunchTilt = -12f;
+        private const float HangDuration = 0.34f;
+        private const float HangWobbleTurns = 3f;
+        private const float HangWobble = 0.1f;
+        private const float HangFloat = 0.14f;
+        private const float DiveTilt = 10f;
+        private const float DiveDepth = 2.2f;
+        private const float DiveDuration = 0.3f;
+        private const float DiveShrink = 0.9f;
+        private const float DiveStretch = 1.55f;
+        private const float EntrySplashHeight = 0.05f;
+        private const int EntrySplashCount = 8;
+        private const float EntrySplashSpeed = 1.1f;
+        private const float EntrySplashSize = 1.3f;
+        private const float SinkDuration = 0.2f;
+        private const float SinkSquash = 1.2f;
+        private const float SinkDepth = 0.3f;
+        private const float PoolBounceDuration = 0.7f;
+        private const float PoolBounceTurns = 3f;
+        private const float PoolBounceWiden = 0.12f;
+        private const float PoolBounceFlatten = 0.35f;
+
+        private const float MinSquash = 0.2f;
+        private const float BodyLift = 0.055f;
+        private const float ShadowHeight = 0.015f;
+        private const float ShadowScale = 2.3f;
+        private const float ShadowFade = 0.7f;
+        private const float IdleSquash = 0.91f;
+        private const float IdleBreath = 0.015f;
+        private const float IdleBreathSpeed = 2.6f;
+        private const float CrouchDepth = 0.18f;
+        private const float FlightSquash = 1.08f;
+        private const float FlightWobble = 0.14f;
+        private const float SpringStiffness = 95f;
+        private const float SpringDamping = 10.5f;
+        private const float SpringMin = -0.28f;
+        private const float SpringMax = 0.25f;
+        private const float SquashMin = 0.65f;
+        private const float SquashMax = 1.35f;
+        private const float ChargePull = 0.22f;
+        private const float PinchPull = 0.03f;
+        private const float PullSmoothTime = 0.09f;
+        private const float FlightTilt = 6f;
+        private const float PullTilt = 14f;
+        private const float ImpactShading = 3f;
+
+        private const float BlinkOffset = 1.4f;
+        private const float BlinkPeriod = 4.3f;
+        private const float BlinkDuration = 0.16f;
+        private const float BlinkClosed = 0.12f;
+        private const float EyeWidth = 0.105f;
+        private const float EyeHeight = 0.16f;
+        private const float EyeDepth = 0.065f;
+
+        private const float DropDistance = 1.32f;
+        private const float DropChargeReach = 0.18f;
+        private const float PinchTravel = 0.5f;
+        private const float MinDropDiameter = 0.02f;
+        private const float NeckStart = 0.72f;
+        private const float NeckEnd = 0.52f;
+        private const float NeckRadius = 0.7f;
+        private const float NeckWaist = 0.7f;
+        private const float PinchedWaist = 0.015f;
+        private const float DropWobbleShare = 0.65f;
+        private const float DropPhase = 2.7f;
+
+        private static readonly int WobbleId = Shader.PropertyToID(WobbleProperty);
+        private static readonly int ImpactId = Shader.PropertyToID(ImpactProperty);
+        private static readonly int PullId = Shader.PropertyToID(PullProperty);
+        private static readonly int PullDirectionId = Shader.PropertyToID(PullDirectionProperty);
+        private static readonly int PhaseId = Shader.PropertyToID(PhaseProperty);
+        private static readonly int BaseColorId = Shader.PropertyToID(BaseColorProperty);
+        private static readonly int TopColorId = Shader.PropertyToID(TopColorProperty);
+        private static readonly Vector3 DropFlightShape = new Vector3(0.88f, 1.29f, 0.88f);
+
         [SerializeField] private Transform body;
         [SerializeField] private Transform[] eyes = Array.Empty<Transform>();
         [SerializeField] private Transform drop;
         [SerializeField] private MeshFilter bridge;
         [SerializeField] private SplashPool splashes;
-        [SerializeField] private float bodyYaw = 150f;
+        [SerializeField] private float bodyYaw = DefaultBodyYaw;
         [Tooltip("Soft contact shadow on the logical anchor: grounds the body for the tilted orthographic camera.")]
         [SerializeField] private Transform shadow;
 
-        private static readonly int WobbleId = Shader.PropertyToID("_Wobble");
-        private static readonly int ImpactId = Shader.PropertyToID("_Impact");
-        private static readonly int PullId = Shader.PropertyToID("_Pull");
-        private static readonly int PullDirectionId = Shader.PropertyToID("_PullDirection");
-        private static readonly int PhaseId = Shader.PropertyToID("_Phase");
-        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
-        private static readonly int TopColorId = Shader.PropertyToID("_TopColor");
-        private const int Rings = 9, Sides = 16;
-
         private GameClock _clock = new GameClock();
         private SlimeViewConfig _config;
-        private MaterialPropertyBlock _bodyProperties, _dropProperties, _bridgeProperties;
-        private MeshRenderer _bodyRenderer, _dropRenderer, _bridgeRenderer;
+        private MaterialPropertyBlock _bodyProperties;
+        private MaterialPropertyBlock _dropProperties;
+        private MaterialPropertyBlock _bridgeProperties;
+        private MeshRenderer _bodyRenderer;
+        private MeshRenderer _dropRenderer;
+        private MeshRenderer _bridgeRenderer;
         private Mesh _bridgeMesh;
-        private Vector3[] _bridgeVertices, _bridgeNormals;
+        private Vector3[] _bridgeVertices;
+        private Vector3[] _bridgeNormals;
 
         private Vector3 _anchor;
-        private float _diameter = 1.6f, _height, _idleTime;
-        private float _prepare;            // 0..1 crouch before a hop
-        private float _flightT = -1;       // 0..1 during the airborne part of a hop
+        private float _diameter = DefaultDiameter;
+        private float _height;
+        private float _idleTime;
+        private float _prepare;
+        private float _flightT = NoFlight;
         private float _hopClock;
-        private float _impactSpring, _impactVelocity, _pull, _pullVelocity;
-        private float _flatten = 1;        // defeat squash
-        private bool _charging, _pinching, _flying, _popped;
-        private bool _scripted;            // a scripted move (the finish dive) owns the body transform
-        private float _dropDiameter, _pinchT, _chargeNormalized;
+        private float _impactSpring;
+        private float _impactVelocity;
+        private float _pull;
+        private float _pullVelocity;
+        private float _flatten = 1;
+        private bool _charging;
+        private bool _pinching;
+        private bool _flying;
+        private bool _popped;
+        // A scripted move (the finish dive) owns the body transform.
+        private bool _scripted;
+        private float _dropDiameter;
+        private float _pinchT;
+        private float _chargeNormalized;
         private Vector3 _pinchStart;
 
-        public Vector3 Anchor => _anchor;
-        public float Diameter => _diameter;
-        public Vector3 BodyCenter => body.position;
-        public SplashPool Splashes => splashes;
         public event Action<SlimePresentationCue> PresentationCue;
 
-        public void Bind(GameClock clock, SlimeViewConfig config)
-        {
-            _clock = clock ?? new GameClock();
-            _config = config;
-            splashes?.Bind(_clock);
-        }
+        public Vector3 Anchor => _anchor;
+
+        public float Diameter => _diameter;
+
+        public Vector3 BodyCenter => body.position;
+
+        public SplashPool Splashes => splashes;
+
+        private float SurfaceWobble => _config != null ? _config.surfaceWobble : DefaultWobble;
 
         private void Awake()
         {
@@ -80,49 +247,58 @@ namespace Game.Gameplay.View
             CreateBridgeMesh();
         }
 
-        /// <summary>Overrides only this slime's colours, preserving its animated shader properties.</summary>
+        public void Bind(GameClock clock, SlimeViewConfig config)
+        {
+            _clock = clock ?? new GameClock();
+            _config = config;
+        }
+
         public void SetColors(SlimeColorPreset preset)
         {
-            void Apply(MeshRenderer renderer, MaterialPropertyBlock properties)
-            {
-                properties.SetColor(BaseColorId, preset.BaseColor);
-                properties.SetColor(TopColorId, preset.TopColor);
-                renderer.SetPropertyBlock(properties);
-            }
-            Apply(_bodyRenderer, _bodyProperties);
-            Apply(_dropRenderer, _dropProperties);
-            Apply(_bridgeRenderer, _bridgeProperties);
+            ApplyColors(_bodyRenderer, _bodyProperties, preset);
+            ApplyColors(_dropRenderer, _dropProperties, preset);
+            ApplyColors(_bridgeRenderer, _bridgeProperties, preset);
             splashes?.SetColors(preset);
         }
 
-        private void OnDestroy()
-        {
-            if (_bridgeMesh != null) Destroy(_bridgeMesh);
-        }
-
-        /// <summary>Puts the slime, unhurt and idle, at the start of a new attempt.</summary>
         public void ResetForAttempt(Vector3 anchor, float diameter)
         {
             _anchor = anchor;
             _diameter = diameter;
             _height = 0;
             _prepare = 0;
-            _flightT = -1;
-            _impactSpring = _impactVelocity = _pull = _pullVelocity = 0;
+            _flightT = NoFlight;
+            _impactSpring = 0;
+            _impactVelocity = 0;
+            _pull = 0;
+            _pullVelocity = 0;
             _flatten = 1;
-            _charging = _pinching = _flying = _popped = _scripted = false;
+            _charging = false;
+            _pinching = false;
+            _flying = false;
+            _popped = false;
+            _scripted = false;
             body.gameObject.SetActive(true);
-            if (shadow != null) shadow.gameObject.SetActive(true);
+            if (shadow != null)
+                shadow.gameObject.SetActive(true);
+
             drop.gameObject.SetActive(false);
             bridge.gameObject.SetActive(false);
             splashes?.Clear();
             UpdateBody(0);
         }
 
-        /// <summary>Logical diameter from the model (the visual body always shows the real resource).</summary>
-        public void SetDiameter(float diameter) => _diameter = Mathf.Max(0.05f, diameter);
+        public void SetDiameter(float diameter)
+        {
+            _diameter = Mathf.Max(MinDiameter, diameter);
+        }
 
-        // ---------------------------------------------------------------- hops
+        public void Tick(float deltaTime)
+        {
+            UpdateBody(deltaTime);
+            if (splashes != null)
+                splashes.Tick(deltaTime);
+        }
 
         public async UniTask HopAsync(Vector3 to, float heightScale, Action<float> progress, CancellationToken token)
         {
@@ -131,7 +307,7 @@ namespace Game.Gameplay.View
             var from = _anchor;
             try
             {
-                await _clock.Animate(_config.hopPrepare, t => _prepare = Mathf.Sin(t * Mathf.PI * 0.5f), token);
+                await _clock.Animate(_config.hopPrepare, t => _prepare = Mathf.Sin(t * QuarterTurn), token);
                 _prepare = 0;
                 _hopClock = 0;
                 PresentationCue?.Invoke(SlimePresentationCue.Takeoff);
@@ -139,7 +315,7 @@ namespace Game.Gameplay.View
                 {
                     _flightT = t;
                     _hopClock += _clock.Delta;
-                    _height = 4 * _config.hopHeight * heightScale * t * (1 - t);
+                    _height = ParabolaPeak * _config.hopHeight * heightScale * t * (1 - t);
                     _anchor = Vector3.Lerp(from, to, GameClock.Smooth(t));
                     progress?.Invoke(_anchor.z);
                 }, token);
@@ -147,34 +323,41 @@ namespace Game.Gameplay.View
             finally
             {
                 _prepare = 0;
-                _flightT = -1;
+                _flightT = NoFlight;
                 _height = 0;
             }
+
             _anchor = to;
             PresentationCue?.Invoke(SlimePresentationCue.Landed);
-            _impactVelocity = -6.3f * Mathf.Clamp(heightScale, 0.3f, 1f);
-            splashes?.Burst(new Vector3(_anchor.x, 0.1f, _anchor.z), 6, 0.4f);
+            _impactVelocity = LandingImpulse * Mathf.Clamp(heightScale, LandingScaleMin, LandingScaleMax);
+            splashes?.Burst(new Vector3(_anchor.x, LandingSplashHeight, _anchor.z), LandingSplashCount, LandingSplashSpeed);
         }
 
-        /// <summary>Hops along the route in equal steps no longer than the configured hop.</summary>
         public async UniTask MoveAsync(float toZ, Action<float> progress, Func<float, CancellationToken, UniTask> gate,
             CancellationToken token)
         {
             var distance = toZ - _anchor.z;
-            if (distance <= 0.0001f) { progress?.Invoke(toZ); return; }
+            if (distance <= MinMoveDistance)
+            {
+                progress?.Invoke(toZ);
+                return;
+            }
+
             var hops = Mathf.Max(1, Mathf.CeilToInt(distance / _config.maxHopLength));
             var step = distance / hops;
             var startZ = _anchor.z;
             for (var i = 1; i <= hops; i++)
             {
-                var targetZ = i == hops ? toZ : startZ + step * i;
-                if (gate != null) await gate(targetZ, token);
-                var scale = Mathf.Clamp(step / _config.maxHopLength, 0.45f, 1f);
+                var targetZ = i == hops
+                    ? toZ
+                    : startZ + step * i;
+                if (gate != null)
+                    await gate(targetZ, token);
+
+                var scale = Mathf.Clamp(step / _config.maxHopLength, HopScaleMin, HopScaleMax);
                 await HopAsync(new Vector3(_anchor.x, 0, targetZ), scale, progress, token);
             }
         }
-
-        // ---------------------------------------------------------------- charge and shot
 
         public void BeginCharge()
         {
@@ -185,24 +368,24 @@ namespace Game.Gameplay.View
             bridge.gameObject.SetActive(true);
         }
 
-        /// <summary>Per-frame charge visual: projectile diameter S and its share of the maximum useful charge.</summary>
         public void UpdateCharge(float projectileDiameter, float normalized)
         {
             _dropDiameter = projectileDiameter;
             _chargeNormalized = Mathf.Clamp01(normalized);
         }
 
-        /// <summary>Unreleased charge returned to the body (pause): the drop is reabsorbed at once.</summary>
         public void CancelCharge()
         {
-            if (!_charging) return;
-            _charging = _pinching = false;
+            if (!_charging)
+                return;
+
+            _charging = false;
+            _pinching = false;
             drop.gameObject.SetActive(false);
             bridge.gameObject.SetActive(false);
-            _impactVelocity += 2.5f;
+            _impactVelocity += CancelChargeImpulse;
         }
 
-        /// <summary>Pinches the drop off and flies it to the first contact. Completes at the moment of impact.</summary>
         public async UniTask ShootAsync(Vector3 touchCenter, Vector3 impactPoint, float projectileDiameter,
             float feedbackStrength, CancellationToken token)
         {
@@ -216,247 +399,346 @@ namespace Game.Gameplay.View
             _charging = false;
             _flying = true;
             bridge.gameObject.SetActive(false);
-            _impactVelocity -= 3.4f;
+            _impactVelocity -= ReleaseRecoil;
             PresentationCue?.Invoke(SlimePresentationCue.ShotReleased);
             var start = drop.position;
-            splashes?.Burst(start, Mathf.RoundToInt(Mathf.Lerp(4, 8, strength)), Mathf.Lerp(0.35f, 0.6f, strength));
-            var radius = projectileDiameter * 0.5f;
-            var target = touchCenter.z > start.z + 0.1f ? touchCenter : impactPoint;
-            target.y = Mathf.Max(radius, 0.15f);
+            splashes?.Burst(
+                start,
+                Mathf.RoundToInt(Mathf.Lerp(ReleaseSplashMin, ReleaseSplashMax, strength)),
+                Mathf.Lerp(ReleaseSplashSpeedMin, ReleaseSplashSpeedMax, strength));
+            var radius = projectileDiameter * HalfDiameter;
+            var target = touchCenter.z > start.z + MinTargetAhead
+                ? touchCenter
+                : impactPoint;
+            target.y = Mathf.Max(radius, MinFlightHeight);
             var distance = Vector3.Distance(start, target);
             var duration = _config.flightMin + distance * _config.flightPerMetre;
-            var arc = _config.flightArc * Mathf.Clamp(distance / 4f, 0.35f, 1.4f);
+            var arc = _config.flightArc * Mathf.Clamp(distance / ArcReferenceDistance, ArcScaleMin, ArcScaleMax);
             try
             {
                 await _clock.Animate(duration, t =>
                 {
-                    drop.position = Vector3.Lerp(start, target, t) + Vector3.up * (arc * 4 * t * (1 - t));
-                    var velocity = (target - start) + Vector3.up * (arc * 4 * (1 - 2 * t));
-                    if (velocity.sqrMagnitude > 1e-6f) drop.rotation = Quaternion.FromToRotation(Vector3.up, velocity.normalized);
-                    drop.localScale = new Vector3(0.88f, 1.29f, 0.88f) * projectileDiameter;
+                    drop.position = Vector3.Lerp(start, target, t) + Vector3.up * (arc * ParabolaPeak * t * (1 - t));
+                    var velocity = (target - start) + Vector3.up * (arc * ParabolaPeak * (1 - ParabolaSlope * t));
+                    if (velocity.sqrMagnitude > MinDirectionSqr)
+                        drop.rotation = Quaternion.FromToRotation(Vector3.up, velocity.normalized);
+
+                    drop.localScale = DropFlightShape * projectileDiameter;
                 }, token);
             }
-            finally { _flying = false; }
+            finally
+            {
+                _flying = false;
+            }
+
             drop.gameObject.SetActive(false);
             PresentationCue?.Invoke(SlimePresentationCue.ShotImpact);
-            splashes?.Burst(impactPoint + Vector3.up * 0.2f, Mathf.RoundToInt(Mathf.Lerp(7, 20, strength)),
-                Mathf.Lerp(0.65f, 1.85f, strength), null, Mathf.Lerp(0.8f, 1.25f, strength));
+            splashes?.Burst(
+                impactPoint + Vector3.up * ImpactSplashHeight,
+                Mathf.RoundToInt(Mathf.Lerp(ImpactSplashMin, ImpactSplashMax, strength)),
+                Mathf.Lerp(ImpactSplashSpeedMin, ImpactSplashSpeedMax, strength),
+                null,
+                Mathf.Lerp(ImpactSplashSizeMin, ImpactSplashSizeMax, strength));
         }
 
-        // ---------------------------------------------------------------- defeat and victory
-
-        /// <summary>Final weak hop into the blocking crystal (if any), squash and pop.</summary>
         public async UniTask DefeatAsync(Vector3? target, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             PresentationCue?.Invoke(SlimePresentationCue.DefeatPreparing);
             CancelCharge();
             if (target.HasValue)
-            {
-                var flat = target.Value - _anchor;
-                flat.y = 0;
-                var reach = Mathf.Max(0, flat.magnitude - _diameter * 0.25f);
-                var to = _anchor + (flat.sqrMagnitude > 1e-6f ? flat.normalized * reach : Vector3.zero);
-                var from = _anchor;
-                try
-                {
-                    await _clock.Animate(_config.hopPrepare, t => _prepare = Mathf.Sin(t * Mathf.PI * 0.5f) * 0.6f, token);
-                    _prepare = 0;
-                    PresentationCue?.Invoke(SlimePresentationCue.Takeoff);
-                    await _clock.Animate(_config.defeatHopDuration, t =>
-                    {
-                        _flightT = t;
-                        _height = 4 * _config.defeatHopHeight * t * (1 - t);
-                        _anchor = Vector3.Lerp(from, to, GameClock.Smooth(t));
-                    }, token);
-                }
-                finally { _flightT = -1; _height = 0; _prepare = 0; }
-                _impactVelocity = -4f;
-                PresentationCue?.Invoke(SlimePresentationCue.Landed);
-            }
-            await _clock.Animate(_config.popSquash, t => _flatten = Mathf.Lerp(1, 0.42f, GameClock.EaseOut(t)), token);
+                await DefeatHopAsync(target.Value, token);
+
+            await _clock.Animate(
+                _config.popSquash,
+                t => _flatten = Mathf.Lerp(1, PoppedFlatten, GameClock.EaseOut(t)),
+                token);
             _popped = true;
             PresentationCue?.Invoke(SlimePresentationCue.Popped);
             body.gameObject.SetActive(false);
-            if (shadow != null) shadow.gameObject.SetActive(false);
-            var center = new Vector3(_anchor.x, _diameter * 0.3f, _anchor.z);
-            splashes?.Burst(center, 26, 1.5f, null, 1.6f);
+            if (shadow != null)
+                shadow.gameObject.SetActive(false);
+
+            var center = new Vector3(_anchor.x, _diameter * PopSplashHeight, _anchor.z);
+            splashes?.Burst(center, PopSplashCount, PopSplashSpeed, null, PopSplashSize);
             await _clock.Wait(_config.popLinger, token);
         }
 
-        /// <summary>
-        /// Victory: a cartoon jump into the colony pool. Deep crouch, launch with stretch, a short hang at the apex
-        /// with a wobble, a stretched dive, splash and sink. Completes when the slime is under the surface.
-        /// </summary>
         public async UniTask DiveIntoAsync(Transform pool, PoolSplashEffect splash, CancellationToken token)
         {
-            if (pool == null) return;
+            if (pool == null)
+                return;
+
             token.ThrowIfCancellationRequested();
             CancelCharge();
             _scripted = true;
-            var radius = _diameter * 0.5f;
+            var radius = _diameter * HalfDiameter;
             var start = new Vector3(_anchor.x, 0, _anchor.z);
             var poolCenter = pool.position;
             var landing = new Vector3(poolCenter.x, 0, poolCenter.z);
-            var surface = poolCenter.y + pool.lossyScale.y * 0.5f;
-            var apex = Vector3.Lerp(start, landing, 0.55f);
-            var apexHeight = 1.9f + radius;
+            var surface = poolCenter.y + pool.lossyScale.y * HalfDiameter;
+            var apex = Vector3.Lerp(start, landing, DiveApexPoint);
+            var apexHeight = DiveApexHeight + radius;
             var splashed = false;
             try
             {
                 // 1. Anticipation: a deep, wide crouch.
                 PresentationCue?.Invoke(SlimePresentationCue.HopPreparing);
-                await _clock.Animate(0.22f, t => Pose(start, radius, Mathf.Lerp(0.9f, 0.56f, GameClock.EaseOut(t)), 0, 0), token);
-                splashes?.Burst(start + Vector3.up * 0.08f, 8, 0.55f);
+                await _clock.Animate(
+                    CrouchDuration,
+                    t => Pose(start, radius, Mathf.Lerp(CrouchSquashFrom, CrouchSquashTo, GameClock.EaseOut(t)), 0, 0),
+                    token);
+                splashes?.Burst(start + Vector3.up * TakeoffSplashHeight, TakeoffSplashCount, TakeoffSplashSpeed);
+
                 // 2. Launch: stretched upwards, decelerating towards the apex.
                 PresentationCue?.Invoke(SlimePresentationCue.Takeoff);
-                await _clock.Animate(0.36f, t =>
+                await _clock.Animate(LaunchDuration, t =>
                 {
-                    var e = GameClock.EaseOut(t);
-                    Pose(Vector3.Lerp(start, apex, e), radius, Mathf.Lerp(1.5f, 1.0f, t), apexHeight * e, -12 * t);
+                    var eased = GameClock.EaseOut(t);
+                    Pose(Vector3.Lerp(start, apex, eased), radius, Mathf.Lerp(LaunchStretch, 1f, t), apexHeight * eased, LaunchTilt * t);
                 }, token);
+
                 // 3. Hang time: a little float and a jelly wobble in the air.
-                await _clock.Animate(0.34f, t =>
+                await _clock.Animate(HangDuration, t =>
                 {
-                    var wobble = 1 + Mathf.Sin(t * Mathf.PI * 3) * 0.1f * (1 - t);
-                    Pose(apex, radius, wobble, apexHeight + Mathf.Sin(t * Mathf.PI) * 0.14f, Mathf.Lerp(-12, 10, t));
+                    var wobble = 1 + Mathf.Sin(t * Mathf.PI * HangWobbleTurns) * HangWobble * (1 - t);
+                    var height = apexHeight + Mathf.Sin(t * Mathf.PI) * HangFloat;
+                    Pose(apex, radius, wobble, height, Mathf.Lerp(LaunchTilt, DiveTilt, t));
                 }, token);
+
                 // 4. Dive: accelerating, stretched like a drop, into the pool.
-                var bottom = surface - radius * 2.2f;
-                await _clock.Animate(0.3f, t =>
+                var bottom = surface - radius * DiveDepth;
+                await _clock.Animate(DiveDuration, t =>
                 {
-                    var e = t * t;
-                    var height = Mathf.Lerp(apexHeight, bottom, e);
-                    Pose(Vector3.Lerp(apex, landing, e), radius * Mathf.Lerp(1, 0.9f, t), Mathf.Lerp(1.0f, 1.55f, t), height, 10);
-                    if (!splashed && height < surface)
-                    {
-                        splashed = true;
-                        PresentationCue?.Invoke(SlimePresentationCue.PoolSplash);
-                        var entry = new Vector3(landing.x, surface, landing.z);
-                        if (splash != null) splash.Play(entry, _diameter / 1.6f);
-                        splashes?.Burst(entry + Vector3.up * 0.05f, 8, 1.1f, null, 1.3f);
-                        PoolBounceAsync(pool, token).Forget();
-                    }
+                    var eased = t * t;
+                    var height = Mathf.Lerp(apexHeight, bottom, eased);
+                    var shrink = radius * Mathf.Lerp(1, DiveShrink, t);
+                    Pose(Vector3.Lerp(apex, landing, eased), shrink, Mathf.Lerp(1f, DiveStretch, t), height, DiveTilt);
+                    if (splashed || height >= surface)
+                        return;
+
+                    splashed = true;
+                    PresentationCue?.Invoke(SlimePresentationCue.PoolSplash);
+                    var entry = new Vector3(landing.x, surface, landing.z);
+                    if (splash != null)
+                        splash.Play(entry, _diameter / DefaultDiameter);
+
+                    splashes?.Burst(entry + Vector3.up * EntrySplashHeight, EntrySplashCount, EntrySplashSpeed, null, EntrySplashSize);
+                    PoolBounceAsync(pool, token).Forget();
                 }, token);
+
                 // 5. Sink and vanish under the surface.
-                await _clock.Animate(0.2f, t => Pose(landing, radius * (1 - t), 1.2f, bottom - t * 0.3f, 10), token);
+                await _clock.Animate(
+                    SinkDuration,
+                    t => Pose(landing, radius * (1 - t), SinkSquash, bottom - t * SinkDepth, DiveTilt),
+                    token);
             }
             finally
             {
-                if (body != null) body.gameObject.SetActive(false);
-                if (shadow != null) shadow.gameObject.SetActive(false);
+                if (body != null)
+                    body.gameObject.SetActive(false);
+
+                if (shadow != null)
+                    shadow.gameObject.SetActive(false);
+
                 _popped = true;
             }
         }
 
-        /// <summary>Sets the body directly during a scripted move. <paramref name="height"/> is the body bottom above the floor.</summary>
+        private static void ApplyColors(MeshRenderer renderer, MaterialPropertyBlock properties, SlimeColorPreset preset)
+        {
+            properties.SetColor(BaseColorId, preset.BaseColor);
+            properties.SetColor(TopColorId, preset.TopColor);
+            renderer.SetPropertyBlock(properties);
+        }
+
+        private async UniTask DefeatHopAsync(Vector3 target, CancellationToken token)
+        {
+            var flat = target - _anchor;
+            flat.y = 0;
+            var reach = Mathf.Max(0, flat.magnitude - _diameter * DefeatReachShrink);
+            var to = _anchor + (flat.sqrMagnitude > MinDirectionSqr ? flat.normalized * reach : Vector3.zero);
+            var from = _anchor;
+            try
+            {
+                await _clock.Animate(
+                    _config.hopPrepare,
+                    t => _prepare = Mathf.Sin(t * QuarterTurn) * DefeatCrouch,
+                    token);
+                _prepare = 0;
+                PresentationCue?.Invoke(SlimePresentationCue.Takeoff);
+                await _clock.Animate(_config.defeatHopDuration, t =>
+                {
+                    _flightT = t;
+                    _height = ParabolaPeak * _config.defeatHopHeight * t * (1 - t);
+                    _anchor = Vector3.Lerp(from, to, GameClock.Smooth(t));
+                }, token);
+            }
+            finally
+            {
+                _flightT = NoFlight;
+                _height = 0;
+                _prepare = 0;
+            }
+
+            _impactVelocity = DefeatLandingImpulse;
+            PresentationCue?.Invoke(SlimePresentationCue.Landed);
+        }
+
+        private void OnDestroy()
+        {
+            if (_bridgeMesh != null)
+                Destroy(_bridgeMesh);
+        }
+
         private void Pose(Vector3 ground, float radius, float squash, float height, float tilt)
         {
             _anchor = new Vector3(ground.x, 0, ground.z);
-            var wide = 1f / Mathf.Sqrt(Mathf.Max(0.2f, squash));
-            body.localScale = new Vector3(wide, squash, wide) * (radius * 2);
-            body.position = new Vector3(ground.x, radius * squash + height + 0.055f, ground.z);
+            var wide = 1f / Mathf.Sqrt(Mathf.Max(MinSquash, squash));
+            body.localScale = new Vector3(wide, squash, wide) * (radius * DiameterPerRadius);
+            body.position = new Vector3(ground.x, radius * squash + height + BodyLift, ground.z);
             body.rotation = Quaternion.Euler(tilt, bodyYaw, 0);
-            if (shadow != null)
-            {
-                shadow.position = new Vector3(ground.x, 0.015f, ground.z);
-                shadow.localScale = Vector3.one * (radius * 2.3f / (1 + Mathf.Max(0, height) * 0.7f));
-            }
+            if (shadow == null)
+                return;
+
+            shadow.position = new Vector3(ground.x, ShadowHeight, ground.z);
+            shadow.localScale = Vector3.one * (radius * ShadowScale / (1 + Mathf.Max(0, height) * ShadowFade));
         }
 
-        /// <summary>Secondary: the pool squashes and springs back after the splash.</summary>
         private async UniTaskVoid PoolBounceAsync(Transform pool, CancellationToken token)
         {
             var baseScale = pool.localScale;
             try
             {
-                await _clock.Animate(0.7f, t =>
+                await _clock.Animate(PoolBounceDuration, t =>
                 {
-                    var k = Mathf.Sin(t * Mathf.PI * 3) * (1 - t);
-                    pool.localScale = new Vector3(baseScale.x * (1 + 0.12f * k), baseScale.y * (1 - 0.35f * k), baseScale.z * (1 + 0.12f * k));
+                    var k = Mathf.Sin(t * Mathf.PI * PoolBounceTurns) * (1 - t);
+                    pool.localScale = new Vector3(
+                        baseScale.x * (1 + PoolBounceWiden * k),
+                        baseScale.y * (1 - PoolBounceFlatten * k),
+                        baseScale.z * (1 + PoolBounceWiden * k));
                 }, token);
             }
-            catch (OperationCanceledException) { }
-            finally { if (pool != null) pool.localScale = baseScale; }
+            catch (OperationCanceledException)
+            {
+            }
+            finally
+            {
+                if (pool != null)
+                    pool.localScale = baseScale;
+            }
         }
-
-        // ---------------------------------------------------------------- per-frame body
-
-        private void Update() => UpdateBody(_clock.Delta);
 
         private void UpdateBody(float dt)
         {
-            if (_popped || _scripted) return;
+            if (_popped || _scripted)
+                return;
+
             _idleTime += dt;
-            var radius = _diameter * 0.5f;
-            var squash = 0.91f + Mathf.Sin(_idleTime * 2.6f) * 0.015f;
-            if (_prepare > 0) squash -= _prepare * 0.18f;
-            if (_flightT >= 0) squash = 1.08f + Mathf.Sin(_flightT * Mathf.PI * 2) * 0.14f;
-            _impactVelocity += (-95 * _impactSpring - 10.5f * _impactVelocity) * dt;
+            var radius = _diameter * HalfDiameter;
+            var squash = IdleSquash + Mathf.Sin(_idleTime * IdleBreathSpeed) * IdleBreath;
+            if (_prepare > 0)
+                squash -= _prepare * CrouchDepth;
+
+            if (_flightT >= 0)
+                squash = FlightSquash + Mathf.Sin(_flightT * FullTurn) * FlightWobble;
+
+            _impactVelocity += (-SpringStiffness * _impactSpring - SpringDamping * _impactVelocity) * dt;
             _impactSpring += _impactVelocity * dt;
-            _impactSpring = Mathf.Clamp(_impactSpring, -0.28f, 0.25f);
-            squash = Mathf.Clamp(squash + _impactSpring, 0.65f, 1.35f) * _flatten;
-            var targetPull = _charging && !_pinching ? _chargeNormalized * 0.22f
-                : _pinching ? Mathf.Lerp(0.22f, 0.03f, _pinchT) : 0;
-            _pull = dt > 0 ? Mathf.SmoothDamp(_pull, targetPull, ref _pullVelocity, 0.09f, Mathf.Infinity, dt) : _pull;
-            var wide = 1f / Mathf.Sqrt(Mathf.Max(0.2f, squash));
-            body.localScale = new Vector3(wide, squash, wide) * (radius * 2);
-            body.position = new Vector3(_anchor.x, radius * squash + _height + 0.055f, _anchor.z);
+            _impactSpring = Mathf.Clamp(_impactSpring, SpringMin, SpringMax);
+            squash = Mathf.Clamp(squash + _impactSpring, SquashMin, SquashMax) * _flatten;
+            var targetPull = TargetPull();
+            if (dt > 0)
+                _pull = Mathf.SmoothDamp(_pull, targetPull, ref _pullVelocity, PullSmoothTime, Mathf.Infinity, dt);
+
+            var wide = 1f / Mathf.Sqrt(Mathf.Max(MinSquash, squash));
+            body.localScale = new Vector3(wide, squash, wide) * (radius * DiameterPerRadius);
+            body.position = new Vector3(_anchor.x, radius * squash + _height + BodyLift, _anchor.z);
             if (shadow != null)
             {
-                shadow.position = new Vector3(_anchor.x, 0.015f, _anchor.z);
-                shadow.localScale = Vector3.one * (radius * 2.3f / (1 + _height * 0.7f));
+                shadow.position = new Vector3(_anchor.x, ShadowHeight, _anchor.z);
+                shadow.localScale = Vector3.one * (radius * ShadowScale / (1 + _height * ShadowFade));
             }
-            var tilt = _flightT >= 0 ? -Mathf.Sin(_flightT * Mathf.PI * 2) * 6 : _pull * 14;
+
+            var tilt = _flightT >= 0
+                ? -Mathf.Sin(_flightT * FullTurn) * FlightTilt
+                : _pull * PullTilt;
             body.rotation = Quaternion.Euler(tilt, bodyYaw, 0);
             var forward = Vector3.forward;
-            _bodyProperties.SetFloat(WobbleId, _config != null ? _config.surfaceWobble : 0.017f);
-            _bodyProperties.SetFloat(ImpactId, Mathf.Abs(_impactSpring) * 3);
+            _bodyProperties.SetFloat(WobbleId, SurfaceWobble);
+            _bodyProperties.SetFloat(ImpactId, Mathf.Abs(_impactSpring) * ImpactShading);
             _bodyProperties.SetFloat(PullId, _pull);
             _bodyProperties.SetVector(PullDirectionId, body.InverseTransformDirection(forward));
             _bodyRenderer.SetPropertyBlock(_bodyProperties);
 
-            var blinkClock = Mathf.Repeat(_idleTime + 1.4f, 4.3f);
-            var blink = blinkClock < 0.16f ? Mathf.Lerp(0.12f, 1, Mathf.Abs(blinkClock - 0.08f) / 0.08f) : 1;
-            foreach (var eye in eyes) eye.localScale = new Vector3(0.105f, 0.16f * blink, 0.065f);
+            var blinkClock = Mathf.Repeat(_idleTime + BlinkOffset, BlinkPeriod);
+            var blink = blinkClock < BlinkDuration
+                ? Mathf.Lerp(BlinkClosed, 1, Mathf.Abs(blinkClock - BlinkDuration * HalfDiameter) / (BlinkDuration * HalfDiameter))
+                : 1;
+            foreach (var eye in eyes)
+                eye.localScale = new Vector3(EyeWidth, EyeHeight * blink, EyeDepth);
 
-            if (_charging || _pinching) UpdateChargedDrop(radius, forward);
+            if (_charging || _pinching)
+                UpdateChargedDrop(radius, forward);
+        }
+
+        private float TargetPull()
+        {
+            if (_charging && !_pinching)
+                return _chargeNormalized * ChargePull;
+
+            if (_pinching)
+                return Mathf.Lerp(ChargePull, PinchPull, _pinchT);
+
+            return 0;
         }
 
         private void UpdateChargedDrop(float bodyRadius, Vector3 direction)
         {
-            var radius = _dropDiameter * 0.5f;
+            var radius = _dropDiameter * HalfDiameter;
             var center = body.position;
-            var distance = bodyRadius * 1.32f + radius + 0.18f * _chargeNormalized;
+            var distance = bodyRadius * DropDistance + radius + DropChargeReach * _chargeNormalized;
             var position = center + direction * distance;
-            if (_pinching) position = _pinchStart + direction * GameClock.Smooth(_pinchT) * 0.5f;
+            if (_pinching)
+                position = _pinchStart + direction * GameClock.Smooth(_pinchT) * PinchTravel;
+
             drop.position = position;
             drop.rotation = Quaternion.identity;
-            drop.localScale = Vector3.one * Mathf.Max(0.02f, _dropDiameter);
-            var start = center + direction * bodyRadius * 0.72f;
-            var end = position - direction * radius * 0.52f;
-            UpdateBridge(start, end, Mathf.Min(radius, bodyRadius) * 0.7f, _pinching ? _pinchT : 0);
-            _dropProperties.SetFloat(WobbleId, (_config != null ? _config.surfaceWobble : 0.017f) * 0.65f);
-            _dropProperties.SetFloat(PhaseId, 2.7f);
+            drop.localScale = Vector3.one * Mathf.Max(MinDropDiameter, _dropDiameter);
+            var start = center + direction * bodyRadius * NeckStart;
+            var end = position - direction * radius * NeckEnd;
+            var pinch = _pinching
+                ? _pinchT
+                : 0;
+            UpdateBridge(start, end, Mathf.Min(radius, bodyRadius) * NeckRadius, pinch);
+            _dropProperties.SetFloat(WobbleId, SurfaceWobble * DropWobbleShare);
+            _dropProperties.SetFloat(PhaseId, DropPhase);
             _dropRenderer.SetPropertyBlock(_dropProperties);
         }
 
         private void CreateBridgeMesh()
         {
-            _bridgeMesh = new Mesh { name = "Slime neck (runtime)" };
+            _bridgeMesh = new Mesh { name = BridgeMeshName };
             _bridgeMesh.MarkDynamic();
-            _bridgeVertices = new Vector3[Rings * Sides];
+            _bridgeVertices = new Vector3[BridgeRings * BridgeSides];
             _bridgeNormals = new Vector3[_bridgeVertices.Length];
-            var triangles = new int[(Rings - 1) * Sides * 6];
+            var triangles = new int[(BridgeRings - 1) * BridgeSides * IndicesPerQuad];
             var index = 0;
-            for (var ring = 0; ring < Rings - 1; ring++)
-                for (var side = 0; side < Sides; side++)
+            for (var ring = 0; ring < BridgeRings - 1; ring++)
+            {
+                for (var side = 0; side < BridgeSides; side++)
                 {
-                    var a = ring * Sides + side;
-                    var b = ring * Sides + (side + 1) % Sides;
-                    triangles[index++] = a; triangles[index++] = b; triangles[index++] = a + Sides;
-                    triangles[index++] = b; triangles[index++] = b + Sides; triangles[index++] = a + Sides;
+                    var a = ring * BridgeSides + side;
+                    var b = ring * BridgeSides + (side + 1) % BridgeSides;
+                    triangles[index++] = a;
+                    triangles[index++] = b;
+                    triangles[index++] = a + BridgeSides;
+                    triangles[index++] = b;
+                    triangles[index++] = b + BridgeSides;
+                    triangles[index++] = a + BridgeSides;
                 }
+            }
+
             _bridgeMesh.vertices = _bridgeVertices;
             _bridgeMesh.triangles = triangles;
             bridge.sharedMesh = _bridgeMesh;
@@ -465,25 +747,28 @@ namespace Game.Gameplay.View
         private void UpdateBridge(Vector3 start, Vector3 end, float radius, float pinch)
         {
             var axis = (end - start).normalized;
-            if (axis.sqrMagnitude < 1e-6f) axis = Vector3.forward;
+            if (axis.sqrMagnitude < MinDirectionSqr)
+                axis = Vector3.forward;
+
             var tangent = Vector3.Cross(axis, Vector3.up).normalized;
             var bitangent = Vector3.Cross(axis, tangent);
-            var t0 = bridge.transform;
-            for (var ring = 0; ring < Rings; ring++)
+            var space = bridge.transform;
+            for (var ring = 0; ring < BridgeRings; ring++)
             {
-                var t = ring / (float)(Rings - 1);
+                var t = ring / (float)(BridgeRings - 1);
                 var middle = Mathf.Sin(t * Mathf.PI);
-                var width = radius * Mathf.Lerp(1, Mathf.Lerp(0.7f, 0.015f, pinch), middle);
-                var c = Vector3.Lerp(start, end, t);
-                for (var side = 0; side < Sides; side++)
+                var width = radius * Mathf.Lerp(1, Mathf.Lerp(NeckWaist, PinchedWaist, pinch), middle);
+                var center = Vector3.Lerp(start, end, t);
+                for (var side = 0; side < BridgeSides; side++)
                 {
-                    var angle = side * Mathf.PI * 2 / Sides;
-                    var n = tangent * Mathf.Cos(angle) + bitangent * Mathf.Sin(angle);
-                    var i = ring * Sides + side;
-                    _bridgeVertices[i] = t0.InverseTransformPoint(c + n * width);
-                    _bridgeNormals[i] = t0.InverseTransformDirection(n);
+                    var angle = side * FullTurn / BridgeSides;
+                    var normal = tangent * Mathf.Cos(angle) + bitangent * Mathf.Sin(angle);
+                    var i = ring * BridgeSides + side;
+                    _bridgeVertices[i] = space.InverseTransformPoint(center + normal * width);
+                    _bridgeNormals[i] = space.InverseTransformDirection(normal);
                 }
             }
+
             _bridgeMesh.vertices = _bridgeVertices;
             _bridgeMesh.normals = _bridgeNormals;
             _bridgeMesh.RecalculateBounds();

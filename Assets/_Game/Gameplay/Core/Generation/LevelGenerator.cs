@@ -15,8 +15,27 @@ namespace Game.Gameplay.Generation
     public sealed class LevelGenerator
     {
         public const int Version = 1;
-        private const int StreamLayout = 1, StreamDecor = 2, StreamCount = 3;
+        private const int StreamLayout = 1;
+        private const int StreamDecor = 2;
+        private const int StreamCount = 3;
         private const int MaxPlannedShots = 64;
+        private const int CheapCandidateShare = 2;
+        private const int ExtraObstacles = 2;
+        private const double SingleDepth = 0.6;
+        private const double PairSpreadMin = 0.3;
+        private const double PairSpreadMax = 0.48;
+        private const double PairStaggerMax = 0.45;
+        private const double FlipChance = 0.5;
+        private const int GroupAttemptsPerMember = 30;
+        private const double GroupDepthPadding = 0.4;
+        private const double DiameterPerRadius = 2;
+        private const double SideChance = 0.5;
+        private const double DecorStartZ = -1.5;
+        private const double DecorDoorClearance = 0.8;
+        private const double Epsilon = 1e-9;
+        private const double FinishBonus = 5;
+        private const double ProgressBias = 0.1;
+        private const double ScoreEpsilon = 1e-12;
 
         private struct Draft
         {
@@ -28,7 +47,9 @@ namespace Game.Gameplay.Generation
 
         public LevelData Generate(GameRules rules, int seed)
         {
-            if (rules == null) throw new ArgumentNullException(nameof(rules));
+            if (rules == null)
+                throw new ArgumentNullException(nameof(rules));
+
             var v = rules.Values;
             var count = new Prng(Prng.Mix(seed, StreamCount, 0)).Range(v.ObstacleCountMin, v.ObstacleCountMax);
             var lowerSpend = v.MinSpendFraction * rules.ControlBudgetLimit;
@@ -45,19 +66,21 @@ namespace Game.Gameplay.Generation
                     continue;
                 }
                 // Prefer levels that use a meaningful share of the budget; relax that wish in the second half.
-                if (level.Control.TotalCost + rules.Tolerance < lowerSpend && candidate < v.MaxCandidates / 2)
+                if (level.Control.TotalCost + rules.Tolerance < lowerSpend && candidate < v.MaxCandidates / CheapCandidateShare)
                 {
-                    if (cheapest == null || level.Control.TotalCost > cheapest.Control.TotalCost) cheapest = level;
-                    count = Math.Min(v.ObstacleCountMax + 2, count + 1);
+                    if (cheapest == null || level.Control.TotalCost > cheapest.Control.TotalCost)
+                        cheapest = level;
+                    count = Math.Min(v.ObstacleCountMax + ExtraObstacles, count + 1);
                     continue;
                 }
                 return level;
             }
-            if (cheapest != null) return cheapest;
+            if (cheapest != null)
+                return cheapest;
+
             return Fallback(rules, seed, lastFailure);
         }
 
-        /// <summary>Simplified, still validated layout: single crystals only, fewer of them until the plan fits.</summary>
         private LevelData Fallback(GameRules rules, int seed, string reason)
         {
             var v = rules.Values;
@@ -65,7 +88,8 @@ namespace Game.Gameplay.Generation
             {
                 var drafts = BuildLayout(rules, seed, v.MaxCandidates, count, simplified: true);
                 var level = TryAccept(rules, seed, drafts, new GenerationReport(v.MaxCandidates, true, reason), out _);
-                if (level != null) return level;
+                if (level != null)
+                    return level;
             }
             throw new InvalidOperationException("Generator could not build even an empty route; rules are inconsistent.");
         }
@@ -75,9 +99,15 @@ namespace Game.Gameplay.Generation
             var placements = Place(rules, drafts);
             var draftLevel = new LevelData(seed, Version, rules, placements, null, report);
             var holds = PlanControl(rules, draftLevel, out failure);
-            if (holds == null) return null;
+            if (holds == null)
+                return null;
+
             var replay = ControlReplay.Run(rules, draftLevel, holds);
-            if (!replay.Success) { failure = "replay: " + replay.Failure; return null; }
+            if (!replay.Success)
+            {
+                failure = "replay: " + replay.Failure;
+                return null;
+            }
             return new LevelData(seed, Version, rules, placements, new ControlPlan(holds, replay.Spent, replay.FinalDiameter), report);
         }
 
@@ -113,16 +143,16 @@ namespace Game.Gameplay.Generation
                 {
                     case CrystalRole.Single:
                         drafts.Add(Crystal(rules, rng, new Vec2(cx, z), role, obstacle));
-                        depth = 0.6;
+                        depth = SingleDepth;
                         break;
                     case CrystalRole.Pair:
                     {
-                        var spread = rng.Range(0.3, 0.48);
-                        var stagger = rng.Range(0, 0.45);
-                        var flip = rng.Chance(0.5) ? 1 : -1;
+                        var spread = rng.Range(PairSpreadMin, PairSpreadMax);
+                        var stagger = rng.Range(0, PairStaggerMax);
+                        var flip = rng.Chance(FlipChance) ? 1 : -1;
                         drafts.Add(Crystal(rules, rng, new Vec2(cx - spread, z + (flip > 0 ? 0 : stagger)), role, obstacle));
                         drafts.Add(Crystal(rules, rng, new Vec2(cx + spread, z + (flip > 0 ? stagger : 0)), role, obstacle));
-                        depth = 0.6 + stagger;
+                        depth = SingleDepth + stagger;
                         break;
                     }
                     default:
@@ -131,19 +161,27 @@ namespace Game.Gameplay.Generation
                         var size = rng.Range(v.GroupSizeMin, v.GroupSizeMax);
                         var center = new Vec2(cx, z + radius);
                         var members = new List<Vec2> { center };
-                        for (var attempt = 0; members.Count < size && attempt < size * 30; attempt++)
+                        for (var attempt = 0; members.Count < size && attempt < size * GroupAttemptsPerMember; attempt++)
                         {
                             // Rejection sampling inside the disk keeps members apart without trigonometry.
                             var p = new Vec2(rng.Range(-radius, radius), rng.Range(-radius, radius));
-                            if (p.LengthSquared > radius * radius) continue;
+                            if (p.LengthSquared > radius * radius)
+                                continue;
+
                             var candidatePoint = center + p;
                             var free = true;
                             foreach (var m in members)
-                                if (Vec2.Distance(m, candidatePoint) < v.MemberSpacing) { free = false; break; }
-                            if (free) members.Add(candidatePoint);
+                                if (Vec2.Distance(m, candidatePoint) < v.MemberSpacing)
+                                {
+                                    free = false;
+                                    break;
+                                }
+                            if (free)
+                                members.Add(candidatePoint);
                         }
-                        foreach (var m in members) drafts.Add(Crystal(rules, rng, m, role, obstacle));
-                        depth = radius * 2 + 0.4;
+                        foreach (var m in members)
+                            drafts.Add(Crystal(rules, rng, m, role, obstacle));
+                        depth = radius * DiameterPerRadius + GroupDepthPadding;
                         break;
                     }
                 }
@@ -155,9 +193,9 @@ namespace Game.Gameplay.Generation
             var decorCount = (int)Math.Floor(v.RouteLength * v.DecorPerMetre);
             for (var i = 0; i < decorCount; i++)
             {
-                var side = decor.Chance(0.5) ? 1 : -1;
+                var side = decor.Chance(SideChance) ? 1 : -1;
                 var position = new Vec2(side * decor.Range(v.DecorLateralMin, v.DecorLateralMax),
-                    decor.Range(-1.5, rules.DoorZ - 0.8));
+                    decor.Range(DecorStartZ, rules.DoorZ - DecorDoorClearance));
                 drafts.Add(Crystal(rules, decor, position, CrystalRole.Decor, -1));
             }
             return drafts;
@@ -177,10 +215,6 @@ namespace Game.Gameplay.Generation
             };
         }
 
-        /// <summary>
-        /// Greedy control planner: at every stop it tries a ladder of hold durations and keeps the one with the best
-        /// progress per spent diameter that removes the blocking crystal. Not optimal, only a proof of a solution.
-        /// </summary>
         internal static List<double> PlanControl(GameRules rules, LevelData level, out string failure)
         {
             var v = rules.Values;
@@ -190,10 +224,14 @@ namespace Game.Gameplay.Generation
             var holds = new List<double>();
             var advance = ShotRules.ComputeAdvance(rules, field, level.StartZ, diameter);
             var z = advance.ToZ;
-            var steps = (int)Math.Floor(v.ControlHoldMax / v.ControlHoldStep + 1e-9);
+            var steps = (int)Math.Floor(v.ControlHoldMax / v.ControlHoldStep + Epsilon);
             while (!advance.ReachesFinish)
             {
-                if (holds.Count >= MaxPlannedShots) { failure = "too many control shots"; return null; }
+                if (holds.Count >= MaxPlannedShots)
+                {
+                    failure = "too many control shots";
+                    return null;
+                }
                 if (!rules.CanAffordMinShot(diameter)) { failure = $"out of resource at z={z:0.##}"; return null; }
                 var bestScore = double.NegativeInfinity;
                 double bestHold = -1;
@@ -201,20 +239,32 @@ namespace Game.Gameplay.Generation
                 {
                     var hold = i * v.ControlHoldStep;
                     var cost = rules.ChargeCost(hold);
-                    if (rules.IsCritical(diameter - cost)) break;
-                    if (spent + cost > rules.ControlBudgetLimit) break;
+                    if (rules.IsCritical(diameter - cost))
+                        break;
+
+                    if (spent + cost > rules.ControlBudgetLimit)
+                        break;
+
                     var shot = ShotRules.ComputeShot(rules, field, z, diameter, hold);
-                    if (!Contains(shot.HitIds, advance.BlockingCrystalId)) continue;
+                    if (!Contains(shot.HitIds, advance.BlockingCrystalId))
+                        continue;
+
                     var trial = field.Clone();
-                    foreach (var id in shot.HitIds) trial.Kill(id);
+                    foreach (var id in shot.HitIds)
+                        trial.Kill(id);
                     var next = ShotRules.ComputeAdvance(rules, trial, z, shot.DiameterAfter);
-                    var progress = next.ReachesFinish ? (rules.FinishZ - z) + 5 : next.ToZ - z;
-                    var score = (progress + 0.1) / cost;
-                    if (score > bestScore + 1e-12) { bestScore = score; bestHold = hold; }
+                    var progress = next.ReachesFinish ? (rules.FinishZ - z) + FinishBonus : next.ToZ - z;
+                    var score = (progress + ProgressBias) / cost;
+                    if (score > bestScore + ScoreEpsilon)
+                    {
+                        bestScore = score;
+                        bestHold = hold;
+                    }
                 }
                 if (bestHold < 0) { failure = $"no affordable shot clears the blocker at z={z:0.##}"; return null; }
                 var chosen = ShotRules.ComputeShot(rules, field, z, diameter, bestHold);
-                foreach (var id in chosen.HitIds) field.Kill(id);
+                foreach (var id in chosen.HitIds)
+                    field.Kill(id);
                 holds.Add(bestHold);
                 spent += chosen.Cost;
                 diameter = chosen.DiameterAfter;
@@ -227,7 +277,10 @@ namespace Game.Gameplay.Generation
 
         private static bool Contains(IReadOnlyList<int> ids, int id)
         {
-            for (var i = 0; i < ids.Count; i++) if (ids[i] == id) return true;
+            for (var i = 0; i < ids.Count; i++)
+                if (ids[i] == id)
+                    return true;
+
             return false;
         }
     }

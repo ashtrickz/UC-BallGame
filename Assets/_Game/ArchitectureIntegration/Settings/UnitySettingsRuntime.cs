@@ -1,81 +1,74 @@
-using Game.Settings;
 using System;
 using System.Collections.Generic;
+using Game.Settings;
 using UnityEngine;
 
 namespace Game.Integration.Settings
 {
-    // PlayerPrefs-backed settings. LocalizationService observes language changes through SettingsService.
+    /// <summary>Persists shared preferences and delegates display controls to the compiled platform.</summary>
     public sealed class UnitySettingsRuntime : ISettingsRuntime
     {
-        private const string KeyPrefix = "Settings.";
+        private const float DefaultVolume = 1;
+        private readonly IReadOnlyList<LanguageOption> _languages;
+        private readonly IDisplaySettings _display;
 
-        private static readonly LanguageOption[] SupportedLanguages =
+        public SettingsPack Pack
         {
-            new LanguageOption("en", "en", "English"),
-            new LanguageOption("uk", "uk", "Українська"),
-            new LanguageOption("es", "es", "Español"),
-            new LanguageOption("zh-CN", "zh-CN", "简体中文")
-        };
-
-        public SettingsPack Pack { get; }
-        public ResolutionOption AppliedResolution { get; private set; }
-        public int AppliedFps { get; private set; }
-        public IReadOnlyList<ResolutionOption> Resolutions => GetResolutions();
-        public IReadOnlyList<LanguageOption> Languages => Array.AsReadOnly(SupportedLanguages);
+            get;
+        }
+        public ResolutionOption AppliedResolution => _display.Resolution;
+        public int AppliedFps
+        {
+            get;
+            private set;
+        }
+        public IReadOnlyList<ResolutionOption> Resolutions => _display.Resolutions;
+        public IReadOnlyList<LanguageOption> Languages => _languages;
         public int CursorCount => 0;
         public int CursorIndex => 0;
-        public int TargetFps { get; private set; }
+        public int TargetFps
+        {
+            get;
+            private set;
+        }
         public int MaximumFps => Pack.MaximumFps;
-        public ResolutionOption Resolution { get; private set; }
-        public WindowMode WindowMode { get; private set; }
-        public string CurrentLanguage { get; private set; }
+        public ResolutionOption Resolution => _display.Resolution;
+        public WindowMode WindowMode => _display.WindowMode;
+        public string CurrentLanguage
+        {
+            get;
+            private set;
+        }
 
-
-        public UnitySettingsRuntime(SettingsPack pack)
+        public UnitySettingsRuntime(SettingsPack pack, LanguageOptionsProvider languages, IDisplaySettings display)
         {
             Pack = pack ?? throw new ArgumentNullException(nameof(pack));
-
-            Resolution = ToOption(Screen.currentResolution);
-            AppliedResolution = Resolution;
-            WindowMode = (WindowMode)Screen.fullScreenMode;
-            TargetFps = Mathf.Clamp(PlayerPrefs.GetInt(KeyPrefix + "TargetFps", Pack.DefaultFps), Pack.MinimumFps, Pack.MaximumFps);
+            _languages = languages.Value;
+            _display = display;
+            TargetFps = Mathf.Clamp(PlayerPrefs.GetInt(SettingsStorageKeys.TargetFps, Pack.DefaultFps), Pack.MinimumFps, Pack.MaximumFps);
             AppliedFps = TargetFps;
-            CurrentLanguage = PlayerPrefs.GetString(KeyPrefix + "Language", SupportedLanguages[0].Name);
-
-            if (!Array.Exists(SupportedLanguages, language => language.Name == CurrentLanguage))
-                CurrentLanguage = SupportedLanguages[0].Name;
-            if (Pack.Contains(SettingId.VSync)) QualitySettings.vSyncCount = GetToggle(PreferenceToggle.VSync) ? 1 : 0;
-            else QualitySettings.vSyncCount = 0;
+            CurrentLanguage = PlayerPrefs.GetString(SettingsStorageKeys.Language, _languages[0].Name);
+            if (!HasLanguage(CurrentLanguage))
+                CurrentLanguage = _languages[0].Name;
+            QualitySettings.vSyncCount = Pack.Contains(SettingId.VSync) && GetToggle(PreferenceToggle.VSync) ? 1 : 0;
             Application.targetFrameRate = TargetFps;
-            if (Pack.Contains(SettingId.Resolution) && PlayerPrefs.HasKey(KeyPrefix + "Width"))
-            {
-                var mode = PlayerPrefs.GetInt(KeyPrefix + "WindowMode", (int)WindowMode);
-                if (!Enum.IsDefined(typeof(WindowMode), mode)) mode = (int)WindowMode;
-                SetDisplay(new ResolutionOption(Math.Max(640, PlayerPrefs.GetInt(KeyPrefix + "Width")),
-                    Math.Max(480, PlayerPrefs.GetInt(KeyPrefix + "Height")),
-                    Math.Max(1, PlayerPrefs.GetInt(KeyPrefix + "RefreshRate", 60))), (WindowMode)mode);
-            }
         }
 
         public float GetVolume(VolumeChannel channel)
         {
-            var value = PlayerPrefs.GetFloat(KeyPrefix + "Volume." + channel, 1f);
-            return float.IsNaN(value) || float.IsInfinity(value) ? 1f : Mathf.Clamp01(value);
+            var value = PlayerPrefs.GetFloat(SettingsStorageKeys.VolumePrefix + channel, DefaultVolume);
+            return float.IsNaN(value) || float.IsInfinity(value) ? DefaultVolume : Mathf.Clamp01(value);
         }
 
         public bool GetToggle(PreferenceToggle toggle) =>
-            PlayerPrefs.GetInt(KeyPrefix + "Toggle." + toggle, toggle == PreferenceToggle.VSync ? 1 : 0) != 0;
+            PlayerPrefs.GetInt(SettingsStorageKeys.TogglePrefix + toggle, toggle == PreferenceToggle.VSync ? 1 : 0) != 0;
 
-        public void SetVolume(VolumeChannel channel, float value)
-        {
-            PlayerPrefs.SetFloat(KeyPrefix + "Volume." + channel, Mathf.Clamp01(value));
-        }
+        public void SetVolume(VolumeChannel channel, float value) =>
+            PlayerPrefs.SetFloat(SettingsStorageKeys.VolumePrefix + channel, Mathf.Clamp01(value));
 
         public void SetToggle(PreferenceToggle toggle, bool value)
         {
-            PlayerPrefs.SetInt(KeyPrefix + "Toggle." + toggle, value ? 1 : 0);
-
+            PlayerPrefs.SetInt(SettingsStorageKeys.TogglePrefix + toggle, value ? 1 : 0);
             if (toggle == PreferenceToggle.VSync)
                 QualitySettings.vSyncCount = value ? 1 : 0;
         }
@@ -85,7 +78,7 @@ namespace Game.Integration.Settings
             TargetFps = value;
             AppliedFps = value;
             Application.targetFrameRate = value;
-            PlayerPrefs.SetInt(KeyPrefix + "TargetFps", value);
+            PlayerPrefs.SetInt(SettingsStorageKeys.TargetFps, value);
         }
 
         public void SetCursor(int index)
@@ -95,21 +88,10 @@ namespace Game.Integration.Settings
         public void SetLanguage(LanguageOption language)
         {
             CurrentLanguage = language.Name;
-            PlayerPrefs.SetString(KeyPrefix + "Language", language.Name);
+            PlayerPrefs.SetString(SettingsStorageKeys.Language, language.Name);
         }
 
-        public void SetDisplay(ResolutionOption resolution, WindowMode mode)
-        {
-            Resolution = resolution;
-            AppliedResolution = resolution;
-            WindowMode = mode;
-            Screen.SetResolution(resolution.Width, resolution.Height, (FullScreenMode)mode,
-                new RefreshRate { numerator = (uint)Math.Max(1, resolution.RefreshRate), denominator = 1 });
-            PlayerPrefs.SetInt(KeyPrefix + "Width", resolution.Width);
-            PlayerPrefs.SetInt(KeyPrefix + "Height", resolution.Height);
-            PlayerPrefs.SetInt(KeyPrefix + "RefreshRate", resolution.RefreshRate);
-            PlayerPrefs.SetInt(KeyPrefix + "WindowMode", (int)mode);
-        }
+        public void SetDisplay(ResolutionOption resolution, WindowMode mode) => _display.SetDisplay(resolution, mode);
 
         public void ResetSetting(SettingId setting)
         {
@@ -117,57 +99,58 @@ namespace Game.Integration.Settings
             {
                 case SettingId.Resolution:
                 case SettingId.WindowMode:
-                    SetDisplay(ToOption(Screen.currentResolution), WindowMode.FullscreenWindow);
+                    _display.Reset();
                     break;
+
                 case SettingId.TargetFps:
                     SetTargetFps(Pack.DefaultFps);
                     break;
+
                 case SettingId.VSync:
                     SetToggle(PreferenceToggle.VSync, true);
                     break;
+
                 case SettingId.MasterVolume:
-                    SetVolume(VolumeChannel.Master, 1f);
+                    SetVolume(VolumeChannel.Master, DefaultVolume);
                     break;
+
                 case SettingId.MusicVolume:
-                    SetVolume(VolumeChannel.Music, 1f);
+                    SetVolume(VolumeChannel.Music, DefaultVolume);
                     break;
+
                 case SettingId.SfxVolume:
-                    SetVolume(VolumeChannel.Sfx, 1f);
+                    SetVolume(VolumeChannel.Sfx, DefaultVolume);
                     break;
+
                 case SettingId.UiVolume:
-                    SetVolume(VolumeChannel.Ui, 1f);
+                    SetVolume(VolumeChannel.Ui, DefaultVolume);
                     break;
+
                 case SettingId.VoiceVolume:
-                    SetVolume(VolumeChannel.Voice, 1f);
+                    SetVolume(VolumeChannel.Voice, DefaultVolume);
                     break;
+
                 case SettingId.Language:
-                    SetLanguage(SupportedLanguages[0]);
+                    SetLanguage(_languages[0]);
                     break;
+
                 case SettingId.FixTooltipOnlyByClick:
                     SetToggle(PreferenceToggle.FixTooltipOnlyByClick, false);
                     break;
+
                 case SettingId.MarketAutoLevelUp:
                     SetToggle(PreferenceToggle.MarketAutoLevelUp, false);
                     break;
             }
         }
 
-        private static IReadOnlyList<ResolutionOption> GetResolutions()
+        private bool HasLanguage(string name)
         {
-            var resolutions = new List<ResolutionOption>();
+            foreach (var language in _languages)
+                if (language.Name == name)
+                    return true;
 
-            foreach (var resolution in Screen.resolutions)
-            {
-                if (resolutions.Exists(option => option.Width == resolution.width && option.Height == resolution.height))
-                    continue;
-
-                resolutions.Add(ToOption(resolution));
-            }
-
-            return resolutions;
+            return false;
         }
-
-        private static ResolutionOption ToOption(Resolution resolution) =>
-            new ResolutionOption(resolution.width, resolution.height, (int)Math.Round(resolution.refreshRateRatio.value));
     }
 }

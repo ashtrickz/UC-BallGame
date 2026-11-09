@@ -10,14 +10,13 @@ namespace Game.UI
     /// </summary>
     public abstract class PopupController<TView> : IPopupController where TView : class, IPopupView
     {
-        private readonly UniTaskCompletionSource _closed = new UniTaskCompletionSource();   // created up front: a popup that closes itself while building must still end
+        private readonly UniTaskCompletionSource _closed = new UniTaskCompletionSource(); // created up front: a popup that closes itself while building must still end
         private bool _disposed;
 
         protected PopupController(TView view) => View = view ?? throw new ArgumentNullException(nameof(view));
 
         protected TView View { get; }
 
-        /// <summary>Shows the popup and completes once <see cref="Close"/> was called (or the view asked to close and <see cref="OnCloseRequested"/> allowed it).</summary>
         protected async UniTask PresentAsync(CancellationToken cancellationToken)
         {
             View.CloseRequested += OnCloseRequested;
@@ -35,12 +34,13 @@ namespace Game.UI
 
         protected void Close() => _closed.TrySetResult();
 
-        /// <summary>The close button or the back gesture. Override to refuse (a purchase is in flight) or to close with a result.</summary>
         protected virtual void OnCloseRequested() => Close();
 
         public void Dispose()
         {
-            if (_disposed) return;
+            if (_disposed)
+                return;
+
             _disposed = true;
             View.Dispose();
         }
