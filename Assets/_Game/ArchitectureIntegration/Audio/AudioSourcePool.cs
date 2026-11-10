@@ -116,6 +116,9 @@ namespace Slime.Infrastructure.Audio
         public void SetGameplayPaused(bool paused)
         {
             _gameplayPaused = paused;
+            if (_root == null)
+                return;
+
             for (var i = 0; i < PoolSize; i++)
                 if (_pool[i].clip != null)
                     ApplyPause(i);

@@ -65,6 +65,8 @@ ProjectScope (shared services, lives for the whole app)
 
 <p align="center"><img src="Docs/Media/transition.gif" width="320" alt="The menu shatters into crystal silhouettes during the scene transition"></p>
 
+<p align="center"><sub>The faint menu buttons showing through the black loading screen are a screen-recorder artefact; the game itself shows a clean black screen.</sub></p>
+
 ### Assemblies
 
 Assembly references enforce the feature boundaries, so the boundaries do not depend on convention. Tests also check them.

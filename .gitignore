@@ -100,3 +100,10 @@ ServerSocket/.local-data/
 
 # Private reference material
 Docs/Reference/
+
+# Build and test by-products
+*.symbols.zip
+*_BurstDebugInformation_DoNotShip/
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+/.utmp/
+/[Aa]ssets/Resources/PerformanceTestRun*

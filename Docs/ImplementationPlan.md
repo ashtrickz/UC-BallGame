@@ -13,8 +13,8 @@ The project uses Unity 6000.3.25f1. At the start of work, check the current vers
 | Area | Entry point |
 | --- | --- |
 | Game scene | [Game.unity](../Assets/_Game/Scenes/Game.unity) |
-| Game scene container | [GameScope.cs](../Assets/_Game/ArchitectureIntegration/Game/GameScope.cs) |
-| Scene readiness | [GameEntryPoint.cs](../Assets/_Game/ArchitectureIntegration/Game/GameEntryPoint.cs), [ReadySceneScope.cs](../Assets/_Game/Architecture/Application/Scenes/ReadySceneScope.cs) |
+| Game scene container | [GameScope.cs](../Assets/_Game/ArchitectureIntegration/Composition/GameScope.cs) |
+| Scene readiness | [GameEntryPoint.cs](../Assets/_Game/ArchitectureIntegration/Composition/GameEntryPoint.cs), [ReadySceneScope.cs](../Assets/_Game/Architecture/Application/Scenes/ReadySceneScope.cs) |
 | Current controller | [GameController.cs](../Assets/_Game/ArchitectureIntegration/Game/GameController.cs) |
 | Shared container | [ProjectScope.cs](../Assets/_Game/ArchitectureIntegration/Composition/ProjectScope.cs) |
 | Visual reference | [SlimeLab.unity](../Assets/_Game/Prototypes/SlimeLab/Scenes/SlimeLab.unity) |
