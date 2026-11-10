@@ -1,6 +1,7 @@
 # Slime: Homecoming
 
 A small portrait mobile game made in Unity. A lost slime finds its way home through a canyon full of crystals. The slime has no ammunition, so every shot costs part of its own body. Each shot shrinks the slime, and if it shrinks too far, the run is lost. Clear a path to the colony doors and dive into the pool with your own kind.
+For more precise look check [the video on YouTube](https://youtube.com/shorts/MTQ-4zhRKng).
 
 > **Strictly non-commercial.** This is a personal, non-commercial project. It is not sold, has no ads or in-app purchases, and must not be used commercially. Some assets, such as music made on the Suno free plan, come with no commercial rights at all.
 
