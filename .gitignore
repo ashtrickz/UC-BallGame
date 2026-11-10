@@ -97,3 +97,6 @@ ServerSocket/.local-data/
 /Art/Audio/Procedural/
 /Art/Audio/Selected/Source/
 /Art/Audio/Selected/validation/
+
+# Private reference material
+Docs/Reference/
