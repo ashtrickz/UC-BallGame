@@ -139,6 +139,15 @@ unity command test run --mode editor
 
 The EditMode suite has 200+ tests. They cover geometry, the model, the generators (run across many seeds), mode policies, assembly boundaries, the frame architecture and code style. The PlayMode suites need `GAME_DEBUG`.
 
+## Room to grow
+
+The game is a complete, playable slice, but it has a lot of room to grow.
+
+- **Bugs and polish.** There are still a couple of small known bugs and a list of polish ideas for game feel, UI and effects.
+- **Saves.** Progress, stars, the slime colour and settings are now stored as separate PlayerPrefs keys. Ideally, they would live in one typed, versioned save file. A dedicated save service would serialize and parse that file and migrate old versions, with PlayerPrefs used only as the storage behind it. The same service could also sync the save through the platform stores' cloud saves. The groundwork already exists. `UserService` keeps a typed, versioned user profile (`UserSaveData`). Its file cache writes atomically and keeps a backup copy, and an `IUserRepository` interface is ready for a cloud or store backend. Game progress just needs to move into that profile.
+- **Levels as Addressables.** Level and UI assets are deliberately not split into Addressables today: there is no case where the game needs only part of them, so everything loads together. That changes once content ships separately from the app. The infrastructure is already in place: `AssetService` initializes Addressables at bootstrap and hands out reference-counted leases (`AssetLease`), so new content can load and unload through it without new plumbing. All campaign levels now live in one `Campaign.asset`, and the level pipeline is already abstracted behind `ILevelSource`. Storing each level as its own Addressable asset would let levels be added, rebalanced or reordered without touching code, and with a remote catalog, even without a new app build. The [Addressables audit](Docs/AddressablesAudit.md) describes the groundwork.
+- **Skins.** The slime already has a colour palette with a saved choice. Skins are the first real case for partial loading: with Addressables, the palette could grow into full skins, with a mesh, materials, effects and sounds in each, loaded only when a player picks one.
+
 ## Credits and asset sources
 
 The design and direction are human. Most of the production work was done with AI tools:
