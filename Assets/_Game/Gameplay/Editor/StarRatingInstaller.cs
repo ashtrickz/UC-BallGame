@@ -8,13 +8,13 @@ using Slime.Gameplay.View;
 using Slime.Gameplay.Presentation;
 using Slime.Infrastructure.Audio;
 using Slime.Composition;
-using Slime.Diagnostics;
 using Slime.Menu;
 using Slime.UI;
 using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 namespace Slime.Gameplay.Editor
@@ -25,6 +25,34 @@ namespace Slime.Gameplay.Editor
         private const string GameScene = "Assets/_Game/Scenes/Game.unity";
         private const string MenuScene = "Assets/_Game/Scenes/Menu.unity";
         private const string SpriteFolder = "Assets/_Game/Art/UI/CartoonContour/Sprites/";
+        private const string ResultCameraName = "Result UI Camera";
+        private const string UiLayerName = "UI";
+        private const string UiRendererPath = "Assets/Settings/UI_Renderer.asset";
+        private const string MobileRendererPath = "Assets/Settings/Mobile_Renderer.asset";
+        private const int UiRendererIndex = 1;
+        private static readonly string[] PipelinePaths =
+        {
+            "Assets/Settings/Mobile_RPAsset.asset",
+            "Assets/Settings/PC_RPAsset.asset",
+        };
+
+        [MenuItem("Tools/Ball Game/Gameplay/Configure Result Rendering")]
+        public static void ConfigureResultRendering()
+        {
+            if (EditorApplication.isPlaying)
+                throw new InvalidOperationException("Stop play mode before configuring result rendering.");
+
+            var scene = SceneManager.GetActiveScene();
+            if (scene.path != GameScene)
+                throw new InvalidOperationException("Open the Game scene before configuring result rendering.");
+
+            var roots = scene.GetRootGameObjects();
+            var result = roots.SelectMany(root => root.GetComponentsInChildren<ResultView>(true)).Single();
+            var stage = roots.SelectMany(root => root.GetComponentsInChildren<GameplayStage>(true)).Single();
+            ConfigureResultRendering(result, stage.CameraRig.GetComponent<Camera>());
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+        }
 
         [MenuItem("Tools/Ball Game/Gameplay/Install Star Rating")]
         public static void Install()
@@ -98,6 +126,7 @@ namespace Slime.Gameplay.Editor
             serializedResult.FindProperty("stars").objectReferenceValue = row;
             serializedResult.FindProperty("starFlight").objectReferenceValue = flight;
             serializedResult.ApplyModifiedPropertiesWithoutUndo();
+            ConfigureResultRendering(result, camera);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
 
@@ -121,6 +150,89 @@ namespace Slime.Gameplay.Editor
             EditorUtility.SetDirty(config);
             AssetDatabase.SaveAssetIfDirty(config);
             InstallSounds();
+        }
+
+        private static void ConfigureResultRendering(ResultView result, Camera worldCamera)
+        {
+            var resultCanvas = result.GetComponentInParent<Canvas>().rootCanvas;
+            var flightCanvas = result.StarFlight.GetComponent<Canvas>();
+            var uiLayer = LayerMask.NameToLayer(UiLayerName);
+            if (uiLayer < 0)
+                throw new InvalidOperationException("The UI layer is missing.");
+
+            ConfigureUiRenderer(uiLayer);
+            var child = worldCamera.transform.Find(ResultCameraName);
+            var cameraObject = child != null ? child.gameObject : new GameObject(ResultCameraName, typeof(Camera));
+            cameraObject.transform.SetParent(worldCamera.transform, false);
+            cameraObject.transform.localPosition = Vector3.zero;
+            cameraObject.transform.localRotation = Quaternion.identity;
+            var uiCamera = cameraObject.GetComponent<Camera>();
+            uiCamera.CopyFrom(worldCamera);
+            uiCamera.cullingMask = 1 << uiLayer;
+            uiCamera.useOcclusionCulling = false;
+            uiCamera.clearFlags = CameraClearFlags.Depth;
+            var uiData = uiCamera.GetUniversalAdditionalCameraData();
+            uiData.renderType = CameraRenderType.Overlay;
+            uiData.renderPostProcessing = false;
+            uiData.renderShadows = false;
+            uiData.requiresColorTexture = false;
+            uiData.requiresDepthTexture = false;
+            uiData.volumeLayerMask = 0;
+            uiData.antialiasing = AntialiasingMode.None;
+            var uiSerialized = new SerializedObject(uiData);
+            uiSerialized.FindProperty("m_ClearDepth").boolValue = true;
+            uiSerialized.ApplyModifiedPropertiesWithoutUndo();
+            uiData.SetRenderer(UiRendererIndex);
+            var worldData = worldCamera.GetUniversalAdditionalCameraData();
+            worldData.cameraStack.Remove(uiCamera);
+            worldData.cameraStack.Add(uiCamera);
+            worldCamera.cullingMask &= ~(1 << uiLayer);
+            resultCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+            resultCanvas.worldCamera = uiCamera;
+            flightCanvas.worldCamera = uiCamera;
+            foreach (var canvas in new[] { resultCanvas, flightCanvas })
+                foreach (var transform in canvas.GetComponentsInChildren<Transform>(true))
+                    transform.gameObject.layer = uiLayer;
+
+            EditorUtility.SetDirty(worldCamera);
+            EditorUtility.SetDirty(worldData);
+            EditorUtility.SetDirty(uiCamera);
+            EditorUtility.SetDirty(uiData);
+            EditorUtility.SetDirty(resultCanvas);
+            EditorUtility.SetDirty(flightCanvas);
+        }
+
+        private static void ConfigureUiRenderer(int uiLayer)
+        {
+            var renderer = AssetDatabase.LoadAssetAtPath<UniversalRendererData>(UiRendererPath);
+            if (renderer == null)
+            {
+                if (!AssetDatabase.CopyAsset(MobileRendererPath, UiRendererPath))
+                    throw new InvalidOperationException("Could not create the UI renderer.");
+
+                renderer = AssetDatabase.LoadAssetAtPath<UniversalRendererData>(UiRendererPath);
+            }
+
+            renderer.renderingMode = RenderingMode.Forward;
+            renderer.opaqueLayerMask = 0;
+            renderer.transparentLayerMask = 1 << uiLayer;
+            EditorUtility.SetDirty(renderer);
+            AssetDatabase.SaveAssetIfDirty(renderer);
+            foreach (var path in PipelinePaths)
+            {
+                var pipeline = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(path);
+                var serialized = new SerializedObject(pipeline);
+                var renderers = serialized.FindProperty("m_RendererDataList");
+                if (renderers.arraySize > UiRendererIndex
+                    && renderers.GetArrayElementAtIndex(UiRendererIndex).objectReferenceValue != renderer)
+                    throw new InvalidOperationException("The reserved UI renderer slot is occupied in " + path);
+
+                renderers.arraySize = Mathf.Max(renderers.arraySize, UiRendererIndex + 1);
+                renderers.GetArrayElementAtIndex(UiRendererIndex).objectReferenceValue = renderer;
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+                EditorUtility.SetDirty(pipeline);
+                AssetDatabase.SaveAssetIfDirty(pipeline);
+            }
         }
 
         private static StarRowView Row(Transform parent, string name, Sprite empty, Sprite filled, float size, float spacing, Vector2 position)

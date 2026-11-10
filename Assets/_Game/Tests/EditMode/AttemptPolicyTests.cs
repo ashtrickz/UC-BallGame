@@ -8,7 +8,6 @@ using Slime.Gameplay.Core.Config;
 using Slime.Gameplay.Core.Generation;
 using Slime.Gameplay.Core.Levels;
 using Slime.Composition;
-using Slime.Diagnostics;
 using Slime.Gameplay.Presentation;
 using Slime.Localization;
 using UnityEditor;

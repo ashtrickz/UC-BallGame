@@ -2,7 +2,6 @@ using Slime.Foundation;
 using System.Linq;
 using NUnit.Framework;
 using Slime.Composition;
-using Slime.Diagnostics;
 using Slime.Gameplay.Presentation;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -12,6 +11,37 @@ namespace Slime.Tests.EditMode
 {
     public sealed class GameplayNavigationBindingTests
     {
+        [Test]
+        public void Result_and_flying_stars_share_a_camera_after_world_post_processing()
+        {
+            var scene = EditorSceneManager.OpenPreviewScene("Assets/_Game/Scenes/Game.unity");
+            try
+            {
+                var roots = scene.GetRootGameObjects();
+                var result = roots.SelectMany(root => root.GetComponentsInChildren<ResultView>(true)).Single();
+                var canvas = result.GetComponentInParent<Canvas>().rootCanvas;
+                var world = roots.SelectMany(root => root.GetComponentsInChildren<Slime.Gameplay.View.CameraRig>(true)).Single().GetComponent<Camera>();
+                Assert.AreEqual(RenderMode.ScreenSpaceCamera, canvas.renderMode);
+                var ui = canvas.worldCamera;
+                Assert.IsNotNull(ui);
+                Assert.AreNotSame(world, ui);
+                Assert.AreSame(ui, result.StarFlight.GetComponent<Canvas>().worldCamera);
+                var uiMask = 1 << LayerMask.NameToLayer("UI");
+                Assert.AreEqual(uiMask, ui.cullingMask);
+                Assert.AreEqual(0, world.cullingMask & uiMask);
+                foreach (var root in new[] { canvas.transform, result.StarFlight.transform })
+                    foreach (var child in root.GetComponentsInChildren<Transform>(true))
+                        Assert.AreEqual(uiMask, 1 << child.gameObject.layer, child.name);
+
+                var data = new SerializedObject(ui.GetComponent("UniversalAdditionalCameraData"));
+                Assert.IsFalse(data.FindProperty("m_RenderPostProcessing").boolValue);
+                Assert.AreEqual(1, data.FindProperty("m_CameraType").enumValueIndex);
+                var stack = new SerializedObject(world.GetComponent("UniversalAdditionalCameraData")).FindProperty("m_Cameras");
+                Assert.AreEqual(ui, stack.GetArrayElementAtIndex(stack.arraySize - 1).objectReferenceValue);
+            }
+            finally { EditorSceneManager.ClosePreviewScene(scene); }
+        }
+
         [Test]
         public void Gameplay_and_result_own_their_buttons_without_extra_actions()
         {

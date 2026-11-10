@@ -12,7 +12,6 @@ using Slime.Gameplay.Presentation;
 using Slime.Infrastructure.Audio;
 using Slime.Composition;
 using Slime.Infrastructure.Frame;
-using Slime.Diagnostics;
 using Slime.Infrastructure.Settings;
 using Slime.Settings;
 using Slime.UI;

@@ -71,6 +71,8 @@ ProjectScope (shared services, lives for the whole app)
 
 Assembly references enforce the feature boundaries, so the boundaries do not depend on convention. Tests also check them.
 
+The [namespace migration report](Docs/NamespaceMigration.md) records the assembly renames and checks that preserve the dependency graph and Unity asset bindings.
+
 | Assembly | Responsibility |
 | --- | --- |
 | `Slime.Gameplay.Core` | Pure C# rules with no Unity references (`noEngineReferences`). This covers geometry, the attempt model, shot rules, the seeded level and wall generators, and control-plan replay. |
@@ -126,6 +128,8 @@ Docs/                  Game design, plans, reports, localization tables
 1. Open the project in **Unity 6000.3.25f1**.
 2. Open `Assets/_Game/Scenes/Loading.unity` and press Play. Use a portrait Game View, for example 1080×2340.
 3. To build, use **Tools → Ball Game → Build → Android APK**. The build goes to `Builds/Android/UC_BallGame.apk`.
+
+The build command prepares release defines, waits for script compilation, builds Addressables and then builds the ARM64 IL2CPP APK. The regular Unity Build button uses the same preparation. Editor diagnostics return automatically afterwards; no manual `GAME_DEBUG` switch is needed. **Windows Demo Player** builds with development diagnostics for autoplay recordings.
 
 To run the tests:
 

@@ -8,7 +8,6 @@ using Slime.Gameplay.Presentation;
 using Slime.Infrastructure.Audio;
 using Slime.Composition;
 using Slime.Infrastructure.Frame;
-using Slime.Diagnostics;
 using Slime.Menu;
 
 namespace Slime.Tests.EditMode

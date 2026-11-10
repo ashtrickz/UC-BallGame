@@ -9,7 +9,6 @@ using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using Slime.Gameplay.View;
 using Slime.Composition;
-using Slime.Diagnostics;
 using Slime.Gameplay.Presentation;
 using UnityEngine;
 

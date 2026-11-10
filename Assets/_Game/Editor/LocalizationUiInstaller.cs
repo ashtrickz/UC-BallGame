@@ -6,7 +6,6 @@ using Slime.App.Loading;
 using Slime.Foundation;
 using Slime.Gameplay.View;
 using Slime.Composition;
-using Slime.Diagnostics;
 using Slime.Gameplay.Presentation;
 using Slime.Infrastructure.Settings;
 using Slime.Infrastructure.Localization;

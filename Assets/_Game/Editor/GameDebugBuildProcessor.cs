@@ -12,8 +12,9 @@ namespace Slime.Editor
     {
         private const int CallbackOrder = int.MinValue;
         private const string PreparationMessage =
-            "GAME_DEBUG does not match the player build type. Call GameDebugDefines.PreparePlayerBuild(target, development), "
-            + "wait for script compilation, then build. Release profiles and extra defines must not contain GAME_DEBUG.";
+            "GAME_DEBUG does not match the player build type. Use GameDebugDefines.RequestBuild(options) or "
+            + "Tools/Ball Game/Build to prepare defines and wait for compilation automatically. "
+            + "Direct BuildPipeline.BuildPlayer calls require PreparePlayerBuild(target, development) and a completed script reload.";
 
         public override int callbackOrder => CallbackOrder;
 

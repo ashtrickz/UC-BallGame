@@ -5,7 +5,6 @@ using System.Threading;
 using NUnit.Framework;
 using Slime.Gameplay.View;
 using Slime.Composition;
-using Slime.Diagnostics;
 using Slime.Gameplay.Presentation;
 using Slime.UI;
 using UnityEngine;

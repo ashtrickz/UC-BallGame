@@ -47,6 +47,8 @@ namespace Slime.Gameplay.Presentation
         {
             Stop();
             token.ThrowIfCancellationRequested();
+            var canvas = GetComponent<Canvas>();
+            var renderCamera = canvas != null && canvas.worldCamera != null ? canvas.worldCamera : camera;
             var generation = _generation;
             count = Mathf.Clamp(count, 0, StarRowView.SlotCount);
             Array.Clear(_launched, 0, _launched.Length);
@@ -61,7 +63,7 @@ namespace Slime.Gameplay.Presentation
                     if (generation != _generation || token.IsCancellationRequested)
                         return;
 
-                    transform.rotation = camera.transform.rotation;
+                    transform.rotation = renderCamera.transform.rotation;
                     var elapsed = progress * duration;
                     FlyingCount = 0;
                     for (var i = 0; i < count; i++)
@@ -80,7 +82,7 @@ namespace Slime.Gameplay.Presentation
                         if (t < 1)
                         {
                             stars[i].gameObject.SetActive(true);
-                            Place(stars[i].rectTransform, targets.Target(i), camera, source, t, i);
+                            Place(stars[i].rectTransform, targets.Target(i), camera, renderCamera, source, t, i);
                             FlyingCount++;
                         }
                         else
@@ -121,16 +123,16 @@ namespace Slime.Gameplay.Presentation
             Stop();
         }
 
-        private void Place(RectTransform star, RectTransform target, Camera camera, Vector3 source, float t, int index)
+        private void Place(RectTransform star, RectTransform target, Camera sourceCamera, Camera renderCamera, Vector3 source, float t, int index)
         {
             var targetCanvas = target.GetComponentInParent<Canvas>();
             var uiCamera = targetCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : targetCanvas.worldCamera;
             var screenTarget = RectTransformUtility.WorldToScreenPoint(uiCamera, target.position);
-            var end = camera.ScreenToWorldPoint(new Vector3(screenTarget.x, screenTarget.y, ScreenDepth));
-            var screenSource = camera.WorldToScreenPoint(source + Vector3.up * SourceHeight);
-            var start = camera.ScreenToWorldPoint(new Vector3(screenSource.x, screenSource.y, ScreenDepth));
+            var end = renderCamera.ScreenToWorldPoint(new Vector3(screenTarget.x, screenTarget.y, ScreenDepth));
+            var screenSource = sourceCamera.WorldToScreenPoint(source + Vector3.up * SourceHeight);
+            var start = renderCamera.ScreenToWorldPoint(new Vector3(screenSource.x, screenSource.y, ScreenDepth));
             var side = index - 1;
-            var pop = start + camera.transform.up * burstHeight + camera.transform.right * (side * waveWidth);
+            var pop = start + renderCamera.transform.up * burstHeight + renderCamera.transform.right * (side * waveWidth);
             Vector3 position;
             if (t < PopFraction)
             {
@@ -141,17 +143,17 @@ namespace Slime.Gameplay.Presentation
             {
                 var flyT = (t - PopFraction) / (1 - PopFraction);
                 position = Vector3.Lerp(pop, end, GameClock.Smooth(flyT))
-                    + camera.transform.up * (Mathf.Sin(Mathf.PI * flyT) * burstHeight * Half)
-                    + camera.transform.right * (Mathf.Sin(Mathf.PI * Two * flyT) * waveWidth);
+                    + renderCamera.transform.up * (Mathf.Sin(Mathf.PI * flyT) * burstHeight * Half)
+                    + renderCamera.transform.right * (Mathf.Sin(Mathf.PI * Two * flyT) * waveWidth);
             }
 
             target.GetWorldCorners(_corners);
             var left = RectTransformUtility.WorldToScreenPoint(uiCamera, _corners[0]);
             var right = RectTransformUtility.WorldToScreenPoint(uiCamera, _corners[CornerCount - 1]);
-            var endSize = Vector3.Distance(camera.ScreenToWorldPoint(new Vector3(left.x, left.y, ScreenDepth)),
-                camera.ScreenToWorldPoint(new Vector3(right.x, right.y, ScreenDepth)));
+            var endSize = Vector3.Distance(renderCamera.ScreenToWorldPoint(new Vector3(left.x, left.y, ScreenDepth)),
+                renderCamera.ScreenToWorldPoint(new Vector3(right.x, right.y, ScreenDepth)));
             star.position = position;
-            star.rotation = camera.transform.rotation * Quaternion.Euler(0, 0, Mathf.Sin(Mathf.PI * t) * FullTurn);
+            star.rotation = renderCamera.transform.rotation * Quaternion.Euler(0, 0, Mathf.Sin(Mathf.PI * t) * FullTurn);
             star.sizeDelta = Vector2.one * Mathf.Lerp(launchSize, endSize, t);
             star.localScale = Vector3.one * Mathf.Lerp(Half, EndScale, Mathf.Clamp01(t / PopFraction));
         }

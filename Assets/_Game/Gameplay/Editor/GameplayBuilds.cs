@@ -14,7 +14,6 @@ namespace Slime.Gameplay.Editor
         public const string AndroidPath = "Builds/Android/UC_BallGame.apk";
         public const string WindowsPath = "Builds/Windows/UC_BallGame.exe";
 
-        [MenuItem("Tools/Ball Game/Build/Android APK")]
         public static void BuildAndroid()
         {
             if (string.IsNullOrEmpty(PlayerSettings.GetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Android)))
@@ -26,7 +25,6 @@ namespace Slime.Gameplay.Editor
             Build(BuildTarget.Android, AndroidPath);
         }
 
-        [MenuItem("Tools/Ball Game/Build/Windows Demo Player")]
         public static void BuildWindows() => Build(BuildTarget.StandaloneWindows64, WindowsPath);
 
         private static void Build(BuildTarget target, string path)
