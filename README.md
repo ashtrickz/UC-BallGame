@@ -4,9 +4,7 @@ A small portrait mobile game made in Unity. A lost slime finds its way home thro
 
 > **Strictly non-commercial.** This is a personal, non-commercial project. It is not sold, has no ads or in-app purchases, and must not be used commercially. Some assets, such as music made on the Suno free plan, come with no commercial rights at all.
 
-<!-- MEDIA: hero GIF, a full run from the first shot to the dive into the pool.
-<p align="center"><img src="Docs/Media/hero.gif" width="320" alt="Slime: Homecoming gameplay"></p>
--->
+<p align="center"><img src="Docs/Media/hero.gif" width="320" alt="The slime jumps along the track, charges a shot and breaks a crystal group"></p>
 
 ## The game
 
@@ -18,11 +16,13 @@ A small portrait mobile game made in Unity. A lost slime finds its way home thro
 - **Endless generator.** This mode gives you a new seeded level on every attempt.
 - **4 languages:** English, Spanish, Ukrainian and Simplified Chinese.
 
-<!-- MEDIA: screenshot row (portrait, ~1080x2340). Suggested files: Docs/Media/menu.png, charge.png, wall.png, result.png
-| Menu | Charging | Crystal Wall | Result |
+| Menu | Charging | Shot | Crystal Wall |
 | :---: | :---: | :---: | :---: |
-| <img src="Docs/Media/menu.png" width="180"> | <img src="Docs/Media/charge.png" width="180"> | <img src="Docs/Media/wall.png" width="180"> | <img src="Docs/Media/result.png" width="180"> |
--->
+| <img src="Docs/Media/menu.jpg" width="180" alt="Main menu with the slime colour picker"> | <img src="Docs/Media/charge.jpg" width="180" alt="Charging: the blast ring grows and the crystals it will break light up"> | <img src="Docs/Media/shot.jpg" width="180" alt="A released droplet flying at a crystal group"> | <img src="Docs/Media/wall.jpg" width="180" alt="Crystal Wall mode with the track buried in crystals"> |
+
+| Low on size | Doors open | Result |
+| :---: | :---: | :---: |
+| <img src="Docs/Media/low-size.jpg" width="180" alt="A tiny slime with 15% size left"> | <img src="Docs/Media/doors.jpg" width="180" alt="The colony doors open as the slime approaches"> | <img src="Docs/Media/result.jpg" width="180" alt="Level clear popup with three stars"> |
 
 ## Development time
 
@@ -63,9 +63,7 @@ ProjectScope (shared services, lives for the whole app)
 
 `SceneService` manages every scene transition in the same order. First it shows the crystal loading screen. Then it loads the next scene, waits until that scene's scope is ready, releases the previous scene, and finally reveals the new one. Input stays blocked until the transition finishes.
 
-<!-- MEDIA: GIF of the crystal loading transition, Menu -> Game.
-<p align="center"><img src="Docs/Media/transition.gif" width="320" alt="Crystal scene transition"></p>
--->
+<p align="center"><img src="Docs/Media/transition.gif" width="320" alt="The menu shatters into crystal silhouettes during the scene transition"></p>
 
 ### Assemblies
 
@@ -162,9 +160,7 @@ The design and direction are human. Most of the production work was done with AI
 
 Third-party libraries and fonts belong to their authors and keep their own licenses: VContainer, UniTask, DOTween, DynaPuff, Noto Sans and Noto Sans CJK SC (SIL OFL), and Liberation Sans.
 
-<!-- MEDIA: optional closing GIF, the slime diving into the colony pool.
-<p align="center"><img src="Docs/Media/homecoming.gif" width="320" alt="Homecoming"></p>
--->
+<p align="center"><img src="Docs/Media/homecoming.gif" width="320" alt="The slime dives into the colony pool behind the doors"></p>
 
 ## License and use
 

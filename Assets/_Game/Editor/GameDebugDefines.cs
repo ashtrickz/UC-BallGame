@@ -196,6 +196,7 @@ namespace Slime.Editor
                     throw new InvalidOperationException("Could not save the open scenes before building.");
 
                 Directory.CreateDirectory(Path.GetDirectoryName(request.output));
+                GameSpriteAtlasPrebuild.Prepare();
                 WriteStatus(request, "Addressables");
                 AddressableAssetSettings.BuildPlayerContent(out var addressables);
                 if (!string.IsNullOrEmpty(addressables.Error))
